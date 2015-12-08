@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: Fundator
+        psr4_prefix: Fundator
+        src_path: app
