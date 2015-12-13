@@ -1,8 +1,10 @@
 /vendor
 /node_modules
+/bower_components
 Homestead.yaml
 Homestead.json
 .env
 .idea
 .vagrant
 /public/packages
+.DS_Store

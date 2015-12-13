@@ -1,0 +1,15 @@
+{
+  "appConfig": {
+    "sass": {
+      "src": ["./resources/assets/sass/**/*.scss", "./angular/**/*.scss"],
+      "main": "./resources/assets/sass/app.scss",
+      "ie": "./resources/assets/sass/ie9.scss"
+    },
+    "js": {
+      "outputFolder": "./public/js/app"
+    },
+    "css": {
+      "outputFolder": "./public/css/app"
+    }
+  }
+}

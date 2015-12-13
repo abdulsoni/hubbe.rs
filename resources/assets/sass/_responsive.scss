@@ -1,0 +1,261 @@
+@media (min-width: 1200px) {
+    .modal-lg.container {
+        width: 1170px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .top-nav.nav > li > a {
+        padding: 7px 5px 14px 5px;
+        margin: 0 20px 0 0px;
+    }
+    ul.tabProjectList li {
+        margin-right: 2%;
+        width: 49%;
+        &:nth-child(3n+0) {
+            margin-right: 2%;
+        }
+        &:nth-child(2n+0) {
+            margin-right: 0;
+        }
+    }
+    .advertisingArea {}
+    .content-contest {
+        height: 75px;
+        padding-top: 0;
+        padding-bottom: 0;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    .advertisingArea .advertisingContent .ongoingContast img {
+        width: 95px;
+    }
+    .advertisingArea .advertisingContent h1 {
+        font-size: 34px;
+    }
+    .tabProjectList.withprojectdetail li .projectImg {
+        height: 550px;
+    }
+}
+
+@media (max-width: 991px) {
+    ul.socialList {
+        position: absolute;
+        right: 0;
+        top: -60px;
+    }
+    header ul.account-list {
+        float: right;
+        margin-right: -25px;
+    }
+    .advertisingArea {
+        margin-top: 30px;
+        text-aling: center;
+    }
+    .fcoll {
+        padding-bottom: 30px;
+    }
+    .footer-top {
+        padding-bottom: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    header .logo {
+        padding-bottom: 15px;
+    }
+    header .navbar-nav,
+    header .nav > li {
+        float: left;
+    }
+    header .navbar-nav > li {
+        float: left;
+    }
+    header .navbar-nav {
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 0;
+        padding-left: 0;
+    }
+    header ul.account-list {
+        margin-right: -10px;
+    }
+    .content-contest {
+        font-size: 13px;
+        line-height: 16px;
+        margin-left: -20px;
+        padding: 12px 0px 12px 0;
+    }
+    .content-contest strong {
+        font-size: 18px;
+    }
+    .radiusBox {
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
+    }
+    .top-nav.nav > li > a {
+        margin-right: 12px;
+    }
+    ul.account-list > li {
+        margin: 0 9px;
+    }
+    ul.account-list > li > a img {
+        margin-right: 6px;
+    }
+    ul.tabProjectList li {
+        width: 100%;
+    }
+    .tabProjectList.withprojectdetail li .projectImg {
+        height: 400px;
+    }
+}
+
+@media (max-width: 550px) {
+    header {
+        text-align: center;
+        padding-top: 15px;
+        padding-bottom: 5px;
+    }
+    header .logo {
+        padding-bottom: 5px;
+    }
+    .nav-tabs.tabsection li a {
+        font-size: 20px;
+    }
+    header .navbar-nav {
+        float: none
+    }
+    ul.socialList {
+        position: inherit;
+    }
+    .top-nav.nav > li > a {
+        padding-bottom: 5px;
+        border-width: 2px;
+    }
+    header ul.account-list {
+        margin-top: 15px;
+    }
+    ul.socialList {
+        margin-top: 20px;
+    }
+    .contest-list .col-xs-2 {
+        display: none;
+    }
+    .contest-list .double-star,
+    .contest-list .coolestMemberPick,
+    .contest-list .contestImg {
+        display: none
+    }
+    .content-contest {
+        margin-left: 0;
+        padding: 0 0 0 12px;
+    }
+    .contest-list .col-xs-7 {
+        width: 65%;
+    }
+    .contest-list .col-xs-3 {
+        width: 35%;
+    }
+    footer .col-xs-6 {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    ul.tabProjectList li .rankingMng [class^=col-xs-] {
+        width: 100%;
+    }
+    .nav-tabs.tabsection li a {
+        font-size: 16px;
+        padding: 4px 15px;
+    }
+    .leftRank {
+        border-right: none;
+    }
+    .projectImg {
+        height: 320px;
+    }
+    .infobg {
+        padding: 2px 15px 20px 15px;
+    }
+    ul.priceList li {
+        font-size: 14px;
+        padding-left: 30px;
+    }
+    .profilePick img {
+        margin-bottom: 10px;
+    }
+    .colRanking [class^=col-xs-] {
+        width: 100%;
+    }
+    .advertisingArea .advertisingContent h1 {
+        font-size: 24px;
+    }
+    .advertisingArea .advertisingContent h1 small {
+        width: 27px;
+        height: 27px;
+    }
+    .advertisingArea .advertisingContent h3 {
+        font-size: 18px;
+    }
+    .advertisingArea .advertisingContent .ongoingContast img {
+        width: 80px;
+        margin: 0 5px 5px 0;
+    }
+}
+
+@media (max-width: 400px) {
+    header img {
+        max-width: 100%;
+    }
+    header .navbar-nav {
+        display: table;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    header ul.account-list {
+        display: table;
+        margin-left: auto;
+        margin-right: auto;
+        float: none;
+    }
+    .top-nav.nav > li > a {
+        font-size: 12px;
+        padding-left: 2px;
+        padding-right: 2px;
+        margin-right: 8px;
+    }
+    ul.socialList {
+        display: none;
+    }
+    ul.account-list > li {
+        margin: 0 8px;
+    }
+    .radiusBox {
+        margin-top: 5px;
+    }
+    .content-contest {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
+
+@media (max-width: 380px) {
+    .tabProjectList.withprojectdetail li .projectImg {
+        height: 320px;
+    }
+    .projectImg {
+        height: 280px;
+    }
+    .btn-info {
+        font-size: 15px;
+    }
+    .advertisingArea .advertisingContent h3 small {
+        float: none;
+    }
+    .advertisingArea .advertisingContent h3 strong {
+        float: none;
+        padding-right: 5px;
+    }
+}

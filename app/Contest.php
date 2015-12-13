@@ -46,4 +46,24 @@ class Contest extends Model
     {
         return $this->belongsToMany('Fundator\Entry', 'contestants');
     }
+
+    /**
+     * Relationship between Prizes and Contests
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function prizes()
+    {
+        return $this->hasMany('Fundator\Prize');
+    }
+
+    /**
+     * Relationship between Skills and Contests
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function skills()
+    {
+        return $this->belongsToMany('Fundator\Skill', 'contest_skills');
+    }
 }

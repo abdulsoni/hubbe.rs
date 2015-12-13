@@ -3,9 +3,13 @@
 namespace Fundator\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 use Fundator\Http\Requests;
 use Fundator\Http\Controllers\Controller;
+use Fundator\Contest;
+
+use Exception;
 
 class ContestController extends Controller
 {
@@ -16,7 +20,24 @@ class ContestController extends Controller
      */
     public function index()
     {
-        //
+        $statusCode = 200;
+        $response = [];
+        $contests = Contest::all();
+
+        $i = 0;
+        foreach($contests as $contest)
+        {
+            $i++;
+            $contest_data = $contest->getAttributes();
+            $contest_data['total_entries'] = $contest->entries->count();
+
+            // Calculated rank
+            $contest_data['rank'] = $i;
+
+            $response[] = $contest_data;
+        }
+
+        return new Response($response, $statusCode);
     }
 
     /**

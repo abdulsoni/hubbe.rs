@@ -15,6 +15,8 @@ class CreateContestsTable extends Migration
         Schema::create('contests', function (Blueprint $table) {
             $table->increments('id');
 
+            $table->integer('status');
+
             $table->string('name');
             $table->longText('description');
             $table->date('start_time');

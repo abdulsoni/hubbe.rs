@@ -61,9 +61,8 @@ return array(
 
 
 	'menu' => array(
-		'contests',
-		'users',
-		'roles',
+		'Contest' => array('contests', 'entries', 'entry_revision', 'skills', 'prizes'),
+		'Users' => array('users', 'roles', 'permissions'),
 		'Settings' => array('settings.site'),
 	),
 
@@ -98,7 +97,7 @@ return array(
 	 *
 	 * @type string
 	 */
-	'home_page' => 'contests',
+	'home_page' => 'settings.site',
 
 	/**
 	 * The route to which the user will be taken when they click the "back to site" button

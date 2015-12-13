@@ -34,6 +34,16 @@ class Entry extends Model
      */
     public function contests()
     {
-        return $this->belongsToMany('Fundator\Contest', 'contestants');
+        return $this->belongsTo('Fundator\Contest');
+    }
+
+    /**
+     * Relationship between Entry Revisions
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function revisions()
+    {
+        return $this->hasMany('Fundator\EntryRevision');
     }
 }

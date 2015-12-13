@@ -14,6 +14,15 @@ class CreatePrizesTable extends Migration
     {
         Schema::create('prizes', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->integer('contest_id'); // FK
+
+            $table->string('description');
+
+            $table->float('prize');
+            $table->integer('currency');
+            $table->float('royalty');
+
             $table->timestamps();
         });
     }

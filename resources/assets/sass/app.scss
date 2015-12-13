@@ -1,2 +1,9 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+// Bootstrap
+@import "_bootstrap";
 
+// Main
+@import "_main";
+
+
+// Tablet & Mobile
+@import "_responsive";

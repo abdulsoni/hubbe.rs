@@ -24,6 +24,11 @@ return array(
             'title' => '# entries',
             'relationship' => 'entries',
             'select' => 'COUNT((:table).id)',
+        ),
+        'num_prizes' => array(
+            'title' => '# prizes',
+            'relationship' => 'prizes',
+            'select' => 'COUNT((:table).id)',
         )
     ),
 
@@ -39,6 +44,16 @@ return array(
      */
     'edit_fields' => array(
         'id',
+        'thumbnail' => array(
+            'title' => 'Image (350 x 370)',
+            'type' => 'image',
+            'naming' => 'random',
+            'location' => public_path(),
+            'size_limit' => 2,
+            'sizes' => array(
+                array(350, 370, 'crop', public_path() . '/resize/', 100),
+            )
+        ),
         'name' => array(
             'title' => 'Name',
         ),
@@ -58,6 +73,15 @@ return array(
             'decimal_separator' => '.'
         ),
         'currency' => array(
+            'title' => 'Currency',
+            'type' => 'enum',
+            'options' => array(
+                'USD' => '$',
+                'CNY' => '¥',
+                'HKD' => 'HK$'
+            ),
+        ),
+        'prizes' => array(
             'title' => 'Currency',
             'type' => 'enum',
             'options' => array(
