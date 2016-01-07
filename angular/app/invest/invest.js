@@ -1,17 +1,25 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.controllers').controller('InvestCtrl', function($rootScope, $scope, $state, $resource) {
+    angular.module('fundator.controllers').controller('InvestCtrl', function($rootScope, $scope, $state, $resource, $window) {
         console.log('Invest Started');
+        $window.scrollTo(0, 0);
 
         $scope.investors = [
-            'Investor 1',
-            'Investor 1',
-            'Investor 1',
-            'Investor 1'
+            {name: 'Alain <br> Amoretti', country: 'France', image: '1.jpg'},
+            {name: 'Charles d\'anterroches', country: 'France', image: '2.jpg'},
+            {name: 'Christophe Brissiaud', country: 'China', image: '3.jpg'},
+            {name: 'Jean-Bernard Antoine', country: 'China', image: '4.jpeg'},
+            {name: 'Xavier <br> Paulin', country: 'Taiwan', image: '5.jpg'},
+            {name: 'Cindy <br> Chung', country: 'Hong Kong', image: '6.jpg'}
         ];
     });
 
+    angular.module('fundator.directives').filter('trustedHtml', ['$sce', function($sce) {
+        return function(html) {
+            return $sce.trustAsHtml(html);
+        };
+    }]);
 
     angular.module('fundator.directives')
 

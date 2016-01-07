@@ -59,8 +59,8 @@
                     }
                 }
             })
-            .state('app.invest', {
-                url: '/invest',
+            .state('app.grabshare', {
+                url: '/grab-a-share',
                 views: {
                     'main@': {
                         templateUrl: getView('invest', 'grab-a-share'),
