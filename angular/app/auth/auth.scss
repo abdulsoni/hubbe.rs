@@ -1,0 +1,30 @@
+.login-main-style1{
+	padding: 120px 30px;
+}
+
+.summary-style1{
+	text-align: center;
+}
+
+.auth-providers{
+	margin-bottom: 25px;
+	text-align: center;
+
+	> a:hover{
+		cursor: pointer;
+	}
+}
+
+.form-style1{
+	max-width: 450px;
+	margin: 0 auto;
+
+	.h-title{
+		margin: 0;
+		margin-bottom: 25px;
+	}
+
+	.form-group{
+		margin-bottom: 25px;
+	}
+}

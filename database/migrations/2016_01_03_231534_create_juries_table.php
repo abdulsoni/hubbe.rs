@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateJuryTable extends Migration
+class CreateJuriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,9 @@ class CreateJuryTable extends Migration
      */
     public function up()
     {
-        Schema::table('jury', function (Blueprint $table) {
-            //
+        Schema::create('juries', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id');
         });
     }
 
@@ -24,8 +25,6 @@ class CreateJuryTable extends Migration
      */
     public function down()
     {
-        Schema::table('jury', function (Blueprint $table) {
-            //
-        });
+        Schema::drop('juries');
     }
 }

@@ -44,7 +44,7 @@ class Contest extends Model
      */
     public function entries()
     {
-        return $this->belongsToMany('Fundator\Entry', 'contestants');
+        return $this->belongsToMany('Fundator\Entry', 'contestants', 'contest_id');
     }
 
     /**

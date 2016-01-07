@@ -23,6 +23,12 @@
                     footer: {
                         templateUrl: getView('footer')
                     },
+                    notifications: {
+                        templateUrl: getView('notifications', 'widget')
+                    },
+                    quickUpdate: {
+                        templateUrl: getView('header', 'quick-update')
+                    },
                     main: {}
                 }
             })
@@ -37,9 +43,6 @@
             })
             .state('app.contest', {
                 url: '/contest',
-                data: {
-                    pageName: 'Contest'
-                },
                 views: {
                     'main@': {
                         templateUrl: getView('contest'),
@@ -47,11 +50,26 @@
                     }
                 }
             })
+            .state('app.contestsingle', {
+                url: '/contest/:contestId',
+                views: {
+                    'main@': {
+                        templateUrl: getView('contest', 'contest-single'),
+                        controller: 'ContestSingleCtrl'
+                    }
+                }
+            })
+            .state('app.invest', {
+                url: '/invest',
+                views: {
+                    'main@': {
+                        templateUrl: getView('invest', 'grab-a-share'),
+                        controller: 'InvestCtrl'
+                    }
+                }
+            })
             .state('app.notifications', {
                 url: '/notifications',
-                data: {
-                    pageName: 'Contest'
-                },
                 views: {
                     'main@': {
                         templateUrl: getView('contest'),

@@ -1,24 +1,22 @@
-
-
-<!-- login: start -->
 <main class="main main-style1 login-main-style1">
-    <div class="main-inner">
-        <div class="main-box">
-
-            <!-- form-style1: start -->
+    <div class="container">
+        <div class="main-inner">
             <form class="box-full-style1 form-style1">
                 <section class="summary-style1">
-                    <h1 class="h-title">Login</h1>
+                    <h1 class="h-title">Login to fundator</h1>
                 </section>
+
+                <div class="auth-providers">
+                    <a ng-click="authenticate('linkedin')">
+                        <img src="/images/linkedin.png" alt="Linkedin Login">
+                    </a>
+                </div>
 
                 <div class="form-msg error" ng-if="errorMessage.length">
                     {{errorMessage}}
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label fm-col-a">
-                        Your Email
-                    </label>
                     <div class="fm-col-m">
                         <input class="form-control input-lg" ng-model="email" type="email" placeholder="Your email" autocomplete="off">
                         <span class="form-control-feedback icon"></span>
@@ -26,24 +24,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label fm-col-a">
-                        Your Password
-                    </label>
                     <div class="fm-col-m">
                         <input class="form-control input-lg" ng-model="password" type="password" placeholder="Your password">
                         <span class="form-control-feedback icon"></span>
                     </div>
                 </div>
 
-                <div class="form-group form-group-min">
-                    <div class="fm-col-m">
-                        <label class="fm-check">
-                            <!-- <input type="checkbox" value="" tabindex="-1"> -->
-                            <!-- <span>Remember me</span> -->
-                        </label>
-                        <span class="form-control-feedback icon"></span>
-                    </div>
-                </div>
 
                 <div class="form-group">
                     <div class="fm-col-m">
@@ -51,10 +37,6 @@
                     </div>
                 </div>
             </form>
-            <!-- form-style1: end -->
-
         </div>
     </div>
 </main>
-<!-- login: end -->
-

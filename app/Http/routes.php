@@ -30,6 +30,7 @@ $api->version('v1', function ($api) {
      */
     $api->post('authenticate', 'Fundator\Http\Controllers\AuthenticateController@authenticate');
     $api->get('user', 'Fundator\Http\Controllers\AuthenticateController@getUser');
+    $api->get('users', 'Fundator\Http\Controllers\AuthenticateController@index');
 
     /*
      * Contests
@@ -40,7 +41,7 @@ $api->version('v1', function ($api) {
     /*
      * Entries
      */
-//    $api->post('entries/', 'Fundator\Http\Controllers\EntryController@store');
-//    $api->put('entries/{id}', 'Fundator\Http\Controllers\EntryController@update');
+    $api->post('entries/', 'Fundator\Http\Controllers\EntryController@store');
+    $api->put('entries/{id}', 'Fundator\Http\Controllers\EntryController@update');
 
 });

@@ -69,7 +69,16 @@ class ContestController extends Controller
      */
     public function show($id)
     {
-        //
+        $statusCode = 200;
+        $response = [];
+        $contest = Contest::find($id);
+
+        $contest_data = $contest->getAttributes();
+        $contest_data['total_entries'] = $contest->entries->count();
+
+        $response = $contest_data;
+
+        return new Response($response, $statusCode);
     }
 
     /**

@@ -13,6 +13,19 @@
     "angular-animate": "~1.4.7",
     "angular-moment": "~0.10.3",
     "angularjs-ordinal-filter": "~2.1.3",
-    "moment": "~2.10.6"
+    "moment": "~2.10.6",
+    "angular-owl-carousel": "~0.2.3",
+    "owl-carousel": "OwlFonk/OwlCarousel",
+    "Chart.js": "~1.0.2"
+  },
+  "overrides": {
+    "owl-carousel": {
+      "main": [
+        "./owl-carousel/owl.carousel.js",
+        "./owl-carousel/owl.carousel.css",
+        "./owl-carousel/owl.theme.css",
+        "./owl-carousel/owl.transitions.css"
+      ]
+    }
   }
 }

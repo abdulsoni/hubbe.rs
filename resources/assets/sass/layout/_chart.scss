@@ -1,0 +1,36 @@
+.chatPIwrap{padding:20px 20px 15px 20px;}
+#canvas-holder1 {
+  width: 300px;
+  margin: 20px auto;
+}
+#canvas-holder2 {
+  width: 50%;
+  margin: 20px 25%;
+}
+#chartjs-tooltip {
+  opacity: 0;
+  position: absolute;
+  background: rgba(0, 0, 0, .7);
+  color: white;
+  padding: 3px;
+  border-radius: 3px;
+  -webkit-transition: all .1s ease;
+  transition: all .1s ease;
+  pointer-events: none;
+  -webkit-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+}
+.chartjs-tooltip-key {
+  display:inline-block;
+  width:10px;
+  height:10px;
+}
+
+.pie-chart-labels{float:right; font-size:18px; font-weight:normal;}
+.pie-chart-labels .pie-chart-label{margin-bottom:5px;}
+.pie-chart-labels .pie-chart-label span{display:inline-block; width:12px; height:12px; border-radius:20px; margin-right:5px;}
+
+
+.line-chart-labels{font-size:18px; font-weight:normal;}
+.line-chart-labels .line-chart-label{margin-right:20px; display: inline-block;}
+.line-chart-labels .line-chart-label span{display:inline-block; width:22px; height:12px; margin-right:5px;}

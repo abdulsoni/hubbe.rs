@@ -3,11 +3,14 @@
 namespace Fundator\Http\Controllers;
 
 use Fundator\Http\Requests;
+use Fundator\Role;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Fundator\Http\Controllers\Controller;
 use Fundator\User;
-use JWTAuth;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Exception;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
@@ -21,7 +24,7 @@ class AuthenticateController extends Controller
         // Apply the jwt.auth middleware to all methods in this controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
-        $this->middleware('jwt.auth', ['except' => ['authenticate']]);
+        $this->middleware('jwt.auth', ['except' => ['index', 'authenticate']]);
     }
 
     /**
@@ -32,7 +35,24 @@ class AuthenticateController extends Controller
     public function index()
     {
         $users = User::all();
-        return $users;
+        $allUsers = [];
+
+        foreach($users as $user){
+            $roles = $user->roles;
+            $userRoles = [];
+
+            foreach($roles as $role){
+                $userRoles[$role->name] = $role->id;
+            }
+
+            $user['user_roles'] = $userRoles;
+
+            unset($user->roles);
+
+            $allUsers[] = $user;
+        }
+
+        return $allUsers;
     }
 
     /**
@@ -52,6 +72,7 @@ class AuthenticateController extends Controller
 
             $response = [
                 'id' => $user->id,
+                'name' => $user->name,
                 'email' => $user->email,
                 'role' => $user->role,
                 'needs_reset' => $user->needs_reset
@@ -69,9 +90,9 @@ class AuthenticateController extends Controller
         }catch (Exception $e){
             $statusCode = 400;
             $response['error'] = $e->errorInfo;
-        }finally{
-            return new Response($response, $statusCode);
         }
+
+        return new Response($response, $statusCode);
     }
 
     public function authenticate(Request $request)
@@ -90,10 +111,6 @@ class AuthenticateController extends Controller
                 'role' => $user->role,
                 'email' => $user->email
             ];
-
-            if($user->role === 'student'){
-                $userData['name'] = $user->student->name;
-            }
 
             $token = JWTAuth::fromUser($user, $userData);
         } catch (JWTException $e) {

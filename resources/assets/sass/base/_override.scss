@@ -1,0 +1,42 @@
+// Style Override
+
+.project-profile{
+  margin-top: 15px;
+}
+
+.project-date{
+  margin-top: 18px;
+}
+
+.row.date-wrap{
+  background: -webkit-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%);
+  margin-top: -15px;
+}
+
+.contest-single{
+  > h2{
+    margin-top: 35px;
+    margin-bottom: 20px;
+  }
+
+  .well{
+    padding:0; border-radius:0; -webkit-border-radius:0; -moz-border-radius:0; border:none; margin-left: -10px; box-shadow: none; -webkit-box-shadow: none; -moz-box-shadow: none;
+  }
+}
+
+.contest-single_info-panel{
+  @include clearfix();
+
+  .nav{
+    width: 25%;
+    float: left;
+  }
+  
+  .tab-content{
+    width: 75%;
+    float: left;
+    padding: 15px 25px;
+
+    @include clearfix();
+  }
+}

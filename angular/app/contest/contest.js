@@ -16,4 +16,27 @@
         });
     });
 
+    angular.module('fundator.controllers').controller('ContestSingleCtrl', function($rootScope, $scope, $state, $stateParams, $resource) {
+        $scope.contestId = $stateParams.contestId;
+
+        var Contest = $resource('/api/contests/:contestId', {
+            contestId: '@id'
+        });
+
+        Contest.get({contestId: $scope.contestId}).$promise.then(function(result){
+            console.log('just one course');
+            console.log(result);
+            $scope.contest = result;
+        });
+
+        $scope.entries = [
+            'Entry 1',
+            'Entry 2',
+            'Entry 3',
+            'Entry 4',
+            'Entry 5',
+            'Entry 6'
+        ];
+    });
+
 })();

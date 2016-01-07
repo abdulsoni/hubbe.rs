@@ -17,7 +17,6 @@ class CreateContestantsTable extends Migration
 
             $table->integer('contest_id');
             $table->integer('user_id');
-
             $table->integer('entry_id');
         });
     }

@@ -22,7 +22,23 @@
 <body>
     <header ui-view="header"></header>
 
-    <div ui-view="main" class="main"></div>
+    <main>
+        <section class="body-content">
+            <div class="container" ng-if="authenticated">
+                <div class="row">
+                    <div class="col-md-7 col-sm-12">
+                        <div class="contest-list" ui-view="notifications"></div>
+                    </div>
+                    <div class="col-md-5 col-sm-12">
+                        <div class="advertisingArea" ui-view="quickUpdate"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div ui-view="main" class="main-content"></div>
+            </div>
+        </section>
+    </main>
 
     <footer ui-view="footer"></footer>
 

@@ -46,4 +46,14 @@ class Entry extends Model
     {
         return $this->hasMany('Fundator\EntryRevision');
     }
+
+    /**
+     * Relationship between Entries and Contests
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function contest()
+    {
+        return $this->belongsTo('Fundator\Contest');
+    }
 }

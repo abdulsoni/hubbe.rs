@@ -5,17 +5,15 @@
             <div class="header_right">
                 <nav>
                     <ul class="nav navbar-nav top-nav">
-                        <li><a href="#">Home</a></li>
+                        <li><a href="#" ng-class="{'activenav': $state.current.name.indexOf('login') !== -1}">Home</a></li>
                         <li><a href="#">Create</a></li>
                         <li><a href="#">Expert</a></li>
-                        <li><a href="#">Invest</a></li>
-                        <li><a ui-sref="app.contest" class="activenav">Contest</a></li>
+                        <li><a ui-sref="app.invest" ng-class="{'activenav': $state.current.name.indexOf('invest') !== -1}">Invest</a></li>
+                        <li><a ui-sref="app.contest" ng-class="{'activenav': $state.current.name.indexOf('contest') !== -1}">Contest</a></li>
                     </ul>
                 </nav>
                 <ul class="account-list navbar-nav">
-                    <!--<li><a href="#"><i>5</i><span class="icon icon-envelop"></span></a></li>-->
-                    <!--<li><a href="#"><i>4</i><span class="icon icon-database"></span></a></li>-->
-                    <li><a href="#" class="profile"><img src="images/profile.jpg" alt="">Joe Doe</a></li>
+                    <li><a class="profile"><img src="images/profile.jpg" alt="">{{user.name}}</a></li>
                 </ul>
                 <ul class="socialList navbar-nav">
                     <li><a href="#"><span class="icon icon-facebook"></span></a></li>

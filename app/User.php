@@ -47,4 +47,52 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->belongsToMany('Fundator\Contest', 'contestants');
     }
+
+    // Helper functions
+
+    /**
+     * Return all users with their user roles
+     *
+     */
+    public static function allWithRoles()
+    {
+        $users = User::all();
+        $allUsers = [];
+
+        foreach ($users as $user) {
+            $roles = $user->roles;
+            $userRoles = [];
+
+            foreach ($roles as $role) {
+
+                $model = null;
+
+                switch ($role->name) {
+                    case 'creator':
+                        $model = Creator::class;
+                        break;
+                    case 'jury':
+                        $model = Jury::class;
+                        break;
+                    case 'investor':
+                        $model = Investor::class;
+                        break;
+                }
+
+                $relatedUserObject = $model->where('user_id', $user->id)->first();
+
+                if (!is_null($relatedUserObject)) {
+                    $userRoles[$role->name] = $relatedUserObject;
+                }
+            }
+
+            $user['user_roles'] = $userRoles;
+
+            unset($user->roles);
+
+            $allUsers[] = $user;
+        }
+
+        return $allUsers;
+    }
 }

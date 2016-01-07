@@ -1,440 +1,96 @@
-<section class="body-content">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-7 col-sm-12">
-                <div class="contest-list">
-                    <div class="row contestR1">
-                        <div class="col-xs-2"><img src="images/coolestImg.jpg" alt="" class="contestImg"/></div>
-                        <div class="col-xs-7">
-                            <div class="content-contest"> <strong>2015 - 08- 27</strong><br>
-                                5 days left for giving your last entry for the Smelly Shoe </div>
-                        </div>
-                        <div class="col-xs-3 text-center"> <a href="#" class="radiusBox sky"><span class="icon icon-search"></span></a> <a href="#" class="radiusBox"><span class="icon icon-file-text2"></span></a> </div>
-                    </div>
-                    <div class="row contestR2">
-                        <div class="col-xs-2"><img src="images/coolestImg.jpg" alt="" class="contestImg"></div>
-                        <div class="col-xs-7">
-                            <div class="content-contest"> <strong>2015 - 08- 27</strong><br>
-                                4 days left for new entries for working suits. You are now... </div>
-                        </div>
-                        <div class="col-xs-3 text-center"> <a href="#" class="radiusBox sky"><span class="icon icon-search"></span></a> <a href="#" class="radiusBox"><span class="icon icon-file-text2"></span></a> </div>
-                    </div>
-                    <div class="row contestR3">
-                        <div class="col-xs-2 text-center"><img src="images/coolestMember.jpg" alt="" class="coolestMemberPick"></div>
-                        <div class="col-xs-7">
-                            <div class="content-contest"> <strong>2015 - 10 - 17</strong><br />
-                                Jury Rowling Booboo left your a comment on Working Suit </div>
-                        </div>
-                        <div class="col-xs-3 text-center"> <a href="#" class="radiusBox white"><span class="icon icon-search"></span></a> <a href="#" class="radiusBox white"><span class="icon icon-file-text2"></span></a> </div>
-                    </div>
-                    <div class="row contestR4">
-                        <div class="col-xs-2 text-center"><img src="images/double-star.png" alt="" class="double-star"></div>
-                        <div class="col-xs-7">
-                            <div class="content-contest"> <strong>2015 - 10 - 17</strong><br />
-                                4.2 is the average mark that Paul Baker from Australia... </div>
-                        </div>
-                        <div class="col-xs-3 text-center"> <a href="#" class="radiusBox white"><span class="icon icon-search"></span></a> <a href="#" class="radiusBox white"><span class="icon icon-file-text2"></span></a> </div>
-                    </div>
-                    <a href="#" class="btn btn-block showmorebtn">Show more</a> </div>
-            </div>
-            <div class="col-md-5 col-sm-12">
-                <div class="advertisingArea">
-                    <div class="advertisingContent">
-                        <h1>Ongoing Contest <small>3</small></h1>
-                        <div class="ongoingContast"><img src="images/coolestImg.jpg" alt=""/> <img src="images/coolestImg.jpg" alt=""/> <img src="images/coolestImg.jpg" alt=""/></div>
-                        <h3><strong>Average Marks</strong> <small>8,5/10</small></h3>
-                        <h3><strong>Average Ranking</strong> <small>17% in 2015</small></h3>
-                        <h3><strong>New Contest</strong> <small>5(since October 2015)</small></h3>
-                    </div>
-                    <div class="text-center"><img src="images/add.jpg" alt="" /></div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <!-- Tabs here-->
-
-                <uib-tabset class="tabsection">
-                    <uib-tab heading="Ongoing Contest">
-                        <ul class="tabProjectList">
-                            <li ng-repeat="contest in contests">
-                                <div class="projectImg">
-                                    <div class="row date-wrap">
-                                        <div class="col-xs-8 col-sm-9">
-                                            <h4>
-                                                {{ end_time = (contest.start_time | amAdd : contest.duration : 'days'); ''}}
-                                                {{ end_time | amDifference : null : 'days' }} days to go
-                                                ({{ end_time | amDateFormat:'MMM Do YYYY'}}).
-                                            </h4>
-                                        </div>
-                                        <div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>
-                                    </div>
-                                    <div class="row rankingMng">
-                                        <div class="col-xs-5 leftRank">
-                                            <h4>Current Ranking</h4>
-                                            <span class="countValue">{{contest.rank | ordinal}}</span> </div>
-                                        <div class="col-xs-7">
-                                            <h4>Number of Contestants</h4>
-                                            <span class="countValue">{{contest.total_entries}}</span> </div>
-                                    </div>
-                                </div>
-                                <h3 class="projectHeading">{{contest.name}}</h3>
-                            </li>
-
-                        </ul>
-                    </uib-tab>
-                    <uib-tab heading="Past Contest">
-
-                    </uib-tab>
-                </uib-tabset>
-                <!--<ul class="nav nav-tabs tabsection">-->
-                    <!--<li class="active"><a data-toggle="tab" href="#OngoingContest">Ongoing Contest</a></li>-->
-                    <!--<li><a data-toggle="tab" href="#PastContest">Past Contest </a></li>-->
-                <!--</ul>-->
-                <!--<div class="tab-content">-->
-                    <!--<div id="OngoingContest" class="tab-pane fade in active">-->
-                        <!--<ul class="tabProjectList">-->
-                            <!--<li ng-repeat="contest in contests">-->
-                                <!--<div class="projectImg">-->
-                                    <!--<div class="row">-->
-                                        <!--<div class="col-xs-8 col-sm-9">-->
-                                            <!--<h4>10 days to go (Dic 12th, 2015).</h4>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>-->
-                                    <!--</div>-->
-                                    <!--<div class="row rankingMng">-->
-                                        <!--<div class="col-xs-5 leftRank">-->
-                                            <!--<h4>Current Ranking</h4>-->
-                                            <!--<span class="countValue">3rd</span> </div>-->
-                                        <!--<div class="col-xs-7">-->
-                                            <!--<h4>Number of Contestants</h4>-->
-                                            <!--<span class="countValue">67</span> </div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<h3 class="projectHeading">Name of the Project</h3>-->
-                            <!--</li>-->
-
-
-
-                            <!--<li  data-toggle="modal" data-target="#myModa2">-->
-                                <!--<div class="projectImg">-->
-                                    <!--<div class="row">-->
-                                        <!--<div class="col-xs-8 col-sm-9">-->
-                                            <!--<h4 style="color:#000">10 days to go (Dic 12th, 2015).</h4>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>-->
-                                    <!--</div>-->
-                                    <!--<div class="row rankingMng">-->
-                                        <!--<div class="col-xs-5 leftRank">-->
-                                            <!--<h4>Current Ranking</h4>-->
-                                            <!--<span class="countValue">3rd</span> </div>-->
-                                        <!--<div class="col-xs-7">-->
-                                            <!--<h4>Number of Contestants</h4>-->
-                                            <!--<span class="countValue">67</span> </div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<h3 class="projectHeading">Name of the Project</h3>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<div class="projectImg">-->
-                                    <!--<div class="row">-->
-                                        <!--<div class="col-xs-8 col-sm-9">-->
-                                            <!--<h4>10 days to go (Dic 12th, 2015).</h4>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>-->
-                                    <!--</div>-->
-                                    <!--<div class="row rankingMng">-->
-                                        <!--<div class="col-xs-5 leftRank">-->
-                                            <!--<h4>Current Ranking</h4>-->
-                                            <!--<span class="countValue">3rd</span> </div>-->
-                                        <!--<div class="col-xs-7">-->
-                                            <!--<h4>Number of Contestants</h4>-->
-                                            <!--<span class="countValue">67</span> </div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<h3 class="projectHeading">Name of the Project</h3>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<div class="projectImg">-->
-                                    <!--<div class="row">-->
-                                        <!--<div class="col-xs-8 col-sm-9">-->
-                                            <!--<h4 style="color:#000;">10 days to go (Dic 12th, 2015).</h4>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>-->
-                                    <!--</div>-->
-                                    <!--<div class="row rankingMng">-->
-                                        <!--<div class="col-xs-5 leftRank">-->
-                                            <!--<h4>Current Ranking</h4>-->
-                                            <!--<span class="countValue">3rd</span> </div>-->
-                                        <!--<div class="col-xs-7">-->
-                                            <!--<h4>Number of Contestants</h4>-->
-                                            <!--<span class="countValue">67</span> </div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<h3 class="projectHeading">Name of the Project</h3>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<div class="projectImg">-->
-                                    <!--<div class="row">-->
-                                        <!--<div class="col-xs-8 col-sm-9">-->
-                                            <!--<h4 style="color:#000;">10 days to go (Dic 12th, 2015).</h4>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>-->
-                                    <!--</div>-->
-                                    <!--<div class="row rankingMng">-->
-                                        <!--<div class="col-xs-5 leftRank">-->
-                                            <!--<h4>Current Ranking</h4>-->
-                                            <!--<span class="countValue">3rd</span> </div>-->
-                                        <!--<div class="col-xs-7">-->
-                                            <!--<h4>Number of Contestants</h4>-->
-                                            <!--<span class="countValue">67</span> </div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<h3 class="projectHeading">Name of the Project</h3>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<div class="projectImg">-->
-                                    <!--<div class="row">-->
-                                        <!--<div class="col-xs-8 col-sm-9">-->
-                                            <!--<h4>10 days to go (Dic 12th, 2015).</h4>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>-->
-                                    <!--</div>-->
-                                    <!--<div class="row rankingMng">-->
-                                        <!--<div class="col-xs-5 leftRank">-->
-                                            <!--<h4>Current Ranking</h4>-->
-                                            <!--<span class="countValue">3rd</span> </div>-->
-                                        <!--<div class="col-xs-7">-->
-                                            <!--<h4>Number of Contestants</h4>-->
-                                            <!--<span class="countValue">67</span> </div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<h3 class="projectHeading">Name of the Project</h3>-->
-                            <!--</li>-->
-                        <!--</ul>-->
-
-                        <!--&lt;!&ndash;Lightbox Box&ndash;&gt;-->
-                        <!--<div class="modal fade" id="myModal" role="dialog">-->
-                            <!--<div class="modal-dialog modal-lg container">-->
-                                <!--<div class="modal-content">-->
-                                    <!--<div class="modal-header">-->
-                                        <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-                                        <!--<h2>Name of the Project</h2>-->
-                                    <!--</div>-->
-                                    <!--<div class="row">-->
-                                        <!--<div class="col-sm-5">-->
-                                            <!--<div class="projectImg">-->
-                                                <!--<div class="row">-->
-                                                    <!--<div class="col-xs-8 col-sm-9">-->
-                                                        <!--<h4>10 days to go (Dic 12th, 2015).</h4>-->
-                                                    <!--</div>-->
-                                                    <!--<div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>-->
-                                                <!--</div>-->
-                                                <!--<div class="row rankingMng">-->
-                                                    <!--<div class="col-xs-6 col-sm-5 leftRank">-->
-                                                        <!--<h4>Current Ranking</h4>-->
-                                                        <!--<span class="countValue">3rd</span> </div>-->
-                                                    <!--<div class="col-xs-6 col-sm-7">-->
-                                                        <!--<h4>Number of Contestants</h4>-->
-                                                        <!--<span class="countValue">67</span> </div>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-sm-7">-->
-                                            <!--Tab-->
-
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="modal-body">-->
-                                    <!--</div>-->
-                                    <!--<div class="modal-footer">-->
-                                        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--&lt;!&ndash;End Lightbox Box&ndash;&gt;-->
-                    <!--</div>-->
-                    <!--<div id="PastContest" class="tab-pane fade">-->
-                        <!--<ul class="tabProjectList">-->
-                            <!--<li>-->
-                                <!--<div class="projectImg">-->
-                                    <!--<div class="row">-->
-                                        <!--<div class="col-xs-8 col-sm-9">-->
-                                            <!--<h4>10 days to go (Dic 12th, 2015).</h4>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>-->
-                                    <!--</div>-->
-                                    <!--<div class="row rankingMng">-->
-                                        <!--<div class="col-xs-5 leftRank">-->
-                                            <!--<h4>Current Ranking</h4>-->
-                                            <!--<span class="countValue">3rd</span> </div>-->
-                                        <!--<div class="col-xs-7">-->
-                                            <!--<h4>Number of Contestants</h4>-->
-                                            <!--<span class="countValue">67</span> </div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<h3 class="projectHeading">Name of the Project</h3>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<div class="projectImg">-->
-                                    <!--<div class="row">-->
-                                        <!--<div class="col-xs-8 col-sm-9">-->
-                                            <!--<h4 style="color:#000">10 days to go (Dic 12th, 2015).</h4>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>-->
-                                    <!--</div>-->
-                                    <!--<div class="row rankingMng">-->
-                                        <!--<div class="col-xs-5 leftRank">-->
-                                            <!--<h4>Current Ranking</h4>-->
-                                            <!--<span class="countValue">3rd</span> </div>-->
-                                        <!--<div class="col-xs-7">-->
-                                            <!--<h4>Number of Contestants</h4>-->
-                                            <!--<span class="countValue">67</span> </div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<h3 class="projectHeading">Name of the Project</h3>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<div class="projectImg">-->
-                                    <!--<div class="row">-->
-                                        <!--<div class="col-xs-8 col-sm-9">-->
-                                            <!--<h4>10 days to go (Dic 12th, 2015).</h4>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>-->
-                                    <!--</div>-->
-                                    <!--<div class="row rankingMng">-->
-                                        <!--<div class="col-xs-5 leftRank">-->
-                                            <!--<h4>Current Ranking</h4>-->
-                                            <!--<span class="countValue">3rd</span> </div>-->
-                                        <!--<div class="col-xs-7">-->
-                                            <!--<h4>Number of Contestants</h4>-->
-                                            <!--<span class="countValue">67</span> </div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<h3 class="projectHeading">Name of the Project</h3>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<div class="projectImg">-->
-                                    <!--<div class="row">-->
-                                        <!--<div class="col-xs-8 col-sm-9">-->
-                                            <!--<h4 style="color:#000;">10 days to go (Dic 12th, 2015).</h4>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>-->
-                                    <!--</div>-->
-                                    <!--<div class="row rankingMng">-->
-                                        <!--<div class="col-xs-5 leftRank">-->
-                                            <!--<h4>Current Ranking</h4>-->
-                                            <!--<span class="countValue">3rd</span> </div>-->
-                                        <!--<div class="col-xs-7">-->
-                                            <!--<h4>Number of Contestants</h4>-->
-                                            <!--<span class="countValue">67</span> </div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<h3 class="projectHeading">Name of the Project</h3>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<div class="projectImg">-->
-                                    <!--<div class="row">-->
-                                        <!--<div class="col-xs-8 col-sm-9">-->
-                                            <!--<h4 style="color:#000;">10 days to go (Dic 12th, 2015).</h4>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>-->
-                                    <!--</div>-->
-                                    <!--<div class="row rankingMng">-->
-                                        <!--<div class="col-xs-5 leftRank">-->
-                                            <!--<h4>Current Ranking</h4>-->
-                                            <!--<span class="countValue">3rd</span> </div>-->
-                                        <!--<div class="col-xs-7">-->
-                                            <!--<h4>Number of Contestants</h4>-->
-                                            <!--<span class="countValue">67</span> </div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<h3 class="projectHeading">Name of the Project</h3>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                                <!--<div class="projectImg">-->
-                                    <!--<div class="row">-->
-                                        <!--<div class="col-xs-8 col-sm-9">-->
-                                            <!--<h4>10 days to go (Dic 12th, 2015).</h4>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>-->
-                                    <!--</div>-->
-                                    <!--<div class="row rankingMng">-->
-                                        <!--<div class="col-xs-5 leftRank">-->
-                                            <!--<h4>Current Ranking</h4>-->
-                                            <!--<span class="countValue">3rd</span> </div>-->
-                                        <!--<div class="col-xs-7">-->
-                                            <!--<h4>Number of Contestants</h4>-->
-                                            <!--<span class="countValue">67</span> </div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<h3 class="projectHeading">Name of the Project</h3>-->
-                            <!--</li>-->
-                        <!--</ul>-->
-                    <!--</div>-->
-                <!--</div>-->
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <h2><strong>Wanna put your creativity in motion? New Contest</strong></h2>
-        <hr>
-        <div class="row">
-            <div class="col-lg-6 col-md-12">
-                <ul class="tabProjectList withprojectdetail">
-                    <li>
+<div class="row">
+    <div class="col-sm-12">
+        <!-- Tabs here-->
+        <uib-tabset class="tabsection">
+            <uib-tab heading="Ongoing Contest">
+                <ul class="tabProjectList">
+                    <li ng-repeat="contest in contests" ui-sref="app.contestsingle({contestId: contest.id})">
                         <div class="projectImg">
-                            <div class="row">
-                                <div class="col-xs-8 col-sm-9">
-                                    <h4 style="color:#000;">10 days to go (Dic 12th, 2015).</h4>
+                            <div class="row date-wrap">
+                                <div class="col-xs-8 col-sm-9 project-date">
+                                    <h4>
+                                        {{ end_time = (contest.start_time | amAdd : contest.duration : 'days'); ''}}
+                                        {{ end_time | amDifference : null : 'days' }} days to go
+                                        ({{ end_time | amDateFormat:'MMM Do YYYY'}}).
+                                    </h4>
                                 </div>
                                 <div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>
                             </div>
                             <div class="row rankingMng">
-                                <div class="col-xs-3 col-sm-4 leftRank">
+                                <div class="col-xs-5 leftRank">
                                     <h4>Current Ranking</h4>
-                                    <span class="countValue">3rd</span> </div>
-                                <div class="col-xs-4 col-sm-4 leftRank">
+                                    <span class="countValue">{{contest.rank | ordinal}}</span> </div>
+                                <div class="col-xs-7">
                                     <h4>Number of Contestants</h4>
-                                    <span class="countValue">67</span> </div>
-                                <div class="col-xs-5 col-sm-4"> <a href="#" class="btn btn-info">Project Details</a> </div>
+                                    <span class="countValue">{{contest.total_entries}}</span> </div>
                             </div>
                         </div>
-                        <h3 class="projectHeading">Name of the Project</h3>
+                        <h3 class="projectHeading">{{contest.name}}</h3>
                     </li>
                 </ul>
-            </div>
-            <div class="col-lg-6 col-md-12">
-                <div class="infobg">
-                    <h3><strong>Short Intro</strong></h3>
-                    <p>Design a workout that will integrate some modern electric tools suchas bluetooth receiver or app..</p>
-                    <p>This worksuit is dedicated to day-to-day workers , casual handyman and all people that want a confortable outfit for "do-it-yourselfers” working integrating modern tools of communication.</p>
-                    <hr>
-                    <h3><strong>Guideline Doc &nbsp;</strong><small><a href="#">Register to Download</a></small></h3>
-                    <h3><strong>Prize</strong></h3>
-                    <ul class="priceList">
-                        <li>USD 1000 + 10% royalties if manufactured</li>
-                        <li>USD 600 + 10% royalties if manufactured</li>
-                        <li>USD 300 + 10% royalties if manufactured</li>
-                    </ul>
-                    <h3><strong>Jury</strong></h3>
-                    <div class="profilePick"><img src="images/profile.jpg" alt=""> <img src="images/profile.jpg" alt=""> <img src="images/profile.jpg" alt=""><strong> <img src="images/profile.jpg" alt=""> <img src="images/profile.jpg" alt=""></strong></div>
-                    <div class="row colRanking">
-                        <div class="col-xs-4 leftRank">
+            </uib-tab>
+            <uib-tab heading="Past Contest">
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>
+
+
+<h2><strong>Wanna put your creativity in motion? New Contest</strong></h2>
+<hr>
+<div class="row">
+    <div class="col-lg-6 col-md-12">
+        <ul class="tabProjectList withprojectdetail">
+            <li>
+                <div class="projectImg">
+                    <div class="row">
+                        <div class="col-xs-8 col-sm-9 project-date">
+                            <h4 style="color:#000;">10 days to go (Dic 12th, 2015).</h4>
+                        </div>
+                        <div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>
+                    </div>
+                    <div class="row rankingMng">
+                        <div class="col-xs-3 col-sm-4 leftRank">
                             <h4>Current Ranking</h4>
                             <span class="countValue">3rd</span> </div>
-                        <div class="col-xs-5 leftRank">
+                        <div class="col-xs-4 col-sm-4 leftRank">
                             <h4>Number of Contestants</h4>
                             <span class="countValue">67</span> </div>
-                        <div class="col-xs-3">
-                            <h4>Days left to Go</h4>
-                            <span class="countValue">12th</span> </div>
+                        <div class="col-xs-5 col-sm-4"> <a href="#" class="btn btn-info">Project Details</a> </div>
                     </div>
-                    <a href="#" class="btn btn-info btn-block">Participate in this Project</a>
-                    <div><a href="#" class="btn backbtn btn-info btn-block">Go back to Project Cover</a></div>
                 </div>
+                <h3 class="projectHeading">Name of the Project</h3>
+            </li>
+        </ul>
+    </div>
+    <div class="col-lg-6 col-md-12">
+        <div class="infobg">
+            <h3><strong>Short Intro</strong></h3>
+            <p>Design a workout that will integrate some modern electric tools suchas bluetooth receiver or app..</p>
+            <p>This worksuit is dedicated to day-to-day workers , casual handyman and all people that want a confortable outfit for "do-it-yourselfers” working integrating modern tools of communication.</p>
+            <hr>
+            <h3><strong>Guideline Doc &nbsp;</strong><small><a href="#">Register to Download</a></small></h3>
+            <h3><strong>Prize</strong></h3>
+            <ul class="priceList">
+                <li>USD 1000 + 10% royalties if manufactured</li>
+                <li>USD 600 + 10% royalties if manufactured</li>
+                <li>USD 300 + 10% royalties if manufactured</li>
+            </ul>
+            <h3><strong>Jury</strong></h3>
+            <div class="profilePick"><img src="images/profile.jpg" alt=""> <img src="images/profile.jpg" alt=""> <img src="images/profile.jpg" alt=""><strong> <img src="images/profile.jpg" alt=""> <img src="images/profile.jpg" alt=""></strong></div>
+            <div class="row colRanking">
+                <div class="col-xs-4 leftRank">
+                    <h4>Current Ranking</h4>
+                    <span class="countValue">3rd</span> </div>
+                <div class="col-xs-5 leftRank">
+                    <h4>Number of Contestants</h4>
+                    <span class="countValue">67</span> </div>
+                <div class="col-xs-3">
+                    <h4>Days left to Go</h4>
+                    <span class="countValue">12th</span> </div>
             </div>
+            <a href="#" class="btn btn-info btn-block">Participate in this Project</a>
+            <div><a href="#" class="btn backbtn btn-info btn-block">Go back to Project Cover</a></div>
         </div>
     </div>
-</section>
+</div>

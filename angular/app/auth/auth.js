@@ -32,9 +32,13 @@
             });
         };
 
+        $scope.authenticate = function(provider) {
+            $auth.authenticate(provider);
+        };
+
         $scope.logout = function(){
             $auth.logout().then(function() {
-                localStorage.removeItem('satellizer_token');
+                localStorage.removeItem('fundator_token');
                 $rootScope.authenticated = false;
                 $rootScope.user = undefined;
 

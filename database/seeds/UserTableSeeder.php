@@ -27,7 +27,7 @@ class UserTableSeeder extends Seeder
         $expert->save();
 
         $superExpert = new Role();
-        $superExpert->name         = 'super-expert';
+        $superExpert->name         = 'super_expert';
         $superExpert->display_name = 'Super Expert';
         $superExpert->description  = 'Super experts manage all projects while working with creators on each step';
         $superExpert->save();
