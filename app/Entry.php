@@ -28,29 +28,29 @@ class Entry extends Model
     protected $fillable = ['name', 'description'];
 
     /**
-     * Relationship between Entries and Contests
+     * Relationship between Entry Rating
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function contests()
+    public function rating()
     {
-        return $this->belongsTo('Fundator\Contest');
-    }
-
-    /**
-     * Relationship between Entry Revisions
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function revisions()
-    {
-        return $this->hasMany('Fundator\EntryRevision');
+        return $this->hasOne('Fundator\EntryRating');
     }
 
     /**
      * Relationship between Entries and Contests
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function creator()
+    {
+        return $this->belongsTo('Fundator\Creator');
+    }
+
+    /**
+     * Relationship between Entries and Contests
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function contest()
     {

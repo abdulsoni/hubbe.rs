@@ -15,6 +15,7 @@ class CreateEntriesTable extends Migration
         Schema::create('entries', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('contest_id');
+            $table->integer('creator_id');
 
             $table->string('name');
             $table->longText('description');

@@ -2,16 +2,14 @@
 
 namespace Fundator\Http\Controllers;
 
+use Fundator\Entry;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 use Fundator\Http\Requests;
 use Fundator\Http\Controllers\Controller;
-use Fundator\Contest;
 
-use Exception;
-
-class ContestController extends Controller
+class EntryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,19 +20,16 @@ class ContestController extends Controller
     {
         $statusCode = 200;
         $response = [];
-        $contests = Contest::all();
+        $entries = Entry::all();
 
         $i = 0;
-        foreach($contests as $contest)
+        foreach($entries as $entry)
         {
             $i++;
-            $contest_data = $contest->getAttributes();
-            $contest_data['total_entries'] = $contest->entries->groupBy('creator_id')->count();
+            $entry_data = $entry->getAttributes();
+            $entry_data['rating'] = $entry->rating;
 
-            // Calculated rank
-            $contest_data['rank'] = $i;
-
-            $response[] = $contest_data;
+            $response[] = $entry_data;
         }
 
         return new Response($response, $statusCode);
@@ -69,17 +64,7 @@ class ContestController extends Controller
      */
     public function show($id)
     {
-        $statusCode = 200;
-        $response = [];
-        $contest = Contest::find($id);
-
-        $contest_data = $contest->getAttributes();
-        $contest_data['total_entries'] = $contest->entries->groupBy('creator_id')->count();
-        $contest_data['rating'] = $contest->rating;
-
-        $response = $contest_data;
-
-        return new Response($response, $statusCode);
+        //
     }
 
     /**

@@ -5,7 +5,7 @@
             <uib-tab heading="Ongoing Contest">
                 <ul class="tabProjectList">
                     <li ng-repeat="contest in contests" ui-sref="app.contestsingle({contestId: contest.id})">
-                        <div class="projectImg">
+                        <div class="projectImg" style="background-image url(/{{contest.thumbnail}}):">
                             <div class="row date-wrap">
                                 <div class="col-xs-8 col-sm-9 project-date">
                                     <h4>
@@ -19,10 +19,12 @@
                             <div class="row rankingMng">
                                 <div class="col-xs-5 leftRank">
                                     <h4>Current Ranking</h4>
-                                    <span class="countValue">{{contest.rank | ordinal}}</span> </div>
+                                    <span class="countValue">{{contest.rank | ordinal}}</span>
+                                </div>
                                 <div class="col-xs-7">
                                     <h4>Number of Contestants</h4>
-                                    <span class="countValue">{{contest.total_entries}}</span> </div>
+                                    <span class="countValue">{{contest.total_entries}}</span>
+                                </div>
                             </div>
                         </div>
                         <h3 class="projectHeading">{{contest.name}}</h3>
@@ -35,7 +37,7 @@
     </div>
 </div>
 
-
+<!--
 <h2><strong>Wanna put your creativity in motion? New Contest</strong></h2>
 <hr>
 <div class="row">
@@ -94,3 +96,4 @@
         </div>
     </div>
 </div>
+-->

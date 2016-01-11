@@ -15,6 +15,9 @@ class CreateCreatorsTable extends Migration
         Schema::create('creators', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
+
+            $table->string('first_name');
+            $table->string('last_name');
         });
     }
 

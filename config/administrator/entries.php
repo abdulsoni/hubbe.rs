@@ -20,6 +20,16 @@ return array(
         'name' => array(
             'title' => 'Name',
         ),
+        'contest' => array(
+            'title' => 'Contest',
+            'relationship' => 'contest',
+            'select' => 'name',
+        ),
+        'creator' => array(
+            'title' => 'Creator',
+            'relationship' => 'creator',
+            'select' => 'first_name',
+        ),
         'description' => array(
             'title' => 'Description',
         )
@@ -43,6 +53,16 @@ return array(
         'description' => array(
             'title' => 'Description',
             'type' => 'wysiwyg'
+        ),
+        'contest' => array(
+            'type' => 'relationship',
+            'title' => 'Contest',
+            'name_field' => 'name'
+        ),
+        'creator' => array(
+            'type' => 'relationship',
+            'title' => 'Creator',
+            'name_field' => 'first_name'
         )
     ),
 

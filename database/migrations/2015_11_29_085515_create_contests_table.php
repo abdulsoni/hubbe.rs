@@ -17,6 +17,8 @@ class CreateContestsTable extends Migration
 
             $table->integer('status');
 
+            $table->string('thumbnail');
+
             $table->string('name');
             $table->longText('description');
             $table->date('start_time');

@@ -48,7 +48,7 @@ return array(
             'title' => 'Image (350 x 370)',
             'type' => 'image',
             'naming' => 'random',
-            'location' => public_path(),
+            'location' => public_path() . '/',
             'size_limit' => 2,
             'sizes' => array(
                 array(350, 370, 'crop', public_path() . '/resize/', 100),
@@ -73,15 +73,6 @@ return array(
             'decimal_separator' => '.'
         ),
         'currency' => array(
-            'title' => 'Currency',
-            'type' => 'enum',
-            'options' => array(
-                'USD' => '$',
-                'CNY' => '¥',
-                'HKD' => 'HK$'
-            ),
-        ),
-        'prizes' => array(
             'title' => 'Currency',
             'type' => 'enum',
             'options' => array(

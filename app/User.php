@@ -48,6 +48,16 @@ class User extends Model implements AuthenticatableContract,
         return $this->belongsToMany('Fundator\Contest', 'contestants');
     }
 
+    /**
+     * Relationship between users and creators
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function creator()
+    {
+        return $this->hasOne('Fundator\Creator');
+    }
+
     // Helper functions
 
     /**
@@ -94,5 +104,26 @@ class User extends Model implements AuthenticatableContract,
         }
 
         return $allUsers;
+    }
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function (User $user)
+        {
+            switch($user->role){
+                case 'creator':
+                    $user->creator()->create([
+                        'first_name' => $user->name
+                    ]);
+                    break;
+            }
+        });
     }
 }

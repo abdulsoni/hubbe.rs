@@ -61,7 +61,7 @@ return array(
 
 
 	'menu' => array(
-		'Contest' => array('contests', 'entries', 'entry_revision', 'skills', 'prizes'),
+		'Contest' => array('contests', 'entries', 'entry_rating', 'skills', 'prizes'),
 		'Users' => array('users', 'roles', 'permissions'),
 		'Settings' => array('settings.site'),
 	),

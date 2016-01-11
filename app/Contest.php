@@ -25,17 +25,7 @@ class Contest extends Model
      *
      * @var array
      */
-    protected $fillable = [];
-
-    /**
-     * Relationship between
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function contestants()
-    {
-        return $this->belongsToMany('Fundator\User', 'contestants');
-    }
+    protected $fillable = ['name', 'description', 'status', 'start_time', 'duration', 'budget', 'currency'];
 
     /**
      * Relationship between Entries and Contests
@@ -44,7 +34,7 @@ class Contest extends Model
      */
     public function entries()
     {
-        return $this->belongsToMany('Fundator\Entry', 'contestants', 'contest_id');
+        return $this->hasMany('Fundator\Entry');
     }
 
     /**

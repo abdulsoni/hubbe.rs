@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Fundator\User;
 use Fundator\Role;
+use Fundator\Permission;
 
 class UserTableSeeder extends Seeder
 {
@@ -13,6 +14,14 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
+        // Create permissions
+        $judge = new Permission();
+        $judge->name            = 'judge';
+        $judge->display_name    = 'Can Judge ?';
+        $judge->description  = 'This permission is given to a user who can judge a contest';
+        $judge->save();
+
+
         // Create Roles
         $creator = new Role();
         $creator->name         = 'creator';
@@ -31,23 +40,36 @@ class UserTableSeeder extends Seeder
         $superExpert->display_name = 'Super Expert';
         $superExpert->description  = 'Super experts manage all projects while working with creators on each step';
         $superExpert->save();
+        $superExpert->attachPermission($judge);
 
         $investor = new Role();
         $investor->name         = 'investor';
         $investor->display_name = 'Investor';
         $investor->description  = '';
         $investor->save();
+        $investor->attachPermission($judge);
+
 
         User::create([
             'name' => 'Udit',
             'email' => 'udit@eskaytech.com',
             'password' => bcrypt('etech'),
+            'role' => 'creator'
         ])->roles()->attach($creator->id);
 
         User::create([
             'name' => 'Benjamin Vignon',
             'email' => 'benjamin@komprom.com',
             'password' => bcrypt('fundator'),
+            'role' => 'creator'
         ])->roles()->attach($creator->id);
+
+        User::create([
+            'name' => 'Christophe Brissiaud',
+            'email' => 'christophe@fundator.co',
+            'password' => bcrypt('fundator'),
+            'role' => 'investor'
+        ])->roles()->attach($investor->id);
+
     }
 }
