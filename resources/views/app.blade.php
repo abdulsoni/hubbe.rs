@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-site-verification" content="Qb1ckt_q8K3bKQSW-JepzfbaUUbyZXHw-_BOP3nYQEU" />
     <title ng-bind="pageTitle()">Fundator</title>
 
     <link rel="stylesheet" href="{!! asset('css/app/app.css') !!}">
