@@ -35,8 +35,6 @@
                 </div>
             </div>
 
-            <fd-loader></fd-loader>
-
             <div class="container">
                 <div ui-view="main" class="main-content"></div>
             </div>
