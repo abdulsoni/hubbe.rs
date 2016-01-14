@@ -41,6 +41,15 @@
                     }
                 }
             })
+            .state('app.register', {
+                url: '/register',
+                views: {
+                    'main@': {
+                        templateUrl: getView('auth', 'register'),
+                        controller: 'RegisterCtrl'
+                    }
+                }
+            })
             .state('app.contest', {
                 url: '/contest',
                 views: {

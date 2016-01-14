@@ -1,0 +1,78 @@
+$primary-color: #333333;
+$secondary-color:#95c54d;
+$tertiary-color:#29aae2;
+$quaternary-color:#e8e8e8;
+
+$primaryText-color:#6d6e71;
+
+$white-color: #fff;
+$black-color: #000;
+
+
+//Background image URL
+$imagesPath : "../images";
+
+
+
+//Rounded corners misins
+@mixin rounded-corners($radius) {
+  -webkit-border-radius: $radius; -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  -o-border-radius: $radius;
+  border-radius: $radius;
+}
+
+//tranisition
+@mixin transition($transition-animat){
+	-webkit-transition: $transition-animat;
+ 	-moz-transition: $transition-animat;
+	-ms-transition: $transition-animat;
+	-o-transition: $transition-animat;
+	transition: $transition-animat;
+}
+
+
+//box shadow
+@mixin box-shadow($box-shadowes){
+	-webkit-box-shadow: $box-shadowes;
+    -moz-box-shadow: $box-shadowes;
+    box-shadow: $box-shadowes;
+}
+
+
+//transform
+@mixin transform($transforms){
+	-webkit-transform: $transforms;
+	-moz-transform: $transforms;
+	-ms-transform: $transforms;
+	-o-transform: $transforms;
+	transform: $transforms;
+}
+
+
+//transform style
+@mixin transform-style($transform-styles){
+	-webkit-transform-style: $transform-styles;
+	-moz-transform-style: $transform-styles;
+	-ms-transform-style: $transform-styles;
+	-o-transform-style: $transform-styles;
+	transform-style: $transform-styles;
+}
+
+//Transform Origin
+@mixin transform-origin($transform-origins){
+	-webkit-transform-origin: $transform-origins;
+	-moz-transform-origin: $transform-origins;
+	-ms-transform-origin: $transform-origins;
+	-o-transform-origin: $transform-origins;
+	transform-origin: $transform-origins;
+}
+
+//backface-visibility
+@mixin backface-visibility($backface-visibilitys){
+	-webkit-backface-visibility: $backface-visibilitys;
+	-moz-backface-visibility: $backface-visibilitys;
+	-ms-backface-visibility: $backface-visibilitys;
+	-o-backface-visibility: $backface-visibilitys;
+	backface-visibility: $backface-visibilitys;
+}

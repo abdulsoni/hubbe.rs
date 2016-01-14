@@ -1,4 +1,8 @@
 .chatPIwrap{padding:20px 20px 15px 20px;}
+.pie-chart-labels{float:right; font-size:18px; font-weight:normal;}
+.pie-chart-labels .pie-chart-label{margin-bottom:5px;}
+.pie-chart-labels .pie-chart-label span{display:inline-block; width:12px; height:12px; @include rounded-corners(20px); margin-right:5px;}
+
 #canvas-holder1 {
   width: 300px;
   margin: 20px auto;
@@ -25,11 +29,6 @@
   width:10px;
   height:10px;
 }
-
-.pie-chart-labels{float:right; font-size:18px; font-weight:normal;}
-.pie-chart-labels .pie-chart-label{margin-bottom:5px;}
-.pie-chart-labels .pie-chart-label span{display:inline-block; width:12px; height:12px; border-radius:20px; margin-right:5px;}
-
 
 .line-chart-labels{font-size:18px; font-weight:normal;}
 .line-chart-labels .line-chart-label{margin-right:20px; display: inline-block;}

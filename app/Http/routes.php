@@ -28,9 +28,14 @@ $api->version('v1', function ($api) {
     /*
      * Authentication
      */
-    $api->post('authenticate', 'Fundator\Http\Controllers\AuthenticateController@authenticate');
     $api->get('user', 'Fundator\Http\Controllers\AuthenticateController@getUser');
     $api->get('users', 'Fundator\Http\Controllers\AuthenticateController@index');
+
+    $api->post('authenticate', 'Fundator\Http\Controllers\AuthenticateController@authenticate');
+
+    // Providers
+    $api->post('authenticate/linkedin', 'Fundator\Http\Controllers\AuthenticateController@linkedin');
+    $api->get('authenticate/linkedin', 'Fundator\Http\Controllers\AuthenticateController@linkedin');
 
     /*
      * Contests

@@ -1,0 +1,48 @@
+body{color:$primaryText-color; font-family: 'Nunito', sans-serif;}
+
+header{position: relative; z-index: 3; position:fixed; width: 100%;
+  background: $primary-color;
+  color:$white-color;
+  padding-top: 24px;
+  .logo{padding-bottom:24px; display: inline-block;}
+} 
+
+.header_right{
+    &:after{content: ''; display: block; height: 0; clear: both;}
+}
+
+
+
+.top-nav.nav > li > a{color:$white-color; text-transform:uppercase; font-size:13px; border-bottom:5px solid transparent; padding:7px 5px 30px 5px; margin:0 10px; @include transition(all .4s ease-out);}
+.top-nav.nav > li > a:hover, .top-nav.nav > li > a.activenav, .top-nav.nav > li > a:focus{background:none; border-bottom-color:$secondary-color;}
+ul.socialList > li.mobileMenu{display: none;
+	a{background-color:$secondary-color;
+	&:hover{background-color: $tertiary-color;}}
+}
+
+
+ul.account-list{margin-left: 0; padding-left: 19px;}
+ul.account-list:after{content: " "; display: table; clear: both;}
+ul.account-list > li{list-style-type: none; margin: 0 15px; text-align: center;}
+ul.account-list > li > a{display: inline-block; padding:0; color:#8f9091; padding: 5px 6px; position: relative; margin-top: 4px;
+	&:hover{text-decoration: none; background-color:inherit;}
+}
+ul.account-list > li > a > i{position: absolute; margin-top: -8px; margin-left: -10px; background:$tertiary-color; width:20px; height:20px; @include rounded-corners(20px); font-style: inherit; color:$white-color; font-size: 12px; text-align: center;}
+ul.account-list > li > a > span{font-size:16px;}
+ul.account-list > li > a.profile{color:$white-color; text-transform: uppercase; font-size: 13px; margin-top:-4px; margin-left: -15px;}
+ul.account-list > li.trigger-li{margin-left:-6px; margin-right:-10px;
+	a{margin-top:0;}
+}
+ul.account-list > li > a img{width:32px; @include rounded-corners(40px); height: 32px; margin-right:5px; margin-top: -2px;}
+
+
+ul.socialList{margin-left: 0; padding-left:0;}
+ul.socialList.navbar-nav{float: right;}
+ul.socialList:after{content: " "; display: table; clear: both;}
+ul.socialList > li{list-style-type: none; margin: 0 5px; text-align: center; float:left;}
+ul.socialList > li > a{background:$black-color; display: inline-block; width:30px; height:30px; padding:0; color:$white-color; @include rounded-corners(20px); font-size:18px; padding: 5px 6px;}
+ul.socialList > li > a:hover{text-decoration: none; background-color:$white-color; color:$black-color;}
+
+ul.socialList > li.cdNavList{margin-right:25px;
+	a{background-color:$tertiary-color}
+}

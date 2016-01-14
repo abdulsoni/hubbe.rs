@@ -1,0 +1,52 @@
+<main class="main main-style1 login-main-style1">
+    <form>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h2 class="clearfix">Complete your Registration - General</h2>
+                <div class="progress registn-progress">
+                    <div class="progress-bar progress-bar-success done-formStep" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar progress-bar-remain" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                        ng-style="{'width': ((form.currentStep / form.totalSteps) * 100) + '%'}"></div>
+                </div>
+                <div class="step-registration">
+                    <h3 class="font-light paddingB5">Hi {{user.email}}!</h3>
+                    <p>Welcome to Fundathom Creative & Innovative world!
+                        <br>Just few more questions and two more minutes before you are given acces to Fundathom’s Desk</p>
+                    <h3 class="font-light">Please, First Select your Primary Interest in using Fundathom</h3>
+                    <div class="primaryinterestList radiobox radioboxGrayBase">
+                        <label for="as-a-creator">
+                            <input type="radio" name="interest-using-fundathom" id="as-a-creator" data-rel="as-a-creator">
+                            <i></i> <span>As a Creator</span> </label>
+                        <label for="As-an-Expert">
+                            <input type="radio" name="interest-using-fundathom" id="As-an-Expert" data-rel="as-an-expert">
+                            <i></i> <span>As an Expert</span> </label>
+                        <label for="as-an-investor">
+                            <input type="radio" name="interest-using-fundathom" id="as-an-investor" data-rel="as-an-investor">
+                            <i></i> <span>As an Investor</span> </label>
+                    </div>
+                    <div class="radiTrueContent">
+                        <div class="as-a-creator radio-rel-content" ng-if="selectedRole === 'creator'">
+                            <h3 class="font-light paddingB10">By putting your ideas in Fundathom you understand that:</h3>
+                            <h4 class="font-light paddingB10">if your project got funded, your full commitment is required to answer to experts on time (COLLABORATION)</h4>
+                            <h4 class="font-light paddingB10">Your idea may be not selected by  experts & investors (HUMILITY)</h4>
+                            <h4 class="font-light">A lot of people (experts and investors) may get involved and take a risk for your idea to get through, be nice with them (RESPECT)</h4>
+                            <h3 class="font-light">Enjoy and be sure that all Fundathom team member are here for you</h3>
+                        </div>
+                        <div class="as-an-expert radio-rel-content" ng-if="selectedRole === 'expert'">
+                            <h3 class="font-light paddingB10">By putting your expertise in Fundathom you understand that:</h3>
+                            <h4 class="font-light paddingB10">You may not be chosen for the project you want (HUMILITY). Be patient, many projects are coming.</h4>
+                            <h4 class="font-light paddingB10">You take a risk that the project fails, you may be paid only for 20-40% of what you have done. (RISK SHARING)</h4>
+                            <h4 class="font-light">You have access to insight information about the project and it should not be disclosed (CONFIDENTIALITY)</h4>
+                        </div>
+                        <div class="as-an-investor radio-rel-content" ng-if="selectedRole === 'investor'">
+                            <h3 class="font-light paddingB10">By investing your money on project, you understand that:</h3>
+                            <h4 class="font-light paddingB10">You can earn up to 40% return but lose all (HIGH RISK, HIGH RETURN)</h4>
+                            <h4 class="font-light paddingB10">You may be the one to fund the project and have access but project creators and experts are the one working everyday (HUMILITY)</h4>
+                            <h4 class="font-light">You have access to insight information about the project and it should not be disclosed (CONFIDENTIALITY)</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>

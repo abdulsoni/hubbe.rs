@@ -19,6 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password', 60);
             $table->boolean('needs_reset');
+            $table->boolean('registered');
+
+            $table->string('linkedin')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
