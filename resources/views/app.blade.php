@@ -32,6 +32,7 @@
                     <div class="col-md-5 col-sm-12">
                         <div class="advertisingArea" ui-view="quickUpdate"></div>
                     </div>
+
                 </div>
             </div>
 

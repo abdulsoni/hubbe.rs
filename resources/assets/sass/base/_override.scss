@@ -30,6 +30,7 @@
 
 .contest-single_info-panel{
   @include clearfix();
+  max-height: 380px;
 
   .nav{
     width: 25%;
@@ -115,6 +116,8 @@
 }
 
 .owl-profiles{
+  padding: 12px 0;
+
   .owl-controls .owl-buttons .owl-prev,
   .owl-controls .owl-buttons .owl-next{
     background-color: transparent;
@@ -126,10 +129,10 @@
   }
 
   .owl-controls .owl-buttons .owl-prev{
-    left: -25px;
+    left: -30px;
   }
   .owl-controls .owl-buttons .owl-next{
-    right: -25px;
+    right: -30px;
   }
 }
 
@@ -139,9 +142,52 @@
     border: rgba(161, 163, 165, 0.58) 3px solid;
   }
 
+  hr{
+    margin: 10px;
+  }
+
   .bio{
     font-size: 15px;
     font-weight: 300;
     font-style: italic;
   }
+
+  .rankingMng{
+    h4{
+      font-weight: bold;
+
+      span.highlighted{
+        margin-left: 5px;
+        color: #29aae2;
+        font-style: italic;
+        font-weight: lighter;
+      }
+
+      span.muted{
+        font-size: 16px;
+        font-weight: lighter;
+        font-style: italic;
+      }
+    }
+
+    .col-xs-3-5{
+      width: 29.166665%;
+    }
+
+    .col-heading{
+      font-size: 16px;
+      font-weight: 300;
+      text-align: center;
+      margin-bottom: 15px;
+      font-style: italic;
+    }
+
+    .countValue{
+      margin-bottom: 33px;
+    }
+  }
+}
+
+.nav-stacked > li + li{
+  margin-top: 3px;
 }

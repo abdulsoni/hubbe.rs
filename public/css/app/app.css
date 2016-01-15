@@ -8748,26 +8748,25 @@ footer {
     -webkit-box-shadow: none;
     -moz-box-shadow: none; }
 
-.contest-single_info-panel:before, .contest-single_info-panel:after {
-  content: " ";
-  display: table; }
-
-.contest-single_info-panel:after {
-  clear: both; }
-
-.contest-single_info-panel .nav {
-  width: 25%;
-  float: left; }
-
-.contest-single_info-panel .tab-content {
-  width: 75%;
-  float: left;
-  padding: 15px 25px; }
-  .contest-single_info-panel .tab-content:before, .contest-single_info-panel .tab-content:after {
+.contest-single_info-panel {
+  max-height: 380px; }
+  .contest-single_info-panel:before, .contest-single_info-panel:after {
     content: " ";
     display: table; }
-  .contest-single_info-panel .tab-content:after {
+  .contest-single_info-panel:after {
     clear: both; }
+  .contest-single_info-panel .nav {
+    width: 25%;
+    float: left; }
+  .contest-single_info-panel .tab-content {
+    width: 75%;
+    float: left;
+    padding: 15px 25px; }
+    .contest-single_info-panel .tab-content:before, .contest-single_info-panel .tab-content:after {
+      content: " ";
+      display: table; }
+    .contest-single_info-panel .tab-content:after {
+      clear: both; }
 
 .center .fd-loader {
   position: absolute;
@@ -8824,28 +8823,59 @@ footer {
   .owl-demo .owl-item > div:hover img {
     opacity: 0.85; }
 
-.owl-profiles .owl-controls .owl-buttons .owl-prev,
-.owl-profiles .owl-controls .owl-buttons .owl-next {
-  background-color: transparent; }
-  .owl-profiles .owl-controls .owl-buttons .owl-prev:hover,
-  .owl-profiles .owl-controls .owl-buttons .owl-next:hover {
-    background-color: transparent;
-    opacity: 0.85; }
-
-.owl-profiles .owl-controls .owl-buttons .owl-prev {
-  left: -25px; }
-
-.owl-profiles .owl-controls .owl-buttons .owl-next {
-  right: -25px; }
+.owl-profiles {
+  padding: 12px 0; }
+  .owl-profiles .owl-controls .owl-buttons .owl-prev,
+  .owl-profiles .owl-controls .owl-buttons .owl-next {
+    background-color: transparent; }
+    .owl-profiles .owl-controls .owl-buttons .owl-prev:hover,
+    .owl-profiles .owl-controls .owl-buttons .owl-next:hover {
+      background-color: transparent;
+      opacity: 0.85; }
+  .owl-profiles .owl-controls .owl-buttons .owl-prev {
+    left: -30px; }
+  .owl-profiles .owl-controls .owl-buttons .owl-next {
+    right: -30px; }
 
 .creator-profile img {
   border-radius: 50%;
   border: rgba(161, 163, 165, 0.58) 3px solid; }
 
+.creator-profile hr {
+  margin: 10px; }
+
 .creator-profile .bio {
   font-size: 15px;
   font-weight: 300;
   font-style: italic; }
+
+.creator-profile .rankingMng h4 {
+  font-weight: bold; }
+  .creator-profile .rankingMng h4 span.highlighted {
+    margin-left: 5px;
+    color: #29aae2;
+    font-style: italic;
+    font-weight: lighter; }
+  .creator-profile .rankingMng h4 span.muted {
+    font-size: 16px;
+    font-weight: lighter;
+    font-style: italic; }
+
+.creator-profile .rankingMng .col-xs-3-5 {
+  width: 29.166665%; }
+
+.creator-profile .rankingMng .col-heading {
+  font-size: 16px;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 15px;
+  font-style: italic; }
+
+.creator-profile .rankingMng .countValue {
+  margin-bottom: 33px; }
+
+.nav-stacked > li + li {
+  margin-top: 3px; }
 
 @font-face {
   font-family: 'IcoMoon-Free';

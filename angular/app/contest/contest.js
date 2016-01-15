@@ -26,8 +26,13 @@
         };
 
         $scope.contestants = [
-            {name: 'U', bio: ''},
-            {name: 'V', bio: ''},
+            {name: 'W', bio: ''},
+            {name: 'X', bio: ''},
+            {name: 'Y', bio: ''},
+            {name: 'Z', bio: ''}
+        ];
+
+        $scope.jury = [
             {name: 'W', bio: ''},
             {name: 'X', bio: ''},
             {name: 'Y', bio: ''},
