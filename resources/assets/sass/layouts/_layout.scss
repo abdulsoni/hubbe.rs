@@ -12,6 +12,7 @@ bottom: -10px;}
 	.coolestMemberLBPick{width: 60px; height:60px; @include rounded-corners(40px); border: rgba(161, 163, 165, 0.58) 2px solid; margin-top: 8px; margin-right: -15px;}
     .double-star{max-width:40px; text-align: center; padding: 15px 0;}
 }
+.contest-list .row:nth-child(2n){background:#d1d3d4;}
 .contestR2{background:#d1d3d4;}
 .contestR3{background:$tertiary-color; color:$white-color;}
 .contestR4, .odd{background:$secondary-color; color:$white-color;}
@@ -104,7 +105,7 @@ ul.prizebox li:nth-child(3) a{background:$secondary-color;}
 }
 
 .ongoingContast{padding:5px 0 12px 0;
-	img{margin-right:10px; width:100px;}
+	img{margin-right:10px; width:83px;}
 }
 .AdvertBtn{margin-top: -15px;}
 .AdvertBtn a{display: block; padding: 18px; cursor: pointer; text-align: center; font-size: 25px;  color: #fff;
@@ -137,8 +138,8 @@ ul.tabProjectList{padding-left: 0; margin: 18px 0; color:$white-color;}
 
 ul.tabProjectList:after{content: " "; display: table; clear: both;}
 
-.projectImg{height:370px; background-image:url(#{$imagesPath}/project1.jpg); background-repeat:no-repeat; background-size: cover; padding:15px; position: relative; width:100%; color:$white-color;
-	h4{font-size:15px; margin-top: 4px;}
+.projectImg{height: 328px; transition: all 0.3s; background-image:url(#{$imagesPath}/project1.jpg); background-repeat:no-repeat; background-size: cover; padding:15px; position: relative; width:100%; color:$white-color;
+	h4{font-size:16px; margin-top: 4px; font-style: italic	}
 	.rankingMng{position: absolute; bottom: 10px; width:100%; text-align:center;}
 	.project-profile img{width:60px; @include rounded-corners(40px); height: 60px;  border: rgba(161, 163, 165, 0.58) 2px solid;
 		&:hover{border-color:rgba(84, 84, 84, 0.58);}
@@ -150,16 +151,14 @@ ul.tabProjectList:after{content: " "; display: table; clear: both;}
 	
 .projectHeading, .headingWithBg{background:#95c54d;  margin: 0; text-align: center; padding:15px 0; font-weight: bold; font-size:20px; color:$white-color;}
 	
-ul.tabProjectList li{float:left; width:32.5%; list-style: none; margin-right: 1.22%; margin-bottom:1.2%; cursor: pointer;
-	&:nth-child(1n) .projectImg{background-image:url(#{$imagesPath}/project1.jpg);}
-	&:nth-child(2n) .projectImg{background-image:url(#{$imagesPath}/project2.jpg);}
-	&:nth-child(3n) .projectImg{background-image:url(#{$imagesPath}/project3.jpg);}
-	&:nth-child(4n) .projectImg{background-image:url(#{$imagesPath}/project4.jpg);}
-	&:nth-child(5n) .projectImg{background-image:url(#{$imagesPath}/project5.jpg);}
-	&:nth-child(6n) .projectImg{background-image:url(#{$imagesPath}/project6.jpg);}
-	&:nth-child(3n+0){margin-right: 0;} 
+ul.tabProjectList li{float:left; width:49%; list-style: none; margin-right: 2%; margin-bottom:2%; cursor: pointer;
+	&:nth-child(2n+0){margin-right: 0;}
 }
-
+ul.tabProjectList li:hover{
+  .projectImg{
+	opacity: 0.85;
+  }
+}
 .tabProjectList.withprojectdetail{margin-top:12px;}
 .tabProjectList.withprojectdetail li{width:100%;
 .projectImg{background-image:url(#{$imagesPath}/coolest.jpg) !important;}

@@ -6,6 +6,16 @@
         $rootScope.$state = $state;
         $rootScope.initialLocationSetup = false;
 
+        $rootScope.appLoading = true;
+
+        $rootScope.$on('startLoading', function(){
+            $rootScope.appLoading = true;
+        });
+
+        $rootScope.$on('stopLoading', function(){
+            $rootScope.appLoading = false;
+        });
+
         $rootScope.$on('$locationChangeSuccess', function(e) {
             // UserService is an example service for managing user state
             if (typeof($rootScope.user) !== 'undefined') return;

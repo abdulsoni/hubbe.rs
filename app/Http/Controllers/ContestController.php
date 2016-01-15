@@ -75,6 +75,7 @@ class ContestController extends Controller
 
         $contest_data = $contest->getAttributes();
         $contest_data['total_entries'] = $contest->entries->groupBy('creator_id')->count();
+        $contest_data['entries'] = $contest->entries;
         $contest_data['rating'] = $contest->rating;
 
         $response = $contest_data;

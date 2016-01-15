@@ -3,6 +3,7 @@
 namespace Fundator\Http\Controllers;
 
 use Fundator\Entry;
+use Fundator\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -64,7 +65,20 @@ class EntryController extends Controller
      */
     public function show($id)
     {
-        //
+        $statusCode = 200;
+        $entry = Entry::find($id);
+
+        $entry_data = $entry->getAttributes();
+        $entry_data['ratings'] = $entry->ratings;
+
+        foreach($entry_data['ratings'] as $rating){
+            $judge = User::find($rating->judge_id);
+            $rating->judge = $judge;
+        }
+
+        $response = $entry_data;
+
+        return new Response($response, $statusCode);
     }
 
     /**

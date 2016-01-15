@@ -32,9 +32,9 @@ class Entry extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function rating()
+    public function ratings()
     {
-        return $this->hasOne('Fundator\EntryRating');
+        return $this->hasMany('Fundator\EntryRating');
     }
 
     /**

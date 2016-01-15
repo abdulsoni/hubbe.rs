@@ -35,8 +35,11 @@
                 </div>
             </div>
 
-            <div class="container">
-                <div ui-view="main" class="main-content"></div>
+            <div class="container position-relative">
+                <fd-loader class="center" ng-class="{'opacity_hide': !appLoading}"></fd-loader>
+                <div class="opacity-hideable" ng-class="{'opacity_hide': appLoading}">
+                    <div ui-view="main" class="main-content"></div>
+                </div>
             </div>
         </section>
     </main>

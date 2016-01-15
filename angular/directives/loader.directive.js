@@ -9,7 +9,7 @@
 	  		viewBox: '@'
 	  	},
 	    restrict: 'E',
-	    template: '<div class="la-ball-pulse"><div></div><div></div><div></div></div>',
+	    template: '<div class="fd-loader la-ball-pulse"><div></div><div></div><div></div></div>',
 	    link: function($scope, $element, $attrs) {
 	    	$element.addClass($attrs.class);
 	    }

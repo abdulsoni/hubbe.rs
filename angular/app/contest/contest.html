@@ -1,3 +1,4 @@
+{{user.role}}
 <div class="row">
     <div class="col-sm-12">
         <!-- Tabs here-->
@@ -7,23 +8,28 @@
                     <li ng-repeat="contest in contests" ui-sref="app.contestsingle({contestId: contest.id})">
                         <div class="projectImg" style="background-image url(/{{contest.thumbnail}}):">
                             <div class="row date-wrap">
-                                <div class="col-xs-8 col-sm-9 project-date">
+                                <!-- <div class="col-xs-8 col-sm-9 project-date">
                                     <h4>
                                         {{ end_time = (contest.start_time | amAdd : contest.duration : 'days'); ''}}
                                         {{ end_time | amDifference : null : 'days' }} days to go
                                         ({{ end_time | amDateFormat:'MMM Do YYYY'}}).
                                     </h4>
-                                </div>
+                                </div> -->
                                 <div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>
                             </div>
                             <div class="row rankingMng">
-                                <div class="col-xs-5 leftRank">
-                                    <h4>Current Ranking</h4>
+                                <div class="col-xs-3 leftRank">
+                                    <h4>Rank</h4>
                                     <span class="countValue">{{contest.rank | ordinal}}</span>
                                 </div>
-                                <div class="col-xs-7">
-                                    <h4>Number of Contestants</h4>
+                                <div class="col-xs-3 leftRank">
+                                    <h4>Contestants</h4>
                                     <span class="countValue">{{contest.total_entries}}</span>
+                                </div>
+                                <div class="col-xs-3">
+                                    <h4>Time to Go</h4>
+                                    {{ end_time = (contest.start_time | amAdd : contest.duration : 'days'); ''}}
+                                    <span class="countValue">{{ end_time | amDifference : null : 'days' }}</span>
                                 </div>
                             </div>
                         </div>
