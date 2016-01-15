@@ -2,6 +2,7 @@
 
 namespace Fundator\Http\Controllers;
 
+use Fundator\Contest;
 use Fundator\Entry;
 use Fundator\User;
 use Illuminate\Http\Request;

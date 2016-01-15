@@ -2,6 +2,7 @@
 
 namespace Fundator\Http\Controllers;
 
+use Fundator\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -77,6 +78,30 @@ class ContestController extends Controller
         $contest_data['total_entries'] = $contest->entries->groupBy('creator_id')->count();
         $contest_data['entries'] = $contest->entries;
         $contest_data['rating'] = $contest->rating;
+        $contest_data['contestants'] = [];
+        $contest_data['judges'] = [];
+
+        $contestants = $contest->entries->groupBy('creator_id');
+
+        foreach($contestants as $creator_id => $entry){
+            $creator = User::find($creator_id);
+            $contest_data['contestants'][] = $creator;
+        }
+
+        $entries = $contest->entries;
+        $existingJudges = [];
+
+        foreach($entries as $entry){
+            $judges = $entry->ratings->groupBy('judge_id');
+
+            foreach($judges as $judge_id => $rating){
+                if(!in_array($judge_id, $existingJudges)){
+                    $judge = User::find($judge_id);
+                    $contest_data['judges'][] = $judge;
+                    $existingJudges[] = $judge_id;
+                }
+            }
+        }
 
         $response = $contest_data;
 

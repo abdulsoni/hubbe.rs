@@ -71,7 +71,7 @@
                         </div>
             		</uib-tab>
             		<uib-tab heading="Creator">
-						<div class="owl-profiles" owl-carousel="contestants"
+						<div class="owl-profiles" owl-carousel="contest.contestants"
                             owl-options='{"pagination": false, "dots": false, "navigation":true, "singleItem":true, "navigationText": [ "<i class=\"icon-chevron-left icon-white\"></i>", "<i class=\"icon-chevron-right icon-white\"></i>" ]}'>>
                             <div class="item creator-profile">
                                 <div class="row">
@@ -87,9 +87,9 @@
                                 <br>
                                 <div class="row rankingMng">
                                     <div class="col-xs-5 leftRank">
-                                        <h4>John Snow</h4>
+                                        <h4>{{item.name}}</h4>
                                         <h4>South Korea</h4>
-                                        <h4>Expert <span class="highlighted">8.5/10</span></h4>
+                                        <h4>{{item.role}} <span class="highlighted">8.5/10</span></h4>
                                         <h4>Reviews <span class="muted">37 reviews</span></h4>
                                     </div>
                                     <div class="col-xs-3 col-xs-3-5 leftRank">
@@ -98,15 +98,14 @@
                                     </div>
                                     <div class="col-xs-3 col-xs-3-5">
                                         <h4 class="col-heading">Contest <br>Done</h4>
-                                        {{ end_time = (contest.start_time | amAdd : contest.duration : 'days'); ''}}
-                                        <span class="countValue">{{ end_time | amDifference : null : 'days' }}</span>
+                                        <span class="countValue">5</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
             		</uib-tab>
             		<uib-tab heading="Jury">
-						<div class="owl-profiles" owl-carousel="jury"
+						<div class="owl-profiles" owl-carousel="contest.jury"
                             owl-options='{"pagination": false, "dots": false, "navigation":true, "singleItem":true, "navigationText": [ "<i class=\"icon-chevron-left icon-white\"></i>", "<i class=\"icon-chevron-right icon-white\"></i>" ]}'>>
                             <div class="item creator-profile">
                                 <div class="row">
@@ -122,9 +121,9 @@
                                 <br>
                                 <div class="row rankingMng">
                                     <div class="col-xs-5 leftRank">
-                                        <h4>John Snow</h4>
+                                        <h4>{{item.name}}</h4>
                                         <h4>South Korea</h4>
-                                        <h4>Expert <span class="highlighted">8.5/10</span></h4>
+                                        <h4>{{item.role}} <span class="highlighted">8.5/10</span></h4>
                                         <h4>Reviews <span class="muted">37 reviews</span></h4>
                                     </div>
                                     <div class="col-xs-3 col-xs-3-5 leftRank">
@@ -133,8 +132,7 @@
                                     </div>
                                     <div class="col-xs-3 col-xs-3-5">
                                         <h4 class="col-heading">Contest <br>Done</h4>
-                                        {{ end_time = (contest.start_time | amAdd : contest.duration : 'days'); ''}}
-                                        <span class="countValue">{{ end_time | amDifference : null : 'days' }}</span>
+                                        <span class="countValue">2</span>
                                     </div>
                                 </div>
                             </div>
