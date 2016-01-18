@@ -8,6 +8,8 @@
             }, 1000);
         });
 
+        $rootScope.$broadcast('stopLoading');
+
         if ($auth.isAuthenticated()) {
             $state.go('app.contest', {});
         }

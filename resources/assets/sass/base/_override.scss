@@ -16,8 +16,6 @@
 }
 
 .contest-single{
-  margin-top: 50px;
-
   > h2{
     margin-top: 35px;
     margin-bottom: 20px;
@@ -190,4 +188,35 @@
 
 .nav-stacked > li + li{
   margin-top: 3px;
+}
+
+.register-main-style1{
+  padding-bottom: 60px;
+}
+
+.step-2-left, .step-2-right{
+  width: 50%;
+  margin-top: 25px;
+}
+
+.imgcrop-area {
+  background: #f2f2f2;
+  overflow: hidden;
+  width: 350px;
+  height: 250px;
+}
+
+.img-upload-style1{
+  float: right;
+
+  .img-upload-file{
+    margin-bottom: 12px;
+  }
+
+  .btn-info{
+    font-size: 16px;
+    font-weight: normal;
+    padding: 8px 12px;
+    width: 350px;
+  }
 }

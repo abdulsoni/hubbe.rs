@@ -50,7 +50,7 @@ main {
   z-index: 3;
   height:30px;
   width:30px;
-  background-color: #29a8e0;
+  background-color: transparent;
   border-radius: 50%;
   overflow: hidden;
   text-indent: 100%;
@@ -59,8 +59,9 @@ main {
   -moz-transition: -moz-transform 0.5s;
   transition: transform 0.5s;
   text-indent:-9999px;
+
 }
-.cd-nav-trigger:hover{background-color:#94c44d !important;}
+//.cd-nav-trigger:hover{background-color:#94c44d !important;}
 
 .cd-nav-trigger .cd-nav-icon,  .mobile-nav-trigger .mobile-nav-icon{
   position: absolute;
@@ -73,7 +74,7 @@ main {
   -ms-transform: translateX(-50%) translateY(-50%);
   -o-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
-  width:16px;
+  width: 22px;
   height: 2px;
   background-color: #ffffff;
 }

@@ -29,7 +29,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'role', 'needs_reset', 'linkedin'];
+    protected $fillable = ['name', 'last_name', 'email', 'role', 'needs_reset', 'registered', 'linkedin', 'dob', 'country_origin', 'country_residence', 'phone', 'contact_time'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -37,6 +37,12 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+
+    public function thumbnail()
+    {
+        return $this->belongsTo('Fundator\File', 'thumbnail_id');
+    }
 
     /**
      * Relationship between users and contests via contestants

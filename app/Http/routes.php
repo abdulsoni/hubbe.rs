@@ -51,4 +51,5 @@ $api->version('v1', function ($api) {
     $api->post('entries/', 'Fundator\Http\Controllers\EntryController@store');
     $api->put('entries/{id}', 'Fundator\Http\Controllers\EntryController@update');
 
+    $api->post('files/', 'Fundator\Http\Controllers\FileController@store');
 });

@@ -3,8 +3,9 @@ body{color:$primaryText-color; font-family: 'Nunito', sans-serif;}
 header{position: relative; z-index: 3; position:fixed; width: 100%;
   background: $primary-color;
   color:$white-color;
-  padding-top: 24px;
-  .logo{padding-bottom:24px; display: inline-block;}
+  padding-top: 10px;
+  .logo{padding: 5px 0px;; display: inline-block;}
+  .logo img{height: 28px;}
 } 
 
 .header_right{
@@ -13,7 +14,7 @@ header{position: relative; z-index: 3; position:fixed; width: 100%;
 
 
 
-.top-nav.nav > li > a{color:$white-color; text-transform:uppercase; font-size:13px; border-bottom:5px solid transparent; padding:7px 5px 30px 5px; margin:0 10px; @include transition(all .4s ease-out);}
+.top-nav.nav > li > a{color:$white-color; text-transform:uppercase; font-size:13px; border-bottom:5px solid transparent; padding: 12px 5px 13px 5px; margin:0 10px; @include transition(all .4s ease-out);}
 .top-nav.nav > li > a:hover, .top-nav.nav > li > a.activenav, .top-nav.nav > li > a:focus{background:none; border-bottom-color:$secondary-color;}
 ul.socialList > li.mobileMenu{display: none;
 	a{background-color:$secondary-color;
@@ -21,7 +22,7 @@ ul.socialList > li.mobileMenu{display: none;
 }
 
 
-ul.account-list{margin-left: 0; padding-left: 19px;}
+ul.account-list{margin-left: 0; padding-left: 19px;  float: right; margin-top: 5px;}
 ul.account-list:after{content: " "; display: table; clear: both;}
 ul.account-list > li{list-style-type: none; margin: 0 15px; text-align: center;}
 ul.account-list > li > a{display: inline-block; padding:0; color:#8f9091; padding: 5px 6px; position: relative; margin-top: 4px;
@@ -29,11 +30,12 @@ ul.account-list > li > a{display: inline-block; padding:0; color:#8f9091; paddin
 }
 ul.account-list > li > a > i{position: absolute; margin-top: -8px; margin-left: -10px; background:$tertiary-color; width:20px; height:20px; @include rounded-corners(20px); font-style: inherit; color:$white-color; font-size: 12px; text-align: center;}
 ul.account-list > li > a > span{font-size:16px;}
-ul.account-list > li > a.profile{color:$white-color; text-transform: uppercase; font-size: 13px; margin-top:-4px; margin-left: -15px;}
+ul.account-list > li > a.profile{color:$white-color;     text-transform: capitalize;
+  font-size: 15px; margin-top:-4px; margin-left: -15px;}
 ul.account-list > li.trigger-li{margin-left:-6px; margin-right:-10px;
 	a{margin-top:0;}
 }
-ul.account-list > li > a img{width:32px; @include rounded-corners(40px); height: 32px; margin-right:5px; margin-top: -2px;}
+ul.account-list > li > a img{width:32px; @include rounded-corners(40px); height: 32px; margin-right:10px; margin-top: -2px;}
 
 
 ul.socialList{margin-left: 0; padding-left:0;}

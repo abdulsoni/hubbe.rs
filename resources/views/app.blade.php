@@ -24,7 +24,7 @@
 
     <main>
         <section class="body-content">
-            <div class="container" ng-if="authenticated">
+            <div class="container marginB60" ng-if="authenticated && user.registered === 1">
                 <div class="row">
                     <div class="col-md-7 col-sm-12">
                         <div class="contest-list" ui-view="notifications"></div>

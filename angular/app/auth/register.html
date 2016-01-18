@@ -1,52 +1,218 @@
-<main class="main main-style1 login-main-style1">
-    <form>
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <h2 class="clearfix">Complete your Registration - General</h2>
-                <div class="progress registn-progress">
-                    <div class="progress-bar progress-bar-success done-formStep" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar progress-bar-remain" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                        ng-style="{'width': ((form.currentStep / form.totalSteps) * 100) + '%'}"></div>
+<main class="main main-style1 register-main-style1">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h2 class="clearfix">Complete your Registration - General</h2>
+            <div class="progress registn-progress">
+                {{percent=getProgress();''}}
+                <div class="progress-bar progress-bar-success done-formStep" role="progressbar" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': percent + '%'}">
+                    <div ng-if="percent < 96">{{percent | number:0}}% done</div>
+                    <div ng-if="percent >= 96">99% almost done</div>
                 </div>
-                <div class="step-registration">
-                    <h3 class="font-light paddingB5">Hi {{user.email}}!</h3>
-                    <p>Welcome to Fundathom Creative & Innovative world!
-                        <br>Just few more questions and two more minutes before you are given acces to Fundathom’s Desk</p>
-                    <h3 class="font-light">Please, First Select your Primary Interest in using Fundathom</h3>
-                    <div class="primaryinterestList radiobox radioboxGrayBase">
-                        <label for="as-a-creator">
-                            <input type="radio" name="interest-using-fundathom" id="as-a-creator" data-rel="as-a-creator">
-                            <i></i> <span>As a Creator</span> </label>
-                        <label for="As-an-Expert">
-                            <input type="radio" name="interest-using-fundathom" id="As-an-Expert" data-rel="as-an-expert">
-                            <i></i> <span>As an Expert</span> </label>
-                        <label for="as-an-investor">
-                            <input type="radio" name="interest-using-fundathom" id="as-an-investor" data-rel="as-an-investor">
-                            <i></i> <span>As an Investor</span> </label>
-                    </div>
-                    <div class="radiTrueContent">
-                        <div class="as-a-creator radio-rel-content" ng-if="selectedRole === 'creator'">
-                            <h3 class="font-light paddingB10">By putting your ideas in Fundathom you understand that:</h3>
-                            <h4 class="font-light paddingB10">if your project got funded, your full commitment is required to answer to experts on time (COLLABORATION)</h4>
-                            <h4 class="font-light paddingB10">Your idea may be not selected by  experts & investors (HUMILITY)</h4>
-                            <h4 class="font-light">A lot of people (experts and investors) may get involved and take a risk for your idea to get through, be nice with them (RESPECT)</h4>
-                            <h3 class="font-light">Enjoy and be sure that all Fundathom team member are here for you</h3>
-                        </div>
-                        <div class="as-an-expert radio-rel-content" ng-if="selectedRole === 'expert'">
-                            <h3 class="font-light paddingB10">By putting your expertise in Fundathom you understand that:</h3>
-                            <h4 class="font-light paddingB10">You may not be chosen for the project you want (HUMILITY). Be patient, many projects are coming.</h4>
-                            <h4 class="font-light paddingB10">You take a risk that the project fails, you may be paid only for 20-40% of what you have done. (RISK SHARING)</h4>
-                            <h4 class="font-light">You have access to insight information about the project and it should not be disclosed (CONFIDENTIALITY)</h4>
-                        </div>
-                        <div class="as-an-investor radio-rel-content" ng-if="selectedRole === 'investor'">
-                            <h3 class="font-light paddingB10">By investing your money on project, you understand that:</h3>
-                            <h4 class="font-light paddingB10">You can earn up to 40% return but lose all (HIGH RISK, HIGH RETURN)</h4>
-                            <h4 class="font-light paddingB10">You may be the one to fund the project and have access but project creators and experts are the one working everyday (HUMILITY)</h4>
-                            <h4 class="font-light">You have access to insight information about the project and it should not be disclosed (CONFIDENTIALITY)</h4>
-                        </div>
-                    </div>
+                {{remaingPercent=getProgressInverted();''}}
+                <div class="progress-bar progress-bar-remain" role="progressbar" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': remaingPercent + '%'}">
+                    <span ng-if="remaingPercent > 5">{{remaingPercent | number:0}}% left</span>
                 </div>
             </div>
+            <div class="step-registration" ng-if="form.currentStep === 1">
+                <h3 class="font-light paddingB5">Hi {{user.email}}!</h3>
+                <p>Welcome to Fundathom Creative & Innovative world!
+                    <br>Just few more questions and two more minutes before you are given acces to Fundathom’s Desk</p>
+                <h3 class="font-light">Please, First Select your Primary Interest in using Fundathom</h3>
+                <div class="primaryinterestList radiobox radioboxGrayBase">
+                    <label for="as-a-creator">
+                        <input type="radio" name="interest-using-fundathom" id="as-a-creator" value="creator" ng-model="data.selectedRole" ng-change="changeRole()">
+                        <i></i> <span>As a Creator</span> </label>
+                    <label for="As-an-Expert">
+                        <input type="radio" name="interest-using-fundathom" id="As-an-Expert" value="expert" ng-model="data.selectedRole" ng-change="changeRole()">
+                        <i></i> <span>As an Expert</span> </label>
+                    <label for="as-an-investor">
+                        <input type="radio" name="interest-using-fundathom" id="as-an-investor" value="investor" ng-model="data.selectedRole" ng-change="changeRole()">
+                        <i></i> <span>As an Investor</span> </label>
+                </div>
+                <div class="radiTrueContent">
+                    <div class="as-a-creator" ng-if="data.selectedRole === 'creator'">
+                        <h3 class="font-light paddingB10">By putting your ideas in Fundathom you understand that:</h3>
+                        <h4 class="font-light paddingB10">if your project got funded, your full commitment is required to answer to experts on time (COLLABORATION)</h4>
+                        <h4 class="font-light paddingB10">Your idea may be not selected by  experts & investors (HUMILITY)</h4>
+                        <h4 class="font-light">A lot of people (experts and investors) may get involved and take a risk for your idea to get through, be nice with them (RESPECT)</h4>
+                        <h3 class="font-light">Enjoy and be sure that all Fundathom team member are here for you</h3>
+                    </div>
+                    <div class="as-an-expert" ng-if="data.selectedRole === 'expert'">
+                        <h3 class="font-light paddingB10">By putting your expertise in Fundathom you understand that:</h3>
+                        <h4 class="font-light paddingB10">You may not be chosen for the project you want (HUMILITY). Be patient, many projects are coming.</h4>
+                        <h4 class="font-light paddingB10">You take a risk that the project fails, you may be paid only for 20-40% of what you have done. (RISK SHARING)</h4>
+                        <h4 class="font-light">You have access to insight information about the project and it should not be disclosed (CONFIDENTIALITY)</h4>
+                    </div>
+                    <div class="as-an-investor" ng-if="data.selectedRole === 'investor'">
+                        <h3 class="font-light paddingB10">By investing your money on project, you understand that:</h3>
+                        <h4 class="font-light paddingB10">You can earn up to 40% return but lose all (HIGH RISK, HIGH RETURN)</h4>
+                        <h4 class="font-light paddingB10">You may be the one to fund the project and have access but project creators and experts are the one working everyday (HUMILITY)</h4>
+                        <h4 class="font-light">You have access to insight information about the project and it should not be disclosed (CONFIDENTIALITY)</h4>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="marginT20" ng-if="data.selectedRole.length > 0">
+                    <button type="button" class="action next btn btn-info rgbBtn" ng-click="form.currentStep = 2">Save &amp; Next</button>
+                </div>
+            </div>
+            <div class="step-registration" ng-if="form.currentStep === 2">
+                <form name="step1Form">
+                    <h3 class="font-light">First step of all!</h3>
+                    <h4 class="font-light">Let’s make sure we have all the information to communicate smoothly & understand each other better</h4>
+                    <div class="step-2-left pull-left">
+                        <h3 class="font-light">My name is...</h3>
+                        <div class="myName-wrap">
+                            <input type="text" placeholder="First Name..." class="inputFieldGray" name="fname" required ng-model="data.fname">
+                            <input type="text" placeholder="Last Name..." class="inputFieldGray" name="lname" required ng-model="data.lname">
+                        </div>
+                        <h3 class="font-light">I'm over 18 years old*</h3>
+                        <div class="primaryinterestList radiobox radioboxGrayBase">
+                            <label for="yes-overEighteen">
+                                <input type="radio" name="iam-overEighteen" id="yes-overEighteen" value="yes" ng-model="data.ageGate">
+                                <i></i> <span>Yes</span> </label>
+                            <label for="no-overEighteen">
+                                <input type="radio" name="iam-overEighteen" id="no-overEighteen" value="no" ng-model="data.ageGate">
+                                <i></i> <span>No</span> </label>
+                        </div>
+                        <div>
+                            <h3 class="font-light">I am from</h3>
+                            <label class="select-style">
+                                <select required ng-options="country as country for country in countries" ng-model="data.countryOrigin"></select>
+                            </label>
+                        </div>
+                        <div>
+                            <h3 class="font-light">I Live in</h3>
+                            <label class="select-style">
+                                <select required ng-options="country as country for country in countries" ng-model="data.countryResidence"></select>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="step-2-right pull-right">
+                        <div class="img-upload-style1">
+                            <h3 class="img-upload-title font-light">Upload Your Profile Picture</h3>
+                            <div class="img-upload-show" ng-class="{'dropable': dropable}">
+                                <div class="img-upload-crop imgcrop-area">
+                                    <img-crop image="thumbnail" result-image="data.croppedThumbnail" area-type="circle"></img-crop>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="img-upload-file">
+                                <input id="fileInput" type="file" accept="image/*" data-icon-name="fa fa-upload" class="iud-file-img" value="{{fileName}}">
+                            </div>
+                            <button class="btn btn-info" ng-click="confirmImage()" ng-if="thumbnail !== null">Set Profile Picture</button>
+                            <div class="image-error">{{data.imageError}}</div>
+                            <div class="image-success">{{data.imageSuccess}}</div>
+                        </div>
+                    </div>
+                </form>
+                <div class="clearfix"></div>
+                <div class="marginT20" ng-if="data.selectedRole.length > 0">
+                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="form.currentStep = 1">Previous</button>
+                    <button type="button" class="action next btn btn-info rgbBtn" ng-disabled="step1Form.$invalid" ng-click="form.currentStep = 3">Save &amp; Next</button>
+                </div>
+            </div>
+            <div class="step-registration" ng-if="form.currentStep === 3">
+                <form name="step2Form">
+                    <h3 class="font-light paddingB10">Let's make sure we can communicate well.</h3>
+                    <h3 class="font-light paddingB5">My email adress is</h3>
+                    <input type="text" placeholder="{{user.email}}" class="inputFieldGray" ng-model="data.contactEmail">
+                    <h3 class="font-light paddingTB5">My phone number is</h3>
+                    <input type="text" placeholder="" class="inputFieldGray" ng-model="data.contactNumber">
+                    <div>
+                        <h3 class="font-light paddingTB5">The best time to contact me is</h3>
+                        <label class="select-style">
+                            <select required ng-options="contactTime.value as contactTime.name for contactTime as contactTimes" ng-model="data.contactTime"></select>
+                        </label>
+                    </div>
+                </form>
+
+                <div class="clearfix"></div>
+                <div class="marginT20">
+                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="form.currentStep = 2">Previous</button>
+                    <button type="button" class="action submit btn btn-success rgbBtn" ng-if="data.selectedRole !== 'creator'">Submit</button>
+                    <button type="button" class="action next btn btn-info rgbBtn" ng-if="data.selectedRole !== 'creator'" ng-click="form.currentStep = 4">Save &amp; Next</button>
+                </div>
+            </div>
+            <div class="step-registration" ng-if="form.currentStep === 4">
+                <h3 class="font-light paddingB10">Which type of projects are you more likely to invest in?</h3>
+                <div class="projects-invest">
+                    <label class="select-style">
+                        <select>
+                            <option selected>iOT Connect...</option>
+                            <option>iOT Connect 2</option>
+                            <option>iOT Connect 3</option>
+                        </select>
+                    </label>
+                    <label class="select-style">
+                        <select>
+                            <option selected>Design...</option>
+                            <option>Design 2</option>
+                            <option>Design 3</option>
+                        </select>
+                    </label>
+                    <label class="select-style">
+                        <select>
+                            <option selected>Furniture...</option>
+                            <option>Furniture 2</option>
+                            <option>Furniture 3</option>
+                        </select>
+                    </label>
+                    <label class="select-style">
+                        <select>
+                            <option selected>Appliances...</option>
+                            <option>Appliances 2</option>
+                            <option>Appliances 3</option>
+                        </select>
+                    </label>
+                </div>
+                <h3 class="font-light">Yearly ammount to Invest</h3>
+                <h4 class="font-light">Select the yearly ammount  in USD that you would like to dedicate for investing in innovative ideas and projects?</h4>
+                {{data.selectedInvestmentBudget}}
+                <div class="clearfix">
+                    <div class="radiobox yearly-ammoutBox">
+                        <label for="price-label1">
+                            <input type="radio" name="yearly-ammount" id="price-label1" value="$500" checked="" ng-model="data.selectedInvestmentBudget">
+                            <i></i> <span>$500</span> </label>
+                        <label for="price-label2">
+                            <input type="radio" name="yearly-ammount" id="price-label2" value="$100" ng-model="data.selectedInvestmentBudget">
+                            <i></i> <span>$1000</span> </label>
+                        <label for="price-label3">
+                            <input type="radio" name="yearly-ammount" id="price-label3" value="$300" ng-model="data.selectedInvestmentBudget">
+                            <i></i> <span>$3000</span> </label>
+                        <label for="price-label4">
+                            <input type="radio" name="yearly-ammount" id="price-label4" value="$500" ng-model="data.selectedInvestmentBudget">
+                            <i></i> <span>$5000</span> </label>
+                        <label for="price-labelOther">
+                            <input type="radio" name="yearly-ammount" id="price-labelOther" value="other" ng-model="data.selectedInvestmentBudget">
+                            <i></i> <span>other</span> </label>
+                    </div>
+                </div>
+                <div class="other-wrap" ng-if="data.selectedInvestmentBudget === 'other'">
+                    <h3 class="font-light paddingB10">In case of other, please introduce the ammount here</h3>
+                    <input type="text" placeholder="other ammount..." class="inputFieldGray">
+                </div>
+                <h3 class="font-light paddingT5">What is your main  goal for investing in innovative projects?</h3>
+                <div class="primaryinterestList radiobox radioboxGrayBase">
+                    <div>
+                        <label for="good-return">
+                            <input type="radio" name="innovative-projects" id="good-return" value="good-return" checked>
+                            <i></i> <span>Good return on investment</span> </label>
+                    </div>
+                    <div>
+                        <label for="new-business">
+                            <input type="radio" name="innovative-projects" id="new-business" value="new-business">
+                            <i></i> <span>New business Opportunities</span> </label>
+                    </div>
+                    <div>
+                        <label for="great-teams">
+                            <input type="radio" name="innovative-projects" id="great-teams" value="great-teams">
+                            <i></i> <span>Network with great minds & great teams</span> </label>
+                    </div>
+                </div>
+                <h3 class="font-light paddingB10 paddingT10">What is your feeling about investing in creative projects?</h3>
+                <textarea class="grayTextareaFiled" placeholder="explain yourself..."></textarea>
+            </div>
         </div>
-    </form>
+    </div>
 </main>

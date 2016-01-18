@@ -14,7 +14,10 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('thumbnail_id');
+
             $table->string('name');
+            $table->string('last_name');
             $table->string('role');
             $table->string('email')->unique();
             $table->string('password', 60);
@@ -22,6 +25,15 @@ class CreateUsersTable extends Migration
             $table->boolean('registered');
 
             $table->string('linkedin')->nullable();
+
+            // Additional Fields
+
+            $table->date('dob');
+            $table->string('country_origin');
+            $table->string('country_residence');
+            $table->string('phone');
+            $table->string('contact_time');
+
             $table->rememberToken();
             $table->timestamps();
         });

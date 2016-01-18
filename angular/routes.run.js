@@ -17,6 +17,13 @@
         });
 
         $rootScope.$on('$locationChangeSuccess', function(e) {
+
+            if (typeof($rootScope.user) !== 'undefined') {
+                if ($rootScope.user.registered == 0) {
+                    $state.go('app.register');
+                }
+            }
+
             // UserService is an example service for managing user state
             if (typeof($rootScope.user) !== 'undefined') return;
             if ($rootScope.initialLocationSetup === true) return;
@@ -32,10 +39,13 @@
                 $http.get('/api/user?token=' + $auth.getToken()).then(function(result) {
                     if (typeof(result.error) === 'undefined') {
                         $rootScope.user = result.data;
-                        console.log('Got tha user!');
-                        console.log(result.data);
+
+                        if ($rootScope.user.registered == 0) {
+                            $state.go('app.register');
+                        }
                     }
                 });
+
 
                 $urlRouter.sync();
                 $urlRouter.listen();
@@ -52,6 +62,9 @@
         });
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+            // if ($rootScope.user.registered == 0 && toState.name.indexOf('register') !== -1) {
+            //     $state.go('app.register');
+            // } else
             if ($auth.isAuthenticated()) {
                 return;
             } else {

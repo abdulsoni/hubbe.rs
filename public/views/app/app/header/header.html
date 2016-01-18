@@ -5,20 +5,21 @@
             <div class="header_right">
                 <nav>
                     <ul class="nav navbar-nav top-nav">
-                        <li><a href="#" ng-class="{'activenav': $state.current.name.indexOf('login') !== -1}">Home</a></li>
-                        <li><a href="#">Create</a></li>
-                        <li><a href="#">Expert</a></li>
-                        <li><a ui-sref="app.invest" ng-class="{'activenav': $state.current.name.indexOf('invest') !== -1}">Invest</a></li>
+                        <li><a>Home</a></li>
+                        <li><a>Create</a></li>
+                        <li><a>Expert</a></li>
+                        <li><a>Invest</a></li>
                         <li><a ui-sref="app.contest" ng-class="{'activenav': $state.current.name.indexOf('contest') !== -1}">Contest</a></li>
                     </ul>
+
+                    <ul class="nav navbar-nav top-nav pull-right" ng-if="!authenticated">
+                        <li><a ui-sref="app.login" ng-class="{'activenav': $state.current.name.indexOf('login') !== -1}">Login</a></li>
+                        <li><a ui-sref="app.register" ng-class="{'activenav': $state.current.name.indexOf('register') !== -1}">Register</a></li>
+                    </ul>
                 </nav>
-                <ul class="account-list navbar-nav">
+                <ul class="account-list navbar-nav" ng-if="authenticated && user">
                     <li><a class="profile"><img src="images/profile.jpg" alt="">{{user.name}}</a></li>
-                </ul>
-                <ul class="socialList navbar-nav">
-                    <li><a href="#"><span class="icon icon-facebook"></span></a></li>
-                    <li><a href="#"><span class="icon icon-twitter"></span></a></li>
-                    <li><a href="#"><span class="icon icon-youtube"></span></a></li>
+                    <li class="cdNavList"><a href="#cd-nav" class="cd-nav-trigger">Menu <span class="cd-nav-icon"></span> </a></li>
                 </ul>
             </div>
         </div>

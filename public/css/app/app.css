@@ -5821,6 +5821,9 @@ button.close {
 .font-light {
   font-weight: 300; }
 
+.marginB60 {
+  margin-top: 60px; }
+
 .marginB30 {
   margin-bottom: 30px; }
 
@@ -6010,10 +6013,12 @@ header {
   width: 100%;
   background: #333333;
   color: #fff;
-  padding-top: 24px; }
+  padding-top: 10px; }
   header .logo {
-    padding-bottom: 24px;
+    padding: 5px 0px;
     display: inline-block; }
+  header .logo img {
+    height: 28px; }
 
 .header_right:after {
   content: '';
@@ -6026,7 +6031,7 @@ header {
   text-transform: uppercase;
   font-size: 13px;
   border-bottom: 5px solid transparent;
-  padding: 7px 5px 30px 5px;
+  padding: 12px 5px 13px 5px;
   margin: 0 10px;
   -webkit-transition: all 0.4s ease-out;
   -moz-transition: all 0.4s ease-out;
@@ -6047,7 +6052,9 @@ ul.socialList > li.mobileMenu {
 
 ul.account-list {
   margin-left: 0;
-  padding-left: 19px; }
+  padding-left: 19px;
+  float: right;
+  margin-top: 5px; }
 
 ul.account-list:after {
   content: " ";
@@ -6092,8 +6099,8 @@ ul.account-list > li > a > span {
 
 ul.account-list > li > a.profile {
   color: #fff;
-  text-transform: uppercase;
-  font-size: 13px;
+  text-transform: capitalize;
+  font-size: 15px;
   margin-top: -4px;
   margin-left: -15px; }
 
@@ -6111,7 +6118,7 @@ ul.account-list > li > a img {
   -o-border-radius: 40px;
   border-radius: 40px;
   height: 32px;
-  margin-right: 5px;
+  margin-right: 10px;
   margin-top: -2px; }
 
 ul.socialList {
@@ -6378,7 +6385,7 @@ main {
   z-index: 2;
   /* padding-bottom:70px;*/
   background-color: #fff;
-  padding-top: 86px;
+  padding-top: 60px;
   -webkit-transform: translateZ(0);
   -moz-transform: translateZ(0);
   -ms-transform: translateZ(0);
@@ -6404,11 +6411,12 @@ main {
 
 .cd-nav-trigger, .mobile-nav-trigger {
   /*position: fixed;*/
+  margin-top: 0 !important;
   position: relative;
   z-index: 3;
   height: 30px;
   width: 30px;
-  background-color: #29a8e0;
+  background-color: transparent;
   border-radius: 50%;
   overflow: hidden;
   text-indent: 100%;
@@ -6419,9 +6427,6 @@ main {
   -o-transition: transform 0.5s;
   transition: transform 0.5s;
   text-indent: -9999px; }
-
-.cd-nav-trigger:hover {
-  background-color: #94c44d !important; }
 
 .cd-nav-trigger .cd-nav-icon, .mobile-nav-trigger .mobile-nav-icon {
   position: absolute;
@@ -6434,7 +6439,7 @@ main {
   -ms-transform: translateX(-50%) translateY(-50%);
   -o-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
-  width: 16px;
+  width: 22px;
   height: 2px;
   background-color: #ffffff; }
 
@@ -6664,7 +6669,6 @@ main {
   transform: rotate(270deg); }
 
 .nav-tabs {
-  margin-top: 60px;
   border-bottom-color: #b8babc; }
 
 .tabsection .nav-tabs li {
@@ -8370,7 +8374,7 @@ label.select-style {
   position: relative;
   margin-right: 5px; }
   label.select-style select {
-    padding: 8px 46px;
+    padding: 8px 46px 8px 20px;
     font-size: 18px;
     font-weight: 300;
     margin: 0;
@@ -8732,21 +8736,20 @@ footer {
   background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.65) 0%, transparent 100%);
   margin-top: -15px; }
 
-.contest-single {
-  margin-top: 50px; }
-  .contest-single > h2 {
-    margin-top: 35px;
-    margin-bottom: 20px; }
-  .contest-single .well {
-    padding: 0;
-    border-radius: 0;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border: none;
-    margin-left: -10px;
-    box-shadow: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none; }
+.contest-single > h2 {
+  margin-top: 35px;
+  margin-bottom: 20px; }
+
+.contest-single .well {
+  padding: 0;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border: none;
+  margin-left: -10px;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none; }
 
 .contest-single_info-panel {
   max-height: 380px; }
@@ -8876,6 +8879,29 @@ footer {
 
 .nav-stacked > li + li {
   margin-top: 3px; }
+
+.register-main-style1 {
+  padding-bottom: 60px; }
+
+.step-2-left, .step-2-right {
+  width: 50%;
+  margin-top: 25px; }
+
+.imgcrop-area {
+  background: #f2f2f2;
+  overflow: hidden;
+  width: 350px;
+  height: 250px; }
+
+.img-upload-style1 {
+  float: right; }
+  .img-upload-style1 .img-upload-file {
+    margin-bottom: 12px; }
+  .img-upload-style1 .btn-info {
+    font-size: 16px;
+    font-weight: normal;
+    padding: 8px 12px;
+    width: 350px; }
 
 @font-face {
   font-family: 'IcoMoon-Free';

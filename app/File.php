@@ -26,4 +26,10 @@ class File extends Model
      * @var array
      */
     protected $fillable = ['title', 'file_name', 'extension', 'file_size', 'file_url'];
+
+
+    public function userThumbnail()
+    {
+        return $this->hasOne('Fundator\User', 'thumbnail_id');
+    }
 }

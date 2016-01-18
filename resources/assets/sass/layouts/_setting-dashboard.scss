@@ -7,7 +7,7 @@ main {
   z-index: 2;
  /* padding-bottom:70px;*/
   background-color: #fff;
-  padding-top:86px;
+  padding-top:60px;
   @include transform(translateZ(0));
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -20,12 +20,12 @@ main {
 
 .cd-nav-trigger, .mobile-nav-trigger {
   /*position: fixed;*/
-  
+  margin-top: 0 !important;
   position:relative;
   z-index: 3;
   height:30px;
   width:30px;
-  background-color: #29a8e0;
+  background-color: transparent;
   border-radius: 50%;
   overflow: hidden;
   text-indent: 100%;
@@ -33,7 +33,7 @@ main {
   @include transition(transform 0.5s);
   text-indent:-9999px;
 }
-.cd-nav-trigger:hover{background-color:#94c44d !important;}
+//.cd-nav-trigger:hover{background-color:#94c44d !important;}
 
 .cd-nav-trigger .cd-nav-icon,  .mobile-nav-trigger .mobile-nav-icon{
  position: absolute;
@@ -42,7 +42,7 @@ main {
   bottom: auto;
   right: auto;
   @include transform(translateX(-50%) translateY(-50%));
-  width:16px;
+  width:22px;
   height: 2px;
   background-color: #ffffff;
 }

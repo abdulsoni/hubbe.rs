@@ -73,13 +73,17 @@ class AuthenticateController extends Controller
                 return response()->json(['user_not_found'], 404);
             }
 
-            $response = [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'role' => $user->role,
-                'needs_reset' => $user->needs_reset
-            ];
+            $response = $user->getAttributes();
+            unset($response['password']);
+            unset($response['remember_token']);
+
+//            $response = [
+//                'id' => $user->id,
+//                'name' => $user->name,
+//                'email' => $user->email,
+//                'role' => $user->role,
+//                'needs_reset' => $user->needs_reset
+//            ];
 
         } catch (TokenExpiredException $e) {
             $statusCode = $e->getStatusCode();
