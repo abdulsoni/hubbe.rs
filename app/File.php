@@ -32,4 +32,9 @@ class File extends Model
     {
         return $this->hasOne('Fundator\User', 'thumbnail_id');
     }
+
+    public function getUrl()
+    {
+        return url('/') . '/' . $this->file_url;
+    }
 }

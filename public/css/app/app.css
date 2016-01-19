@@ -4457,7 +4457,7 @@ a.thumbnail.active {
   animation: progress-bar-stripes 2s linear infinite; }
 
 .progress-bar-success {
-  background-color: #5cb85c; }
+  background-color: #94c44d; }
   .progress-striped .progress-bar-success {
     background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
     background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
@@ -5822,7 +5822,7 @@ button.close {
   font-weight: 300; }
 
 .marginB60 {
-  margin-top: 60px; }
+  margin-bottom: 60px; }
 
 .marginB30 {
   margin-bottom: 30px; }
@@ -8374,6 +8374,7 @@ label.select-style {
   position: relative;
   margin-right: 5px; }
   label.select-style select {
+    min-width: 208px;
     padding: 8px 46px 8px 20px;
     font-size: 18px;
     font-weight: 300;
@@ -8902,6 +8903,20 @@ footer {
     font-weight: normal;
     padding: 8px 12px;
     width: 350px; }
+
+.image-success {
+  text-align: center;
+  padding: 15px;
+  color: #94c44d; }
+
+''
+.progress-bar-success {
+  background-color: #94c44d !important; }
+
+.btn-success {
+  padding: 14px 20px; }
+  .btn-success:hover, .btn-success:focus, .btn-success:active {
+    background-color: #7aa737; }
 
 @font-face {
   font-family: 'IcoMoon-Free';

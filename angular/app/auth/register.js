@@ -22,7 +22,7 @@
         return new Blob([ia], {type:mimeString});
     }
 
-    angular.module('fundator.controllers').controller('RegisterCtrl', function($rootScope, $scope, $state, $auth, $timeout, FileUploader) {
+    angular.module('fundator.controllers').controller('RegisterCtrl', function($rootScope, $scope, $state, $auth, $timeout, $http, FileUploader) {
 
         $scope.form = {
             currentStep: 1,
@@ -31,15 +31,15 @@
 
         $scope.totalSteps = {
             creator: 3,
-            expert: 4,
+            expert: 3,
             investor: 4
         };
 
         $scope.countries = ['India', 'China', 'USA', 'UK'];
 
         $scope.contactTimes = [
-            {name: 'Working hours (9am to 6 pm)', value: 'w'},
-            {name: 'Evening time (6am to 9 pm)', value: 'e'}
+            {name: 'Working hours (9am to 6 pm)', value: '9-6'},
+            {name: 'Evening time (6am to 9 pm)', value: '6-9'}
         ];
 
         $scope.data = {
@@ -72,8 +72,16 @@
         $scope.imageError = null;
 
         $scope.data = {
-            croppedThumbnail: null
+            croppedThumbnail: null,
+            email: ''
         };
+
+        $rootScope.$watch('user', function(user){
+            if (typeof(user) === 'undefined') return;
+            if (user.registered == 1) $state.go('app.contest');
+
+            $scope.data.email = user.email;
+        }, true);
 
         var handleFileSelect = function(evt, drop) {
             evt.stopPropagation();
@@ -159,6 +167,8 @@
                 item.formData = [];
                 item.formData.push({attach: 'thumbnail'});
                 item.formData.push({user_id: $rootScope.user.id});
+
+                $scope.data.imageSuccess = null;
             };
 
             $scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
@@ -169,15 +179,36 @@
                 }
             };
 
-            $scope.uploader.onProgressAll = function(progress) {
-                // TODO add a progress loader
-            };
-
-
             $scope.uploader.addToQueue(dataURItoBlob(image));
             $scope.uploader.uploadAll();
         }
 
+
+        $scope.submitDetails = function(){
+            console.log('Submit details');
+            console.log($scope.data);
+
+            var userData = {
+                name: $scope.data.fname,
+                last_name: $scope.data.lname,
+                role: $scope.data.selectedRole,
+                age_gate: $scope.data.ageGate,
+                country_origin: $scope.data.countryOrigin,
+                country_residence: $scope.data.countryResidence,
+                contact_number: $scope.data.contactNumber,
+                contact_time: $scope.data.contactTime.value
+            };
+
+            $http.put('/api/users/' + $rootScope.user.id, userData).then(function(result){
+                if (result.data === 'Updated') {
+                    $rootScope.user.registered = 1;
+                    $state.go('app.contest');
+                }
+            }, function(result){
+                console.log('error');
+                console.log(result);
+            });
+        }
 
     });
 

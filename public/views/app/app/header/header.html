@@ -18,7 +18,11 @@
                     </ul>
                 </nav>
                 <ul class="account-list navbar-nav" ng-if="authenticated && user">
-                    <li><a class="profile"><img src="images/profile.jpg" alt="">{{user.name}}</a></li>
+                    <li><a class="profile">
+                        <img src="images/icon-user-default.png" alt="" ng-if="!user.thumbnail">
+                        <img ng-src="{{user.thumbnail}}" alt="" ng-if="user.thumbnail">
+                        {{user.name}}
+                    </a></li>
                     <li class="cdNavList"><a href="#cd-nav" class="cd-nav-trigger">Menu <span class="cd-nav-icon"></span> </a></li>
                 </ul>
             </div>

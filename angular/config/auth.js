@@ -11,7 +11,7 @@
         	clientId: '77zjxfbh2928re',
             url: '/api/authenticate/linkedin',
             authorizationEndpoint: 'https://www.linkedin.com/uas/oauth2/authorization',
-            redirectUri: 'http://fundator.co/api/authenticate/linkedin',
+            redirectUri: 'http://192.168.10.10/api/authenticate/linkedin',
             requiredUrlParams: ['state'],
             scope: ['r_emailaddress'],
             scopeDelimiter: ' ',

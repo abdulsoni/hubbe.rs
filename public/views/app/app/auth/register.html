@@ -1,7 +1,9 @@
 <main class="main main-style1 register-main-style1">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <h2 class="clearfix">Complete your Registration - General</h2>
+        <fd-loader ng-if="!user" class="center"></fd-loader>
+
+        <div class="col-md-10 col-md-offset-1" ng-if="user">
+            <h2 class="clearfix">Complete your Registration</h2>
             <div class="progress registn-progress">
                 {{percent=getProgress();''}}
                 <div class="progress-bar progress-bar-success done-formStep" role="progressbar" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': percent + '%'}">
@@ -14,14 +16,14 @@
                 </div>
             </div>
             <div class="step-registration" ng-if="form.currentStep === 1">
-                <h3 class="font-light paddingB5">Hi {{user.email}}!</h3>
+                <h3 class="font-light paddingB5">Hi {{user.name}}!</h3>
                 <p>Welcome to Fundathom Creative & Innovative world!
                     <br>Just few more questions and two more minutes before you are given acces to Fundathom’s Desk</p>
                 <h3 class="font-light">Please, First Select your Primary Interest in using Fundathom</h3>
                 <div class="primaryinterestList radiobox radioboxGrayBase">
                     <label for="as-a-creator">
                         <input type="radio" name="interest-using-fundathom" id="as-a-creator" value="creator" ng-model="data.selectedRole" ng-change="changeRole()">
-                        <i></i> <span>As a Creator</span> </label>
+                        <i></i> <span>As a Contestant</span> </label>
                     <label for="As-an-Expert">
                         <input type="radio" name="interest-using-fundathom" id="As-an-Expert" value="expert" ng-model="data.selectedRole" ng-change="changeRole()">
                         <i></i> <span>As an Expert</span> </label>
@@ -102,7 +104,7 @@
                             </div>
                             <button class="btn btn-info" ng-click="confirmImage()" ng-if="thumbnail !== null">Set Profile Picture</button>
                             <div class="image-error">{{data.imageError}}</div>
-                            <div class="image-success">{{data.imageSuccess}}</div>
+                            <div class="image-success" ng-if="imageSuccess !== 'null'">{{data.imageSuccess}}</div>
                         </div>
                     </div>
                 </form>
@@ -116,13 +118,13 @@
                 <form name="step2Form">
                     <h3 class="font-light paddingB10">Let's make sure we can communicate well.</h3>
                     <h3 class="font-light paddingB5">My email adress is</h3>
-                    <input type="text" placeholder="{{user.email}}" class="inputFieldGray" ng-model="data.contactEmail">
+                    <input type="text" placeholder="{{user.email}}" class="inputFieldGray" ng-model="data.email" required>
                     <h3 class="font-light paddingTB5">My phone number is</h3>
-                    <input type="text" placeholder="" class="inputFieldGray" ng-model="data.contactNumber">
+                    <input type="text" placeholder="" class="inputFieldGray" ng-model="data.contactNumber" required>
                     <div>
                         <h3 class="font-light paddingTB5">The best time to contact me is</h3>
                         <label class="select-style">
-                            <select required ng-options="contactTime.value as contactTime.name for contactTime as contactTimes" ng-model="data.contactTime"></select>
+                            <select required ng-options="contactTime.name for contactTime in contactTimes" ng-model="data.contactTime"></select>
                         </label>
                     </div>
                 </form>
@@ -130,88 +132,97 @@
                 <div class="clearfix"></div>
                 <div class="marginT20">
                     <button type="button" class="action back btn btn-black rgbBtn" ng-click="form.currentStep = 2">Previous</button>
-                    <button type="button" class="action submit btn btn-success rgbBtn" ng-if="data.selectedRole !== 'creator'">Submit</button>
-                    <button type="button" class="action next btn btn-info rgbBtn" ng-if="data.selectedRole !== 'creator'" ng-click="form.currentStep = 4">Save &amp; Next</button>
+                    <button type="button" class="action submit btn btn-success rgbBtn" ng-disabled="step2Form.$invalid"  ng-if="data.selectedRole !== 'investor'" ng-click="submitDetails()">Submit</button>
+                    <button type="button" class="action next btn btn-info rgbBtn" ng-disabled="step2Form.$invalid"  ng-if="data.selectedRole === 'investor'" ng-click="form.currentStep = 4">Save &amp; Next</button>
                 </div>
             </div>
             <div class="step-registration" ng-if="form.currentStep === 4">
-                <h3 class="font-light paddingB10">Which type of projects are you more likely to invest in?</h3>
-                <div class="projects-invest">
-                    <label class="select-style">
-                        <select>
-                            <option selected>iOT Connect...</option>
-                            <option>iOT Connect 2</option>
-                            <option>iOT Connect 3</option>
-                        </select>
-                    </label>
-                    <label class="select-style">
-                        <select>
-                            <option selected>Design...</option>
-                            <option>Design 2</option>
-                            <option>Design 3</option>
-                        </select>
-                    </label>
-                    <label class="select-style">
-                        <select>
-                            <option selected>Furniture...</option>
-                            <option>Furniture 2</option>
-                            <option>Furniture 3</option>
-                        </select>
-                    </label>
-                    <label class="select-style">
-                        <select>
-                            <option selected>Appliances...</option>
-                            <option>Appliances 2</option>
-                            <option>Appliances 3</option>
-                        </select>
-                    </label>
-                </div>
-                <h3 class="font-light">Yearly ammount to Invest</h3>
-                <h4 class="font-light">Select the yearly ammount  in USD that you would like to dedicate for investing in innovative ideas and projects?</h4>
-                {{data.selectedInvestmentBudget}}
-                <div class="clearfix">
-                    <div class="radiobox yearly-ammoutBox">
-                        <label for="price-label1">
-                            <input type="radio" name="yearly-ammount" id="price-label1" value="$500" checked="" ng-model="data.selectedInvestmentBudget">
-                            <i></i> <span>$500</span> </label>
-                        <label for="price-label2">
-                            <input type="radio" name="yearly-ammount" id="price-label2" value="$100" ng-model="data.selectedInvestmentBudget">
-                            <i></i> <span>$1000</span> </label>
-                        <label for="price-label3">
-                            <input type="radio" name="yearly-ammount" id="price-label3" value="$300" ng-model="data.selectedInvestmentBudget">
-                            <i></i> <span>$3000</span> </label>
-                        <label for="price-label4">
-                            <input type="radio" name="yearly-ammount" id="price-label4" value="$500" ng-model="data.selectedInvestmentBudget">
-                            <i></i> <span>$5000</span> </label>
-                        <label for="price-labelOther">
-                            <input type="radio" name="yearly-ammount" id="price-labelOther" value="other" ng-model="data.selectedInvestmentBudget">
-                            <i></i> <span>other</span> </label>
+                <form name="step3Form">
+
+                    <h3 class="font-light paddingB10">Which type of projects are you more likely to invest in?</h3>
+                    <div class="projects-invest">
+                        <label class="select-style">
+                            <select>
+                                <option selected>iOT Connect...</option>
+                                <option>iOT Connect 2</option>
+                                <option>iOT Connect 3</option>
+                            </select>
+                        </label>
+                        <label class="select-style">
+                            <select>
+                                <option selected>Design...</option>
+                                <option>Design 2</option>
+                                <option>Design 3</option>
+                            </select>
+                        </label>
+                        <label class="select-style">
+                            <select>
+                                <option selected>Furniture...</option>
+                                <option>Furniture 2</option>
+                                <option>Furniture 3</option>
+                            </select>
+                        </label>
+                        <label class="select-style">
+                            <select>
+                                <option selected>Appliances...</option>
+                                <option>Appliances 2</option>
+                                <option>Appliances 3</option>
+                            </select>
+                        </label>
                     </div>
-                </div>
-                <div class="other-wrap" ng-if="data.selectedInvestmentBudget === 'other'">
-                    <h3 class="font-light paddingB10">In case of other, please introduce the ammount here</h3>
-                    <input type="text" placeholder="other ammount..." class="inputFieldGray">
-                </div>
-                <h3 class="font-light paddingT5">What is your main  goal for investing in innovative projects?</h3>
-                <div class="primaryinterestList radiobox radioboxGrayBase">
-                    <div>
-                        <label for="good-return">
-                            <input type="radio" name="innovative-projects" id="good-return" value="good-return" checked>
-                            <i></i> <span>Good return on investment</span> </label>
+                    <h3 class="font-light">Yearly ammount to Invest</h3>
+                    <h4 class="font-light">Select the yearly ammount  in USD that you would like to dedicate for investing in innovative ideas and projects?</h4>
+                    {{data.selectedInvestmentBudget}}
+                    <div class="clearfix">
+                        <div class="radiobox yearly-ammoutBox">
+                            <label for="price-label1">
+                                <input type="radio" name="yearly-ammount" id="price-label1" value="$500" ng-model="data.selectedInvestmentBudget">
+                                <i></i> <span>$500</span> </label>
+                            <label for="price-label2">
+                                <input type="radio" name="yearly-ammount" id="price-label2" value="$100" ng-model="data.selectedInvestmentBudget">
+                                <i></i> <span>$1000</span> </label>
+                            <label for="price-label3">
+                                <input type="radio" name="yearly-ammount" id="price-label3" value="$300" ng-model="data.selectedInvestmentBudget">
+                                <i></i> <span>$3000</span> </label>
+                            <label for="price-label4">
+                                <input type="radio" name="yearly-ammount" id="price-label4" value="$500" ng-model="data.selectedInvestmentBudget">
+                                <i></i> <span>$5000</span> </label>
+                            <label for="price-labelOther">
+                                <input type="radio" name="yearly-ammount" id="price-labelOther" value="other" ng-model="data.selectedInvestmentBudget">
+                                <i></i> <span>other</span> </label>
+                        </div>
                     </div>
-                    <div>
-                        <label for="new-business">
-                            <input type="radio" name="innovative-projects" id="new-business" value="new-business">
-                            <i></i> <span>New business Opportunities</span> </label>
+                    <div class="other-wrap" ng-if="data.selectedInvestmentBudget === 'other'">
+                        <h3 class="font-light paddingB10">In case of other, please introduce the ammount here</h3>
+                        <input type="text" placeholder="other ammount..." class="inputFieldGray">
                     </div>
-                    <div>
-                        <label for="great-teams">
-                            <input type="radio" name="innovative-projects" id="great-teams" value="great-teams">
-                            <i></i> <span>Network with great minds & great teams</span> </label>
+                    <h3 class="font-light paddingT5">What is your main  goal for investing in innovative projects?</h3>
+                    <div class="primaryinterestList radiobox radioboxGrayBase">
+                        <div>
+                            <label for="good-return">
+                                <input type="radio" name="innovative-projects" id="good-return" value="good-return" checked>
+                                <i></i> <span>Good return on investment</span> </label>
+                        </div>
+                        <div>
+                            <label for="new-business">
+                                <input type="radio" name="innovative-projects" id="new-business" value="new-business">
+                                <i></i> <span>New business Opportunities</span> </label>
+                        </div>
+                        <div>
+                            <label for="great-teams">
+                                <input type="radio" name="innovative-projects" id="great-teams" value="great-teams">
+                                <i></i> <span>Network with great minds & great teams</span> </label>
+                        </div>
                     </div>
+                    <h3 class="font-light paddingB10 paddingT10">What is your feeling about investing in creative projects?</h3>
+                    <textarea class="grayTextareaFiled" placeholder="explain yourself..."></textarea>
+                </form>
+
+                <div class="clearfix"></div>
+                <div class="marginT20">
+                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="form.currentStep = 3">Previous</button>
+                    <button type="button" class="action submit btn btn-success rgbBtn" ng-disabled="step3Form.$invalid"  ng-if="data.selectedRole === 'investor'" ng-click="submitDetails()">Submit</button>
                 </div>
-                <h3 class="font-light paddingB10 paddingT10">What is your feeling about investing in creative projects?</h3>
-                <textarea class="grayTextareaFiled" placeholder="explain yourself..."></textarea>
             </div>
         </div>
     </div>

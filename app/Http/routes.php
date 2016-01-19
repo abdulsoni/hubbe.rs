@@ -30,6 +30,7 @@ $api->version('v1', function ($api) {
      */
     $api->get('user', 'Fundator\Http\Controllers\AuthenticateController@getUser');
     $api->get('users', 'Fundator\Http\Controllers\AuthenticateController@index');
+    $api->put('users/{id}', 'Fundator\Http\Controllers\UserController@update');
 
     $api->post('authenticate', 'Fundator\Http\Controllers\AuthenticateController@authenticate');
 

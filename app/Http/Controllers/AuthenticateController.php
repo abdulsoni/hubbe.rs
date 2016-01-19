@@ -77,13 +77,9 @@ class AuthenticateController extends Controller
             unset($response['password']);
             unset($response['remember_token']);
 
-//            $response = [
-//                'id' => $user->id,
-//                'name' => $user->name,
-//                'email' => $user->email,
-//                'role' => $user->role,
-//                'needs_reset' => $user->needs_reset
-//            ];
+            if(!is_null($user->thumbnail)){
+                $response['thumbnail'] = $user->thumbnail->getUrl();
+            }
 
         } catch (TokenExpiredException $e) {
             $statusCode = $e->getStatusCode();
@@ -96,7 +92,7 @@ class AuthenticateController extends Controller
             $response['error'] = 'token_absent';
         }catch (Exception $e){
             $statusCode = 400;
-            $response['error'] = $e->errorInfo;
+            $response['error'] = $e;
         }
 
         return new Response($response, $statusCode);

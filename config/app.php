@@ -174,7 +174,13 @@ return [
         /*
          * Administrator
          */
-        Frozennode\Administrator\AdministratorServiceProvider::class
+        Frozennode\Administrator\AdministratorServiceProvider::class,
+
+        /*
+         * Notifynder
+         */
+        Fenos\Notifynder\NotifynderServiceProvider::class
+
     ],
 
     /*
@@ -233,7 +239,12 @@ return [
         /*
          * Entrust
          */
-        'Entrust' => Zizaco\Entrust\EntrustFacade::class
+        'Entrust' => Zizaco\Entrust\EntrustFacade::class,
+
+        /*
+         * Notifynder
+         */
+        'Notifynder'    => Fenos\Notifynder\Facades\Notifynder::class
     ],
 
 ];

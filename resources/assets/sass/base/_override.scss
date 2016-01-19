@@ -220,3 +220,21 @@
     width: 350px;
   }
 }
+
+.image-success{
+  text-align: center;
+  padding: 15px;
+  color: $brand-success;
+}
+''
+.progress-bar-success{
+  background-color: $brand-success !important;;
+}
+
+.btn-success{
+  padding: 14px 20px;
+
+  &:hover, &:focus, &:active{
+    background-color: darken($brand-success, 10%);
+  }
+}

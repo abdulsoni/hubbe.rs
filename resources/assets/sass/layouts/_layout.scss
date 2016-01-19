@@ -506,7 +506,7 @@ a.action-bell{display: block; height:132px; width:132px;  background:$tertiary-c
 }
 
 label.select-style {position:relative; margin-right: 5px;
-	select{padding:8px 46px 8px 20px; font-size: 18px; font-weight:300; margin: 0; background: #f2f2f2; color:#888; border:none; outline:none; display: inline-block; -webkit-appearance:none; -moz-appearance:none; appearance:none; cursor:pointer;}
+	select{min-width: 208px; padding:8px 46px 8px 20px; font-size: 18px; font-weight:300; margin: 0; background: #f2f2f2; color:#888; border:none; outline:none; display: inline-block; -webkit-appearance:none; -moz-appearance:none; appearance:none; cursor:pointer;}
 	&:before{ontent:''; right:6px; top:0px; width:20px; height:20px; background-color:#f2f2f2; position:absolute; pointer-events:none; display:block;}
 	&:after{content:''; background-image:url(#{$imagesPath}/downarrow.png); background-repeat:no-repeat; right:12px; top:0; width:20px; height:100%; background-position: 0 center; position:absolute; pointer-events:none;}
 }

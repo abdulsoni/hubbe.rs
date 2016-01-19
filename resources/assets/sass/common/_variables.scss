@@ -8,11 +8,11 @@ $primaryText-color:#6d6e71;
 $white-color: #fff;
 $black-color: #000;
 
-$brand-primary:         darken(#428bca, 6.5%) !default; // #337ab7
-$brand-success:         #94c44d !default;
-$brand-info:            #5bc0de !default;
-$brand-warning:         #f0ad4e !default;
-$brand-danger:          #ec1c24 !default;
+$brand-primary:         darken(#428bca, 6.5%); // #337ab7
+$brand-success:         #94c44d;
+$brand-info:            #5bc0de;
+$brand-warning:         #f0ad4e;
+$brand-danger:          #ec1c24;
 
 $progress-bar-success-bg: $brand-success;
 

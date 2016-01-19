@@ -29,9 +29,10 @@ class CreateUsersTable extends Migration
             // Additional Fields
 
             $table->date('dob');
+            $table->date('age_gate');
             $table->string('country_origin');
             $table->string('country_residence');
-            $table->string('phone');
+            $table->string('contact_number');
             $table->string('contact_time');
 
             $table->rememberToken();
