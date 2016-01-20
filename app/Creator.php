@@ -26,4 +26,9 @@ class Creator extends Model
      * @var array
      */
     protected $fillable = [];
+
+
+    public function user(){
+        return $this->belongsTo('Fundator\User');
+    }
 }

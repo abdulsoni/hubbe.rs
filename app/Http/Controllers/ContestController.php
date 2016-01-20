@@ -85,6 +85,11 @@ class ContestController extends Controller
 
         foreach($contestants as $creator_id => $entry){
             $creator = User::find($creator_id);
+
+            if(!is_null($creator->thumbnail)){
+                $creator['thumbnail'] = $creator->thumbnail->getUrl();
+            }
+
             $contest_data['contestants'][] = $creator;
         }
 
@@ -97,6 +102,11 @@ class ContestController extends Controller
             foreach($judges as $judge_id => $rating){
                 if(!in_array($judge_id, $existingJudges)){
                     $judge = User::find($judge_id);
+
+                    if(!is_null($judge->thumbnail)){
+                        $judge['thumbnail'] = $judge->thumbnail->getUrl();
+                    }
+
                     $contest_data['judges'][] = $judge;
                     $existingJudges[] = $judge_id;
                 }

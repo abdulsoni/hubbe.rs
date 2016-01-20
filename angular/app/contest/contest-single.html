@@ -76,7 +76,8 @@
                             <div class="item creator-profile">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <img src="images/coolestMember.jpg" alt="" class="coolestMemberLBPick">
+                                        <img src="images/icon-user-default.png" alt="" ng-if="!item.thumbnail" class="coolestMemberLBPick">
+                                        <img ng-src="{{user.thumbnail}}" alt="" ng-if="item.thumbnail">
                                     </div>
                                     <div class="col-sm-8 bio">
                                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur natus voluptas error eaque. Porro repellat amet maiores aliquid quasi ea quam cumque voluptates esse consequuntur ut, necessitatibus adipisci provident sapiente.
@@ -105,12 +106,13 @@
                         </div>
             		</uib-tab>
             		<uib-tab heading="Jury">
-						<div class="owl-profiles" owl-carousel="contest.jury"
+						<div class="owl-profiles" owl-carousel="contest.judges"
                             owl-options='{"pagination": false, "dots": false, "navigation":true, "singleItem":true, "navigationText": [ "<i class=\"icon-chevron-left icon-white\"></i>", "<i class=\"icon-chevron-right icon-white\"></i>" ]}'>>
                             <div class="item creator-profile">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <img src="images/coolestMember.jpg" alt="" class="coolestMemberLBPick">
+                                        <img src="images/icon-user-default.png" alt="" ng-if="!item.thumbnail" class="coolestMemberLBPick">
+                                        <img ng-src="{{user.thumbnail}}" alt="" ng-if="item.thumbnail">
                                     </div>
                                     <div class="col-sm-8 bio">
                                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur natus voluptas error eaque. Porro repellat amet maiores aliquid quasi ea quam cumque voluptates esse consequuntur ut, necessitatibus adipisci provident sapiente.
