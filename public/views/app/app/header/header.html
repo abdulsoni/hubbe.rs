@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-lg-4 col-md-12"> <a href="#" class="logo"><img src="images/logo.png" alt=""></a> </div>
+        <div class="col-lg-4 col-md-12"> <a href="/#/contest" class="logo"><img src="images/header.png" alt=""></a> </div>
         <div class="col-lg-8 col-md-12">
             <div class="header_right">
                 <nav>
@@ -14,7 +14,6 @@
 
                     <ul class="nav navbar-nav top-nav pull-right" ng-if="!authenticated">
                         <li><a ui-sref="app.login" ng-class="{'activenav': $state.current.name.indexOf('login') !== -1}">Login</a></li>
-                        <li><a ui-sref="app.register" ng-class="{'activenav': $state.current.name.indexOf('register') !== -1}">Register</a></li>
                     </ul>
                 </nav>
                 <ul class="account-list navbar-nav" ng-if="authenticated && user">
