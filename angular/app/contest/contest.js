@@ -87,6 +87,9 @@
                 id: $scope.contestId
             });
 
+            console.log('judgeable');
+                console.log(judgeable);
+
             if (typeof(judgeable) !== 'undefined') {
                 if (judgeable.length > 0 && $stateParams.role !== 'jury') {
                     $rootScope.flashNotices.juryView.show = true;

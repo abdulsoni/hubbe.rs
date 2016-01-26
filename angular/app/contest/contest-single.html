@@ -197,26 +197,16 @@
 	            <a class="btn btn-block showmorebtn" ng-if="data.selectedEntry.ratings.length > 4">Show more</a> </div>
 	    </div>
 	    <div class="col-md-6">
-	        <div class="chatbox">
-	            <div class="chatRow">
-	                <div class="chat-userSendbox chat-comein">
-	                    <div class="chat-content">you should improve the sleeve parts</div>
-	                </div>
-	                <div class="caht-label">Larry <span>2015-11-23:</span></div>
-	            </div>
-	            <div class="chatRow">
-	                <div class="chat-userSendbox chat-send">
-	                    <div class="chat-content">Idea is to make the user feel secured</div>
-	                    <div class="caht-label">Paulo Coehlo <span>2015-11-22:</span></div>
-	                </div>
-	            </div>
-	            <div class="chatRow">
-	                <div class="chat-userSendbox chat-comein">
-	                    <div class="chat-content">Why have you added a Bluetooth Remote Control?</div>
-	                </div>
-	                <div class="caht-label">Larry <span>2015-11-23:</span></div>
-	            </div>
-	        </div>
+            <div class="chatbox">
+                <div class="chatRow" ng-repeat="message in data.selectedEntry.messages">
+                    <div class="chat-userSendbox" ng-class="{'chat-send': user.id === message.user.id, 'chat-comein': user.id !== message.user.id}">
+                        <div class="chat-content">{{message.body}}</div>
+                    </div>
+                    <div class="caht-label" ng-class="{'text-right': user.id === message.user.id}">
+                        {{message.user.name}} <span>{{message.created_at | amDateFormat:'MMM Do YYYY'}}:</span>
+                    </div>
+                </div>
+            </div>
             <form class="chatsendform">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Enter your message here and click enter or send button...">
