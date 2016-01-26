@@ -201,8 +201,11 @@
 
             $http.put('/api/users/' + $rootScope.user.id, userData).then(function(result){
                 if (result.data === 'Updated') {
+                    $rootScope.user.name = $scope.data.fname;
+                    $rootScope.user.last_name = $scope.data.lname;
+                    $rootScope.user.role = $scope.data.selectedRole;
                     $rootScope.user.registered = 1;
-                    $state.go('app.contest');
+                    $state.go('app.contest', {role: $scope.data.selectedRole});
                 }
             }, function(result){
                 console.log('error');

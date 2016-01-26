@@ -12,9 +12,9 @@
                 <div class="tab-content">
                     <div id="account" class="tab-pane fade in active">
                         <div class="paddingB15">
-                            <h5 class="font-light marginB20"><span class="bigtext paddingR25">Registered Email Adress:</span>  youremail@youdoman.com</h5>
+                            <h5 class="font-light marginB20"><span class="bigtext paddingR25">Registered Email Adress:</span>  {{user.email}}</h5>
                             <h5 class="font-light marginB20"><span class="bigtext paddingR25">Registered Phone Number:</span>  444-555-44444</h5>
-                            <h5 class="font-light marginB20"><span class="bigtext paddingR25">Name:</span> Mr. Benjamin Vignon</h5>
+                            <h5 class="font-light marginB20"><span class="bigtext paddingR25">Name:</span> {{user.name}} {{user.last_name}}</h5>
                         </div>
                         <a href="#" class="btn btn_default btn-info">Save</a> <a href="#" class="btn btn_default btn-success marginL10">Change Details</a>
 

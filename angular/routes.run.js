@@ -48,8 +48,6 @@
 
                         if ($rootScope.user.registered == 0) {
                             $state.go('app.register');
-                        }else{
-                            $state.go('app.contestsingle', {role: 'jury', contestId: 4});
                         }
                     }
                 });

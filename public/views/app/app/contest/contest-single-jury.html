@@ -214,8 +214,12 @@
                             <input id="market" ng-model="data.selectedEntry.rating.market" type="text" min="1" max="10" class="form-control" placeholder="introduce mark ...">
                         </fieldset>
 
-                        <button class="btn btn-info btn-block marginT20" ng-click="saveMarks()" ng-if="!data.selectedEntry.rating">Submit</button>
-                        <button class="btn btn-info btn-block marginT20" ng-click="saveMarks(data.selectedEntry.rating.id)" ng-if="data.selectedEntry.rating">Save</button>
+                        <button class="btn btn-info btn-block marginT20" ng-click="saveMarks()" ng-if="!data.selectedEntry.rating.id" ng-disabled="data.savingMarks" ng-class="{'btn-success': data.savedMarks}">
+                            {{data.savingMarks ? 'Saving ...' : (data.savedMarks ? 'Saved' : 'Submit')}}
+                        </button>
+                        <button class="btn btn-info btn-block marginT20" ng-click="saveMarks(data.selectedEntry.rating.id)" ng-if="data.selectedEntry.rating.id" ng-disabled="data.savingMarks" ng-class="{'btn-success': data.savedMarks}">
+                            {{data.savingMarks ? 'Saving ...' : (data.savedMarks ? 'Saved' : 'Save')}}
+                        </button>
                     </form>
                 </div>
             </div>
@@ -233,7 +237,7 @@
 	        </div>
             <form class="chatsendform">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter your message here ..." ng-model="data.messageToSend">
+                    <input type="text" class="form-control" placeholder="Enter your message here ..." ng-model="data.messageToSend" fd-enter="sendMessage()">
                     <span class="input-group-addon sendbtn" ng-click="sendMessage()"><span class="glyphicon">Send</span></span>
                 </div>
             </form>

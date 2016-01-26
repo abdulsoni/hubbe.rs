@@ -137,12 +137,12 @@ class EntryController extends Controller
         //
     }
 
-    public function judgeEntries($judgeId)
+    public function judgeEntries($contestId, $judgeId)
     {
         $statusCode = 200;
         $response = [];
 
-        $entries = Entry::all();
+        $entries = Entry::where('contest_id', $contestId)->get();
         $judge = User::find($judgeId);
 
 

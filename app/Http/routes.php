@@ -52,7 +52,7 @@ $api->version('v1', function ($api) {
     $api->post('entries/', 'Fundator\Http\Controllers\EntryController@store');
     $api->put('entries/{id}', 'Fundator\Http\Controllers\EntryController@update');
 
-    $api->get('entries/judge/{judgeId}', 'Fundator\Http\Controllers\EntryController@judgeEntries');
+    $api->get('entries/contest/{contestId}/judge/{judgeId}', 'Fundator\Http\Controllers\EntryController@judgeEntries');
 
     $api->post('entries/{id}/messages', 'Fundator\Http\Controllers\EntryController@postEntryMessage');
 

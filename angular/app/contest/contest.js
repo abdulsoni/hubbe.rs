@@ -22,6 +22,20 @@
         });
     });
 
+    angular.module('fundator.directives').directive('fdEnter', function () {
+        return function (scope, element, attrs) {
+            element.bind("keydown keypress", function (event) {
+                if(event.which === 13) {
+                    scope.$apply(function (){
+                        scope.$eval(attrs.fdEnter);
+                    });
+
+                    event.preventDefault();
+                }
+            });
+        };
+    });
+
     angular.module('fundator.controllers').controller('ContestSingleCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $filter, $window, $timeout) {
         $scope.contestId = $stateParams.contestId;
         $scope.data = {
@@ -43,7 +57,7 @@
         }, {
             judgeEntries: {
                 method: 'GET',
-                url: '/api/entries/judge/:judgeId',
+                url: '/api/entries/contest/:contestId/judge/:judgeId',
                 isArray: true
             },
             sendMessage: {
@@ -86,6 +100,7 @@
                     };
                 } else if($stateParams.role === 'jury') {
                     Entry.judgeEntries({
+                        contestId: $scope.contestId,
                         judgeId: $rootScope.user.id
                     }).$promise.then(function(result){
                         $scope.contest.entries = angular.copy(result);
@@ -108,6 +123,10 @@
             }).$promise.then(function(result) {
                 $scope.data.selectedEntry = result;
                 $scope.data.selectedEntry.rating = rating;
+
+                $timeout(function(){
+                    $('.chatbox').animate({scrollTop: 10000});
+                }, 100);
             });
         };
 
@@ -122,10 +141,16 @@
             Entry.sendMessage({entryId: $scope.data.selectedEntry.id}, messageRequest, function(result){
                 $scope.data.selectedEntry.messages.push(result.message);
                 $scope.data.messageToSend = '';
+
+                $timeout(function(){
+                    $('.chatbox').animate({scrollTop: 10000});
+                }, 100);
             });
         };
 
         $scope.saveMarks = function(entryRatingId){
+            $scope.data.savingMarks = true;
+
             var updatedRating = {
                 design: $scope.data.selectedEntry.rating.design,
                 creativity: $scope.data.selectedEntry.rating.creativity,
@@ -142,6 +167,8 @@
                 }, updatedRating).$promise.then(function(result){
                     if (result !== 'error') {
                         console.log('entry rating saved!');
+                        $scope.data.savingMarks = false;
+                        $scope.data.savedMarks = true;
                     }
                 });
 
@@ -150,6 +177,8 @@
                 entryRating.$save().then(function(result){
                     if (result !== 'error') {
                         console.log('entry rating created!');
+                        $scope.data.savingMarks = false;
+                        $scope.data.savedMarks = true;
                     }
                 });
             }
