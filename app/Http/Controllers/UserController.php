@@ -99,7 +99,7 @@ class UserController extends Controller
 
             $user->name = $request->name;
             $user->last_name = $request->last_name;
-            $user->role = $request->selectedRole;
+            $user->role = $request->role;
             $user->age_gate = $request->age_gate;
             $user->country_origin = $request->country_origin;
             $user->country_residence = $request->country_residence;

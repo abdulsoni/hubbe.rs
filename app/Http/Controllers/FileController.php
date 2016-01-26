@@ -54,7 +54,7 @@ class FileController extends Controller
                     'title' => $fileTitle,
                     'file_name' => $fileName,
                     'extension' => $extension,
-                    'file_size' => $file->getClientSize(),
+                    'file_size' => 0,
                     'file_url' => $this->destinationPath . '/' . $fileName
                 ]);
 
