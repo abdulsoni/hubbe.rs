@@ -17,12 +17,23 @@
                     </ul>
                 </nav>
                 <ul class="account-list navbar-nav" ng-if="authenticated && user">
-                    <li><a class="profile">
-                        <img src="images/icon-user-default.png" alt="" ng-if="!user.thumbnail">
-                        <img ng-src="{{user.thumbnail}}" alt="" ng-if="user.thumbnail">
-                        {{user.name}}
-                    </a></li>
-                    <li class="cdNavList"><a class="cd-nav-trigger">Menu <span class="cd-nav-icon"></span> </a></li>
+                    <li>
+                        <a class="profile">
+                            <div class="profile-image">
+                                <img src="images/icon-user-default.png" alt="" ng-if="!user.thumbnail">
+                                <img ng-src="{{user.thumbnail}}" alt="" ng-if="user.thumbnail">
+                            </div>
+                            <div class="profile-info">
+                                <span class="profile-name">{{user.name}} {{user.last_name}}</span>
+                                <span class="profile-role" ng-if="user.user_roles.length <= 1">{{$stateParams.role}}</span>
+                                <span class="profile-role pointer" uib-popover-template="'userRole.html'" popover-title="Use fundator as ..." popover-placement="bottom" ng-if="user.user_roles.length > 1">{{user.role}}</span>
+                            </div>
+                            <script type="text/ng-template" id="userRole.html">
+                                <div></div>
+                            </script>
+                        </a>
+                    </li>
+                    <li class="cdNavList"><a class="cd-nav-trigger pointer" ng-click="toggleNavigation()">Menu <span class="cd-nav-icon"></span> </a></li>
                 </ul>
             </div>
         </div>

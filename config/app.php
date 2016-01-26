@@ -179,7 +179,12 @@ return [
         /*
          * Notifynder
          */
-        Fenos\Notifynder\NotifynderServiceProvider::class
+        Fenos\Notifynder\NotifynderServiceProvider::class,
+
+        /*
+         * Messenger
+         */
+        Cmgmyr\Messenger\MessengerServiceProvider::class
 
     ],
 

@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'Fundator\Events\Register' => [
             'Fundator\Listeners\SendRegistrationNotification',
         ],
+        'Fundator\Events\AssignJury' => [
+            'Fundator\Listeners\SendJuryInvitationNotification',
+        ],
     ];
 
     /**

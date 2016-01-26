@@ -1,7 +1,7 @@
 body{@include transition(overflow .5s ease-out);} 
 body.navigation-is-open{overflow:hidden;}
 
-body.navigation-is-open header{padding-right:16px;}
+//body.navigation-is-open header{padding-right:16px;}
 main {
   position: relative;
   z-index: 2;

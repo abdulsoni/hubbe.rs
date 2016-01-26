@@ -11,14 +11,22 @@
             return './views/app/app/' + viewName + '/' + secondaryName + '.html';
         };
 
-        $urlRouterProvider.otherwise('/contest');
+        $urlRouterProvider.otherwise('/user/contest');
 
         $stateProvider
             .state('app', {
+                url: '/:role',
                 abstract: true,
                 views: {
                     header: {
                         templateUrl: getView('header')
+                    },
+                    navigation: {
+                        templateUrl: getView('header', 'navigation')
+                    },
+                    flashNotice: {
+                        templateUrl: getView('header', 'flash-notice'),
+                        controller: 'FlashNoticeCtrl'
                     },
                     footer: {
                         templateUrl: getView('footer')
@@ -27,7 +35,15 @@
                         templateUrl: getView('notifications', 'widget')
                     },
                     quickUpdate: {
-                        templateUrl: getView('header', 'quick-update')
+                        templateUrl: function(stateParams){
+                            switch(stateParams.role){
+                                case 'jury': return getView('quick-update', 'quick-update-jury');
+                                case 'investor': return getView('quick-update', 'quick-update-investor');
+                                case 'expert': return getView('quick-update', 'quick-update-expert');
+                                default : return getView('quick-update', 'quick-update');
+                            }
+                            return getView('quick-update', 'quick-update');
+                        }
                     },
                     main: {}
                 }
@@ -63,7 +79,13 @@
                 url: '/contest/:contestId',
                 views: {
                     'main@': {
-                        templateUrl: getView('contest', 'contest-single'),
+                        templateUrl: function(stateParams){
+                            switch(stateParams.role){
+                                case 'jury': return getView('contest', 'contest-single-jury');
+                                default : return getView('contest', 'contest-single');
+                            }
+                            return getView('contest', 'contest-single');
+                        },
                         controller: 'ContestSingleCtrl'
                     }
                 }

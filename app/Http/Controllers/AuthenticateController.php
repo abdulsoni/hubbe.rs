@@ -77,6 +77,17 @@ class AuthenticateController extends Controller
             unset($response['password']);
             unset($response['remember_token']);
 
+            $response['judging'] = $user->judging;
+
+            $roles = $user->roles;
+            $userRoles = [];
+
+            foreach($roles as $role){
+                $userRoles[] = ['role' => $role->name, 'id' => $role->id];
+            }
+
+            $response['user_roles'] = $userRoles;
+
             if(!is_null($user->thumbnail)){
                 $response['thumbnail'] = $user->thumbnail->getUrl();
             }

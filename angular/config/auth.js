@@ -7,11 +7,13 @@
         $authProvider.loginUrl = '/api/authenticate';
         $authProvider.tokenPrefix = 'fundator';
 
+        var redirectUriPath = window.location.protocol + '//' + window.location.hostname;
+
         $authProvider.linkedin({
         	clientId: '77zjxfbh2928re',
             url: '/api/authenticate/linkedin',
             authorizationEndpoint: 'https://www.linkedin.com/uas/oauth2/authorization',
-            redirectUri: 'http://fundator.co/api/authenticate/linkedin',
+            redirectUri: redirectUriPath + '/api/authenticate/linkedin',
             requiredUrlParams: ['state'],
             scope: ['r_emailaddress'],
             scopeDelimiter: ' ',

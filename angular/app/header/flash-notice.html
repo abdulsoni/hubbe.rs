@@ -1,0 +1,5 @@
+<div class="alert alert-info" role="alert" ng-if="flashNotices.juryView.show && $stateParams.role !== 'jury'">
+	You are a Judge on this contest, switch to the jury view to assess this contest.
+
+	<strong><a class="pointer pull-right" ng-click="flashNotices.juryView.onClick()">Switch to Jury View</a></strong>
+</div>

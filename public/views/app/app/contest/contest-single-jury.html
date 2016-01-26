@@ -163,6 +163,7 @@
                             <div class="row">
                                 <div class="col-xs-8">
                                     <h5>{{item.name}}</h5>
+                                    <p class="small" ng-if="item.type">{{item.type}}</p>
                                 </div>
                                 <div class="col-xs-4"><span class="icon icon-plus radius-box rbM marginT10"></span></div>
                             </div>
@@ -176,51 +177,64 @@
     </div>
 	<div class="row" ng-if="data.selectedEntry !== null">
 	    <div class="col-md-6">
-	        <div class="contest-list contest-list-lb">
-	            <div class="row" ng-repeat="rating in data.selectedEntry.ratings">
-	                <div class="col-xs-2 text-center"><img src="images/coolestMember.jpg" alt="" class="coolestMemberLBPick"></div>
-	                <div class="col-xs-2 ">
-	                    <p class="bordRight">{{rating.judge.name}}
-	                        <br> Inventor
-	                        <br>
-	                        <a href="#">Italia</a></p>
-	                </div>
-	                <div class="col-xs-4">
-	                    <h4 class="clearfix"><strong class="pull-left">Design</strong> <small class="pull-right">{{rating.design}}</small></h4>
-	                    <h4 class="clearfix"><strong class="pull-left">Creativity</strong> <small class="pull-right">{{rating.creativity}}</small></h4>
-	                </div>
-	                <div class="col-xs-4 text-center">
-	                    <h4 class="clearfix"><strong class="pull-left">Industrial</strong> <small class="pull-right">{{rating.industrial}}</small></h4>
-	                    <h4 class="clearfix"><strong class="pull-left">Market P.</strong> <small class="pull-right">{{rating.market}}</small></h4>
-	                </div>
-	            </div>
-	            <a class="btn btn-block showmorebtn" ng-if="data.selectedEntry.ratings.length > 4">Show more</a> </div>
+	        <div class="entry-details entry-details-marks">
+                <div class="entry-image">
+                    <h2>{{data.selectedEntry.name}}</h2>
+                </div>
+                <div class="entry-marks">
+                    <h3 class="clearfix heading-bottom-border marginT0">Average Marks</h3>
+
+                    <form name="entryMarks">
+                        <fieldset>
+                            <label for="creativity">
+                                <span class="label-prefix">C</span>
+                                Creativity
+                            </label>
+                            <input id="creativity" ng-model="data.selectedEntry.rating.creativity" type="text" min="1" max="10" class="form-control" placeholder="introduce mark ...">
+                        </fieldset>
+                        <fieldset>
+                            <label for="design">
+                                <span class="label-prefix">D</span>
+                                Design
+                            </label>
+                            <input id="design" ng-model="data.selectedEntry.rating.design" type="text" min="1" max="10" class="form-control" placeholder="introduce mark ...">
+                        </fieldset>
+                        <fieldset>
+                            <label for="industrialization">
+                                <span class="label-prefix">I</span>
+                                Industrialization
+                            </label>
+                            <input id="industrialization" ng-model="data.selectedEntry.rating.industrial" type="text" min="1" max="10" class="form-control" placeholder="introduce mark ...">
+                        </fieldset>
+                        <fieldset>
+                            <label for="market">
+                                <span class="label-prefix">M</span>
+                                Market
+                            </label>
+                            <input id="market" ng-model="data.selectedEntry.rating.market" type="text" min="1" max="10" class="form-control" placeholder="introduce mark ...">
+                        </fieldset>
+
+                        <button class="btn btn-info btn-block marginT20" ng-click="saveMarks()" ng-if="!data.selectedEntry.rating">Submit</button>
+                        <button class="btn btn-info btn-block marginT20" ng-click="saveMarks(data.selectedEntry.rating.id)" ng-if="data.selectedEntry.rating">Save</button>
+                    </form>
+                </div>
+            </div>
 	    </div>
 	    <div class="col-md-6">
 	        <div class="chatbox">
-	            <div class="chatRow">
-	                <div class="chat-userSendbox chat-comein">
-	                    <div class="chat-content">you should improve the sleeve parts</div>
+	            <div class="chatRow" ng-repeat="message in data.selectedEntry.messages">
+	                <div class="chat-userSendbox" ng-class="{'chat-send': user.id === message.user.id, 'chat-comein': user.id !== message.user.id}">
+	                    <div class="chat-content">{{message.body}}</div>
 	                </div>
-	                <div class="caht-label">Larry <span>2015-11-23:</span></div>
-	            </div>
-	            <div class="chatRow">
-	                <div class="chat-userSendbox chat-send">
-	                    <div class="chat-content">Idea is to make the user feel secured</div>
-	                    <div class="caht-label">Paulo Coehlo <span>2015-11-22:</span></div>
-	                </div>
-	            </div>
-	            <div class="chatRow">
-	                <div class="chat-userSendbox chat-comein">
-	                    <div class="chat-content">Why have you added a Bluetooth Remote Control?</div>
-	                </div>
-	                <div class="caht-label">Larry <span>2015-11-23:</span></div>
+	                <div class="caht-label" ng-class="{'text-right': user.id === message.user.id}">
+                        {{message.user.name}} <span>{{message.created_at | amDateFormat:'MMM Do YYYY'}}:</span>
+                    </div>
 	            </div>
 	        </div>
             <form class="chatsendform">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter your message here and click enter or send button...">
-                    <span class="input-group-addon sendbtn"><span class="glyphicon">Send</span></span>
+                    <input type="text" class="form-control" placeholder="Enter your message here ..." ng-model="data.messageToSend">
+                    <span class="input-group-addon sendbtn" ng-click="sendMessage()"><span class="glyphicon">Send</span></span>
                 </div>
             </form>
 	    </div>

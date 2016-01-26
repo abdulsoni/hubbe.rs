@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContestantsTable extends Migration
+class CreateJudgesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,12 @@ class CreateContestantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('contestants', function (Blueprint $table) {
+        Schema::create('judges', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->integer('contest_id');
             $table->integer('user_id');
-            $table->integer('entry_id');
+
+            $table->string('first_name');
+            $table->string('last_name');
         });
     }
 
@@ -28,6 +28,6 @@ class CreateContestantsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('contestants');
+        Schema::drop('judges');
     }
 }

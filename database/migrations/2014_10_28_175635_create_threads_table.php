@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class CreateJuriesTable extends Migration
+class CreateThreadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,10 @@ class CreateJuriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('juries', function (Blueprint $table) {
+        Schema::create('threads', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-
-            $table->string('first_name');
-            $table->string('last_name');
+            $table->string('subject');
+            $table->timestamps();
         });
     }
 
@@ -28,6 +26,6 @@ class CreateJuriesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('juries');
+        Schema::drop('threads');
     }
 }

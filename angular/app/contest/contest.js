@@ -1,7 +1,10 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.controllers').controller('ContestCtrl', function($rootScope, $scope, $state, $resource, $timeout) {
+    angular.module('fundator.controllers').controller('ContestCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $timeout) {
+
+        console.log('contest state param');
+        console.log($stateParams);
 
         $scope.contests = [];
         $rootScope.$broadcast('startLoading');
@@ -10,63 +13,147 @@
             contestId: '@id'
         });
 
-        Contest.query().$promise.then(function(result){
+        Contest.query().$promise.then(function(result) {
             $scope.contests = result;
-        }).finally(function(){
-            $timeout(function(){
+        }).finally(function() {
+            $timeout(function() {
                 $rootScope.$broadcast('stopLoading');
             }, 1000);
         });
     });
 
-    angular.module('fundator.controllers').controller('ContestSingleCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $window, $timeout) {
+    angular.module('fundator.controllers').controller('ContestSingleCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $filter, $window, $timeout) {
         $scope.contestId = $stateParams.contestId;
         $scope.data = {
-            selectedEntry: null
+            selectedEntry: null,
+            rating: {
+                design: '',
+                creativity: '',
+                industrial: '',
+                market: ''
+            }
         };
-
-        $scope.contestants = [
-            {name: 'W', bio: ''},
-            {name: 'X', bio: ''},
-            {name: 'Y', bio: ''},
-            {name: 'Z', bio: ''}
-        ];
-
-        $scope.jury = [
-            {name: 'W', bio: ''},
-            {name: 'X', bio: ''},
-            {name: 'Y', bio: ''},
-            {name: 'Z', bio: ''}
-        ];
-
-        var Entry = $resource('/api/entries/:entryId', {
-            entryId: '@id'
-        });
-
-        $window.scrollTo(0, 0);
-        $rootScope.$broadcast('startLoading');
 
         var Contest = $resource('/api/contests/:contestId', {
             contestId: '@id'
         });
 
-        Contest.get({contestId: $scope.contestId}).$promise.then(function(result){
+        var Entry = $resource('/api/entries/:entryId', {
+            entryId: '@id'
+        }, {
+            judgeEntries: {
+                method: 'GET',
+                url: '/api/entries/judge/:judgeId',
+                isArray: true
+            },
+            sendMessage: {
+                method: 'POST',
+                url: '/api/entries/:entryId/messages',
+                isArray: false
+            }
+        });
+
+        var EntryRating = $resource('/api/entry-ratings/:entryRatingId', function(){
+            entryRatingId: '@id'
+        }, {
+            update: {
+                method: 'PUT'
+            }
+        });
+
+        $window.scrollTo(0, 0);
+        $rootScope.$broadcast('startLoading');
+
+        Contest.get({
+            contestId: $scope.contestId
+        }).$promise.then(function(result) {
             $scope.contest = result;
-        }).finally(function(){
-            $timeout(function(){
+
+            var judgeable = $filter('filter')($rootScope.user.judging, {
+                id: $scope.contestId
+            });
+
+            if (typeof(judgeable) !== 'undefined') {
+                if (judgeable.length > 0 && $stateParams.role !== 'jury') {
+                    $rootScope.flashNotices.juryView.show = true;
+                    $rootScope.flashNotices.juryView.contestId = result.id;
+
+                    $rootScope.flashNotices.juryView.onClick = function() {
+                        $state.go('app.contestsingle', {
+                            role: 'jury',
+                            contestId: result.id
+                        });
+                    };
+                } else if($stateParams.role === 'jury') {
+                    Entry.judgeEntries({
+                        judgeId: $rootScope.user.id
+                    }).$promise.then(function(result){
+                        $scope.contest.entries = angular.copy(result);
+                    });
+                }
+            }
+
+        }).finally(function() {
+            $timeout(function() {
                 $rootScope.$broadcast('stopLoading');
             }, 1000);
         });
 
-        $scope.selectEntry = function(entry){
-            $scope.data.selectedEntry = null;
-            console.log('Ive selected the entry : ');
-            console.log(entry);
+        $scope.selectEntry = function(entry) {
+            $scope.data.selectedEntry = entry;
+            var rating = angular.copy($scope.data.selectedEntry.rating);
 
-            Entry.get({entryId: entry.id}).$promise.then(function(result){
-                console.log('Hey this is the full data');
+            Entry.get({
+                entryId: entry.id
+            }).$promise.then(function(result) {
                 $scope.data.selectedEntry = result;
+                $scope.data.selectedEntry.rating = rating;
             });
+        };
+
+        $scope.sendMessage = function(){
+            console.log('sending message');
+            console.log($scope.data.messageToSend);
+
+            var messageRequest = {
+                message: $scope.data.messageToSend
+            };
+
+            Entry.sendMessage({entryId: $scope.data.selectedEntry.id}, messageRequest, function(result){
+                $scope.data.selectedEntry.messages.push(result.message);
+                $scope.data.messageToSend = '';
+            });
+        };
+
+        $scope.saveMarks = function(entryRatingId){
+            var updatedRating = {
+                design: $scope.data.selectedEntry.rating.design,
+                creativity: $scope.data.selectedEntry.rating.creativity,
+                industrial: $scope.data.selectedEntry.rating.industrial,
+                market: $scope.data.selectedEntry.rating.market,
+            };
+
+            updatedRating.judge_id = $rootScope.user.id;
+            updatedRating.entry_id = $scope.data.selectedEntry.id;
+
+            if (typeof(entryRatingId) !== 'undefined') {
+                EntryRating.update({
+                    entryRatingId: entryRatingId
+                }, updatedRating).$promise.then(function(result){
+                    if (result !== 'error') {
+                        console.log('entry rating saved!');
+                    }
+                });
+
+            }else{
+                var entryRating = new EntryRating(updatedRating);
+                entryRating.$save().then(function(result){
+                    if (result !== 'error') {
+                        console.log('entry rating created!');
+                    }
+                });
+            }
+
         }
     });
 

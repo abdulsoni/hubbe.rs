@@ -12,19 +12,19 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="robots" content="none">
-
-    {{--<link href="css/bootstrap.css" rel="stylesheet" type="text/css">--}}
-    {{--<link href="css/main.css" rel="stylesheet" type="text/css">--}}
-    {{--<link rel="stylesheet" href="IcoMoon/icoMoon.css" type="text/css">--}}
-    {{--<link href="css/responsive.css" rel="stylesheet" type="text/css">--}}
 </head>
 
-<body>
+<body ng-class="{'navigation-is-open': isNavShown}">
     <header ui-view="header"></header>
-
+    <div class="navigation" ui-view="navigation"></div>
     <main>
         <section class="body-content">
             <div class="container marginB60" ng-if="authenticated && user.registered == 1">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="flast-notice-list" ui-view="flashNotice"></div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-7 col-sm-12">
                         <div class="contest-list" ui-view="notifications"></div>

@@ -4,7 +4,7 @@ namespace Fundator;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Jury extends Model
+class Judge extends Model
 {
     /**
      * Indicates if the model should be timestamped.
@@ -18,7 +18,7 @@ class Jury extends Model
      *
      * @var string
      */
-    protected $table = 'juries';
+    protected $table = 'judges';
 
     /**
      * The attributes that are mass assignable.
@@ -26,4 +26,14 @@ class Jury extends Model
      * @var array
      */
     protected $fillable = [];
+
+//    /**
+//     * Contest
+//     *
+//     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+//     */
+//    public function contests()
+//    {
+//        return $this->belongsToMany('Fundator\Contest', 'contest_jury');
+//    }
 }

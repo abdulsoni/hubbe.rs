@@ -80,6 +80,11 @@ return array(
                 'CNY' => '¥',
                 'HKD' => 'HK$'
             ),
+        ),
+        'jury' => array(
+            'type' => 'relationship',
+            'title' => 'Jury',
+            'name_field' => 'name'
         )
     ),
 

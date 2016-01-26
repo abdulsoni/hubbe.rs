@@ -1,12 +1,18 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.routes').run(function($rootScope, $state, $auth, $timeout, $http, $urlRouter) {
+    angular.module('fundator.routes').run(function($rootScope, $state, $stateParams, $auth, $timeout, $http, $urlRouter) {
 
         $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
         $rootScope.initialLocationSetup = false;
 
         $rootScope.appLoading = true;
+        $rootScope.isNavShown = false;
+
+        $rootScope.toggleNavigation = function () {
+            $rootScope.isNavShown ? $rootScope.isNavShown = false : $rootScope.isNavShown = true;
+        };
 
         $rootScope.$on('startLoading', function(){
             $rootScope.appLoading = true;
@@ -42,6 +48,8 @@
 
                         if ($rootScope.user.registered == 0) {
                             $state.go('app.register');
+                        }else{
+                            $state.go('app.contestsingle', {role: 'jury', contestId: 4});
                         }
                     }
                 });

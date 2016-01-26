@@ -3,6 +3,7 @@
 namespace Fundator;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Contest extends Model
 {
@@ -27,6 +28,7 @@ class Contest extends Model
      */
     protected $fillable = ['name', 'description', 'status', 'start_time', 'duration', 'budget', 'currency'];
 
+
     /**
      * Relationship between Entries and Contests
      *
@@ -35,6 +37,11 @@ class Contest extends Model
     public function entries()
     {
         return $this->hasMany('Fundator\Entry');
+    }
+
+    public function jury()
+    {
+        return $this->belongsToMany('Fundator\User', 'contest_jury', null, 'judge_id');
     }
 
     /**

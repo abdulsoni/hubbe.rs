@@ -10,12 +10,15 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 //use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
+use Cmgmyr\Messenger\Traits\Messagable;
+use Cmgmyr\Messenger\Models\Thread;
+
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Model implements AuthenticatableContract,
                                     CanResetPasswordContract
 {
-    use Authenticatable, CanResetPassword, EntrustUserTrait;
+    use Authenticatable, CanResetPassword, EntrustUserTrait, Messagable;
 
     /**
      * The database table used by the model.
@@ -45,16 +48,6 @@ class User extends Model implements AuthenticatableContract,
     }
 
     /**
-     * Relationship between users and contests via contestants
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function contests()
-    {
-        return $this->belongsToMany('Fundator\Contest', 'contestants');
-    }
-
-    /**
      * Relationship between users and creators
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -62,6 +55,16 @@ class User extends Model implements AuthenticatableContract,
     public function creator()
     {
         return $this->hasOne('Fundator\Creator');
+    }
+
+    /**
+     * Relationship between users and creators
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function judging()
+    {
+        return $this->belongsToMany('Fundator\Contest', 'contest_jury', 'judge_id');
     }
 
     // Helper functions
@@ -86,9 +89,6 @@ class User extends Model implements AuthenticatableContract,
                 switch ($role->name) {
                     case 'creator':
                         $model = Creator::class;
-                        break;
-                    case 'jury':
-                        $model = Jury::class;
                         break;
                     case 'investor':
                         $model = Investor::class;
