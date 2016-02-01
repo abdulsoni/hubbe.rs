@@ -3,6 +3,8 @@
 namespace Fundator\Http\Controllers;
 
 use Fundator\Events\Register;
+use Fundator\Investor;
+use Fundator\Role;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -107,12 +109,29 @@ class UserController extends Controller
             $user->contact_number = $request->contact_number;
             $user->contact_time = $request->contact_time;
 
+
+            if(!is_null($request->investor) && is_null($user->investor)){
+
+                $investor = Investor::create([
+                    'investment_budget' => $request->investor['investment_budget'],
+                    'investment_goal' => $request->investor['investment_goal'],
+                    'investment_reason' => $request->investor['investment_reason']
+                ]);
+
+                $investor->user()->associate($user);
+
+                $investorRole = Role::where('name', 'investor')->first();
+
+                if(!is_null($investorRole)){
+                    $investor->roles()->attach($investorRole->id);
+                }
+            }
+
             if($user->registered == 0){
                 $user->registered = 1;
 
                 Event::fire(new Register($user));
             }
-
 
             if($user->save()){
                 $response = 'Updated';

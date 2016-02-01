@@ -6,6 +6,9 @@
 @import "base/_override";
 @import "base/_fonts";
 
+// Components
+@import "components/_notifications";
+
 // Pages
 @import "../../../angular/app/auth/auth";
 @import "../../../angular/app/header/header";

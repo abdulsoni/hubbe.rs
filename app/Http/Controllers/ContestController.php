@@ -79,7 +79,7 @@ class ContestController extends Controller
         $contest_data['entries'] = $contest->entries;
         $contest_data['rating'] = $contest->rating;
         $contest_data['contestants'] = [];
-        $contest_data['judges'] = [];
+        $contest_data['judges'] = $contest->jury;
 
         $contestants = $contest->entries->groupBy('creator_id');
 
@@ -93,25 +93,25 @@ class ContestController extends Controller
             $contest_data['contestants'][] = $creator;
         }
 
-        $entries = $contest->entries;
-        $existingJudges = [];
+//        $entries = $contest->entries;
+//        $existingJudges = [];
 
-        foreach($entries as $entry){
-            $judges = $entry->ratings->groupBy('judge_id');
-
-            foreach($judges as $judge_id => $rating){
-                if(!in_array($judge_id, $existingJudges)){
-                    $judge = User::find($judge_id);
-
-                    if(!is_null($judge->thumbnail)){
-                        $judge['thumbnail'] = $judge->thumbnail->getUrl();
-                    }
-
-                    $contest_data['judges'][] = $judge;
-                    $existingJudges[] = $judge_id;
-                }
-            }
-        }
+//        foreach($entries as $entry){
+//            $judges = $entry->ratings->groupBy('judge_id');
+//
+//            foreach($judges as $judge_id => $rating){
+//                if(!in_array($judge_id, $existingJudges)){
+//                    $judge = User::find($judge_id);
+//
+//                    if(!is_null($judge->thumbnail)){
+//                        $judge['thumbnail'] = $judge->thumbnail->getUrl();
+//                    }
+//
+//                    $contest_data['judges'][] = $judge;
+//                    $existingJudges[] = $judge_id;
+//                }
+//            }
+//        }
 
         $response = $contest_data;
 

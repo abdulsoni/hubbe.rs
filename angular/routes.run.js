@@ -46,12 +46,19 @@
                     if (typeof(result.error) === 'undefined') {
                         $rootScope.user = result.data;
 
+                        console.log('user data');
+                        console.log(result.data)
+
                         if ($rootScope.user.registered == 0) {
                             $state.go('app.register');
                         }
+
+                        var params = $state.params;
+                        params.role = $rootScope.user.role;
+
+                        $state.go($state.current.name, params, {reload: true});
                     }
                 });
-
 
                 $urlRouter.sync();
                 $urlRouter.listen();
@@ -68,10 +75,13 @@
         });
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-            // if ($rootScope.user.registered == 0 && toState.name.indexOf('register') !== -1) {
-            //     $state.go('app.register');
-            // } else
             if ($auth.isAuthenticated()) {
+
+                if (typeof($rootScope.user) !== 'undefined' && toParams.role === 'user') {
+                    toParams.role = $rootScope.user.role;
+                    $state.go(toState.name, toParams, {reload: true});
+                    event.preventDefault();
+                }
                 return;
             } else {
                 if (toState.name.indexOf('login') === -1) {

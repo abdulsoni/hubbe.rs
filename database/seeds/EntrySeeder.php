@@ -14,9 +14,10 @@ class EntrySeeder extends Seeder
      */
     public function run()
     {
-        $contest = Contest::find(1);
-        $user1 = User::find(1);
-        $user2 = User::find(2);
+//        $contest = Contest::find(1);
+//
+//        $user1 = User::find(1);
+//        $user2 = User::find(2);
 
         $entry1 = Entry::create([
             'name' => 'Exercitation ullamco',

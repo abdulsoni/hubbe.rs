@@ -25,5 +25,14 @@ class Investor extends Model
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = ['investment_budget', 'investment_goal', 'investment_reason'];
+
+    /**
+     * Attachemnt to the parent user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(){
+        return $this->belongsTo('Fundator\User');
+    }
 }

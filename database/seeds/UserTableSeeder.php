@@ -71,5 +71,64 @@ class UserTableSeeder extends Seeder
             'role' => 'investor'
         ])->roles()->attach($investor->id);
 
+
+        User::create([
+            'name' => 'Laura C.',
+            'last_name' => 'Wilton',
+            'email' => 'LauraCWilton@teleworm.us',
+            'password' => bcrypt('fundator'),
+            'role' => 'investor',
+            'gender' => 'female',
+            'age_gate' => true,
+            'country_origin' => 'us',
+            'country_residence' => 'us',
+            'contact_number' => '+1-510-489-3184',
+            'contact_time' => '9-6'
+        ])->roles()->attach($investor->id);
+
+
+        User::create([
+            'name' => 'Kristy R.',
+            'last_name' => 'Black',
+            'email' => 'KristyRBlack@armyspy.com',
+            'password' => bcrypt('fundator'),
+            'role' => 'investor',
+            'gender' => 'female',
+            'age_gate' => true,
+            'country_origin' => 'france',
+            'country_residence' => 'france',
+            'contact_number' => '+33 03.54.10.61.10',
+            'contact_time' => '9-6'
+        ])->roles()->attach($investor->id);
+
+
+        User::create([
+            'name' => 'Marcus R.',
+            'last_name' => 'Didomenico',
+            'email' => 'MarcusRDidomenico@dayrep.com',
+            'password' => bcrypt('fundator'),
+            'role' => 'investor',
+            'gender' => 'female',
+            'age_gate' => true,
+            'country_origin' => 'france',
+            'country_residence' => 'france',
+            'contact_number' => '+33 03.54.10.61.10',
+            'contact_time' => '9-6'
+        ])->roles()->attach($investor->id);
+
+        User::create([
+            'name' => 'Rosalie L.',
+            'last_name' => 'Silva',
+            'email' => 'RosalieLSilva@jourrapide.com',
+            'password' => bcrypt('fundator'),
+            'role' => 'investor',
+            'gender' => 'female',
+            'age_gate' => true,
+            'country_origin' => 'france',
+            'country_residence' => 'france',
+            'contact_number' => '+33 03.54.10.61.10',
+            'contact_time' => '9-6'
+        ])->roles()->attach($investor->id);
+
     }
 }

@@ -19,8 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ContestSeeder::class);
         $this->command->info('Contests Seeded');
 
-        $this->call(EntrySeeder::class);
-        $this->command->info('Entries Seeded');
+//        $this->call(EntrySeeder::class);
+//        $this->command->info('Entries Seeded');
 
 //        $this->call(CurrencySeeder::class);
 //        $this->command->info('Currency Seeded');

@@ -25,11 +25,13 @@ class CreateUsersTable extends Migration
             $table->boolean('registered');
 
             $table->string('linkedin')->nullable();
+            $table->string('google')->nullable();
+            $table->string('twitter')->nullable();
 
             // Additional Fields
-
+            $table->string('gender');
             $table->date('dob');
-            $table->date('age_gate');
+            $table->boolean('age_gate');
             $table->string('country_origin');
             $table->string('country_residence');
             $table->string('contact_number');

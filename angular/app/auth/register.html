@@ -1,6 +1,6 @@
 <main class="main main-style1 register-main-style1">
     <div class="row">
-        <fd-loader ng-if="!user" class="center"></fd-loader>
+        <!-- <fd-loader ng-if="!user" class="center"></fd-loader> -->
 
         <div class="col-md-10 col-md-offset-1" ng-if="user">
             <h2 class="clearfix">Complete your Registration</h2>
@@ -175,46 +175,46 @@
                     <div class="clearfix">
                         <div class="radiobox yearly-ammoutBox">
                             <label for="price-label1">
-                                <input type="radio" name="yearly-ammount" id="price-label1" value="$500" ng-model="data.selectedInvestmentBudget">
+                                <input type="radio" name="yearly-ammount" id="price-label1" value="$500" required ng-model="data.selectedInvestmentBudget">
                                 <i></i> <span>$500</span> </label>
                             <label for="price-label2">
-                                <input type="radio" name="yearly-ammount" id="price-label2" value="$100" ng-model="data.selectedInvestmentBudget">
+                                <input type="radio" name="yearly-ammount" id="price-label2" value="$100" required ng-model="data.selectedInvestmentBudget">
                                 <i></i> <span>$1000</span> </label>
                             <label for="price-label3">
-                                <input type="radio" name="yearly-ammount" id="price-label3" value="$300" ng-model="data.selectedInvestmentBudget">
+                                <input type="radio" name="yearly-ammount" id="price-label3" value="$300" required ng-model="data.selectedInvestmentBudget">
                                 <i></i> <span>$3000</span> </label>
                             <label for="price-label4">
-                                <input type="radio" name="yearly-ammount" id="price-label4" value="$5000" ng-model="data.selectedInvestmentBudget">
+                                <input type="radio" name="yearly-ammount" id="price-label4" value="$5000" required ng-model="data.selectedInvestmentBudget">
                                 <i></i> <span>$5000</span> </label>
                             <label for="price-labelOther">
-                                <input type="radio" name="yearly-ammount" id="price-labelOther" value="other" ng-model="data.selectedInvestmentBudget">
+                                <input type="radio" name="yearly-ammount" id="price-labelOther" value="other" required ng-model="data.selectedInvestmentBudget">
                                 <i></i> <span>other</span> </label>
                         </div>
                     </div>
                     <div class="other-wrap" ng-if="data.selectedInvestmentBudget === 'other'">
                         <h3 class="font-light paddingB10">In case of other, please introduce the ammount here</h3>
-                        <input type="text" placeholder="other ammount..." class="inputFieldGray">
+                        <input type="text" placeholder="other ammount..." class="inputFieldGray" ng-model="data.selectedInvestmentBudgetOther" required>
                     </div>
                     <h3 class="font-light paddingT5">What is your main  goal for investing in innovative projects?</h3>
                     <div class="primaryinterestList radiobox radioboxGrayBase">
                         <div>
                             <label for="good-return">
-                                <input type="radio" name="innovative-projects" id="good-return" value="good-return" checked>
+                                <input type="radio" name="innovative-projects" id="good-return" value="good-return" ng-model="data.selectedInvestmentGoal" required>
                                 <i></i> <span>Good return on investment</span> </label>
                         </div>
                         <div>
                             <label for="new-business">
-                                <input type="radio" name="innovative-projects" id="new-business" value="new-business">
+                                <input type="radio" name="innovative-projects" id="new-business" value="new-business" ng-model="data.selectedInvestmentGoal" required>
                                 <i></i> <span>New business Opportunities</span> </label>
                         </div>
                         <div>
                             <label for="great-teams">
-                                <input type="radio" name="innovative-projects" id="great-teams" value="great-teams">
+                                <input type="radio" name="innovative-projects" id="great-teams" value="great-teams" ng-model="data.selectedInvestmentGoal" required>
                                 <i></i> <span>Network with great minds & great teams</span> </label>
                         </div>
                     </div>
                     <h3 class="font-light paddingB10 paddingT10">What is your feeling about investing in creative projects?</h3>
-                    <textarea class="grayTextareaFiled" placeholder="explain yourself..."></textarea>
+                    <textarea class="grayTextareaFiled" placeholder="explain yourself..." ng-model="data.selectedInvestmentReason" required></textarea>
                 </form>
 
                 <div class="clearfix"></div>

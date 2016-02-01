@@ -1,6 +1,8 @@
 <div class="container">
     <div class="row">
-        <div class="col-lg-4 col-md-12"> <a href="/#/contest" class="logo"><img src="images/header.png" alt=""></a> </div>
+        <div class="col-lg-4 col-md-12">
+            <a href="/#/contest" class="logo"><img src="images/header.png" alt=""></a>
+        </div>
         <div class="col-lg-8 col-md-12">
             <div class="header_right">
                 <nav>
@@ -11,7 +13,6 @@
                         <li><a>Invest</a></li>
                         <li><a ui-sref="app.contest" ng-class="{'activenav': $state.current.name.indexOf('contest') !== -1}">Contest</a></li>
                     </ul>
-
                     <ul class="nav navbar-nav top-nav pull-right" ng-if="!authenticated">
                         <li><a ui-sref="app.login" ng-class="{'activenav': $state.current.name.indexOf('login') !== -1}">Login</a></li>
                     </ul>
@@ -25,8 +26,8 @@
                             </div>
                             <div class="profile-info">
                                 <span class="profile-name">{{user.name}} {{user.last_name}}</span>
-                                <span class="profile-role" ng-if="user.user_roles.length <= 1">{{$stateParams.role}}</span>
-                                <span class="profile-role pointer" uib-popover-template="'userRole.html'" popover-title="Use fundator as ..." popover-placement="bottom" ng-if="user.user_roles.length > 1">{{user.role}}</span>
+                                <span class="profile-role" ng-if="$stateParams.role !== 'user'">{{user.role}}</span>
+                                <span class="profile-role pointer" uib-popover-template="'userRoles.html'" popover-title="Use fundator as ..." popover-placement="bottom" ng-if="user.user_roles.length > 1">{{user.role}}</span>
                             </div>
                             <script type="text/ng-template" id="userRole.html">
                                 <div></div>
@@ -39,3 +40,8 @@
         </div>
     </div>
 </div>
+<script type="text/ng-template" id="userRoles.html">
+    <ul class="list-unstyled">
+        <li ng-repeat="role in user.roles">{{role}}</li>
+    </ul>
+</script>

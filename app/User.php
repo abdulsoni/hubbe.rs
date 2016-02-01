@@ -58,6 +58,16 @@ class User extends Model implements AuthenticatableContract,
     }
 
     /**
+     * Relationship between users and investors
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function investor()
+    {
+        return $this->hasOne('Fundator\Investor');
+    }
+
+    /**
      * Relationship between users and creators
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

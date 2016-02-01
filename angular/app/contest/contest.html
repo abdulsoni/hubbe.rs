@@ -2,7 +2,7 @@
     <div class="col-sm-12">
         <!-- Tabs here-->
         <uib-tabset class="tabsection">
-            <uib-tab heading="Ongoing Contest">
+            <uib-tab heading="Ongoing Contests">
                 <ul class="tabProjectList">
                     <li ng-repeat="contest in contests" ui-sref="app.contestsingle({contestId: contest.id})">
                         <div class="projectImg" style="background-image url(/{{contest.thumbnail}}):">
@@ -40,7 +40,6 @@
     </div>
 </div>
 
-<!--
 <h2><strong>Wanna put your creativity in motion? New Contest</strong></h2>
 <hr>
 <div class="row">
@@ -99,4 +98,3 @@
         </div>
     </div>
 </div>
--->
