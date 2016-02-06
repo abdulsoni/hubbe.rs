@@ -26,11 +26,10 @@
                             </div>
                             <div class="profile-info">
                                 <span class="profile-name">{{user.name}} {{user.last_name}}</span>
-                                <span class="profile-role" ng-if="$stateParams.role !== 'user'">{{user.role}}</span>
-                                <span class="profile-role pointer" uib-popover-template="'userRoles.html'" popover-title="Use fundator as ..." popover-placement="bottom" ng-if="user.user_roles.length > 1">{{user.role}}</span>
+                                <span class="profile-role" ng-if="$stateParams.role !== 'user' && user.user_roles.length === 1">{{activeRole}}</span>
+                                <span class="profile-role pointer" uib-popover-template="'userRole.html'" popover-title="Use fundator as ..." popover-placement="bottom" ng-if="user.user_roles.length > 1">{{activeRole}}</span>
                             </div>
-                            <script type="text/ng-template" id="userRole.html">
-                                <div></div>
+                            <script type="text/ng-template" id="userRole.html"><div><ul class="list-unstyled"><li ng-repeat="role in user.user_roles"><a class="cursor" ng-click="switchUserRole(role.role, true)">{{role.name}}</a></li></ul></div>
                             </script>
                         </a>
                     </li>
@@ -40,8 +39,3 @@
         </div>
     </div>
 </div>
-<script type="text/ng-template" id="userRoles.html">
-    <ul class="list-unstyled">
-        <li ng-repeat="role in user.roles">{{role}}</li>
-    </ul>
-</script>

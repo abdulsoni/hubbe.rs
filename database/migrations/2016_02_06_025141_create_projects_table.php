@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContestsTable extends Migration
+class CreateProjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,18 +12,24 @@ class CreateContestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('contests', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer('status');
             $table->string('thumbnail');
-
-            $table->string('name');
-            $table->longText('description');
             $table->dateTime('start_time');
             $table->integer('duration');
 
-            $table->float('budget');
+            // Step 1
+            $table->string('name')->nullable();
+            $table->mediumText('description')->nullable();
+            $table->mediumText('market')->nullable();
+            $table->json('geography')->nullable();
+
+            // Step 2
+
+            // Extra Attributes
+            $table->boolean('display');
         });
     }
 
@@ -34,6 +40,6 @@ class CreateContestsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('contests');
+        Schema::drop('projects');
     }
 }

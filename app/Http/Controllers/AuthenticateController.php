@@ -83,7 +83,7 @@ class AuthenticateController extends Controller
             $userRoles = [];
 
             foreach($roles as $role){
-                $userRoles[] = ['role' => $role->name, 'id' => $role->id];
+                $userRoles[] = ['role' => $role->name, 'name' => $role->display_name, 'id' => $role->id];
             }
 
             $response['user_roles'] = $userRoles;

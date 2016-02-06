@@ -102,7 +102,7 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->last_name = $request->last_name;
             $user->role = $request->role;
-            $user->age_gate = $request->age_gate;
+            $user->age_gate = ($request->age_gate === 'yes');
             $user->country_origin = $request->country_origin;
             $user->country_residence = $request->country_residence;
 
@@ -111,32 +111,29 @@ class UserController extends Controller
 
 
             if(!is_null($request->investor) && is_null($user->investor)){
-
                 $investor = Investor::create([
                     'investment_budget' => $request->investor['investment_budget'],
                     'investment_goal' => $request->investor['investment_goal'],
                     'investment_reason' => $request->investor['investment_reason']
                 ]);
 
-                $investor->user()->associate($user);
+                $investor->user()->associate($user)->save();
 
                 $investorRole = Role::where('name', 'investor')->first();
 
                 if(!is_null($investorRole)){
-                    $investor->roles()->attach($investorRole->id);
+                    $user->roles()->attach($investorRole->id);
                 }
             }
 
             if($user->registered == 0){
                 $user->registered = 1;
-
                 Event::fire(new Register($user));
             }
 
             if($user->save()){
                 $response = 'Updated';
             }
-
         } catch (TokenExpiredException $e) {
             $statusCode = $e->getStatusCode();
             $response['error'] = 'token_expired';

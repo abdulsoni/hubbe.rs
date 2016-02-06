@@ -61,7 +61,11 @@ return array(
 
 
 	'menu' => array(
-		'Contest' => array('contests', 'entries', 'entry_rating', 'skills', 'prizes'),
+		'Contest' => array('contests', 'entries', 'entry_rating', 'prizes'),
+		'Expertise' => array('expertise', 'skills'),
+		'Projects' => array('projects'),
+		'Investments' => array('investments'),
+		'Pages' => array('pages'),
 		'Users' => array('users', 'roles', 'permissions'),
 		'Settings' => array('settings.site'),
 	),

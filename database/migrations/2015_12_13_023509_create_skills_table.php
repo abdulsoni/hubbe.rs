@@ -17,8 +17,6 @@ class CreateSkillsTable extends Migration
 
             $table->string('name');
             $table->text('description');
-
-            $table->integer('parent_id')->nullable();
         });
     }
 

@@ -4,7 +4,7 @@ namespace Fundator;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Judge extends Model
+class Page extends Model
 {
     /**
      * Indicates if the model should be timestamped.
@@ -18,13 +18,12 @@ class Judge extends Model
      *
      * @var string
      */
-    protected $table = 'judges';
+    protected $table = 'pages';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [];
-
+    protected $fillable = ['title', 'slug', 'content'];
 }

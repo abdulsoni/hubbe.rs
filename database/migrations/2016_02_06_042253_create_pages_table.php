@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEntryRevisionTable extends Migration
+class CreatePagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,12 @@ class CreateEntryRevisionTable extends Migration
      */
     public function up()
     {
-        Schema::create('entry_revision', function (Blueprint $table) {
+        Schema::create('pages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('entry_id');
 
-            $table->string('name');
-            $table->longText('description');
-
-            $table->timestamps();
+            $table->string('title');
+            $table->string('slug');
+            $table->longText('content');
         });
     }
 
@@ -30,6 +28,6 @@ class CreateEntryRevisionTable extends Migration
      */
     public function down()
     {
-        Schema::drop('entry_revision');
+        Schema::drop('pages');
     }
 }

@@ -63,5 +63,14 @@ $api->version('v1', function ($api) {
     $api->post('entry-ratings', 'Fundator\Http\Controllers\EntryRatingController@store');
     $api->put('entry-ratings/{id}', 'Fundator\Http\Controllers\EntryRatingController@update');
 
+    /*
+     * Files
+     */
     $api->post('files/', 'Fundator\Http\Controllers\FileController@store');
+
+
+    /*
+     * Pages
+     */
+    $api->get('pages/{slug}', 'Fundator\Http\Controllers\PageController@show');
 });

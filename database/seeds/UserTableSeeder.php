@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Fundator\User;
+use Fundator\Investor;
 use Fundator\Role;
 use Fundator\Permission;
 
@@ -71,7 +72,6 @@ class UserTableSeeder extends Seeder
             'role' => 'investor'
         ])->roles()->attach($investor->id);
 
-
         User::create([
             'name' => 'Laura C.',
             'last_name' => 'Wilton',
@@ -130,5 +130,17 @@ class UserTableSeeder extends Seeder
             'contact_time' => '9-6'
         ])->roles()->attach($investor->id);
 
+        $investors = User::where('role', 'investor')->get();
+
+        foreach($investors as $user){
+            $investor = Investor::create([
+                'investment_budget' => 2000,
+                'investment_goal' => 'good-return',
+                'investment_reason' => 'To receive a good return on my investment!',
+            ]);
+
+            $investor->user()->associate($user);
+            $investor->save();
+        }
     }
 }

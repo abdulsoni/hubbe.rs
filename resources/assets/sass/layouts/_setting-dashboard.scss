@@ -1,4 +1,4 @@
-body{@include transition(overflow .5s ease-out);} 
+body{@include transition(overflow .5s ease-out);}
 body.navigation-is-open{overflow:hidden;}
 
 //body.navigation-is-open header{padding-right:16px;}
@@ -32,8 +32,16 @@ main {
   white-space: nowrap;
   @include transition(transform 0.5s);
   text-indent:-9999px;
+
+  > span{
+    @include transition(all 0.3s);
+  }
 }
-//.cd-nav-trigger:hover{background-color:#94c44d !important;}
+.cd-nav-trigger:hover{
+  > span {
+    background-color: $fd-green !important;
+  }
+}
 
 .cd-nav-trigger .cd-nav-icon,  .mobile-nav-trigger .mobile-nav-icon{
  position: absolute;
@@ -140,4 +148,4 @@ main {
 .cd-nav .cd-contact-info span {display: block;}
 .cd-nav .cd-contact-info li, .cd-nav .cd-contact-info a, .cd-nav .cd-contact-info span {font-size: 1.6rem;}
 .mobile-nav-trigger{@include transform(rotate(90deg));}
-.open-mobileNav.mobile-nav-trigger{@include transform(rotate(270deg));}	
+.open-mobileNav.mobile-nav-trigger{@include transform(rotate(270deg));}

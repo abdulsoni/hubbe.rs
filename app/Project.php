@@ -4,7 +4,7 @@ namespace Fundator;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EntryRevision extends Model
+class Project extends Model
 {
     /**
      * Indicates if the model should be timestamped.
@@ -18,22 +18,21 @@ class EntryRevision extends Model
      *
      * @var string
      */
-    protected $table = 'entry_revision';
+    protected $table = 'projects';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description', 'status', 'start_time', 'duration', 'market', 'geography'];
 
     /**
-     * Relationship between Entries and Contests
+     * Project Investment
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function entry()
-    {
-        return $this->belongsTo('Fundator\Entry');
+    public function investments(){
+        return $this->hasMany('Fundator\Investment');
     }
 }

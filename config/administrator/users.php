@@ -49,7 +49,12 @@ return array(
         'role' => array(
             'type' => 'enum',
             'title' => 'Role',
-            'options' => array('Creator', 'Expert', 'Super Expert', 'Investor'),
+            'options' => array(
+                'creator' => 'Creator',
+                'expert' => 'Expert',
+                'super_expert' => 'Super Expert',
+                'investor' => 'Investor'
+            ),
         ),
     ),
 

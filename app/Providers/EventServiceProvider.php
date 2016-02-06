@@ -33,19 +33,5 @@ class EventServiceProvider extends ServiceProvider
     public function boot(DispatcherContract $events)
     {
         parent::boot($events);
-
-        Pivot::updated(function($pivot) {
-            Log::info('detected ...');
-            Log::info('table ' . $pivot->getTable());
-
-            if ($pivot->getTable() == 'contest_jury') {
-                //do your stuff
-                //ugly hack to get current parent model
-                $parent = $pivot->offsetGet('parent')->touch();
-
-
-                Log::info($parent);
-            }
-        });
     }
 }

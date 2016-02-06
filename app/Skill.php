@@ -26,14 +26,4 @@ class Skill extends Model
      * @var array
      */
     protected $fillable = ['name', 'description'];
-
-    /**
-     * Relationship between Entries and Contests
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function parent()
-    {
-        return $this->belongsTo('Fundator\Skill', 'parent_id');
-    }
 }

@@ -2,6 +2,8 @@
 
 namespace Fundator\Providers;
 
+use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

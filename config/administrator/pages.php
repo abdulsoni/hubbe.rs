@@ -6,23 +6,23 @@
 
 return array(
 
-    'title' => 'Skills',
+    'title' => 'Pages',
 
-    'single' => 'Skill',
+    'single' => 'Page',
 
-    'model' => 'Fundator\Skill',
+    'model' => 'Fundator\Page',
 
     /**
      * The display columns
      */
     'columns' => array(
         'id',
-        'name' => array(
-            'title' => 'Name'
+        'title' => array(
+            'title' => 'Title'
         ),
-        'description' => array(
-            'title' => 'Description'
-        )
+        'slug' => array(
+            'title' => 'Slug'
+        ),
     ),
 
     /**
@@ -37,10 +37,13 @@ return array(
      */
     'edit_fields' => array(
         'id',
-        'name' => array(
-            'title' => 'Name',
+        'title' => array(
+            'title' => 'Title'
         ),
-        'description' => array(
+        'slug' => array(
+            'title' => 'Slug'
+        ),
+        'content' => array(
             'title' => 'Description',
             'type' => 'wysiwyg'
         )

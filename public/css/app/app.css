@@ -6430,6 +6430,15 @@ main {
   -o-transition: transform 0.5s;
   transition: transform 0.5s;
   text-indent: -9999px; }
+  .cd-nav-trigger > span, .mobile-nav-trigger > span {
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s; }
+
+.cd-nav-trigger:hover > span {
+  background-color: #95c54d !important; }
 
 .cd-nav-trigger .cd-nav-icon, .mobile-nav-trigger .mobile-nav-icon {
   position: absolute;
@@ -8159,14 +8168,16 @@ ul.list-unstyled.radioboxWhiteBase li {
   border-bottom: none;
   margin-bottom: 50px; }
   .dashbord-tab > ul li {
-    padding-right: 105px; }
+    width: 25%;
+    text-align: center; }
     .dashbord-tab > ul li a {
       border: 2px solid rgba(41, 170, 226, 0);
       font-size: 34px;
       text-decoration: none;
       color: #fff;
       font-weight: 300;
-      padding-bottom: 4px; }
+      padding-bottom: 4px;
+      display: inline-block; }
   .dashbord-tab > ul:after {
     display: block;
     content: '';
@@ -10770,6 +10781,29 @@ footer {
     font-style: italic;
     font-weight: lighter;
     line-height: 1.3; }
+  .profile .profile-info .popover {
+    border: 0;
+    box-shadow: none;
+    background: #444;
+    min-width: 180px; }
+    .profile .profile-info .popover .arrow:after {
+      border-bottom-color: #444; }
+    .profile .profile-info .popover .popover-title {
+      background-color: #444;
+      border-bottom: 0;
+      font-weight: normal; }
+    .profile .profile-info .popover .popover-content {
+      background-color: #333;
+      padding: 0; }
+      .profile .profile-info .popover .popover-content ul > li > a {
+        display: block;
+        padding: 8px 15px;
+        color: #fff;
+        text-decoration: none; }
+        .profile .profile-info .popover .popover-content ul > li > a:hover {
+          cursor: pointer;
+          background-color: #444;
+          color: #95c54d; }
 
 .ongoing-contest,
 .contest-list {

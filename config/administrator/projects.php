@@ -6,11 +6,11 @@
 
 return array(
 
-    'title' => 'Contests',
+    'title' => 'Projects',
 
-    'single' => 'Contest',
+    'single' => 'Project',
 
-    'model' => 'Fundator\Contest',
+    'model' => 'Fundator\Project',
 
     /**
      * The display columns
@@ -19,16 +19,6 @@ return array(
         'id',
         'name' => array(
             'title' => 'Name',
-        ),
-        'num_entries' => array(
-            'title' => '# entries',
-            'relationship' => 'entries',
-            'select' => 'COUNT((:table).id)',
-        ),
-        'num_prizes' => array(
-            'title' => '# prizes',
-            'relationship' => 'prizes',
-            'select' => 'COUNT((:table).id)',
         )
     ),
 
@@ -65,17 +55,9 @@ return array(
             'title' => 'Start Date',
             'type' => 'date'
         ),
-        'budget' => array(
-            'title' => 'Budget',
-            'type' => 'number',
-            'decimals' => 2,
-            'thousands_separator' => ',',
-            'decimal_separator' => '.'
-        ),
-        'jury' => array(
-            'type' => 'relationship',
-            'title' => 'Jury',
-            'name_field' => 'name'
+        'duration' => array(
+            'title' => 'Duration',
+            'type' => 'number'
         )
     ),
 

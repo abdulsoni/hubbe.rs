@@ -139,6 +139,9 @@ class User extends Model implements AuthenticatableContract,
                         'first_name' => $user->name
                     ]);
                     break;
+                case 'investor':
+                    $user->investor()->create([]);
+                    break;
             }
         });
     }

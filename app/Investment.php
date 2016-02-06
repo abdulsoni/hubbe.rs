@@ -4,37 +4,36 @@ namespace Fundator;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Investor extends Model
+class Investment extends Model
 {
     /**
      * Indicates if the model should be timestamped.
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'investors';
+    protected $table = 'investments';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['investment_budget', 'investment_goal', 'investment_reason'];
+    protected $fillable = ['type', 'amount', 'equity'];
 
     /**
-     * Attachemnt to the parent user
+     * Attachment to the investor
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
-    {
-        return $this->belongsTo('Fundator\User');
+    public function investor(){
+        return $this->belongsTo('Fundator\Investor');
     }
 
     /**
@@ -42,14 +41,7 @@ class Investor extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function investments()
-    {
-        return $this->hasMany('Fundator\Investment');
+    public function project(){
+        return $this->belongsTo('Fundator\Project');
     }
-
-    public function getNameAttribute()
-    {
-        return $this->user->name;
-    }
-
 }

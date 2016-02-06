@@ -7,6 +7,8 @@
         $rootScope.$stateParams = $stateParams;
         $rootScope.initialLocationSetup = false;
 
+        $rootScope.activeRole = '';
+
         $rootScope.appLoading = true;
         $rootScope.isNavShown = false;
 
@@ -53,11 +55,14 @@
                             $state.go('app.register');
                         }
 
-                        var params = $state.params;
-                        params.role = $rootScope.user.role;
-
-                        $state.go($state.current.name, params, {reload: true});
+                        $rootScope.switchUserRole($rootScope.user.role, true);
                     }
+                }, function(){
+                    $auth.logout().then(function() {
+                        localStorage.removeItem('fundator_token');
+                        $rootScope.authenticated = false;
+                        $rootScope.user = undefined;
+                    });
                 });
 
                 $urlRouter.sync();
@@ -77,12 +82,12 @@
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
             if ($auth.isAuthenticated()) {
 
-                if (typeof($rootScope.user) !== 'undefined' && toParams.role === 'user') {
-                    toParams.role = $rootScope.user.role;
-                    $state.go(toState.name, toParams, {reload: true});
-                    event.preventDefault();
-                }
-                return;
+                // if (typeof($rootScope.user) !== 'undefined' && toParams.role === 'user') {
+                //     toParams.role = $rootScope.user.role;
+                //     $state.go(toState.name, toParams, {reload: true});
+                //     event.preventDefault();
+                // }
+                // return;
             } else {
                 if (toState.name.indexOf('login') === -1) {
                     $timeout(function() {
@@ -93,6 +98,50 @@
                 }
             }
         });
+
+        var getView = function(viewName, secondaryName) {
+            if (typeof secondaryName === 'undefined') {
+                secondaryName = viewName;
+            }
+
+            return './views/app/app/' + viewName + '/' + secondaryName + '.html';
+        };
+
+        // Switch User Role
+
+        $rootScope.switchUserRole = function(role, reload) {
+            $rootScope.activeRole = role;
+
+            var userRoleViews = [{
+                route: 'app',
+                view: 'quickUpdate',
+                roles: {
+                    investor: getView('quick-update', 'quick-update-investor'),
+                    jury: getView('quick-update', 'quick-update-jury'),
+                },
+                defaultTemplate: getView('quick-update')
+            }, {
+                route: 'app.contestsingle',
+                view: 'main@',
+                roles: {
+                    jury: getView('contest-single', 'contest-single-jury'),
+                },
+                defaultTemplate: getView('contest', 'contest-single')
+            }];
+
+            angular.forEach(userRoleViews, function(roleView) {
+                var roleTemplateView = roleView.roles[role];
+                var view = $state.get(roleView.route).views[roleView.view];
+
+                if (typeof(roleTemplateView) !== 'undefined') {
+                    view.templateUrl = roleTemplateView;
+                }else{
+                    view.templateUrl = roleView.defaultTemplate;
+                }
+            });
+
+            $state.go($state.current.name, $state.current.params, {reload: reload});
+        };
 
     });
 
