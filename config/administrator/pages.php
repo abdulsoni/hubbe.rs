@@ -22,7 +22,7 @@ return array(
         ),
         'slug' => array(
             'title' => 'Slug'
-        ),
+        )
     ),
 
     /**

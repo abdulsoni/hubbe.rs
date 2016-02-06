@@ -82,12 +82,11 @@
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
             if ($auth.isAuthenticated()) {
 
-                // if (typeof($rootScope.user) !== 'undefined' && toParams.role === 'user') {
-                //     toParams.role = $rootScope.user.role;
-                //     $state.go(toState.name, toParams, {reload: true});
-                //     event.preventDefault();
-                // }
-                // return;
+                if (typeof($rootScope.user) === 'undefined') {
+                    event.preventDefault();
+                }
+
+                return;
             } else {
                 if (toState.name.indexOf('login') === -1) {
                     $timeout(function() {
@@ -139,6 +138,10 @@
                     view.templateUrl = roleView.defaultTemplate;
                 }
             });
+
+            if ($state.current.name === '') {
+                $state.current.name = 'app.contest';
+            }
 
             $state.go($state.current.name, $state.current.params, {reload: reload});
         };

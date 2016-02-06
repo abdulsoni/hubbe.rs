@@ -59,6 +59,15 @@
                     }
                 }
             })
+            .state('app.home', {
+                url: '/',
+                views: {
+                    'main@': {
+                        templateUrl: getView('home'),
+                        controller: 'HomeCtrl'
+                    }
+                }
+            })
             .state('app.contest', {
                 url: '/contest',
                 views: {

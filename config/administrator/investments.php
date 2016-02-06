@@ -33,10 +33,10 @@ return array(
             'title' => 'Type',
         ),
         'amount' => array(
-            'title' => 'Amount',
+            'title' => 'Amount (USD)',
         ),
         'equity' => array(
-            'title' => 'Equity',
+            'title' => 'Equity (%)',
         )
     ),
 
@@ -71,14 +71,14 @@ return array(
             ]
         ),
         'amount' => array(
-            'title' => 'Amount',
+            'title' => 'Amount (USD)',
             'type' => 'number',
             'decimals' => 2,
             'thousands_separator' => ',',
             'decimal_separator' => '.'
         ),
         'equity' => array(
-            'title' => 'Equity',
+            'title' => 'Equity (%)',
             'type' => 'number',
             'decimals' => 2
         ),
