@@ -24,10 +24,6 @@ return array(
             'type' => 'text',
             'limit' => 50,
         ),
-        'page_cache_lifetime' => array(
-            'title' => 'Page Cache Lifetime (in minutes)',
-            'type' => 'number',
-        ),
         'logo' => array(
             'title' => 'Image (200 x 150)',
             'type' => 'image',
@@ -47,8 +43,6 @@ return array(
      */
     'rules' => array(
         'site_name' => 'required|max:50',
-        'page_cache_lifetime' => 'required|integer',
-        'logo' => 'required',
     ),
 
     /**
@@ -61,7 +55,10 @@ return array(
      */
     'before_save' => function(&$data)
     {
-        $data['site_name'] = $data['site_name'] . ' - The Blurst Site Ever';
+        //$data['site_name'] = $data['site_name'] . ' - where creation begins';
+
+
+        Config::set('app.site_name', $data['site_name']);
     },
 
     /**
@@ -79,22 +76,22 @@ return array(
     /**
      * This is where you can define the settings page's custom actions
      */
-    'actions' => array(
-        //Ordering an item up
-        'clear_page_cache' => array(
-            'title' => 'Clear Page Cache',
-            'messages' => array(
-                'active' => 'Clearing cache...',
-                'success' => 'Page Cache Cleared',
-                'error' => 'There was an error while clearing the page cache',
-            ),
-            //the settings data is passed to the closure and saved if a truthy response is returned
-            'action' => function(&$data)
-            {
-                Cache::forget('pages');
-
-                return true;
-            }
-        ),
-    ),
+//    'actions' => array(
+//        //Ordering an item up
+//        'clear_page_cache' => array(
+//            'title' => 'Clear Page Cache',
+//            'messages' => array(
+//                'active' => 'Clearing cache...',
+//                'success' => 'Page Cache Cleared',
+//                'error' => 'There was an error while clearing the page cache',
+//            ),
+//            //the settings data is passed to the closure and saved if a truthy response is returned
+//            'action' => function(&$data)
+//            {
+//                Cache::forget('pages');
+//
+//                return true;
+//            }
+//        ),
+//    ),
 );

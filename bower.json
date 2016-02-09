@@ -18,7 +18,8 @@
     "owl-carousel": "OwlFonk/OwlCarousel",
     "Chart.js": "~1.0.2",
     "ng-img-crop": "ngImgCrop#~0.3.2",
-    "angular-file-upload": "~2.2.0"
+    "angular-file-upload": "~2.2.0",
+    "angular-ellipsis": "~0.1.6"
   },
   "overrides": {
     "owl-carousel": {

@@ -1,4 +1,5 @@
 <?php
+use Fundator\Events\AssignJury;
 
 /**
  * Directors model config
@@ -79,4 +80,41 @@ return array(
         )
     ),
 
+    /**
+     * Notify Judges
+     */
+    'actions' => array(
+
+        // Send Notifications to judges
+        'notify_judges' => array(
+            'title' => 'Notify Judges',
+            'messages' => array(
+                'active' => 'Notifying ...',
+                'success' => 'All Judges were notified',
+                'error' => 'There was an error while notifying the judges',
+            ),
+            'permission' => function($model)
+            {
+                return $model->jury->count() >= 1;
+            },
+            'action' => function($model)
+            {
+                // Notify the judges
+
+
+                try{
+                    foreach($model->jury as $judge){
+                        Event::fire(new AssignJury($model, $judge));
+                    }
+
+                    return true;
+                }catch (Exception $e){
+                    Log::error($e);
+                }
+
+                return false;
+            }
+        )
+
+    ),
 );

@@ -47,5 +47,15 @@ class ContestSeeder extends Seeder
             'duration' => 60,
             'budget' => 50000
         ]);
+
+        /*
+         * Create Entries
+         */
+
+
+
+        /*
+         * Create Prizes
+         */
     }
 }

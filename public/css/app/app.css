@@ -8802,6 +8802,12 @@ footer {
       display: table; }
     .contest-single_info-panel .tab-content:after {
       clear: both; }
+  .contest-single_info-panel .nav-pills > li > a .badge {
+    position: relative;
+    top: 5px; }
+
+.contest-single_description {
+  max-height: 60px; }
 
 .center .fd-loader {
   position: absolute;

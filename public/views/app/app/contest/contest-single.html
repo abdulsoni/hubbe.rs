@@ -35,8 +35,8 @@
             	<uib-tabset vertical="true" type="pills">
             		<uib-tab heading="General">
                         <div class="row">
-                            <div class="col-xs-12 contest-single_description marginT15">
-                                <p>{{contest.description}}</p>
+                            <div class="col-xs-12 contest-single_description marginT15" data-ellipsis data-ellipsis-append="read more" data-ellipsis-append-click="showFullText()">
+                                <div ng-bind-html="contest.description | trustedHtml"></div>
                             </div>
                         </div>
                         <hr />
@@ -50,23 +50,8 @@
                             <div class="col-sm-3 text-right"><span class="radius-box marginT10">2nd</span></div>
                         </div>
                         <hr />
-                        <!-- <div class="row">
-                            <div class="col-xs-12">
-                                <h4><strong>Average Marks</strong></h4>
-                            </div>
-                            <div class="col-sm-5">
-                                <h4 class="clearfix"><strong class="pull-left">Design</strong> <small class="pull-right">8,5/10</small></h4>
-                                <h4 class="clearfix"><strong class="pull-left">Creativity</strong> <small class="pull-right">8,5/10</small></h4>
-                            </div>
-                            <div class="col-sm-1"></div>
-                            <div class="col-sm-5">
-                                <h4 class="clearfix"><strong class="pull-left">Industry</strong> <small class="pull-right">8,5/10</small></h4>
-                                <h4 class="clearfix"><strong class="pull-left">Market</strong> <small class="pull-right">8,5/10</small></h4>
-                            </div>
-                            <div class="col-sm-1"></div>
-                        </div>
-                        <hr />
- -->                        <div class="row">
+
+                        <div class="row">
                             <div class="col-md-12">
                                 <ul class="prizebox">
                                     <li><a>USD 1000 + 10% royalties if manufactured</a></li>
@@ -195,7 +180,7 @@
 	                    <p class="bordRight">{{rating.judge.name}}
 	                        <br> Inventor
 	                        <br>
-	                        <a href="#">Italia</a></p>
+	                        <a href="#">{{rating.country_residence}}</a></p>
 	                </div>
 	                <div class="col-xs-4">
 	                    <h4 class="clearfix"><strong class="pull-left">Design</strong> <small class="pull-right">{{rating.design}}</small></h4>
@@ -221,8 +206,8 @@
             </div>
             <form class="chatsendform">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter your message here and click enter or send button...">
-                    <span class="input-group-addon sendbtn"><span class="glyphicon">Send</span></span>
+                    <input type="text" class="form-control" placeholder="Enter your message here ..." ng-model="data.messageToSend" fd-enter="sendMessage()">
+                    <span class="input-group-addon sendbtn" ng-click="sendMessage()"><span class="glyphicon">Send</span></span>
                 </div>
             </form>
 	    </div>

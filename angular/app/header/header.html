@@ -29,7 +29,7 @@
                                 <span class="profile-role" ng-if="$stateParams.role !== 'user' && user.user_roles.length === 1">{{activeRole}}</span>
                                 <span class="profile-role pointer" uib-popover-template="'userRole.html'" popover-title="Use fundator as ..." popover-placement="bottom" ng-if="user.user_roles.length > 1">{{activeRole}}</span>
                             </div>
-                            <script type="text/ng-template" id="userRole.html"><div><ul class="list-unstyled"><li ng-repeat="role in user.user_roles"><a class="cursor" ng-click="switchUserRole(role.role, true)">{{role.name}}</a></li></ul></div>
+                            <script type="text/ng-template" id="userRole.html"><div><ul class="list-unstyled"><li ng-repeat="role in user.user_roles"><a class="cursor" ng-click="switchUserRole(role.role, role.id, true)">{{role.name}}</a></li></ul></div>
                             </script>
                         </a>
                     </li>

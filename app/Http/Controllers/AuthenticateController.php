@@ -2,6 +2,7 @@
 
 namespace Fundator\Http\Controllers;
 
+use Fenos\Notifynder\Models\Notification;
 use Fundator\Http\Requests;
 use Fundator\Role;
 use Illuminate\Http\Request;
@@ -24,9 +25,7 @@ class AuthenticateController extends Controller
 
     public function __construct()
     {
-        // Apply the jwt.auth middleware to all methods in this controller
-        // except for the authenticate method. We don't want to prevent
-        // the user from retrieving their token if they don't already have it
+        // Token Based Access
         $this->middleware('jwt.auth', ['except' => ['index', 'authenticate', 'linkedin']]);
     }
 
@@ -88,6 +87,13 @@ class AuthenticateController extends Controller
 
             $response['user_roles'] = $userRoles;
 
+
+            $notifications = $user->getNotifications();
+            foreach($notifications as $notification){
+                unset($notification['from']);
+            }
+            $response['notifications'] = $notifications;
+
             if(!is_null($user->thumbnail)){
                 $response['thumbnail'] = $user->thumbnail->getUrl();
             }
@@ -106,7 +112,7 @@ class AuthenticateController extends Controller
             $response['error'] = $e;
         }
 
-        return new Response($response, $statusCode);
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
     public function authenticate(Request $request)

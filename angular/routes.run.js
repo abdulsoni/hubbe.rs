@@ -1,13 +1,15 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.routes').run(function($rootScope, $state, $stateParams, $auth, $timeout, $http, $urlRouter) {
+    angular.module('fundator.routes').run(function($rootScope, $state, $stateParams, $auth, $timeout, $http, $urlRouter, $filter) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
         $rootScope.initialLocationSetup = false;
 
         $rootScope.activeRole = '';
+        $rootScope.activeState = null;
+        $rootScope.activeStateParams = null;
 
         $rootScope.appLoading = true;
         $rootScope.isNavShown = false;
@@ -48,14 +50,16 @@
                     if (typeof(result.error) === 'undefined') {
                         $rootScope.user = result.data;
 
-                        console.log('user data');
-                        console.log(result.data)
-
                         if ($rootScope.user.registered == 0) {
                             $state.go('app.register');
-                        }
+                        }else{
+                            var roles = $filter('filter')($rootScope.user.user_roles, {role: $rootScope.user.role}, true);
 
-                        $rootScope.switchUserRole($rootScope.user.role, true);
+                            if (typeof(roles) !== 'undefined' && roles.length > 0) {
+                                var role = roles[0];
+                                $rootScope.switchUserRole(role.role, role.id, true);
+                            }
+                        }
                     }
                 }, function(){
                     $auth.logout().then(function() {
@@ -81,11 +85,11 @@
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
             if ($auth.isAuthenticated()) {
-
                 if (typeof($rootScope.user) === 'undefined') {
+                    $rootScope.activeState = toState;
+                    $rootScope.activeStateParams = toParams;
                     event.preventDefault();
                 }
-
                 return;
             } else {
                 if (toState.name.indexOf('login') === -1) {
@@ -108,13 +112,24 @@
 
         // Switch User Role
 
-        $rootScope.switchUserRole = function(role, reload) {
+        $rootScope.switchUserRole = function(role, roleId, reload) {
             $rootScope.activeRole = role;
+
+            if (typeof($rootScope.user) !== 'undefined') {
+                if ($rootScope.user.user_roles.length === 0) {
+                    $rootScope.user.user_roles.push({
+                        id: null,
+                        name: role,
+                        role: null
+                    });
+                }
+            }
 
             var userRoleViews = [{
                 route: 'app',
                 view: 'quickUpdate',
                 roles: {
+                    creator: getView('quick-update', 'quick-update-creator'),
                     investor: getView('quick-update', 'quick-update-investor'),
                     jury: getView('quick-update', 'quick-update-jury'),
                 },
@@ -139,11 +154,25 @@
                 }
             });
 
-            if ($state.current.name === '') {
-                $state.current.name = 'app.contest';
+            var model = null;
+
+            switch(role){
+                case 'creator': model = '/api/creators/' + roleId
+                break;
+                case 'investor': model = '/api/investors/' + roleId
+                break;
             }
 
-            $state.go($state.current.name, $state.current.params, {reload: reload});
+            $http.get(model).then(function(result){
+                $rootScope.user[role] = result.data;
+
+                if ($state.current.name === '') {
+                    $state.current.name = $rootScope.activeState.name;
+                    $state.current.params = $rootScope.activeStateParams;
+                }
+
+                $state.go($state.current.name, $state.current.params, {reload: reload});
+            });
         };
 
     });

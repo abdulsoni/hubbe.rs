@@ -9,8 +9,6 @@
         	contestId: 0,
         	onClick: function(){}
         };
-
-        console.log('flash notice controller');
     });
 
 })();

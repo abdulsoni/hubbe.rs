@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Fundator\Entry;
 use Fundator\Contest;
-use Fundator\User;
+use Fundator\Creator;
 
 class EntrySeeder extends Seeder
 {
@@ -14,27 +14,74 @@ class EntrySeeder extends Seeder
      */
     public function run()
     {
-//        $contest = Contest::find(1);
-//
-//        $user1 = User::find(1);
-//        $user2 = User::find(2);
+        $contests = Contest::all();
 
-        $entry1 = Entry::create([
-            'name' => 'Exercitation ullamco',
-            'description' => 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-        ]);
+        $creator = Creator::where('user_id', 1)->first();
 
-        $entry2 = Entry::create([
-            'name' => 'Exercitation ullamco',
-            'description' => 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-        ]);
+        foreach($contests as $contest){
+            $entry1 = Entry::create([
+                'name' => 'Entry #1 : ' . $contest->name,
+                'description' => 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+            ]);
 
-//        $contest->contestants()->attach($user1->id, [
-//           'entry_id' => $entry1->id
-//        ]);
-//
-//        $contest->contestants()->attach($user2->id, [
-//            'entry_id' => $entry2->id
-//        ]);
+            $entry1->contest()->associate($contest);
+            $entry1->creator()->associate($creator)->save();
+
+            $entry2 = Entry::create([
+                'name' => 'Entry #1 : ' . $contest->name,
+                'description' => 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+            ]);
+
+            $entry2->contest()->associate($contest);
+            $entry2->creator()->associate($creator)->save();
+
+            $entry1->ratings()->create([
+                'judge_id' => '3',
+                'design' => rand(1, 10),
+                'creativity' => rand(1, 10),
+                'industrial' => rand(1, 10),
+                'market' => rand(1, 10)
+            ]);
+
+            $entry1->ratings()->create([
+                'judge_id' => '4',
+                'design' => rand(1, 10),
+                'creativity' => rand(1, 10),
+                'industrial' => rand(1, 10),
+                'market' => rand(1, 10)
+            ]);
+
+            $entry1->ratings()->create([
+                'judge_id' => '5',
+                'design' => rand(1, 10),
+                'creativity' => rand(1, 10),
+                'industrial' => rand(1, 10),
+                'market' => rand(1, 10)
+            ]);
+
+            $entry2->ratings()->create([
+                'judge_id' => '3',
+                'design' => rand(1, 10),
+                'creativity' => rand(1, 10),
+                'industrial' => rand(1, 10),
+                'market' => rand(1, 10)
+            ]);
+
+            $entry2->ratings()->create([
+                'judge_id' => '4',
+                'design' => rand(1, 10),
+                'creativity' => rand(1, 10),
+                'industrial' => rand(1, 10),
+                'market' => rand(1, 10)
+            ]);
+
+            $entry2->ratings()->create([
+                'judge_id' => '5',
+                'design' => rand(1, 10),
+                'creativity' => rand(1, 10),
+                'industrial' => rand(1, 10),
+                'market' => rand(1, 10)
+            ]);
+        }
     }
 }

@@ -28,8 +28,8 @@ $api->version('v1', function ($api) {
     /*
      * Authentication
      */
-    $api->get('user', 'Fundator\Http\Controllers\AuthenticateController@getUser');
     $api->get('users', 'Fundator\Http\Controllers\AuthenticateController@index');
+    $api->get('user', 'Fundator\Http\Controllers\UserController@show');
     $api->put('users/{id}', 'Fundator\Http\Controllers\UserController@update');
 
     $api->post('authenticate', 'Fundator\Http\Controllers\AuthenticateController@authenticate');
@@ -62,6 +62,12 @@ $api->version('v1', function ($api) {
      */
     $api->post('entry-ratings', 'Fundator\Http\Controllers\EntryRatingController@store');
     $api->put('entry-ratings/{id}', 'Fundator\Http\Controllers\EntryRatingController@update');
+
+    /*
+     * Creators
+     */
+    $api->get('creators/', 'Fundator\Http\Controllers\CreatorController@index');
+    $api->get('creators/{id}', 'Fundator\Http\Controllers\CreatorController@show');
 
     /*
      * Files

@@ -2,6 +2,8 @@
 
 namespace Fundator\Http\Controllers;
 
+use Fenos\Notifynder\Models\Notification;
+use Fundator\Creator;
 use Fundator\Events\Register;
 use Fundator\Investor;
 use Fundator\Role;
@@ -45,10 +47,9 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
         $statusCode = 200;
         $response = [];
@@ -61,6 +62,23 @@ class UserController extends Controller
             $response = $user->getAttributes();
             unset($response['password']);
             unset($response['remember_token']);
+
+            $response['judging'] = $user->judging;
+            $response['user_roles'] = $user->user_roles;
+
+            $notifications = $user->getNotifications();
+
+            foreach($notifications as $notification){
+                unset($notification['from']);
+                $extra = $notification->extra->toArray();
+                $notification['extras'] = $extra;
+            }
+
+            $response['notifications'] = $notifications;
+
+            if(!is_null($user->thumbnail)){
+                $response['thumbnail'] = $user->thumbnail->getUrl();
+            }
 
         } catch (TokenExpiredException $e) {
             $statusCode = $e->getStatusCode();
@@ -76,7 +94,7 @@ class UserController extends Controller
             $response['error'] = $e;
         }
 
-        return new Response($response, $statusCode);
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
 
@@ -110,7 +128,7 @@ class UserController extends Controller
             $user->contact_time = $request->contact_time;
 
 
-            if(!is_null($request->investor) && is_null($user->investor)){
+            if(isset($request->investor) && is_null($user->investor)){
                 $investor = Investor::create([
                     'investment_budget' => $request->investor['investment_budget'],
                     'investment_goal' => $request->investor['investment_goal'],
@@ -123,6 +141,18 @@ class UserController extends Controller
 
                 if(!is_null($investorRole)){
                     $user->roles()->attach($investorRole->id);
+                }
+            }
+
+            if(isset($request->creator) && is_null($user->creator)){
+                $creator = Creator::create([]);
+
+                $creator->user()->associate($user)->save();
+
+                $creatorRole = Role::where('name', 'creator')->first();
+
+                if(!is_null($creatorRole)){
+                    $user->roles()->attach($creatorRole->id);
                 }
             }
 

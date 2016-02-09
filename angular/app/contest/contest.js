@@ -3,9 +3,6 @@
 
     angular.module('fundator.controllers').controller('ContestCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $timeout) {
 
-        console.log('contest state param');
-        console.log($stateParams);
-
         $scope.contests = [];
         $rootScope.$broadcast('startLoading');
 
@@ -86,9 +83,6 @@
             var judgeable = $filter('filter')($rootScope.user.judging, {
                 id: $scope.contestId
             });
-
-            console.log('judgeable');
-                console.log(judgeable);
 
             if (typeof(judgeable) !== 'undefined') {
                 if (judgeable.length > 0 && $stateParams.role !== 'jury') {

@@ -27,8 +27,8 @@ return array(
         ),
         'creator' => array(
             'title' => 'Creator',
-            'relationship' => 'creator',
-            'select' => 'first_name',
+            'relationship' => 'creator.user',
+            'select' => 'name',
         ),
         'description' => array(
             'title' => 'Description',
@@ -62,7 +62,7 @@ return array(
         'creator' => array(
             'type' => 'relationship',
             'title' => 'Creator',
-            'name_field' => 'first_name'
+            'name_field' => 'name'
         )
     ),
 

@@ -40,9 +40,8 @@ class SendRegistrationNotification
                 ->from($user->id)
                 ->to($user->id)
                 ->url(URL::to('/'))
+                ->extra(['icon' => 'signup', 'action' => null])
                 ->send();
-
-            Log::info('Sending email to : ' . $user->email);
 
             Mail::send('emails.register', ['user' => $user, 'login_url' => $this->login_url], function ($m) use ($user) {
                 $m->from('noreply@fundator.co', 'Fundator');

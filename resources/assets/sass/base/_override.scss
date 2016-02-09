@@ -34,7 +34,7 @@
     width: 25%;
     float: left;
   }
-  
+
   .tab-content{
     width: 75%;
     float: left;
@@ -42,6 +42,19 @@
 
     @include clearfix();
   }
+
+  .nav-pills{
+    > li > a{
+      .badge{
+        position: relative;
+        top: 5px;
+      }
+    }
+  }
+}
+
+.contest-single_description{
+  max-height: 60px;
 }
 
 .fd-loader{

@@ -4,7 +4,7 @@ namespace Fundator;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Skill extends Model
+class ExpertiseCategory extends Model
 {
     /**
      * Indicates if the model should be timestamped.
@@ -18,7 +18,7 @@ class Skill extends Model
      *
      * @var string
      */
-    protected $table = 'skills';
+    protected $table = 'expertise_categories';
 
     /**
      * The attributes that are mass assignable.
@@ -28,12 +28,10 @@ class Skill extends Model
     protected $fillable = ['name', 'description'];
 
     /**
-     * Expertise
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Parent Link
      */
-    public function expertise()
+    public function parent()
     {
-        return $this->belongsToMany('Fundator\Expertise', 'expertise_skills');
+        return $this->belongsTo('Fundator\ExpertiseCategory', 'parent_id');
     }
 }

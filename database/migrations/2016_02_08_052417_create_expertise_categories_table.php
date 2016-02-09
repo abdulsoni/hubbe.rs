@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCreatorsTable extends Migration
+class CreateExpertiseCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,12 @@ class CreateCreatorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('creators', function (Blueprint $table) {
+        Schema::create('expertise_categories', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('parent_id')->nullable();
 
-            $table->integer('user_id');
+            $table->string('name');
+            $table->string('description');
         });
     }
 
@@ -26,6 +28,6 @@ class CreateCreatorsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('creators');
+        Schema::drop('expertise_categories');
     }
 }

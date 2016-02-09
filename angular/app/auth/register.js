@@ -185,9 +185,6 @@
 
 
         $scope.submitDetails = function(){
-            console.log('Submit details');
-
-
             var userData = {
                 name: $scope.data.fname,
                 last_name: $scope.data.lname,
@@ -196,21 +193,24 @@
                 country_origin: $scope.data.countryOrigin,
                 country_residence: $scope.data.countryResidence,
                 contact_number: $scope.data.contactNumber,
-                contact_time: $scope.data.contactTime.value,
-                investor: {}
+                contact_time: $scope.data.contactTime.value
             };
 
             switch($scope.data.selectedRole){
                 case 'investor':
-                var investmentBudget = $scope.data.selectedInvestmentBudget;
+                    var investmentBudget = $scope.data.selectedInvestmentBudget;
 
-                if (investmentBudget === 'other') {
-                    investmentBudget = $scope.data.selectedInvestmentBudgetOther;
-                }
-
-                userData.investor.investment_budget = investmentBudget;
-                userData.investor.investment_goal = $scope.data.selectedInvestmentGoal;
-                userData.investor.investment_reason = $scope.data.selectedInvestmentReason;
+                    if (investmentBudget === 'other') {
+                        investmentBudget = $scope.data.selectedInvestmentBudgetOther;
+                    }
+                    userData.investor = {};
+                    userData.investor.investment_budget = investmentBudget;
+                    userData.investor.investment_goal = $scope.data.selectedInvestmentGoal;
+                    userData.investor.investment_reason = $scope.data.selectedInvestmentReason;
+                break;
+                case 'creator':
+                    userData.creator = {};
+                break;
             }
 
             $rootScope.$broadcast('startLoading');

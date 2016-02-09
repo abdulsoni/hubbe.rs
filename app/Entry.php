@@ -84,6 +84,23 @@ class Entry extends Model
         return null;
     }
 
+    public function getAverageRating()
+    {
+        $ratings = $this->ratings;
+
+        if(sizeof($ratings) > 0){
+            $averageSum = 0;
+
+            foreach($ratings as $rating){
+                $averageSum = $averageSum + ($rating->design + $rating->creativity + $rating->industrial + $rating->market) / 4;
+            }
+
+            return $averageSum / sizeof($ratings);
+        }
+
+        return 0;
+    }
+
     /**
      *
      */
@@ -91,28 +108,36 @@ class Entry extends Model
     {
         parent::boot();
 
-        static::created(function($entry){
+        static::saved(function($entry){
             $thread = Thread::create([
                 'subject' => '#' . $entry->id . ' ' . $entry->name,
             ]);
 
-            $judges = $entry->contest->jury;
+            if(!is_null($entry->contest)){
+                $judges = $entry->contest->jury;
 
-            foreach($judges as $judge){
-                Participant::create([
-                    'thread_id' => $thread->id,
-                    'user_id'   => $judge->id,
-                    'last_read' => new Carbon,
-                ]);
+                foreach($judges as $judge){
+                    if(is_null(Participant::where('user_id', $judge->id)->first())){
+                        Participant::create([
+                            'thread_id' => $thread->id,
+                            'user_id'   => $judge->id,
+                            'last_read' => new Carbon,
+                        ]);
+                    }
+                }
             }
 
-            $creator = $entry->creator->user;
+            if(!is_null($entry->creator)){
+                $creator = $entry->creator->user;
 
-            Participant::create([
-                'thread_id' => $thread->id,
-                'user_id'   => $creator->id,
-                'last_read' => new Carbon,
-            ]);
+                if(is_null(Participant::where('user_id', $creator->id)->first())) {
+                    Participant::create([
+                        'thread_id' => $thread->id,
+                        'user_id' => $creator->id,
+                        'last_read' => new Carbon,
+                    ]);
+                }
+            }
 
         });
     }

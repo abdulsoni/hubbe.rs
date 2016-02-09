@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title ng-bind="pageTitle()">Fundator</title>
+    <title>{!! config('app.site_name') !!}</title>
 
     <link rel="stylesheet" href="{!! asset('css/app/app.css') !!}">
     <link rel="stylesheet" href="{!! asset('css/app/vendor.css') !!}">

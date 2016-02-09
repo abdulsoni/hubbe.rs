@@ -2,6 +2,7 @@
 
 namespace Fundator;
 
+use Fenos\Notifynder\Notifable;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -18,7 +19,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 class User extends Model implements AuthenticatableContract,
                                     CanResetPasswordContract
 {
-    use Authenticatable, CanResetPassword, EntrustUserTrait, Messagable;
+    use Authenticatable, CanResetPassword, EntrustUserTrait, Messagable, Notifable;
 
     /**
      * The database table used by the model.
@@ -75,6 +76,18 @@ class User extends Model implements AuthenticatableContract,
     public function judging()
     {
         return $this->belongsToMany('Fundator\Contest', 'contest_jury', 'judge_id');
+    }
+
+    public function getUserRolesAttribute()
+    {
+        $roles = $this->roles;
+        $userRoles = [];
+
+        foreach($roles as $role){
+            $userRoles[] = ['role' => $role->name, 'name' => $role->display_name, 'id' => $role->id];
+        }
+
+        return $userRoles;
     }
 
     // Helper functions
@@ -135,9 +148,7 @@ class User extends Model implements AuthenticatableContract,
         {
             switch($user->role){
                 case 'creator':
-                    $user->creator()->create([
-                        'first_name' => $user->name
-                    ]);
+                    $user->creator()->create([]);
                     break;
                 case 'investor':
                     $user->investor()->create([]);
