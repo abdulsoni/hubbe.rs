@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{!! config('app.site_name') !!}</title>
 
+    <link rel="stylesheet" href="{!! asset('css/app/chosen.min.css') !!}">
     <link rel="stylesheet" href="{!! asset('css/app/app.css') !!}">
     <link rel="stylesheet" href="{!! asset('css/app/vendor.css') !!}">
 
@@ -48,6 +49,7 @@
     <footer ui-view="footer"></footer>
 
     <script src="{!! asset('js/app/jquery.min.js') !!}"></script>
+    <script src="{!! asset('js/app/chosen.jquery.min.js') !!}"></script>
     <script src="{!! asset('js/app/vendor.js') !!}"></script>
     <script src="{!! asset('js/app/app.js') !!}"></script>
 

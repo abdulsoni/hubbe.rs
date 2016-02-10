@@ -23,7 +23,7 @@
                 <div class="primaryinterestList radiobox radioboxGrayBase">
                     <label for="as-a-creator">
                         <input type="radio" name="interest-using-fundathom" id="as-a-creator" value="creator" ng-model="data.selectedRole" ng-change="changeRole()">
-                        <i></i> <span>As a Contestant</span> </label>
+                        <i></i> <span>As a Contestant OR Creator</span> </label>
                     <label for="As-an-Expert">
                         <input type="radio" name="interest-using-fundathom" id="As-an-Expert" value="expert" ng-model="data.selectedRole" ng-change="changeRole()">
                         <i></i> <span>As an Expert</span> </label>
@@ -132,13 +132,12 @@
                 <div class="clearfix"></div>
                 <div class="marginT20">
                     <button type="button" class="action back btn btn-black rgbBtn" ng-click="form.currentStep = 2">Previous</button>
-                    <button type="button" class="action submit btn btn-success rgbBtn" ng-disabled="step2Form.$invalid"  ng-if="data.selectedRole !== 'investor'" ng-click="submitDetails()">Submit</button>
-                    <button type="button" class="action next btn btn-info rgbBtn" ng-disabled="step2Form.$invalid"  ng-if="data.selectedRole === 'investor'" ng-click="form.currentStep = 4">Save &amp; Next</button>
+                    <button type="button" class="action submit btn btn-success rgbBtn" ng-disabled="step2Form.$invalid"  ng-if="totalSteps[data.selectedRole] === 3" ng-click="submitDetails()">Submit</button>
+                    <button type="button" class="action next btn btn-info rgbBtn" ng-disabled="step2Form.$invalid"  ng-if="totalSteps[data.selectedRole] > 3" ng-click="form.currentStep = 4">Save &amp; Next</button>
                 </div>
             </div>
-            <div class="step-registration" ng-if="form.currentStep === 4">
+            <div class="step-registration" ng-if="form.currentStep === 4 && data.selectedRole === 'investor'">
                 <form name="step3Form">
-
                     <h3 class="font-light paddingB10">Which type of projects are you more likely to invest in?</h3>
                     <div class="projects-invest">
                         <label class="select-style">
@@ -221,6 +220,170 @@
                 <div class="marginT20">
                     <button type="button" class="action back btn btn-black rgbBtn" ng-click="form.currentStep = 3">Previous</button>
                     <button type="button" class="action submit btn btn-success rgbBtn" ng-disabled="step3Form.$invalid"  ng-if="data.selectedRole === 'investor'" ng-click="submitDetails()">Submit</button>
+                </div>
+            </div>
+            <div class="step-registration" ng-if="form.currentStep === 4 && data.selectedRole === 'expert'">
+                <form name="step3Form">
+                    <h3 class="font-light paddingB10">Select your expertise.</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto exercitationem consequatur
+                    <br>laboriosam doloribus nobis quia nam dolore maxime perspiciatis nesciunt harum magni aliquid aspernatur omnis.</p>
+
+                    <div class="expertise-list">
+                        <div class="expertise" ng-repeat="inputtedExpertise in inputtedExpertiseList track by $index" ng-disabled="inputtedExpertise === false">
+                            {{inputtedExpertiseIndex=$index;''}}
+                            <h3 class="font-light paddingB10">Expertise {{inputtedExpertiseIndex + 1}}</h3>
+
+                            <!-- <div class="expertise_inner">
+                                <div class="expertise_empty" ng-if="typeof(inputtedExpertise.id) !== 'undefined' || inputtedExpertise === false">
+                                    <span class="icon icon-plus"></span>
+                                    Add New
+                                </div>
+                            </div> -->
+
+                            <div class="expertise-form">
+                                <div class="expertise-form_steps">
+                                    <div class="expertise-form_step" ng-class="{'active': inputtedExpertise.step === 1}" ng-click="inputtedExpertise.step = 1">
+                                        <span class="expertise-form_step__count">1</span>
+                                        Expertise Category
+                                        <span class="expertise-form_step__sub" ng-if="inputtedExpertise.selectedExpertiseCategory !== null">+ {{inputtedExpertise.selectedExpertiseCategory.name}}</span>
+                                    </div>
+                                    <div class="expertise-form_step" ng-class="{'active': inputtedExpertise.step === 2}" ng-click="inputtedExpertise.step = 2"
+                                        ng-disabled="inputtedExpertise.selectedExpertiseCategory === null && inputtedExpertise.otherExpertiseCategory.status === 0">
+                                        <span class="expertise-form_step__count">2</span>
+                                        Sub Expertise Category
+                                        <span class="expertise-form_step__sub" ng-if="inputtedExpertise.selectedExpertiseSubCategory !== null">+ {{inputtedExpertise.selectedExpertiseSubCategory.name}}</span>
+                                    </div>
+                                    <div class="expertise-form_step" ng-class="{'active': inputtedExpertise.step === 3}" ng-click="inputtedExpertise.step = 3"
+                                        ng-disabled="inputtedExpertise.selectedExpertiseSubCategory === null && inputtedExpertise.otherExpertiseSubCategory.status === 0">
+                                        <span class="expertise-form_step__count">3</span>
+                                        Expertise
+                                        <span class="expertise-form_step__sub" ng-if="inputtedExpertise.selectedExpertise !== null">+ {{inputtedExpertise.selectedExpertise.name}}</span>
+                                    </div>
+                                    <div class="expertise-form_step" ng-class="{'active': inputtedExpertise.step === 4}" ng-click="inputtedExpertise.step = 4"
+                                        ng-disabled="inputtedExpertise.selectedExpertise === null && inputtedExpertise.otherExpertise.status === 0">
+                                        <span class="expertise-form_step__count">4</span>
+                                        Skills Review
+                                        <span class="expertise-form_step__sub" ng-if="inputtedExpertise.selectedSkills.length > 0">+ {{inputtedExpertise.selectedSkills.length}} selected</span>
+                                    </div>
+                                </div>
+
+                                <div class="expertise-form_panes" ng-if="!inputtedEpxertise.loading">
+                                    <div class="expertise-form_step-pane" ng-if="inputtedExpertise.step === 1">
+                                        <div class="expertise-category-list" ng-if="inputtedExpertise.otherExpertiseCategory.status === 0">
+                                            <div class="expertise-category tag" ng-repeat="expertiseCategory in inputtedExpertise.expertiseCategoryList track by $index"
+                                                ng-class="{'active': inputtedExpertise.selectedExpertiseCategory === expertiseCategory}"
+                                                ng-click="selectExpertiseCategory(inputtedExpertiseIndex, expertiseCategory, 0)"
+                                                ng-disabled="inputtedExpertise.selectedExpertiseCategory !== null && inputtedExpertise.selectedExpertiseCategory != expertiseCategory">
+                                                {{expertiseCategory.name}}
+                                                <span class="expertise-category_cancel icon icon-cross" ng-click="deselectExpertiseCategory($event, inputtedExpertiseIndex, 0)"></span>
+                                            </div>
+                                        </div>
+                                        <div class="expertise-actions">
+                                            <div class="expertise-actions_other-status" ng-if="inputtedExpertise.otherExpertiseCategory.status > 0">
+                                                You have opted to enter a custom Expertise Category, enter your Expertise Category below
+                                            </div>
+
+                                            <div class="expertise-actions_other-field">
+                                                <input type="text" class="expertise-actions_other-field__input" placeholder="Other ..." ng-model="inputtedExpertise.otherExpertiseCategory.name"
+                                                focus-on="inputtedExpertise.otherExpertiseCategory.status > 0">
+                                            </div>
+
+                                            <button class="expertise-actions_other-submit btn btn-info" ng-click="saveOtherExpertiseCategory(inputtedExpertiseIndex, 0)"
+                                                ng-if="inputtedExpertise.otherExpertiseCategory.status === 0">Save</button>
+                                            <button class="expertise-actions_other-submit btn btn-danger" ng-click="removeOtherExpertiseCategory(inputtedExpertiseIndex, 0)"
+                                                ng-if="inputtedExpertise.otherExpertiseCategory.status > 0">Remove</button>
+                                        </div>
+                                    </div>
+                                    <div class="expertise-form_step-pane" ng-if="inputtedExpertise.step === 2">
+                                        <div class="expertise-category-list" ng-if="inputtedExpertise.otherExpertiseCategory.status === 0 && inputtedExpertise.otherExpertiseSubCategory.status === 0">
+                                            <div class="expertise-category tag" ng-repeat="expertiseSubCategory in inputtedExpertise.expertiseSubCategoryList track by $index"
+                                                ng-class="{'active': inputtedExpertise.selectedExpertiseSubCategory === expertiseSubCategory}"
+                                                ng-click="selectExpertiseCategory(inputtedExpertiseIndex, expertiseSubCategory, 1)"
+                                                ng-disabled="inputtedExpertise.selectedExpertiseSubCategory !== null && inputtedExpertise.selectedExpertiseSubCategory != expertiseSubCategory">
+                                                {{expertiseSubCategory.name}}
+                                                <span class="expertise-category_cancel icon icon-cross" ng-click="deselectExpertiseCategory($event, inputtedExpertiseIndex, 1)"></span>
+                                            </div>
+                                        </div>
+                                        <div class="expertise-actions">
+                                            <div class="expertise-actions_other-status" ng-if="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0">
+                                                You have opted to enter a custom Sub Expertise Category, enter your Expertise Category below
+                                            </div>
+
+                                            <div class="expertise-actions_other-field">
+                                                <input type="text" class="expertise-actions_other-field__input" placeholder="Other ..." ng-model="inputtedExpertise.otherExpertiseSubCategory.name"
+                                                focus-on="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0">
+                                            </div>
+
+                                            <button class="expertise-actions_other-submit btn btn-info" ng-click="saveOtherExpertiseCategory(inputtedExpertiseIndex, 1)"
+                                                ng-if="inputtedExpertise.otherExpertiseSubCategory.status === 0">Save</button>
+                                            <button class="expertise-actions_other-submit btn btn-danger" ng-click="removeOtherExpertiseCategory(inputtedExpertiseIndex, 1)"
+                                                ng-if="inputtedExpertise.otherExpertiseSubCategory.status > 0">Remove</button>
+                                        </div>
+                                    </div>
+                                    <div class="expertise-form_step-pane" ng-if="inputtedExpertise.step === 3">
+                                        <div class="expertise-category-list" ng-if="inputtedExpertise.otherExpertiseCategory.status === 0 && inputtedExpertise.otherExpertiseSubCategory.status === 0 && inputtedExpertise.otherExpertise.status === 0">
+                                            <div class="expertise-category tag full" ng-repeat="expertise in inputtedExpertise.expertiseList track by $index"
+                                                ng-class="{'active': inputtedExpertise.selectedExpertise === expertise}"
+                                                ng-click="selectExpertise(inputtedExpertiseIndex, expertise)"
+                                                ng-disabled="inputtedExpertise.selectedExpertise !== null && inputtedExpertise.selectedExpertise != expertise">
+                                                {{expertise.name}}
+                                                <span class="expertise-category_cancel icon icon-cross" ng-click="deselectExpertise($event, inputtedExpertiseIndex)"></span>
+                                            </div>
+                                        </div>
+                                        <div class="expertise-actions">
+                                            <div class="expertise-actions_other-status" ng-if="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0 || inputtedExpertise.otherExpertise.status > 0">
+                                                You have opted to enter a custom Expertise, enter your Expertise below
+                                            </div>
+
+                                            <div class="expertise-actions_other-field">
+                                                <input type="text" class="expertise-actions_other-field__input" placeholder="Other ..." ng-model="inputtedExpertise.otherExpertise.name"
+                                                focus-on="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0 || inputtedExpertise.otherExpertise.status > 0">
+                                            </div>
+
+                                            <button class="expertise-actions_other-submit btn btn-info" ng-click="saveOtherExpertise(inputtedExpertiseIndex)"
+                                                ng-if="inputtedExpertise.otherExpertise.status === 0">Save</button>
+                                            <button class="expertise-actions_other-submit btn btn-danger" ng-click="removeOtherExpertise(inputtedExpertiseIndex)"
+                                                ng-if="inputtedExpertise.otherExpertise.status > 0">Remove</button>
+                                        </div>
+                                    </div>
+                                    <div class="expertise-form_step-pane" ng-if="inputtedExpertise.step === 4">
+                                        <div class="expertise-category-list" ng-if="inputtedExpertise.otherExpertiseCategory.status === 0 && inputtedExpertise.otherExpertiseSubCategory.status === 0 && inputtedExpertise.otherExpertise.status === 0">
+                                            <div class="expertise-category tag" ng-repeat="skill in inputtedExpertise.skillsList track by $index"
+                                                ng-class="{'active': inSkills(inputtedExpertiseIndex, skill)}"
+                                                ng-click="selectSkill(inputtedExpertiseIndex, skill)">
+                                                <!-- ng-disabled="inputtedExpertise.skillsList.length > 0 && !inSkills(inputtedExpertiseIndex, skill)" -->
+                                                {{skill.name}}
+                                                <span class="expertise-category_cancel icon icon-cross" ng-click="deselectSkill($event, inputtedExpertiseIndex, skill)"></span>
+                                            </div>
+                                        </div>
+                                        <div class="expertise-actions">
+                                            <div class="expertise-actions_other-status" ng-if="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0 || inputtedExpertise.otherExpertise.status > 0">
+                                                You have entered a custom Expertise, please select the matching skills below.
+                                            </div>
+                                            <div class="expertise-actions_other-field">
+                                                <select chosen multiple data-placeholder="Other Skills ..."
+                                                    no-results-text="'Could not find any skills :('"
+                                                    ng-model="inputtedExpertise.otherSkills.list"
+                                                    ng-options="skill as skill.name for skill in allSkills">
+                                                </select>
+                                            </div>
+
+                                            <button class="expertise-actions_other-submit btn btn-info" ng-click="saveSkills(inputtedExpertiseIndex)">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <fd-loader ng-if="inputtedEpxertise.loading"></fd-loader>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+                <div class="clearfix"></div>
+                <div class="marginT20">
+                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="form.currentStep = 3">Previous</button>
+                    <button type="button" class="action submit btn btn-success rgbBtn" ng-disabled="step3Form.$invalid" ng-click="submitDetails()">Submit</button>
                 </div>
             </div>
         </div>

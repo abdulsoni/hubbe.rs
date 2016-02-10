@@ -7,8 +7,20 @@
                 </section>
 
                 <div class="auth-providers">
-                    <a ng-click="authenticate('linkedin')">
+                    <!-- <a ng-click="authenticate('linkedin')">
                         <img src="/images/linkedin.png" alt="Linkedin Login">
+                    </a> -->
+                    <a class="auth-provider auth-provider_facebook" ng-click="authenticate('facebook')">
+                        <span class="icon icon-facebook"></span>
+                    </a>
+                    <a class="auth-provider auth-provider_linkedin" ng-click="authenticate('linkedin')">
+                        <span class="icon icon-linkedin2"></span>
+                    </a>
+                    <a class="auth-provider auth-provider_google" ng-click="authenticate('google')">
+                        <span class="icon icon-google"></span>
+                    </a>
+                    <a class="auth-provider auth-provider_twitter" ng-click="authenticate('twitter')">
+                        <span class="icon icon-twitter"></span>
                     </a>
                 </div>
 

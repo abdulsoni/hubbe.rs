@@ -22,16 +22,30 @@
         return new Blob([ia], {type:mimeString});
     }
 
-    angular.module('fundator.controllers').controller('RegisterCtrl', function($rootScope, $scope, $state, $auth, $timeout, $http, $window, FileUploader) {
+    angular.module('fundator.directives').directive('focusOn', function() {
+        return {
+            scope: { focusOn: '=' },
+            link: function(scope, elem, attr) {
+                console.log(scope.focusOn);
+
+                if(scope.focusOn){
+                    elem[0].focus();
+                }
+           }
+       };
+    });
+
+
+    angular.module('fundator.controllers').controller('RegisterCtrl', function($rootScope, $scope, $state, $auth, $timeout, $http, $resource, $window, $filter, FileUploader) {
 
         $scope.form = {
             currentStep: 1,
-            totalSteps: 4
+            totalSteps: 3
         };
 
         $scope.totalSteps = {
             creator: 3,
-            expert: 3,
+            expert: 4,
             investor: 4
         };
 
@@ -43,11 +57,17 @@
         ];
 
         $scope.data = {
-            selectedRole: '',
+            selectedRole: 'expert',
             ageGate: 'yes',
             countryOrigin: 'China',
             countryResidence: 'China',
-            contactTime: ''
+            contactTime: '',
+            expertiseForm: {
+                step: 1,
+                loading: true
+            },
+            croppedThumbnail: null,
+            email: ''
         };
 
         var payload = $auth.getPayload();
@@ -70,11 +90,6 @@
         $scope.croppedThumbnail = null;
         $scope.fileName = 'No file selected';
         $scope.imageError = null;
-
-        $scope.data = {
-            croppedThumbnail: null,
-            email: ''
-        };
 
         $rootScope.$watch('user', function(user){
             if (typeof(user) === 'undefined') return;
@@ -183,6 +198,204 @@
             $scope.uploader.uploadAll();
         }
 
+
+        // Expert Related Functions
+
+        $scope.allSkills = $resource('api/skills').query();
+
+        $scope.inputtedExpertiseList = [];
+
+        function addNewInputtedExpertise(){
+            if ($scope.inputtedExpertiseList.length < 3) {
+                $scope.inputtedExpertiseList.push({
+                    expertiseCategoryList: [],
+                    expertiseSubCategoryList: [],
+                    expertiseList: [],
+                    skillsList: [],
+                    selectedExpertiseCategory: null,
+                    otherExpertiseCategory: {name: '', status: 0},
+                    selectedExpertiseSubCategory: null,
+                    otherExpertiseSubCategory: {name: '', status: 0},
+                    selectedExpertise: null,
+                    otherExpertise: {name: '', status: 0},
+                    selectedSkills: [],
+                    otherSkills: {list: [], status: 0},
+                    step: 1,
+                    loading: false
+                })
+            };
+
+            $scope.fetchExpertiseCategory($scope.inputtedExpertiseList.length - 1);
+        }
+
+        $scope.selectExpertiseCategory = function(index, expertiseCategory, level){
+            if (level === 0) {
+                $scope.inputtedExpertiseList[index].selectedExpertiseCategory = expertiseCategory;
+                $scope.inputtedExpertiseList[index].step = 2;
+                $scope.fetchExpertiseSubCategory(index);
+            }else{
+                $scope.inputtedExpertiseList[index].selectedExpertiseSubCategory = expertiseCategory;
+                $scope.inputtedExpertiseList[index].step = 3;
+                $scope.fetchExpertiseList(index);
+            }
+        }
+
+        $scope.deselectExpertiseCategory = function(e, index, level){
+            if (level === 0) {
+                $scope.inputtedExpertiseList[index].selectedExpertiseCategory = null;
+                $scope.inputtedExpertiseList[index].otherExpertiseCategory = {name: '', status: 0};
+                $scope.inputtedExpertiseList[index].selectedExpertiseSubCategory = null;
+                $scope.inputtedExpertiseList[index].otherExpertiseSubCategory = {name: '', status: 0};
+                $scope.inputtedExpertiseList[index].selectedExpertise = null;
+                $scope.inputtedExpertiseList[index].otherExpertise = {name: '', status: 0};
+                $scope.inputtedExpertiseList[index].selectedSkills = [];
+            }else{
+                $scope.inputtedExpertiseList[index].selectedExpertiseSubCategory = null;
+                $scope.inputtedExpertiseList[index].otherExpertiseSubCategory = {name: '', status: 0};
+                $scope.inputtedExpertiseList[index].selectedExpertise = null;
+                $scope.inputtedExpertiseList[index].otherExpertise = {name: '', status: 0};
+                $scope.inputtedExpertiseList[index].selectedSkills = [];
+            }
+            e.stopPropagation();
+        }
+
+        $scope.saveOtherExpertiseCategory = function(index, level){
+            if (level === 0) {
+                $scope.inputtedExpertiseList[index].selectedExpertiseCategory = null;
+                // $scope.inputtedExpertiseList[index].otherExpertiseCategory = {name: '', status: 0};
+                $scope.inputtedExpertiseList[index].selectedExpertiseSubCategory = null;
+                $scope.inputtedExpertiseList[index].otherExpertiseSubCategory = {name: '', status: 0};
+                $scope.inputtedExpertiseList[index].selectedExpertise = null;
+                $scope.inputtedExpertiseList[index].otherExpertise = {name: '', status: 0};
+                $scope.inputtedExpertiseList[index].selectedSkills = [];
+
+                $scope.inputtedExpertiseList[index].otherExpertiseCategory.status = 1;
+                $scope.inputtedExpertiseList[index].step = 2;
+            }else{
+                $scope.inputtedExpertiseList[index].selectedExpertiseSubCategory = null;
+                // $scope.inputtedExpertiseList[index].otherExpertiseSubCategory = {name: '', status: 0};
+                $scope.inputtedExpertiseList[index].selectedExpertise = null;
+                $scope.inputtedExpertiseList[index].otherExpertise = {name: '', status: 0};
+                $scope.inputtedExpertiseList[index].selectedSkills = [];
+
+                $scope.inputtedExpertiseList[index].otherExpertiseSubCategory.status = 1;
+                $scope.inputtedExpertiseList[index].step = 3;
+            }
+        }
+
+        $scope.removeOtherExpertiseCategory = function(index, level){
+            if (level === 0) {
+                $scope.inputtedExpertiseList[index].otherExpertiseCategory = {name: '', status: 0};
+                $scope.inputtedExpertiseList[index].otherExpertiseSubCategory = {name: '', status: 0};
+                $scope.inputtedExpertiseList[index].otherExpertise = {name: '', status: 0};
+            }else{
+                $scope.inputtedExpertiseList[index].otherExpertiseSubCategory = {name: '', status: 0};
+                $scope.inputtedExpertiseList[index].otherExpertise = {name: '', status: 0};
+            }
+        }
+
+        $scope.selectExpertise = function(index, expertise){
+            $scope.inputtedExpertiseList[index].selectedExpertise = expertise;
+            $scope.inputtedExpertiseList[index].otherExpertise = {name: '', status: 0};
+            $scope.inputtedExpertiseList[index].step = 4;
+            $scope.fetchSkillsList(index);
+            addNewInputtedExpertise();
+        }
+
+        $scope.deselectExpertise = function(e, index){
+            $scope.inputtedExpertiseList[index].selectedExpertise = null;
+            $scope.inputtedExpertiseList[index].selectedSkills = [];
+            e.stopPropagation(index);
+        }
+
+        $scope.saveOtherExpertise = function(index){
+            $scope.inputtedExpertiseList[index].selectedExpertise = null;
+            // $scope.inputtedExpertiseList[index].otherExpertise = {name: '', status: 0};
+            $scope.inputtedExpertiseList[index].selectedSkills = [];
+
+            $scope.inputtedExpertiseList[index].otherExpertise.status = 1;
+            $scope.inputtedExpertiseList[index].step = 4;
+            addNewInputtedExpertise();
+        }
+
+        $scope.removeOtherExpertise = function(index){
+            $scope.inputtedExpertiseList[index].otherExpertise = {name: '', status: 0};
+        }
+
+        $scope.inSkills = function(index, skill){
+            var foundSkill = $filter('filter')($scope.inputtedExpertiseList[index].selectedSkills, {id: skill.id}, true);
+
+            if (typeof(foundSkill) !== 'undefined') {
+                return foundSkill.length > 0;
+            }
+
+            return false;
+        }
+
+        $scope.selectSkill = function(index, skill){
+            if(!$scope.inSkills(index, skill)){
+                $scope.inputtedExpertiseList[index].selectedSkills.push(skill);
+            }
+            $scope.inputtedExpertiseList[index].step = 4;
+        }
+
+        $scope.deselectSkill = function(e, index, skill){
+            $scope.inputtedExpertiseList[index].selectedSkills = $filter('filter')($scope.inputtedExpertiseList[index].selectedSkills, {id: skill.id}, function(actual, expected){
+                return !angular.equals(actual, expected)
+            });
+            e.stopPropagation();
+        }
+
+        $scope.saveSkills = function(index){
+            $scope.inputtedExpertiseList[index].skillsList = angular.copy($scope.inputtedExpertiseList[index].otherSkills.list);
+            $scope.inputtedExpertiseList[index].selectedSkills = angular.copy($scope.inputtedExpertiseList[index].otherSkills.list);
+            $scope.inputtedExpertiseList[index].otherSkills = {list: [], status: 0};
+        }
+
+        $scope.fetchExpertiseCategory = function(index){
+            $scope.inputtedExpertiseList[index].expertiseCategoryList = [];
+            $scope.inputtedExpertiseList[index].loading = true;
+
+            $http.get('/api/expertise-category/0').then(function(result){
+                $scope.inputtedExpertiseList[index].expertiseCategoryList = result.data;
+                $scope.inputtedExpertiseList[index].loading = false;
+            });
+        }
+
+        $scope.fetchExpertiseSubCategory = function(index){
+            $scope.expertiseSubCategoryList = [];
+            $scope.inputtedExpertiseList[index].loading = true;
+
+            $http.get('/api/expertise-category/' + $scope.inputtedExpertiseList[index].selectedExpertiseCategory.id).then(function(result){
+                $scope.inputtedExpertiseList[index].expertiseSubCategoryList = result.data;
+                $scope.inputtedExpertiseList[index].loading = false;
+            });
+        }
+
+        $scope.fetchExpertiseList = function(index){
+            $scope.inputtedExpertiseList[index].expertiseList = [];
+            $scope.inputtedExpertiseList[index].loading = true;
+
+            $http.get('/api/expertise/category/' + $scope.inputtedExpertiseList[index].selectedExpertiseSubCategory.id).then(function(result){
+                $scope.inputtedExpertiseList[index].expertiseList = result.data;
+                $scope.inputtedExpertiseList[index].loading = false;
+            }, 2000);
+        }
+
+        $scope.fetchSkillsList = function(index){
+            $scope.inputtedExpertiseList[index].skillsList = [];
+            $scope.inputtedExpertiseList[index].loading = true;
+
+            $http.get('/api/expertise/' + $scope.inputtedExpertiseList[index].selectedExpertise.id + '/skills/').then(function(result){
+                $scope.inputtedExpertiseList[index].skillsList = result.data;
+                $scope.inputtedExpertiseList[index].selectedSkills = result.data;
+                $scope.inputtedExpertiseList[index].loading = false;
+            }, 2000);
+        }
+
+        addNewInputtedExpertise()
+
+        // Expert Related Functions
 
         $scope.submitDetails = function(){
             var userData = {

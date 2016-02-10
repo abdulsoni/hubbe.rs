@@ -20,7 +20,6 @@ Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
-
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api) {
@@ -74,9 +73,17 @@ $api->version('v1', function ($api) {
      */
     $api->post('files/', 'Fundator\Http\Controllers\FileController@store');
 
-
     /*
      * Pages
      */
     $api->get('pages/{slug}', 'Fundator\Http\Controllers\PageController@show');
+
+    /*
+     * Expertise & Expertise Category
+     */
+    $api->get('expertise/category/{category}', 'Fundator\Http\Controllers\ExpertiseController@index');
+    $api->get('expertise/{id}/skills', 'Fundator\Http\Controllers\ExpertiseController@skills');
+    $api->get('expertise-category/{parent?}', 'Fundator\Http\Controllers\ExpertiseCategoryController@index');
+
+    $api->get('skills/', 'Fundator\Http\Controllers\SkillsController@index');
 });

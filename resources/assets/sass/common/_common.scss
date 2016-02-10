@@ -189,3 +189,6 @@ fd-loader {
     cursor: pointer;
 }
 
+*, *:focus{
+    outline: none !important;
+}

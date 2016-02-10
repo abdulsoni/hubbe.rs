@@ -23,6 +23,8 @@
             };
 
             $auth.login(credentials).then(function(data) {
+                console.log('login succssfull');
+                console.log(data);
                 $state.go('app.contest', {}, {reload: true});
             }, function(err){
                 console.log(err);

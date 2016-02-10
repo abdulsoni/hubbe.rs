@@ -27,7 +27,6 @@
         });
 
         $rootScope.$on('$locationChangeSuccess', function(e) {
-
             if (typeof($rootScope.user) !== 'undefined') {
                 if ($rootScope.user.registered == 0) {
                     $state.go('app.register');
@@ -88,7 +87,7 @@
                 if (typeof($rootScope.user) === 'undefined') {
                     $rootScope.activeState = toState;
                     $rootScope.activeStateParams = toParams;
-                    event.preventDefault();
+                    // event.preventDefault();
                 }
                 return;
             } else {

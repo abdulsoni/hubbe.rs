@@ -6,7 +6,7 @@
         		<img src="images/coolestImg.jpg" alt="{{contest.thumbnail}}">
         	</div>
         </div>
-        <h3 class="clearfix marginT0"><span class="pull-left">Average Marks</span> <small class="pull-right marginT5">{{user.creator.rating}}</small></h3>
+        <h3 class="clearfix marginT0"><span class="pull-left">Average Marks</span> <small class="pull-right marginT5">{{user.creator.rating | number:1}} / 10</small></h3>
         <h3 class="clearfix marginT0"><span class="pull-left">Average Ranking</span> <small class="pull-right marginT5">17% in 2015</small></h3>
         <h3 class="clearfix marginT0"><span class="pull-left">Total Entries </span> <small class="pull-right marginT5">{{user.creator.total_entries}}</small></h3>
     </div>
