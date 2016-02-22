@@ -13,6 +13,7 @@ use Fundator\Http\Controllers\Controller;
 use Fundator\User;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Exception;
@@ -166,10 +167,12 @@ class AuthenticateController extends Controller
                 return response()->json(['message' => $validator->messages()], 400);
             }
 
-            $user = new User([
-                'name' => $request->only('name'),
-                'email' => $request->only('email'),
-                'password' => $request->only('password'),
+            Log::info($request->name);
+
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => $request->password,
                 'confirmation_code' => str_random(30)
             ]);
 
