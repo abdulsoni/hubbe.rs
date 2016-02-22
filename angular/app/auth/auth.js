@@ -14,23 +14,27 @@
             $state.go('app.contest', {});
         }
 
+        $scope.data = {};
+
         $scope.signup = function() {
             var userInfo = {
-                name: $scope.name,
-                email: $scope.email,
-                password: $scope.password
+                name: $scope.data.name,
+                email: $scope.data.email,
+                password: $scope.data.password
             }
 
             $http.post('/api/authenticate/signup', userInfo).then(function(result){
                 if (typeof(result.data.error) === 'undefined') {
 
                     if (result.data.success === true && typeof(result.data.message) !== 'undefined') {
+                        $scope.errorMessage = null;
                         $scope.successMessage = result.data.message;
                     }
                 }
             }, function(error){
                 if (typeof(error.data.message.email) !== 'undefined') {
                     console.log(error.data.message.email[0]);
+                    $scope.successMessage = null;
                     $scope.errorMessage = error.data.message.email[0];
                 }
             });
@@ -42,8 +46,8 @@
             FdScroller.toTop();
 
             var credentials = {
-                email: $scope.email,
-                password: $scope.password
+                email: $scope.data.email,
+                password: $scope.data.password
             };
 
             $auth.login(credentials).then(function(data) {

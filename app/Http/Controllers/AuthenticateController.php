@@ -166,12 +166,12 @@ class AuthenticateController extends Controller
                 return response()->json(['message' => $validator->messages()], 400);
             }
 
-            $user = new User;
-            $user->name = $request->input('name');
-            $user->email = $request->input('email');
-            $user->password = bcrypt($request->input('password'));
-            $user->confirmation_code = $confirmation_code = str_random(30);
-            $user->save();
+            $user = new User([
+                'name' => $request->only('name'),
+                'email' => $request->only('email'),
+                'password' => $request->only('password'),
+                'confirmation_code' => str_random(30)
+            ]);
 
             Event::fire(new Signup($user));
 

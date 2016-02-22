@@ -94,6 +94,11 @@
                 return;
             } else {
                 if (fromState.name.indexOf('auth') === -1) {
+                    $timeout(function() {
+                        event.preventDefault();
+                        $state.go('app.auth.login', {});
+                        return;
+                    });
                     return;
                 } else if (toState.name.indexOf('auth') === -1 && fromState.name.indexOf('auth') !== -1) {
                     FdScroller.toTop();
