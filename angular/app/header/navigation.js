@@ -12,7 +12,7 @@
                 $rootScope.user = undefined;
                 $rootScope.isNavShown = false;
 
-                $state.go('app.login', {}, {reload: true});
+                $state.go('app.auth.login', {}, {reload: true});
             });
         }
     });

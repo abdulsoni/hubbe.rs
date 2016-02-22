@@ -1,0 +1,20 @@
+<main class="main-login">
+    <div class="main-inner">
+	    <form action="" class="login-form">
+	        <h3 class="login-title">Confirm your e-mail</h3>
+	        <p>Please wait while we confirm your e-mail address ...</p>
+
+			<br>
+
+	        <div class="form-msg error alert alert-danger" ng-if="errorMessage && !loading">
+	            {{errorMessage}}
+	        </div>
+
+	        <div class="form-msg success recover-success-message" ng-if="successMessage && !loading">
+	            {{successMessage}}
+	        </div>
+
+	        <fd-loader ng-if="loading"></fd-loader>
+	    </form>
+    </div>
+</main>

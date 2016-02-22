@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.routes').run(function($rootScope, $state, $stateParams, $auth, $timeout, $http, $urlRouter, $filter) {
+    angular.module('fundator.routes').run(function($rootScope, $state, $stateParams, $auth, $timeout, $http, $urlRouter, $filter, FdNotifications, FdScroller) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
@@ -29,7 +29,7 @@
         $rootScope.$on('$locationChangeSuccess', function(e) {
             if (typeof($rootScope.user) !== 'undefined') {
                 if ($rootScope.user.registered == 0) {
-                    $state.go('app.register');
+                    $state.go('app.auth.register');
                 }
             }
 
@@ -49,8 +49,10 @@
                     if (typeof(result.error) === 'undefined') {
                         $rootScope.user = result.data;
 
+                        FdNotifications.init();
+
                         if ($rootScope.user.registered == 0) {
-                            $state.go('app.register');
+                            $state.go('app.auth.register');
                         }else{
                             var roles = $filter('filter')($rootScope.user.user_roles, {role: $rootScope.user.role}, true);
 
@@ -84,16 +86,24 @@
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
             if ($auth.isAuthenticated()) {
-                if (typeof($rootScope.user) === 'undefined') {
+                if (typeof($rootScope.user) === 'undefined' && fromState.name.indexOf('recover') === -1) {
                     $rootScope.activeState = toState;
                     $rootScope.activeStateParams = toParams;
-                    // event.preventDefault();
+                    event.preventDefault();
                 }
                 return;
             } else {
-                if (toState.name.indexOf('login') === -1) {
+                if (fromState.name.indexOf('auth') === -1) {
+                    return;
+                } else if (toState.name.indexOf('auth') === -1 && fromState.name.indexOf('auth') !== -1) {
+                    FdScroller.toTop();
+                    event.preventDefault();
+                    return;
+                } else if (toState.name.indexOf('auth') === -1) {
                     $timeout(function() {
-                        $state.go('app.login', {});
+                        event.preventDefault();
+                        $state.go('app.auth.login', {});
+                        return;
                     });
                 } else {
                     return;

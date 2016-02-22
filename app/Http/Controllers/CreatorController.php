@@ -49,7 +49,7 @@ class CreatorController extends Controller
             ];
         }catch (Exception $e){
             $statusCode = 400;
-            $response = $e;
+            $response = ['error' => $e->getMessage()];
         }
 
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);

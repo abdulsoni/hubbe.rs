@@ -21,6 +21,20 @@
             type: '2.0',
             display: 'self'
         });
+
+        // $authProvider.google({
+        //     url: '/auth/google',
+        //     authorizationEndpoint: 'https://accounts.google.com/o/oauth2/auth',
+        //     redirectUri: window.location.origin,
+        //     requiredUrlParams: ['scope'],
+        //     optionalUrlParams: ['display'],
+        //     scope: ['profile', 'email'],
+        //     scopePrefix: 'openid',
+        //     scopeDelimiter: ' ',
+        //     display: 'popup',
+        //     type: '2.0',
+        //     popupOptions: { width: 452, height: 633 }
+        // });
     });
 
 })();

@@ -2,6 +2,7 @@
 
 namespace Fundator\Http\Controllers;
 
+use Fenos\Notifynder\Models\Notification;
 use Fundator\User;
 use Illuminate\Http\Request;
 
@@ -25,12 +26,45 @@ class NotificationController extends Controller
         try{
             $user = User::find($id);
             if($user !== null){
-                $response['notifications'] = $user->getNotifications();
-                $response['unread'] = $user->countNotificationsNotRead();
+                $notifications = $user->getNotificationsNotRead();
+
+                foreach($notifications as $notification){
+                    unset($notification['from']);
+                    $extra = $notification->extra->toArray();
+                    $notification['extras'] = $extra;
+                }
+
+                $response['notifications'] = $notifications;
             }
         }catch (Exception $e){
             $statusCode = 400;
-            $response['error'] = $e;
+            $response = ['error' => $e->getMessage()];
+        }
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * Mark a single notification as read
+     *
+     * @param Request $request
+     * @param $id
+     */
+    public function markSingleRead(Request $request, $id)
+    {
+        $statusCode = 200;
+        $response = [];
+
+        try{
+            $notification = Notification::find($id);
+            $notification->read = 1;
+
+            if($notification->save()){
+                $response = 'Updated';
+            }
+        }catch (Exception $e){
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
         }
 
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
@@ -42,17 +76,17 @@ class NotificationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function markAsRead(Request $request, $id)
+    public function markAllAsRead(Request $request, $userId)
     {
         $statusCode = 200;
         $response = [];
 
         try{
-            $user = User::find($id);
+            $user = User::find($userId);
             $response = $user->readAllNotifications();
         }catch (Exception $e){
             $statusCode = 400;
-            $response['error'] = $e;
+            $response = ['error' => $e->getMessage()];
         }
 
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);

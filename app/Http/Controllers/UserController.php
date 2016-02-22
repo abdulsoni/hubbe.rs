@@ -131,7 +131,7 @@ class UserController extends Controller
             if(isset($request->investor) && is_null($user->investor)){
                 $investor = Investor::create([
                     'investment_budget' => $request->investor['investment_budget'],
-                    'investment_goal' => $request->investor['investment_goal'],
+//                    'investment_goal' => $request->investor['investment_goal'],
                     'investment_reason' => $request->investor['investment_reason']
                 ]);
 
@@ -190,5 +190,32 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * List all the investors
+     */
+    public function indexInvestors()
+    {
+        return response()->json([], 200, [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * Show a perticular investor
+     */
+    public function showInvestor($id)
+    {
+        $statusCode = 200;
+
+        try{
+            $investor = Investor::find($id);
+
+            $response = [];
+        }catch (Exception $e){
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 }

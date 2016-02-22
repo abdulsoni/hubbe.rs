@@ -519,6 +519,13 @@ ul.tabProjectList:after {
         bottom: 10px;
         width: 100%;
         text-align: center;
+
+        > div {
+            display: inline-block;
+            float: none;
+            width: auto;
+            padding: 0 30px;
+        }
     }
     .project-profile img {
         width: 60px;

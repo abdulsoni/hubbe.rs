@@ -32,6 +32,12 @@ $api->version('v1', function ($api) {
     $api->put('users/{id}', 'Fundator\Http\Controllers\UserController@update');
 
     $api->post('authenticate', 'Fundator\Http\Controllers\AuthenticateController@authenticate');
+    $api->post('authenticate/signup', 'Fundator\Http\Controllers\AuthenticateController@signup');
+    $api->post('authenticate/confirm', 'Fundator\Http\Controllers\AuthenticateController@confirm');
+
+    $api->post('authenticate/reset', 'Fundator\Http\Controllers\PasswordController@appReset');
+    $api->post('authenticate/forgot', 'Fundator\Http\Controllers\Auth\PasswordController@appRecoverPasswordSend');
+    $api->post('authenticate/recover', 'Fundator\Http\Controllers\Auth\PasswordController@appRecoverPasswordProcess');
 
     // Providers
     $api->post('authenticate/linkedin', 'Fundator\Http\Controllers\AuthenticateController@linkedin');
@@ -69,6 +75,12 @@ $api->version('v1', function ($api) {
     $api->get('creators/{id}', 'Fundator\Http\Controllers\CreatorController@show');
 
     /*
+     * Investors
+     */
+    $api->get('investors/', 'Fundator\Http\Controllers\UserController@indexInvestor');
+    $api->get('investors/{id}', 'Fundator\Http\Controllers\UserController@showInvestor');
+
+    /*
      * Files
      */
     $api->post('files/', 'Fundator\Http\Controllers\FileController@store');
@@ -86,4 +98,12 @@ $api->version('v1', function ($api) {
     $api->get('expertise-category/{parent?}', 'Fundator\Http\Controllers\ExpertiseCategoryController@index');
 
     $api->get('skills/', 'Fundator\Http\Controllers\SkillsController@index');
+
+
+    /*
+     * Notifications
+     */
+    $api->get('notifications/{userId}', 'Fundator\Http\Controllers\NotificationController@index');
+    $api->post('notifications/user/{userId}/read', 'Fundator\Http\Controllers\NotificationController@markAllAsRead');
+    $api->post('notifications/{id}/read', 'Fundator\Http\Controllers\NotificationController@markAsRead');
 });

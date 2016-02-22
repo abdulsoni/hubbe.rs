@@ -1,9 +1,11 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.controllers').controller('InvestCtrl', function($rootScope, $scope, $state, $resource, $window) {
+    angular.module('fundator.controllers').controller('InvestCtrl', function($rootScope, $scope, $state, $resource, FdScroller) {
         console.log('Invest Started');
-        $window.scrollTo(0, 0);
+
+        // Scroll to the top
+        FdScroller.toTop();
 
         $scope.investors = [
             {name: 'Alain <br> Amoretti', country: 'France', image: '1.jpg'},

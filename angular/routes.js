@@ -33,7 +33,8 @@
                         templateUrl: getView('footer')
                     },
                     notifications: {
-                        templateUrl: getView('notifications', 'widget')
+                        templateUrl: getView('notifications', 'notifications'),
+                        controller: 'NotificationsCtrl'
                     },
                     quickUpdate: {
                         templateUrl: getView('quick-update', 'quick-update')
@@ -41,7 +42,11 @@
                     main: {}
                 }
             })
-            .state('app.login', {
+            .state('app.auth', {
+                url: '/auth',
+                abstract: true,
+            })
+            .state('app.auth.login', {
                 url: '/login',
                 views: {
                     'main@': {
@@ -50,7 +55,43 @@
                     }
                 }
             })
-            .state('app.register', {
+            .state('app.auth.signup', {
+                url: '/signup',
+                views: {
+                    'main@': {
+                        templateUrl: getView('auth', 'signup'),
+                        controller: 'AuthCtrl'
+                    }
+                }
+            })
+            .state('app.auth.forgot', {
+                url: '/forgot',
+                views: {
+                    'main@': {
+                        templateUrl: getView('auth', 'forgot'),
+                        controller: 'AuthCtrl'
+                    }
+                }
+            })
+            .state('app.auth.recover', {
+                url: '/recover?token&email',
+                views: {
+                    'main@': {
+                        templateUrl: getView('auth', 'recover'),
+                        controller: 'AuthRecoverCtrl'
+                    }
+                }
+            })
+            .state('app.auth.confirm', {
+                url: '/confirm?code&email',
+                views: {
+                    'main@': {
+                        templateUrl: getView('auth', 'confirm'),
+                        controller: 'AuthConfirmCtrl'
+                    }
+                }
+            })
+            .state('app.auth.register', {
                 url: '/register',
                 views: {
                     'main@': {

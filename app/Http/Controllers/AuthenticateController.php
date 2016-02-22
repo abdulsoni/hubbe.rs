@@ -3,6 +3,8 @@
 namespace Fundator\Http\Controllers;
 
 use Fenos\Notifynder\Models\Notification;
+use Fundator\Events\Signup;
+use Fundator\Exceptions\InvalidConfirmationCodeException;
 use Fundator\Http\Requests;
 use Fundator\Role;
 use Illuminate\Http\Request;
@@ -17,7 +19,7 @@ use Exception;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
-
+use Illuminate\Support\Facades\Event;
 use GuzzleHttp;
 
 class AuthenticateController extends Controller
@@ -26,7 +28,7 @@ class AuthenticateController extends Controller
     public function __construct()
     {
         // Token Based Access
-        $this->middleware('jwt.auth', ['except' => ['index', 'authenticate', 'linkedin']]);
+        $this->middleware('jwt.auth', ['except' => ['index', 'authenticate', 'signup', 'confirm', 'linkedin']]);
     }
 
     /**
@@ -144,23 +146,79 @@ class AuthenticateController extends Controller
 
     /**
      * Create Email and Password Account.
+     *
+     * @param Request $request
+     * @return mixed
      */
     public function signup(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'displayName' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required'
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['message' => $validator->messages()], 400);
+        $statusCode = 200;
+        $response = [];
+
+        try{
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['message' => $validator->messages()], 400);
+            }
+
+            $user = new User;
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            $user->password = bcrypt($request->input('password'));
+            $user->confirmation_code = $confirmation_code = str_random(30);
+            $user->save();
+
+            Event::fire(new Signup($user));
+
+            $response = ['success' => true, 'message' => 'Please confirm your email address'];
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
         }
-        $user = new User;
-        $user->name = $request->input('displayName');
-        $user->email = $request->input('email');
-        $user->password = bcrypt($request->input('password'));
-        $user->save();
-        return response()->json(['token' => $this->createToken($user)]);
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * Confirm the user's email address
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function confirm(Request $request)
+    {
+        $statusCode = 200;
+        $response = [];
+
+        try{
+            $confirmation_code = $request->only('confirmation_code');
+
+            if( ! $confirmation_code) {
+                throw new InvalidConfirmationCodeException;
+            }
+
+            $user = User::where('confirmation_code', $confirmation_code)->first();
+
+            if ( ! $user) {
+                throw new InvalidConfirmationCodeException;
+            }
+
+            $user->confirmed = 1;
+            $user->confirmation_code = null;
+            $user->save();
+
+            $response = ['success' => true, 'token' => $user->getToken()];
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -204,35 +262,27 @@ class AuthenticateController extends Controller
             $user->name = $user->displayName ?: $profile['firstName'] . ' ' . $profile['lastName'];
             $user->email = $profile['emailAddress'];
             $user->save();
-            return response()->json(['token' => $this->createToken($user)]);
+            return response()->json(['token' => $user->getToken()]);
         }
         // Step 3b. Create a new user account or return an existing one.
         else
         {
-            $user = User::where('linkedin', '=', $profile['id']);
-            if ($user->first())
+            $users = User::where('linkedin', '=', $profile['id']);
+            $user = $users->first();
+
+            if ($user)
             {
-                return response()->json(['token' => $this->createToken($user->first())]);
+                return response()->json(['token' => $user->getToken()]);
             }
+
             $user = new User;
             $user->linkedin = $profile['id'];
             $user->name =  $profile['firstName'] . ' ' . $profile['lastName'];
             $user->email = $profile['emailAddress'];
+            $user->confirmed = 1;
             $user->save();
-            return response()->json(['token' => $this->createToken($user)]);
+
+            return response()->json(['token' => $user->getToken()]);
         }
-    }
-
-    protected function createToken($user)
-    {
-        $userData = [
-            'role' => $user->role,
-            'email' => $user->email,
-            'registered' => $user->registered,
-            'iat' => time(),
-            'exp' => time() + (2 * 7 * 24 * 60 * 60)
-        ];
-
-        return JWTAuth::fromUser($user, $userData);
     }
 }

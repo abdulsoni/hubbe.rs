@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->boolean('needs_reset');
             $table->boolean('registered');
 
+            $table->string('facebook')->nullable();
             $table->string('linkedin')->nullable();
             $table->string('google')->nullable();
             $table->string('twitter')->nullable();
@@ -36,6 +37,9 @@ class CreateUsersTable extends Migration
             $table->string('country_residence');
             $table->string('contact_number');
             $table->string('contact_time');
+
+            $table->boolean('confirmed')->default(0);
+            $table->string('confirmation_code')->nullable();
 
             $table->rememberToken();
             $table->timestamps();

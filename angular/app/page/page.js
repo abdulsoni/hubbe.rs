@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.controllers').controller('PageCtrl', function($rootScope, $scope, $state, $stateParams, $http, $window) {
+    angular.module('fundator.controllers').controller('PageCtrl', function($rootScope, $scope, $state, $stateParams, $http) {
         console.log('Page View Started');
 
         $scope.page = {

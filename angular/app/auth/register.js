@@ -36,7 +36,7 @@
     });
 
 
-    angular.module('fundator.controllers').controller('RegisterCtrl', function($rootScope, $scope, $state, $auth, $timeout, $http, $resource, $window, $filter, FileUploader) {
+    angular.module('fundator.controllers').controller('RegisterCtrl', function($rootScope, $scope, $state, $auth, $timeout, $http, $resource, FdScroller, $filter, FileUploader) {
 
         $scope.form = {
             currentStep: 1,
@@ -427,7 +427,7 @@
             }
 
             $rootScope.$broadcast('startLoading');
-            $window.scrollTo(0, 0);
+            FdScroller.toTop();
 
             $http.put('/api/users/' + $rootScope.user.id, userData).then(function(result){
                 if (result.data === 'Updated') {

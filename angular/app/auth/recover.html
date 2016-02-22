@@ -1,0 +1,59 @@
+<main class="main-login">
+    <div class="main-inner">
+        <form class="login-form" name="recoverForm" autocomplete="off">
+
+            <h3 class="login-title">Request a new password</h3>
+            <p>Enter your email below to request a new password.</p>
+			<br>
+
+            <div class="form-msg error alert alert-danger" ng-if="errorMessage.length && viewState !== 'loading'">
+                {{errorMessage}}
+            </div>
+
+            <div class="form-msg success recover-success-message" ng-if="successMessage.length && viewState !== 'loading'">
+                <span class="icon icon-rocket"></span>
+                {{successMessage}}
+            </div>
+
+            <fd-loader ng-if="viewState === 'loading'"></fd-loader>
+
+            <div ng-if="viewState === 'recover'">
+                <div class="form-group">
+                    <div class="fm-col-m">
+                        <input class="form-control input-lg" ng-model="data.recoveryEmail" type="email" placeholder="Your email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="fm-col-m">
+                        <button type="submit" class="btn btn-block btn-info btn-lg" ng-click="recover()" ng-disabled="recoverForm.$invalid">Recover</button>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="viewState === 'set'">
+                <div class="form-group">
+                    <div class="fm-col-m">
+                        <input class="form-control input-lg" ng-model="data.password" type="password" placeholder="Create new password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="fm-col-m">
+                        <input class="form-control input-lg" ng-model="data.password_repeat" type="password" placeholder="Confirm new password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="fm-col-m">
+                        <button type="submit" class="btn btn-block btn-info btn-lg" ng-click="set()" ng-disabled="(data.password !== data.password_repeat) || data.password.length < 6">
+                            Reset your Password
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group form-group-min marginB0 marginT15">
+                <div class="fm-col-m">
+                    <a ui-sref="app.auth.login">Login using your password</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>

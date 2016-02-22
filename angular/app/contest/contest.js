@@ -33,7 +33,7 @@
         };
     });
 
-    angular.module('fundator.controllers').controller('ContestSingleCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $filter, $window, $timeout) {
+    angular.module('fundator.controllers').controller('ContestSingleCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $filter, $timeout, FdScroller) {
         $scope.contestId = $stateParams.contestId;
         $scope.data = {
             selectedEntry: null,
@@ -72,7 +72,7 @@
             }
         });
 
-        $window.scrollTo(0, 0);
+        FdScroller.toTop();
         $rootScope.$broadcast('startLoading');
 
         Contest.get({

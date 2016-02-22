@@ -17,10 +17,13 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         'Fundator\Events\Register' => [
-            'Fundator\Listeners\SendRegistrationNotification',
+            'Fundator\Listeners\SendRegistrationNotification'
         ],
         'Fundator\Events\AssignJury' => [
-            'Fundator\Listeners\SendJuryInvitationNotification',
+            'Fundator\Listeners\SendJuryInvitationNotification'
+        ],
+        'Fundator\Events\Signup' => [
+            'Fundator\Listeners\SendEmailVerification'
         ],
     ];
 

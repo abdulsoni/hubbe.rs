@@ -1,54 +1,54 @@
-<main class="main main-style1 login-main-style1">
-    <div class="container">
-        <div class="main-inner">
-            <form class="box-full-style1 form-style1">
-                <section class="summary-style1">
-                    <h1 class="h-title">Login to fundator</h1>
-                </section>
+<main class="main-login">
+    <div class="main-inner">
+        <form class="login-form" name="loginForm" autocomplete="off">
+            <div class="auth-providers">
+                <h3 class="login-title">Use a Social Network</h3>
+                <!-- <a ng-click="authenticate('linkedin')">
+                    <img src="/images/linkedin.png" alt="Linkedin Login">
+                </a> -->
+                <a class="auth-provider auth-provider_facebook" ng-click="authenticate('facebook')">
+                    <span class="icon icon-facebook"></span>
+                </a>
+                <a class="auth-provider auth-provider_linkedin" ng-click="authenticate('linkedin')">
+                    <span class="icon icon-linkedin2"></span>
+                </a>
+                <a class="auth-provider auth-provider_google" ng-click="authenticate('google')">
+                    <span class="icon icon-google"></span>
+                </a>
+                <a class="auth-provider auth-provider_twitter" ng-click="authenticate('twitter')">
+                    <span class="icon icon-twitter"></span>
+                </a>
+            </div>
 
-                <div class="auth-providers">
-                    <!-- <a ng-click="authenticate('linkedin')">
-                        <img src="/images/linkedin.png" alt="Linkedin Login">
-                    </a> -->
-                    <a class="auth-provider auth-provider_facebook" ng-click="authenticate('facebook')">
-                        <span class="icon icon-facebook"></span>
-                    </a>
-                    <a class="auth-provider auth-provider_linkedin" ng-click="authenticate('linkedin')">
-                        <span class="icon icon-linkedin2"></span>
-                    </a>
-                    <a class="auth-provider auth-provider_google" ng-click="authenticate('google')">
-                        <span class="icon icon-google"></span>
-                    </a>
-                    <a class="auth-provider auth-provider_twitter" ng-click="authenticate('twitter')">
-                        <span class="icon icon-twitter"></span>
-                    </a>
+            <h3 class="login-title">Or</h3>
+
+            <div class="form-msg error alert alert-danger" ng-if="errorMessage.length">
+                {{errorMessage}}
+            </div>
+
+            <div class="form-group">
+                <div class="fm-col-m">
+                    <input class="form-control input-lg" ng-model="email" type="email" placeholder="Enter your email ..." autocomplete="off">
+                    <span class="form-control-feedback icon"></span>
                 </div>
+            </div>
 
-                <div class="form-msg error" ng-if="errorMessage.length">
-                    {{errorMessage}}
+            <div class="form-group">
+                <div class="fm-col-m">
+                    <input class="form-control input-lg" ng-model="password" type="password" placeholder="Enter your password ...">
+                    <span class="form-control-feedback icon"></span>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <div class="fm-col-m">
-                        <input class="form-control input-lg" ng-model="email" type="email" placeholder="Your email" autocomplete="off">
-                        <span class="form-control-feedback icon"></span>
-                    </div>
+            <div class="form-group margin0">
+                <div class="fm-col-m">
+                    <button type="submit" class="btn btn-block btn-info btn-lg fm-selected" ng-click="login()">Login</button>
                 </div>
-
-                <div class="form-group">
-                    <div class="fm-col-m">
-                        <input class="form-control input-lg" ng-model="password" type="password" placeholder="Your password">
-                        <span class="form-control-feedback icon"></span>
-                    </div>
+                <div class="login-form_actions clearfix marginT10">
+                    <a ui-sref="app.auth.recover" class="forgot-password pull-left">Forgotten Password ?</a>
+                    <a ui-sref="app.auth.signup" class="signup pull-right">Create an account</a>
                 </div>
-
-
-                <div class="form-group">
-                    <div class="fm-col-m">
-                        <button type="submit" class="btn btn-block btn-lg fm-selected" ng-click="login()">Login</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 </main>

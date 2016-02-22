@@ -43,10 +43,10 @@ class PageController extends Controller
             }
         }catch (Exception $e){
             $statusCode = 400;
-            $response = $e;
+            $response = ['error' => $e->getMessage()];
         }
 
-        return new Response($response, $statusCode);
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
 }

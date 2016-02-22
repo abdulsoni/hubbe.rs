@@ -10,6 +10,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 //use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 use Cmgmyr\Messenger\Traits\Messagable;
 use Cmgmyr\Messenger\Models\Thread;
@@ -88,6 +89,22 @@ class User extends Model implements AuthenticatableContract,
         }
 
         return $userRoles;
+    }
+
+    /*
+     * Create a JWT token with additional parameters
+     */
+    public function getToken()
+    {
+        $userData = [
+            'role' => $this->role,
+            'email' => $this->email,
+            'registered' => $this->registered,
+            'iat' => time(),
+            'exp' => time() + (2 * 7 * 24 * 60 * 60)
+        ];
+
+        return JWTAuth::fromUser($this, $userData);
     }
 
     // Helper functions
