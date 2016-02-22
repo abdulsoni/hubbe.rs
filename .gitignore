@@ -8,3 +8,5 @@ Homestead.json
 .vagrant
 /public/packages
 .DS_Store
+.ai
+.zip
