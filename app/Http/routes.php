@@ -54,6 +54,7 @@ $api->version('v1', function ($api) {
      */
     $api->get('entries/', 'Fundator\Http\Controllers\EntryController@index');
     $api->get('entries/{id}', 'Fundator\Http\Controllers\EntryController@show');
+    $api->get('entries/{id}/judge/{judgeId}', 'Fundator\Http\Controllers\EntryController@show');
     $api->post('entries/', 'Fundator\Http\Controllers\EntryController@store');
     $api->put('entries/{id}', 'Fundator\Http\Controllers\EntryController@update');
 

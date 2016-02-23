@@ -173,9 +173,17 @@
                 </div>
             </div>
         </div>
-        <hr/>
     </div>
 	<div class="row" ng-if="data.selectedEntry !== null">
+        <div class="col-sm-12">
+            <div class="contest-single_entry__title">
+                <h3>Entry by user [<a href="#">latest</a> / <a href="#">v2</a> / <a href="#">v1</a>]</h3>
+            </div>
+
+            <div class="contest-single_entry__description">
+                {{data.selectedEntry.description}}
+            </div>
+        </div>
 	    <div class="col-md-6">
 	        <div class="entry-details entry-details-marks">
                 <div class="entry-image">

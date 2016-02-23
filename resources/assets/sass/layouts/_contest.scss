@@ -1,0 +1,40 @@
+// Contest Single
+
+.contest-single_entry{
+	.contest-single_entry__description{
+		padding: 25px 0;
+	}
+}
+
+.contest-single_add-entry{
+	.ta-toolbar{
+		background: #f5f5f5;
+		padding: 10px;
+		margin: 0;
+		margin-bottom: 10px;
+		border-radius: 4px;
+	}
+
+	.ta-editor.form-control{
+		font-size: 16px;
+		box-shadow: none !important;
+		padding: 15px;
+	}
+
+	.drop-target{
+		padding: 15px;
+		border: 2px #f1f1f1 dashed;
+		border-radius: 5px;
+	}
+
+	.image-preview-list{
+		padding: 15px;
+		@include clearfix();
+
+		.image-preview{
+			background: #eee;
+			padding-top: 15px;
+			padding-bottom: 15px;
+		}
+	}
+}

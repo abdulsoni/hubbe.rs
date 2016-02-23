@@ -3,13 +3,6 @@
 	    <div class="col-md-5">
 	        <div class="projectImg lb">
 	            <div class="row date-wrap">
-	                <!-- <div class="col-xs-8 col-sm-9 project-date">
-	                    <h4>
-	                    	{{ end_time = (contest.start_time | amAdd : contest.duration : 'days'); ''}}
-	                    	{{ end_time | amDifference : null : 'days' }} days to go
-	                    	({{ end_time | amDateFormat:'MMM Do YYYY'}}).
-	                    </h4>
-	                </div> -->
 	                <div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>
 	            </div>
 	            <div class="row rankingMng">
@@ -122,9 +115,9 @@
                                 <div class="row rankingMng">
                                     <div class="col-xs-5 leftRank">
                                         <h4>{{item.name}}</h4>
-                                        <h4>South Korea</h4>
-                                        <h4 class="capitalize">{{item.role}} <span class="highlighted">8.5/10</span></h4>
-                                        <h4>Reviews <span class="muted">37 reviews</span></h4>
+                                        <h4>{{item.country_residence}}</h4>
+                                        <h4 class="capitalize">{{item.role}} <span class="highlighted">0/10</span></h4>
+                                        <h4>Reviews <span class="muted">0 reviews</span></h4>
                                     </div>
                                     <div class="col-xs-3 col-xs-3-5 leftRank">
                                         <h4 class="col-heading">Notation <br>Number</h4>
@@ -132,7 +125,7 @@
                                     </div>
                                     <div class="col-xs-3 col-xs-3-5">
                                         <h4 class="col-heading">Contest <br>Done</h4>
-                                        <span class="countValue">2</span>
+                                        <span class="countValue">0</span>
                                     </div>
                                 </div>
                             </div>
@@ -149,11 +142,12 @@
 	        </div>
 	    </div>
 	</div>
-	<div class="entries-list" ng-if="contest.entries.length > 0">
+	<!-- <div class="entries-list" ng-if="contest.entries.length > 0">
+        <h2>Entries</h2>
         <hr/>
         <div class="row">
-            <div class="col-sm-12">
-                <div class="owl-demo" owl-carousel="contest.entries"
+            <div class="col-sm-9">
+                <div class="owl-demo greybg" owl-carousel="contest.entries"
                     owl-options='{"pagination": false, "dots": false, "navigation":true, "items":5, "navigationText": [ "<i class=\"icon-chevron-left icon-white\"></i>", "<i class=\"icon-chevron-right icon-white\"></i>" ]}'>
                     <div class="item" ng-click="selectEntry(item)">
                         <div class="carousel_content">
@@ -168,10 +162,60 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-3">
+                <a class="moreentires marginT0 pointer" ng-click="showAddEntry()">
+                    <span class="icon icon-plus large-plus marginT10"></span>
+                    <h3>Add new Entry</h3>
+                </a>
+            </div>
         </div>
-        <hr/>
-    </div>
-	<div class="row" ng-if="data.selectedEntry !== null">
+    </div> -->
+    <!-- <div class="row contest-single_add-entry" ng-if="data.addEntry">
+        <div class="col-sm-12">
+            <hr>
+            <h3 class="marginB15">
+                Add a new entry
+                <span class="revision-note mute small" ng-if="contest.entries.length > 0">(This entry is your {{contest.entries.length | ordinal}} revision)</span>
+            </h3>
+            <form name="newEntry">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="contest-single_add-entry__description">
+                            <text-angular ng-model="data.addEntryForm.description"></text-angular>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div flow-init="{target: '/upload'}"
+                            flow-files-submitted="$flow.upload()"
+                            flow-file-success="$file.msg = $message">
+
+                            <div class="drop-target" flow-drop flow-drag-enter="style={border:'2px #eee dashed', background: '#f5f5f5'}" flow-drag-leave="style={}" ng-style="style">
+                                <span class="btn btn-info" flow-btn>Upload File</span> &nbsp; or Drag &amp; Drop images to upload
+                            </div>
+
+                            <div class="image-preview-list">
+                                <div class="image-preview col-sm-4 col-md-3" ng-repeat="file in $flow.files">
+                                    <img flow-img="file" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 text-center marginT30">
+                        <button class="btn btn-info" ng-disabled="newEntry.$invalid || $flow.files.length === 0">Submit Entry</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div> -->
+	<!-- <div class="row contest-single_entry" ng-if="data.selectedEntry !== null">
+        <div class="col-sm-12">
+            <div class="contest-single_entry__description">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus labore quis esse non reiciendis nobis, dolores eligendi fuga, excepturi aliquid minima aut dolor consectetur velit sequi veniam molestiae maxime accusamus!
+            </div>
+        </div>
+
 	    <div class="col-md-6">
 	        <div class="contest-list contest-list-lb">
 	            <div class="row" ng-repeat="rating in data.selectedEntry.ratings">
@@ -196,7 +240,7 @@
 	    <div class="col-md-6">
             <div class="chatbox">
                 <div class="chatRow" ng-repeat="message in data.selectedEntry.messages">
-                    <div class="chat-userSendbox" ng-class="{'chat-send': user.id === message.user.id, 'chat-comein': user.id !== message.user.id}">
+                    <div class="chat-userSendbox" ng-class="{'chat-comein': user.id === message.user.id, 'chat-send': user.id !== message.user.id}">
                         <div class="chat-content">{{message.body}}</div>
                     </div>
                     <div class="caht-label" ng-class="{'text-right': user.id === message.user.id}">
@@ -211,5 +255,5 @@
                 </div>
             </form>
 	    </div>
-	</div>
+	</div> -->
 </div>

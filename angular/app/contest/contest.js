@@ -33,9 +33,11 @@
         };
     });
 
-    angular.module('fundator.controllers').controller('ContestSingleCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $filter, $timeout, FdScroller) {
+    angular.module('fundator.controllers').controller('ContestSingleCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $filter, $timeout, FdScroller, $http) {
         $scope.contestId = $stateParams.contestId;
         $scope.data = {
+            addEntry: false,
+            addEntryForm: {},
             selectedEntry: null,
             rating: {
                 design: '',
@@ -112,20 +114,50 @@
         });
 
         $scope.selectEntry = function(entry) {
+            $scope.data.addEntry = false;
             $scope.data.selectedEntry = entry;
-            var rating = angular.copy($scope.data.selectedEntry.rating);
 
-            Entry.get({
-                entryId: entry.id
-            }).$promise.then(function(result) {
-                $scope.data.selectedEntry = result;
-                $scope.data.selectedEntry.rating = rating;
+            // var rating = angular.copy($scope.data.selectedEntry.rating);
 
-                $timeout(function(){
-                    $('.chatbox').animate({scrollTop: 10000});
-                }, 100);
-            });
+            var judgeId = null;
+
+            if ($rootScope.activeRole === 'jury') {
+                judgeId = $rootScope.user.id;
+            }
+
+            if (judgeId !== null) {
+                $http.get('/api/entries/' + entry.id + '/judge/' + judgeId).then(function(result){
+                    $scope.data.selectedEntry = result.data;
+                    $scope.data.selectedEntry.rating = result.data.rating;
+
+                    $timeout(function(){
+                        $('.chatbox').animate({scrollTop: 10000});
+                    }, 100);
+                });
+            }else{
+                Entry.get({
+                    entryId: entry.id
+                }).$promise.then(function(result) {
+                    $scope.data.selectedEntry = result;
+                    // $scope.data.selectedEntry.rating = rating;
+
+                    $timeout(function(){
+                        $('.chatbox').animate({scrollTop: 10000});
+                    }, 100);
+                });
+            }
+
         };
+
+        $scope.showAddEntry = function() {
+            console.log('showing add entry form');
+
+            $scope.data.selectedEntry = null;
+            $scope.data.addEntry = true;
+            $scope.data.addEntryForm = {};
+
+            $scope.data.addEntryForm.description = $scope.contest.entries[$scope.contest.entries.length - 1].description;
+        }
 
         $scope.sendMessage = function(){
             console.log('sending message');

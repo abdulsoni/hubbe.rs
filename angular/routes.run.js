@@ -89,15 +89,16 @@
                 if (typeof($rootScope.user) === 'undefined' && fromState.name.indexOf('recover') === -1) {
                     $rootScope.activeState = toState;
                     $rootScope.activeStateParams = toParams;
-                    event.preventDefault();
+                    // event.preventDefault();
                 }
                 return;
             } else {
-                if (fromState.name.indexOf('auth') === -1) {
+                if (fromState.name.indexOf('auth') === -1 && toState.name.indexOf('auth') !== -1) {
+                    return;
+                } else if (fromState.name.indexOf('auth') === -1) {
                     $timeout(function() {
                         event.preventDefault();
                         $state.go('app.auth.login', {});
-                        return;
                     });
                     return;
                 } else if (toState.name.indexOf('auth') === -1 && fromState.name.indexOf('auth') !== -1) {
@@ -128,6 +129,8 @@
 
         $rootScope.switchUserRole = function(role, roleId, reload) {
             $rootScope.activeRole = role;
+            console.log(role);
+            console.log(roleId);
 
             if (typeof($rootScope.user) !== 'undefined') {
                 if ($rootScope.user.user_roles.length === 0) {
@@ -152,7 +155,7 @@
                 route: 'app.contestsingle',
                 view: 'main@',
                 roles: {
-                    jury: getView('contest-single', 'contest-single-jury'),
+                    jury: getView('contest', 'contest-single-jury'),
                 },
                 defaultTemplate: getView('contest', 'contest-single')
             }];
@@ -177,16 +180,26 @@
                 break;
             }
 
-            $http.get(model).then(function(result){
-                $rootScope.user[role] = result.data;
+            if (model !== null) {
+                $http.get(model).then(function(result){
+                    $rootScope.user[role] = result.data;
 
+                    if ($state.current.name === '') {
+                        $state.current.name = $rootScope.activeState.name;
+                        $state.current.params = $rootScope.activeStateParams;
+                    }
+
+                    $state.go($state.current.name, $state.current.params, {reload: reload});
+                });
+            }else{
                 if ($state.current.name === '') {
                     $state.current.name = $rootScope.activeState.name;
                     $state.current.params = $rootScope.activeStateParams;
                 }
 
                 $state.go($state.current.name, $state.current.params, {reload: reload});
-            });
+            }
+
         };
 
     });

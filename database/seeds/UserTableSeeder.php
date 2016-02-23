@@ -23,7 +23,6 @@ class UserTableSeeder extends Seeder
         $judge->description  = 'This permission is given to a user who can judge a contest';
         $judge->save();
 
-
         // Create Roles
         $creator = new Role();
         $creator->name         = 'creator';

@@ -7,7 +7,10 @@
         $rootScope.flashNotices.juryView = {
         	show: false,
         	contestId: 0,
-        	onClick: function(){}
+        	onClick: function(){
+        		console.log('onClick');
+        		$rootScope.switchUserRole('jury', 5, true);
+        	}
         };
     });
 

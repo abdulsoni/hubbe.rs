@@ -6010,6 +6010,9 @@ fd-loader {
 *, *:focus {
   outline: none !important; }
 
+.greybg {
+  background-color: #f5f5f5; }
+
 /*--------------- components -----------------------*/
 body {
   color: #6d6e71;
@@ -7136,7 +7139,6 @@ ul.prizebox li:nth-child(3) a {
   height: 170px;
   text-align: center;
   color: #95c54d;
-  margin: 15px 0 0 -30px;
   padding: 22px;
   font-weight: 300;
   background-size: cover;
@@ -8760,6 +8762,38 @@ footer {
         margin-bottom: 25px; }
     .main-login .login-form .form-group {
       margin-bottom: 25px; }
+
+.contest-single_entry .contest-single_entry__description {
+  padding: 25px 0; }
+
+.contest-single_add-entry .ta-toolbar {
+  background: #f5f5f5;
+  padding: 10px;
+  margin: 0;
+  margin-bottom: 10px;
+  border-radius: 4px; }
+
+.contest-single_add-entry .ta-editor.form-control {
+  font-size: 16px;
+  box-shadow: none !important;
+  padding: 15px; }
+
+.contest-single_add-entry .drop-target {
+  padding: 15px;
+  border: 2px #f1f1f1 dashed;
+  border-radius: 5px; }
+
+.contest-single_add-entry .image-preview-list {
+  padding: 15px; }
+  .contest-single_add-entry .image-preview-list:before, .contest-single_add-entry .image-preview-list:after {
+    content: " ";
+    display: table; }
+  .contest-single_add-entry .image-preview-list:after {
+    clear: both; }
+  .contest-single_add-entry .image-preview-list .image-preview {
+    background: #eee;
+    padding-top: 15px;
+    padding-bottom: 15px; }
 
 /*--------------- plugins -----------------------*/
 /* 

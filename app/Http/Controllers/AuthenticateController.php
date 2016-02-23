@@ -130,6 +130,10 @@ class AuthenticateController extends Controller
 
             $user = User::where('email', $credentials['email'])->first();
 
+            if (! $user->confirmed) {
+                return response()->json(['success' => false, 'message' => 'Email not verified'], 401);
+            }
+
             $userData = [
                 'role' => $user->role,
                 'email' => $user->email
@@ -171,10 +175,12 @@ class AuthenticateController extends Controller
 
             $user = User::create([
                 'name' => $request->name,
-                'email' => $request->email,
-                'password' => $request->password,
-                'confirmation_code' => str_random(30)
+                'email' => $request->email
             ]);
+
+            $user->password = bcrypt($request->password);
+            $user->confirmation_code = str_random(30);
+            $user->save();
 
             Event::fire(new Signup($user));
 

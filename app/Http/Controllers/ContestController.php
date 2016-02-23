@@ -86,7 +86,7 @@ class ContestController extends Controller
         foreach($contestants as $creator_id => $entry){
             $creator = User::find($creator_id);
 
-            if(!is_null($creator->thumbnail)){
+            if(!is_null($creator) && !is_null($creator->thumbnail)){
                 $creator['thumbnail'] = $creator->thumbnail->getUrl();
             }
 

@@ -66,15 +66,23 @@ class UserController extends Controller
             $response['judging'] = $user->judging;
             $response['user_roles'] = $user->user_roles;
 
-            $notifications = $user->getNotifications();
-
-            foreach($notifications as $notification){
-                unset($notification['from']);
-                $extra = $notification->extra->toArray();
-                $notification['extras'] = $extra;
+            if($user->judging){
+                $response['user_roles'][] = [
+                    'role' => 'jury',
+                    'name' => 'Jury',
+                    'id' => 5
+                ];
             }
 
-            $response['notifications'] = $notifications;
+//            $notifications = $user->getNotifications();
+//
+//            foreach($notifications as $notification){
+//                unset($notification['from']);
+//                $extra = $notification->extra->toArray();
+//                $notification['extras'] = $extra;
+//            }
+//
+//            $response['notifications'] = $notifications;
 
             if(!is_null($user->thumbnail)){
                 $response['thumbnail'] = $user->thumbnail->getUrl();
@@ -91,7 +99,7 @@ class UserController extends Controller
             $response['error'] = 'token_absent';
         }catch (Exception $e){
             $statusCode = 400;
-            $response['error'] = $e;
+            $response['error'] = $e->getMessage();
         }
 
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);

@@ -50,8 +50,11 @@
                 password: $scope.data.password
             };
 
-            $auth.login(credentials).then(function(data) {
-                $state.go('app.contest', {}, {reload: true});
+            $auth.login(credentials).then(function(result) {
+                console.log('result');
+                console.log(result.data.token);
+                $auth.setToken(result.data.token);
+                $state.go('app.auth.signup');
             }, function(err){
                 $rootScope.$broadcast('stopLoading');
 

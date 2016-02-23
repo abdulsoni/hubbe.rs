@@ -67,13 +67,12 @@ class EntryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $judgeId = null)
     {
         $statusCode = 200;
         $entry = Entry::find($id);
 
         $entry_data = $entry->getAttributes();
-        $entry_data['ratings'] = $entry->ratings;
         $entry_data['messages'] = [];
 
         $thread = $entry->getThread();
@@ -93,9 +92,15 @@ class EntryController extends Controller
             }
         }
 
-        foreach($entry_data['ratings'] as $rating){
-            $judge = User::find($rating->judge_id);
-            $rating->judge = $judge;
+        if(is_null($judgeId)){
+            $entry_data['ratings'] = $entry->ratings;
+
+            foreach($entry_data['ratings'] as $rating){
+                $judge = User::find($rating->judge_id);
+                $rating->judge = $judge;
+            }
+        }else{
+            $entry_data['rating'] = $entry->ratings->where('judge_id', $judgeId)->first();
         }
 
         $response = $entry_data;

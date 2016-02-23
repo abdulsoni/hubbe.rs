@@ -436,7 +436,10 @@
                     $rootScope.user.role = $scope.data.selectedRole;
                     $rootScope.user.registered = 1;
 
-                    $state.go('app.contest', {role: angular.copy($scope.data.selectedRole)});
+                    $rootScope.activeRole = $scope.data.selectedRole;
+
+                    $state.go('app.contest');
+                    console.log('add in the latest role');
                 }
             }, function(result){
                 console.log('error');
