@@ -155,6 +155,7 @@
                 route: 'app.contestsingle',
                 view: 'main@',
                 roles: {
+                    creator: getView('contest', 'contest-single-creator'),
                     jury: getView('contest', 'contest-single-jury'),
                 },
                 defaultTemplate: getView('contest', 'contest-single')
