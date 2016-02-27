@@ -12,7 +12,10 @@ use Illuminate\Http\Response;
 
 use Fundator\Http\Requests;
 use Fundator\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
+
+use Exception;
 
 class EntryController extends Controller
 {
@@ -37,7 +40,7 @@ class EntryController extends Controller
             $response[] = $entry_data;
         }
 
-        return new Response($response, $statusCode);
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -103,6 +106,15 @@ class EntryController extends Controller
             $entry_data['rating'] = $entry->ratings->where('judge_id', $judgeId)->first();
         }
 
+        $entry_data['revisions'] = [];
+        $revisions = Entry::where('contest_id', $entry->contest_id)->where('name', $entry->name)->get();
+
+        foreach ($revisions as $revision) {
+            $entry_data['revisions'][] = [
+                'id' => $revision->id
+            ];
+        }
+
         $response = $entry_data;
 
         return new Response($response, $statusCode);
@@ -147,30 +159,52 @@ class EntryController extends Controller
         $statusCode = 200;
         $response = [];
 
-        $entries = Entry::where('contest_id', $contestId)->get();
-        $judge = User::find($judgeId);
+        try{
+            $entries = Entry::select('*', DB::raw('MAX(id) AS id'))->where('contest_id', $contestId)->orderBy('id', 'desc')->groupBy('name')->get();
+            $judge = User::find($judgeId);
 
-
-        foreach($entries as $entry)
-        {
-            $entry_data = $entry->getAttributes();
-            $type = '';
-
-            if($entry->ratings->where('judge_id', $judge->id)->count() === 0 && Entry::where('name', $entry->name)->first()->id === $entry->id){
-                $type = 'new';
+            if (is_null($judge) || is_null($entries)) {
+                throw new Exception('Invalid Judge or Entry', 1);
             }
 
-            if($entry->ratings->where('judge_id', $judge->id)->count() === 0 && Entry::where('name', $entry->name)->first()->id !== $entry->id) {
-                $type = 'ammended';
+            foreach($entries as $entry)
+            {
+                $entry_data = $entry->getAttributes();
+                $type = '';
+
+                $last_entry = Entry::where('name', $entry->name)->orderBy('id', 'desc')->first()->first();
+
+                if($entry->ratings->where('judge_id', $judge->id)->count() === 0 && Entry::where('name', $entry->name)->count() === 1){
+                    $type = 'new';
+                }
+
+                if(Entry::where('name', $entry->name)->count() > 1 && $last_entry->rating !== null) {
+                    $type = 'ammended';
+                }
+
+                if(Entry::where('name', $entry->name)->count() > 1 && $last_entry->rating === null) {
+                    $type = 'waiting review';
+                }
+
+                $entry_data['type'] = $type;
+
+                $entry_data['revisions'] = [];
+                $revisions = Entry::where('contest_id', $contestId)->where('name', $entry->name)->get();
+
+                foreach ($revisions as $revision) {
+                    $entry_data['revisions'][] = [
+                        'id' => $revision->id
+                    ];
+                }
+
+                $response[] = $entry_data;
             }
-
-            $entry_data['type'] = $type;
-            $entry_data['rating'] = $entry->ratings->where('judge_id', $judge->id)->first();
-
-            $response[] = $entry_data;
+        }catch(Exception $e){
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
         }
 
-        return new Response($response, $statusCode);
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
     /**

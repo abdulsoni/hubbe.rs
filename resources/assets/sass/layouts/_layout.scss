@@ -261,10 +261,28 @@ ul.prizebox li:nth-child(3) a {
     left: 0;
     top: 0;
     width: 100%;
-    h5 {
+    height: 100%;
+    h4, h5 {
         color: $white-color;
         padding: 5px 1px 5px 10px;
     }
+}
+.carousel_content .meta-data{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 15px;
+}
+.carousel_content .thumbnail{
+    width: 45px !important;
+    height: 45px !important;
+    -webkit-border-radius: 45px;
+    -moz-border-radius: 45px;
+    -ms-border-radius: 45px;
+    -o-border-radius: 45px;
+    border-radius: 45px;
+    border: rgba(161, 163, 165, 0.58) 2px solid;
+    margin-top: 10px;
 }
 .moreentires {
     background:url(#{$imagesPath}/entries.png);

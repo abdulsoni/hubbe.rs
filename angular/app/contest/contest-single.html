@@ -56,7 +56,7 @@
             		</uib-tab>
             		<uib-tab heading="Contestants">
                         <uib-tab-heading>
-                            Creators <span class="badge pull-right">{{contest.contestants.length}}</span>
+                            Creators <span ng-if="contest.contestants.length > 0" class="badge pull-right">{{contest.contestants.length}}</span>
                         </uib-tab-heading>
 						<div class="owl-profiles" ng-if="contest.contestants.length > 0" owl-carousel="contest.contestants"
                             owl-options='{"pagination": false, "dots": false, "navigation":true, "singleItem":true, "navigationText": [ "<i class=\"icon-chevron-left icon-white\"></i>", "<i class=\"icon-chevron-right icon-white\"></i>" ]}'>>
@@ -64,10 +64,10 @@
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <img src="images/icon-user-default.png" alt="" ng-if="!item.thumbnail" class="coolestMemberLBPick">
-                                        <img ng-src="{{user.thumbnail}}" alt="" ng-if="item.thumbnail">
+                                        <img ng-src="{{item.thumbnail}}" alt="" ng-if="item.thumbnail">
                                     </div>
                                     <div class="col-sm-8 bio">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur natus voluptas error eaque. Porro repellat amet maiores aliquid quasi ea quam cumque voluptates esse consequuntur ut, necessitatibus adipisci provident sapiente.
+                                        {{item.bio}}
                                     </div>
                                 </div>
                                 <br>
@@ -76,9 +76,9 @@
                                 <div class="row rankingMng">
                                     <div class="col-xs-5 leftRank">
                                         <h4>{{item.name}}</h4>
-                                        <h4>South Korea</h4>
-                                        <h4>{{item.role}} <span class="highlighted">8.5/10</span></h4>
-                                        <h4>Reviews <span class="muted">37 reviews</span></h4>
+                                        <h4>{{item.country_origin}}</h4>
+                                        <h4 class="capitalize">{{item.role}} <!-- <span class="highlighted">8.5/10</span> --></h4>
+                                        <h4>Reviews <a class="muted cursor">0 reviews</a></h4>
                                     </div>
                                     <div class="col-xs-3 col-xs-3-5 leftRank">
                                         <h4 class="col-heading">Notation <br>Number</h4>
@@ -86,7 +86,7 @@
                                     </div>
                                     <div class="col-xs-3 col-xs-3-5">
                                         <h4 class="col-heading">Contest <br>Done</h4>
-                                        <span class="countValue">5</span>
+                                        <span class="countValue">0</span>
                                     </div>
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
             		</uib-tab>
             		<uib-tab heading="Jury">
                         <uib-tab-heading>
-                            Jury <span class="badge pull-right">{{contest.judges.length}}</span>
+                            Jury <span ng-if="contest.judges.length > 0" class="badge pull-right">{{contest.judges.length}}</span>
                         </uib-tab-heading>
 						<div class="owl-profiles" ng-if="contest.judges.length > 0" owl-carousel="contest.judges"
                             owl-options='{"pagination": false, "dots": false, "navigation":true, "singleItem":true, "navigationText": [ "<i class=\"icon-chevron-left icon-white\"></i>", "<i class=\"icon-chevron-right icon-white\"></i>" ]}'>>
@@ -103,10 +103,10 @@
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <img src="images/icon-user-default.png" alt="" ng-if="!item.thumbnail" class="coolestMemberLBPick">
-                                        <img ng-src="{{user.thumbnail}}" alt="" ng-if="item.thumbnail">
+                                        <img ng-src="{{item.thumbnail}}" alt="" ng-if="item.thumbnail">
                                     </div>
                                     <div class="col-sm-8 bio">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur natus voluptas error eaque. Porro repellat amet maiores aliquid quasi ea quam cumque voluptates esse consequuntur ut, necessitatibus adipisci provident sapiente.
+                                        {{item.bio}}
                                     </div>
                                 </div>
                                 <br>
@@ -115,16 +115,16 @@
                                 <div class="row rankingMng">
                                     <div class="col-xs-5 leftRank">
                                         <h4>{{item.name}}</h4>
-                                        <h4>{{item.country_residence}}</h4>
-                                        <h4 class="capitalize">{{item.role}} <span class="highlighted">0/10</span></h4>
-                                        <h4>Reviews <span class="muted">0 reviews</span></h4>
+                                        <h4>{{item.country_origin}}</h4>
+                                        <h4 class="capitalize">{{item.role}} <!-- <span class="highlighted">0/10</span> --></h4>
+                                        <h4>Reviews  <a class="muted cursor">0 reviews</a></h4>
                                     </div>
                                     <div class="col-xs-3 col-xs-3-5 leftRank">
                                         <h4 class="col-heading">Notation <br>Number</h4>
                                         <span class="countValue">{{contest.total_entries}}</span>
                                     </div>
                                     <div class="col-xs-3 col-xs-3-5">
-                                        <h4 class="col-heading">Contest <br>Done</h4>
+                                        <h4 class="col-heading">Contest <br>Judged</h4>
                                         <span class="countValue">0</span>
                                     </div>
                                 </div>
@@ -142,118 +142,4 @@
 	        </div>
 	    </div>
 	</div>
-	<!-- <div class="entries-list" ng-if="contest.entries.length > 0">
-        <h2>Entries</h2>
-        <hr/>
-        <div class="row">
-            <div class="col-sm-9">
-                <div class="owl-demo greybg" owl-carousel="contest.entries"
-                    owl-options='{"pagination": false, "dots": false, "navigation":true, "items":5, "navigationText": [ "<i class=\"icon-chevron-left icon-white\"></i>", "<i class=\"icon-chevron-right icon-white\"></i>" ]}'>
-                    <div class="item" ng-click="selectEntry(item)">
-                        <div class="carousel_content">
-                            <div class="row">
-                                <div class="col-xs-8">
-                                    <h5>{{item.name}}</h5>
-                                </div>
-                                <div class="col-xs-4"><span class="icon icon-plus radius-box rbM marginT10"></span></div>
-                            </div>
-                        </div>
-                        <img src="images/1.png" alt="">
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <a class="moreentires marginT0 pointer" ng-click="showAddEntry()">
-                    <span class="icon icon-plus large-plus marginT10"></span>
-                    <h3>Add new Entry</h3>
-                </a>
-            </div>
-        </div>
-    </div> -->
-    <!-- <div class="row contest-single_add-entry" ng-if="data.addEntry">
-        <div class="col-sm-12">
-            <hr>
-            <h3 class="marginB15">
-                Add a new entry
-                <span class="revision-note mute small" ng-if="contest.entries.length > 0">(This entry is your {{contest.entries.length | ordinal}} revision)</span>
-            </h3>
-            <form name="newEntry">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="contest-single_add-entry__description">
-                            <text-angular ng-model="data.addEntryForm.description"></text-angular>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <div flow-init="{target: '/upload'}"
-                            flow-files-submitted="$flow.upload()"
-                            flow-file-success="$file.msg = $message">
-
-                            <div class="drop-target" flow-drop flow-drag-enter="style={border:'2px #eee dashed', background: '#f5f5f5'}" flow-drag-leave="style={}" ng-style="style">
-                                <span class="btn btn-info" flow-btn>Upload File</span> &nbsp; or Drag &amp; Drop images to upload
-                            </div>
-
-                            <div class="image-preview-list">
-                                <div class="image-preview col-sm-4 col-md-3" ng-repeat="file in $flow.files">
-                                    <img flow-img="file" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12 text-center marginT30">
-                        <button class="btn btn-info" ng-disabled="newEntry.$invalid || $flow.files.length === 0">Submit Entry</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div> -->
-	<!-- <div class="row contest-single_entry" ng-if="data.selectedEntry !== null">
-        <div class="col-sm-12">
-            <div class="contest-single_entry__description">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus labore quis esse non reiciendis nobis, dolores eligendi fuga, excepturi aliquid minima aut dolor consectetur velit sequi veniam molestiae maxime accusamus!
-            </div>
-        </div>
-
-	    <div class="col-md-6">
-	        <div class="contest-list contest-list-lb">
-	            <div class="row" ng-repeat="rating in data.selectedEntry.ratings">
-	                <div class="col-xs-2 text-center"><img src="images/coolestMember.jpg" alt="" class="coolestMemberLBPick"></div>
-	                <div class="col-xs-2 ">
-	                    <p class="bordRight">{{rating.judge.name}}
-	                        <br> Inventor
-	                        <br>
-	                        <a href="#">{{rating.country_residence}}</a></p>
-	                </div>
-	                <div class="col-xs-4">
-	                    <h4 class="clearfix"><strong class="pull-left">Design</strong> <small class="pull-right">{{rating.design}}</small></h4>
-	                    <h4 class="clearfix"><strong class="pull-left">Creativity</strong> <small class="pull-right">{{rating.creativity}}</small></h4>
-	                </div>
-	                <div class="col-xs-4 text-center">
-	                    <h4 class="clearfix"><strong class="pull-left">Industrial</strong> <small class="pull-right">{{rating.industrial}}</small></h4>
-	                    <h4 class="clearfix"><strong class="pull-left">Market P.</strong> <small class="pull-right">{{rating.market}}</small></h4>
-	                </div>
-	            </div>
-	            <a class="btn btn-block showmorebtn" ng-if="data.selectedEntry.ratings.length > 4">Show more</a> </div>
-	    </div>
-	    <div class="col-md-6">
-            <div class="chatbox">
-                <div class="chatRow" ng-repeat="message in data.selectedEntry.messages">
-                    <div class="chat-userSendbox" ng-class="{'chat-comein': user.id === message.user.id, 'chat-send': user.id !== message.user.id}">
-                        <div class="chat-content">{{message.body}}</div>
-                    </div>
-                    <div class="caht-label" ng-class="{'text-right': user.id === message.user.id}">
-                        {{message.user.name}} <span>{{message.created_at | amDateFormat:'MMM Do YYYY'}}:</span>
-                    </div>
-                </div>
-            </div>
-            <form class="chatsendform">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter your message here ..." ng-model="data.messageToSend" fd-enter="sendMessage()">
-                    <span class="input-group-addon sendbtn" ng-click="sendMessage()"><span class="glyphicon">Send</span></span>
-                </div>
-            </form>
-	    </div>
-	</div> -->
 </div>

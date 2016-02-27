@@ -31,6 +31,13 @@ class Entry extends Model
     protected $fillable = ['name', 'description'];
 
     /**
+     * Appends custom attributes
+     *
+     * @var array
+     */
+    protected $appends = ['contestant'];
+
+    /**
      * Relationship between Entry Rating
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -58,6 +65,25 @@ class Entry extends Model
     public function contest()
     {
         return $this->belongsTo('Fundator\Contest');
+    }
+
+    public function getContestantAttribute()
+    {
+        $creator = Creator::find($this->creator_id);
+        $creator_data = null;
+
+        if (!is_null($creator)) {
+            $user = $creator->user;
+
+            $creator_data = [
+                'id' => $user['id'],
+                'name' => $user['name'],
+                'last_name' => $user['last_name'],
+                'thumbnail' => $user['thumbnail']
+            ];
+        }
+
+        return $creator_data;
     }
 
     public function getThreadId()
@@ -99,6 +125,18 @@ class Entry extends Model
         }
 
         return 0;
+    }
+
+
+    /**
+     * Override the get attributes function
+     *
+     */
+    public function getAttributes()
+    {
+        $attributes = $this->toArray();
+
+        return $attributes;
     }
 
     /**

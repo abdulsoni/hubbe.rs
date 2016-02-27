@@ -46,6 +46,10 @@ return array(
         'email' => array(
             'title' => 'Email'
         ),
+        'bio' => array(
+            'title' => 'Short Bio',
+            'type' => 'textarea'
+        ),
         'role' => array(
             'type' => 'enum',
             'title' => 'Role',

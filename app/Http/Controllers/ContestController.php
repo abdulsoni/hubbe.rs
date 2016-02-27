@@ -2,6 +2,7 @@
 
 namespace Fundator\Http\Controllers;
 
+use Fundator\Creator;
 use Fundator\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -84,13 +85,17 @@ class ContestController extends Controller
         $contestants = $contest->entries->groupBy('creator_id');
 
         foreach($contestants as $creator_id => $entry){
-            $creator = User::find($creator_id);
+            $creator_obj = Creator::find($creator_id);
 
-            if(!is_null($creator) && !is_null($creator->thumbnail)){
-                $creator['thumbnail'] = $creator->thumbnail->getUrl();
+            if (!is_null($creator_obj)) {
+                $creator = $creator_obj->user;
+
+                if(!is_null($creator) && !is_null($creator->thumbnail)){
+                    $creator['thumbnail'] = $creator->thumbnail->getUrl();
+                }
+
+                $contest_data['contestants'][] = $creator;
             }
-
-            $contest_data['contestants'][] = $creator;
         }
 
 //        $entries = $contest->entries;

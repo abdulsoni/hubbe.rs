@@ -1,11 +1,12 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.routes').run(function($rootScope, $state, $stateParams, $auth, $timeout, $http, $urlRouter, $filter, FdNotifications, FdScroller) {
+    angular.module('fundator.routes').run(function($rootScope, $state, $stateParams, $auth, $timeout, $http, $urlRouter, $filter, $cookies, FdNotifications, FdScroller) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
         $rootScope.initialLocationSetup = false;
+        $rootScope.initialRoleAssignment = false;
 
         $rootScope.activeRole = '';
         $rootScope.activeState = null;
@@ -54,11 +55,20 @@
                         if ($rootScope.user.registered == 0) {
                             $state.go('app.auth.register');
                         }else{
-                            var roles = $filter('filter')($rootScope.user.user_roles, {role: $rootScope.user.role}, true);
+                            var orignalRole = $rootScope.user.role;
+                            var activeRole = $rootScope.user.role;
+
+                            if (typeof($cookies.get('fd_active_role')) !== 'undefined') {
+                                activeRole = $cookies.get('fd_active_role');
+                            }
+
+                            var roles = $filter('filter')($rootScope.user.user_roles, {role: activeRole}, true);
 
                             if (typeof(roles) !== 'undefined' && roles.length > 0) {
                                 var role = roles[0];
                                 $rootScope.switchUserRole(role.role, role.id, true);
+                            }else{
+                                $rootScope.switchUserRole(orignalRole.role, orignalRole.id, true);
                             }
                         }
                     }
@@ -89,7 +99,8 @@
                 if (typeof($rootScope.user) === 'undefined' && fromState.name.indexOf('recover') === -1) {
                     $rootScope.activeState = toState;
                     $rootScope.activeStateParams = toParams;
-                    // event.preventDefault();
+                } else if(!$rootScope.initialRoleAssignment) {
+                    event.preventDefault();
                 }
                 return;
             } else {
@@ -98,7 +109,7 @@
                 } else if (fromState.name.indexOf('auth') === -1) {
                     $timeout(function() {
                         event.preventDefault();
-                        $state.go('app.auth.login', {});
+                        $state.go('app.auth.login', {}, {reload: true});
                     });
                     return;
                 } else if (toState.name.indexOf('auth') === -1 && fromState.name.indexOf('auth') !== -1) {
@@ -108,7 +119,7 @@
                 } else if (toState.name.indexOf('auth') === -1) {
                     $timeout(function() {
                         event.preventDefault();
-                        $state.go('app.auth.login', {});
+                        $state.go('app.auth.login', {}, {reload: true});
                         return;
                     });
                 } else {
@@ -129,8 +140,12 @@
 
         $rootScope.switchUserRole = function(role, roleId, reload) {
             $rootScope.activeRole = role;
-            console.log(role);
-            console.log(roleId);
+            $cookies.put('fd_active_role', role);
+
+            if (!$rootScope.initialRoleAssignment) {
+                $rootScope.initialRoleAssignment = true;
+                // reload = false;
+            }
 
             if (typeof($rootScope.user) !== 'undefined') {
                 if ($rootScope.user.user_roles.length === 0) {

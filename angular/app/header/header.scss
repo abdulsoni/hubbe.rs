@@ -39,13 +39,21 @@
                 background-color: #333;
                 padding: 0;
 
-                ul > li > a{
-                    display: block;
-                    padding: 8px 15px;
-                    color: #fff;
-                    text-decoration: none;
+                ul > li {
+                    a{
+                        display: block;
+                        padding: 8px 15px;
+                        color: #fff;
+                        text-decoration: none;
 
-                    &:hover{
+                        &:hover{
+                            cursor: pointer;
+                            background-color: #444;
+                            color: $fd-green;
+                        }
+                    }
+
+                    &.active a{
                         cursor: pointer;
                         background-color: #444;
                         color: $fd-green;
@@ -60,6 +68,11 @@
 .contest-list {
     min-height: 294px;
     max-height: 294px;
+}
+
+.contest-single_entry .contest-list {
+    min-height: 447px;
+    max-height: auto;
 }
 
 .carousel_content .small {

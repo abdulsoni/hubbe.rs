@@ -55,21 +55,42 @@ class UserTableSeeder extends Seeder
             'name' => 'Udit',
             'email' => 'udit@eskaytech.com',
             'password' => bcrypt('etech'),
-            'role' => 'creator'
+            'role' => 'creator',
+            'gender' => 'female',
+            'age_gate' => true,
+            'country_origin' => 'us',
+            'country_residence' => 'us',
+            'contact_number' => '+1-510-489-3184',
+            'contact_time' => '9-6',
+            'bio' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis error dolor similique dolorum ratione fugit quam fuga modi, dignissimos deserunt libero accusantium esse sequi accusamus nam reiciendis ut odit hic!'
         ])->roles()->attach($creator->id);
 
         User::create([
             'name' => 'Benjamin Vignon',
             'email' => 'benjamin@komprom.com',
             'password' => bcrypt('fundator'),
-            'role' => 'creator'
+            'role' => 'creator',
+            'gender' => 'female',
+            'age_gate' => true,
+            'country_origin' => 'us',
+            'country_residence' => 'us',
+            'contact_number' => '+1-510-489-3184',
+            'contact_time' => '9-6',
+            'bio' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet eaque libero incidunt accusamus quaerat cumque ullam perferendis officia consectetur atque, quis blanditiis. Voluptatem eius quibusdam aut atque explicabo cum cupiditate.'
         ])->roles()->attach($creator->id);
 
         User::create([
             'name' => 'Christophe Brissiaud',
             'email' => 'christophe@fundator.co',
             'password' => bcrypt('fundator'),
-            'role' => 'investor'
+            'role' => 'investor',
+            'gender' => 'female',
+            'age_gate' => true,
+            'country_origin' => 'us',
+            'country_residence' => 'us',
+            'contact_number' => '+1-510-489-3184',
+            'contact_time' => '9-6',
+            'bio' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa perspiciatis perferendis hic eaque sed fuga, id. A repellat consequuntur adipisci, saepe dolore dignissimos, odio, expedita officiis totam inventore commodi nemo?'
         ])->roles()->attach($investor->id);
 
         User::create([
@@ -83,7 +104,8 @@ class UserTableSeeder extends Seeder
             'country_origin' => 'us',
             'country_residence' => 'us',
             'contact_number' => '+1-510-489-3184',
-            'contact_time' => '9-6'
+            'contact_time' => '9-6',
+            'bio' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur minima, sit sequi dolore nesciunt officiis ullam neque harum, rem, perspiciatis exercitationem, ipsa perferendis ratione eos. Nisi ut quod, perferendis atque!'
         ])->roles()->attach($investor->id);
 
 
@@ -98,7 +120,8 @@ class UserTableSeeder extends Seeder
             'country_origin' => 'france',
             'country_residence' => 'france',
             'contact_number' => '+33 03.54.10.61.10',
-            'contact_time' => '9-6'
+            'contact_time' => '9-6',
+            'bio' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio fuga eius accusamus veniam odio ab iure. Delectus, voluptas tempore! Ex doloribus velit corporis placeat officiis aliquid deleniti ipsam, illo obcaecati.'
         ])->roles()->attach($investor->id);
 
 
@@ -113,7 +136,8 @@ class UserTableSeeder extends Seeder
             'country_origin' => 'france',
             'country_residence' => 'france',
             'contact_number' => '+33 03.54.10.61.10',
-            'contact_time' => '9-6'
+            'contact_time' => '9-6',
+            'bio' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel aliquam consequatur dolor aperiam, nobis provident ipsa sint, voluptates a nihil ducimus dolorum sed molestias praesentium, tenetur at corporis error facere.'
         ])->roles()->attach($investor->id);
 
         User::create([
@@ -127,7 +151,8 @@ class UserTableSeeder extends Seeder
             'country_origin' => 'france',
             'country_residence' => 'france',
             'contact_number' => '+33 03.54.10.61.10',
-            'contact_time' => '9-6'
+            'contact_time' => '9-6',
+            'bio' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae voluptate magni iusto esse amet veritatis tempora, doloremque minima deleniti ex, facere dignissimos suscipit nobis praesentium harum voluptas? Veniam, aliquid, eius.'
         ])->roles()->attach($investor->id);
 
     }

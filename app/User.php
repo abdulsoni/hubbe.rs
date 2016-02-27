@@ -91,6 +91,18 @@ class User extends Model implements AuthenticatableContract,
         return $userRoles;
     }
 
+    public function getThumbnailAttribute()
+    {
+        $thumbnail = File::find($this->thumbnail_id);
+        $thumbnail_url = null;
+
+        if (!is_null($thumbnail_url)) {
+            $thumbnail_url = $thumbnail->getUrl();
+        }
+
+        return $thumbnail_url;
+    }
+
     /*
      * Create a JWT token with additional parameters
      */

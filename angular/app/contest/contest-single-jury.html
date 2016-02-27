@@ -1,18 +1,11 @@
 <div class="contest-single">
 	<div class="row">
-	    <div class="col-md-5">
-	        <div class="projectImg lb">
-	            <div class="row date-wrap">
-	                <div class="col-xs-8 col-sm-9 project-date">
-	                    <!-- <h4>
-	                    	{{ end_time = (contest.start_time | amAdd : contest.duration : 'days'); ''}}
-	                    	{{ end_time | amDifference : null : 'days' }} days to go
-	                    	({{ end_time | amDateFormat:'MMM Do YYYY'}}).
-	                    </h4> -->
-	                </div>
-	                <div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>
-	            </div>
-	            <div class="row rankingMng">
+        <div class="col-md-5">
+            <div class="projectImg lb">
+                <div class="row date-wrap">
+                    <div class="col-xs-4 col-sm-3 project-profile"><img src="images/profile.jpg" alt=""></div>
+                </div>
+                <div class="row rankingMng">
                     <div class="col-xs-4 leftRank">
                         <h4>Rank</h4>
                         <span class="countValue">{{contest.id | ordinal}}</span>
@@ -29,14 +22,20 @@
                 </div>
             </div>
             <h3 class="projectHeading">{{contest.name}}</h3>
-	    </div>
-	    <div class="col-md-7">
-	        <div class="well contest-single_info-panel">
-            	<uib-tabset vertical="true" type="pills">
-            		<uib-tab heading="General">
-						<div class="row">
+        </div>
+        <div class="col-md-7">
+            <div class="well contest-single_info-panel">
+                <uib-tabset vertical="true" type="pills">
+                    <uib-tab heading="General">
+                        <div class="row">
+                            <div class="col-xs-12 contest-single_description marginT15" data-ellipsis data-ellipsis-append="read more" data-ellipsis-append-click="showFullText()">
+                                <div ng-bind-html="contest.description | trustedHtml"></div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
                             <div class="col-sm-9">
-	                            {{ end_time = (contest.start_time | amAdd : contest.duration : 'days'); ''}}
+                                {{ end_time = (contest.start_time | amAdd : contest.duration : 'days'); ''}}
                                 <h4 class="clearfix"><strong class="pull-left">Start Time</strong> <small class="pull-right">{{contest.start_time | amDateFormat:'MMM Do YYYY'}}</small></h4>
                                 <h4 class="clearfix"><strong class="pull-left">Finish Time</strong> <small class="pull-right">{{end_time | amDateFormat:'MMM Do YYYY'}}</small></h4>
                                 <h4 class="clearfix"><strong class="pull-left">Number of Contestants</strong> <small class="pull-right">{{contest.total_entries}}</small></h4>
@@ -44,22 +43,7 @@
                             <div class="col-sm-3 text-right"><span class="radius-box marginT10">2nd</span></div>
                         </div>
                         <hr />
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <h4><strong>Average Marks</strong></h4>
-                            </div>
-                            <div class="col-sm-5">
-                                <h4 class="clearfix"><strong class="pull-left">Design</strong> <small class="pull-right">8,5/10</small></h4>
-                                <h4 class="clearfix"><strong class="pull-left">Creativity</strong> <small class="pull-right">8,5/10</small></h4>
-                            </div>
-                            <div class="col-sm-1"></div>
-                            <div class="col-sm-5">
-                                <h4 class="clearfix"><strong class="pull-left">Industry</strong> <small class="pull-right">8,5/10</small></h4>
-                                <h4 class="clearfix"><strong class="pull-left">Market</strong> <small class="pull-right">8,5/10</small></h4>
-                            </div>
-                            <div class="col-sm-1"></div>
-                        </div>
-                        <hr />
+
                         <div class="row">
                             <div class="col-md-12">
                                 <ul class="prizebox">
@@ -69,9 +53,12 @@
                                 </ul>
                             </div>
                         </div>
-            		</uib-tab>
-            		<uib-tab heading="Creator">
-						<div class="owl-profiles" ng-if="contest.contestants.length > 0" owl-carousel="contest.contestants"
+                    </uib-tab>
+                    <uib-tab heading="Contestants">
+                        <uib-tab-heading>
+                            Creators <span class="badge pull-right">{{contest.contestants.length}}</span>
+                        </uib-tab-heading>
+                        <div class="owl-profiles" ng-if="contest.contestants.length > 0" owl-carousel="contest.contestants"
                             owl-options='{"pagination": false, "dots": false, "navigation":true, "singleItem":true, "navigationText": [ "<i class=\"icon-chevron-left icon-white\"></i>", "<i class=\"icon-chevron-right icon-white\"></i>" ]}'>>
                             <div class="item creator-profile">
                                 <div class="row">
@@ -80,7 +67,7 @@
                                         <img ng-src="{{user.thumbnail}}" alt="" ng-if="item.thumbnail">
                                     </div>
                                     <div class="col-sm-8 bio">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur natus voluptas error eaque. Porro repellat amet maiores aliquid quasi ea quam cumque voluptates esse consequuntur ut, necessitatibus adipisci provident sapiente.
+                                        {{user.bio}}
                                     </div>
                                 </div>
                                 <br>
@@ -89,9 +76,9 @@
                                 <div class="row rankingMng">
                                     <div class="col-xs-5 leftRank">
                                         <h4>{{item.name}}</h4>
-                                        <h4>South Korea</h4>
-                                        <h4>{{item.role}} <span class="highlighted">8.5/10</span></h4>
-                                        <h4>Reviews <span class="muted">37 reviews</span></h4>
+                                        <h4>{{item.country_origin}}</h4>
+                                        <h4>{{item.role}} <!-- <span class="highlighted">8.5/10</span> --></h4>
+                                        <h4>Reviews <a class="muted cursor">0 reviews</a></h4>
                                     </div>
                                     <div class="col-xs-3 col-xs-3-5 leftRank">
                                         <h4 class="col-heading">Notation <br>Number</h4>
@@ -99,15 +86,18 @@
                                     </div>
                                     <div class="col-xs-3 col-xs-3-5">
                                         <h4 class="col-heading">Contest <br>Done</h4>
-                                        <span class="countValue">5</span>
+                                        <span class="countValue">0</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <p class="no-have" ng-if="contest.contestants.length === 0">There are currently no creators for this contest.</p>
-            		</uib-tab>
-            		<uib-tab heading="Jury">
-						<div class="owl-profiles" ng-if="contest.judges.length > 0" owl-carousel="contest.judges"
+                    </uib-tab>
+                    <uib-tab heading="Jury">
+                        <uib-tab-heading>
+                            Jury <span class="badge pull-right">{{contest.judges.length}}</span>
+                        </uib-tab-heading>
+                        <div class="owl-profiles" ng-if="contest.judges.length > 0" owl-carousel="contest.judges"
                             owl-options='{"pagination": false, "dots": false, "navigation":true, "singleItem":true, "navigationText": [ "<i class=\"icon-chevron-left icon-white\"></i>", "<i class=\"icon-chevron-right icon-white\"></i>" ]}'>>
                             <div class="item creator-profile">
                                 <div class="row">
@@ -116,7 +106,7 @@
                                         <img ng-src="{{user.thumbnail}}" alt="" ng-if="item.thumbnail">
                                     </div>
                                     <div class="col-sm-8 bio">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur natus voluptas error eaque. Porro repellat amet maiores aliquid quasi ea quam cumque voluptates esse consequuntur ut, necessitatibus adipisci provident sapiente.
+                                        {{user.bio}}
                                     </div>
                                 </div>
                                 <br>
@@ -125,34 +115,35 @@
                                 <div class="row rankingMng">
                                     <div class="col-xs-5 leftRank">
                                         <h4>{{item.name}}</h4>
-                                        <h4>South Korea</h4>
-                                        <h4>{{item.role}} <span class="highlighted">8.5/10</span></h4>
-                                        <h4>Reviews <span class="muted">37 reviews</span></h4>
+                                        <h4>{{item.country_origin}}</h4>
+                                        <h4 class="capitalize">{{item.role}} <span class="highlighted">0/10</span></h4>
+                                        <h4>Reviews  <a class="muted cursor">0 reviews</a></h4>
                                     </div>
                                     <div class="col-xs-3 col-xs-3-5 leftRank">
                                         <h4 class="col-heading">Notation <br>Number</h4>
                                         <span class="countValue">{{contest.total_entries}}</span>
                                     </div>
                                     <div class="col-xs-3 col-xs-3-5">
-                                        <h4 class="col-heading">Contest <br>Done</h4>
-                                        <span class="countValue">2</span>
+                                        <h4 class="col-heading">Contest <br>Judged</h4>
+                                        <span class="countValue">0</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <p class="no-have" ng-if="contest.judges.length === 0">There are currently no judges for this contest.</p>
-            		</uib-tab>
-            		<uib-tab heading="Market">
-						<p class="no-have">There is currently no Market information for this contest.</p>
-            		</uib-tab>
-            		<uib-tab heading="Market Survey">
-						<p class="no-have">There is currently no Market Survey information for this contest.</p>
-            		</uib-tab>
-            	</uib-tabset>
-	        </div>
-	    </div>
-	</div>
+                    </uib-tab>
+                    <uib-tab heading="Market">
+                        <p class="no-have">There is currently no Market information for this contest.</p>
+                    </uib-tab>
+                    <uib-tab heading="Market Survey">
+                        <p class="no-have">There is currently no Market Survey information for this contest.</p>
+                    </uib-tab>
+                </uib-tabset>
+            </div>
+        </div>
+    </div>
 	<div class="entries-list" ng-if="contest.entries.length > 0">
+        <h2>Entries to evaluate</h2>
         <hr/>
         <div class="row">
             <div class="col-sm-12">
@@ -162,10 +153,16 @@
                         <div class="carousel_content">
                             <div class="row">
                                 <div class="col-xs-8">
-                                    <h5>{{item.name}}</h5>
-                                    <p class="small" ng-if="item.type">{{item.type}}</p>
+                                    <h4>by {{item.contestant.name}} {{item.contestant.last_name}}</h4>
                                 </div>
-                                <div class="col-xs-4"><span class="icon icon-plus radius-box rbM marginT10"></span></div>
+                                <div class="col-xs-4">
+                                    <img class="thumbnail" src="images/profile.jpg" alt="">
+                                </div>
+
+                                <div class="meta-data clearfix">
+                                    <p class="small pull-left" ng-if="item.type">{{item.type}}</p>
+                                    <p class="small pull-right">#{{item.revisions.length}}</p>
+                                </div>
                             </div>
                         </div>
                         <img src="images/1.png" alt="">
@@ -176,15 +173,45 @@
     </div>
 	<div class="row" ng-if="data.selectedEntry !== null">
         <div class="col-sm-12">
-            <div class="contest-single_entry__title">
-                <h3>Entry by user [<a href="#">latest</a> / <a href="#">v2</a> / <a href="#">v1</a>]</h3>
+            <div class="contest-single_entry__title marginB30">
+                <h3>
+                    Entry by {{data.selectedEntry.contestant.name}} {{data.selectedEntry.contestant.last_name}}
+                    <span class="pull-right">
+                        <ul class="list-unstyled list-inline">
+                            <li ng-repeat="revision in data.selectedEntry.revisions | orderBy: '-id'">
+                                <a class="cursor" ng-click="selectEntry(revision)"># {{(data.selectedEntry.revisions.length - $index)}}</a> <span class="divider" ng-if="$index < (data.selectedEntry.revisions.length - 1)">/</span>
+                            </li>
+                        </ul>
+                    </span>
+                </h3>
+                <hr>
             </div>
-
-            <div class="contest-single_entry__description">
-                {{data.selectedEntry.description}}
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="contest-single_entry__description">
+                        {{data.selectedEntry.description}}
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="owl-demo" owl-carousel="data.selectedEntry.gallery"
+                        owl-options='{"pagination": false, "dots": false, "navigation":true, "items": 2, "navigationText": [ "<i class=\"icon-chevron-left icon-white\"></i>", "<i class=\"icon-chevron-right icon-white\"></i>" ]}'>
+                        <div class="item" ng-click="openLightbox(item)">
+                            <img src="{{item}}" alt="">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-	    <div class="col-md-6">
+        <div class="col-md-12 center-block" ng-if="!data.selectedEntry.rating && data.selectedEntry.rating !== null">
+            <fd-loader class="center"></fd-loader>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
+	    <div class="col-md-6" ng-if="data.selectedEntry.rating || data.selectedEntry.rating === null">
 	        <div class="entry-details entry-details-marks">
                 <div class="entry-image">
                     <h2>{{data.selectedEntry.name}}</h2>
@@ -232,13 +259,13 @@
                 </div>
             </div>
 	    </div>
-	    <div class="col-md-6">
+	    <div class="col-md-6" ng-if="data.selectedEntry.messages">
 	        <div class="chatbox">
 	            <div class="chatRow" ng-repeat="message in data.selectedEntry.messages">
-	                <div class="chat-userSendbox" ng-class="{'chat-send': user.id === message.user.id, 'chat-comein': user.id !== message.user.id}">
+	                <div class="chat-userSendbox" ng-class="{'chat-send': user.id == message.user.id, 'chat-comein': user.id != message.user.id}">
 	                    <div class="chat-content">{{message.body}}</div>
 	                </div>
-	                <div class="caht-label" ng-class="{'text-right': user.id === message.user.id}">
+	                <div class="caht-label" ng-class="{'text-right': user.id == message.user.id}">
                         {{message.user.name}} <span>{{message.created_at | amDateFormat:'MMM Do YYYY'}}:</span>
                     </div>
 	            </div>

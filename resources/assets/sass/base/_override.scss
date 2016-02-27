@@ -148,6 +148,8 @@
 }
 
 .creator-profile{
+  overflow: hidden;
+
   img{
     border-radius: 50%;
     border: rgba(161, 163, 165, 0.58) 3px solid;
@@ -252,3 +254,15 @@
   }
 }
 
+.lightbox-modal .modal-content{
+  padding: 0 !important;
+}
+
+#loading-bar .bar{
+  background: $fd-green !important;
+}
+
+#loading-bar-spinner .spinner-icon{
+  border-top-color: $fd-green !important;
+  border-left-color: $fd-green !important;
+}

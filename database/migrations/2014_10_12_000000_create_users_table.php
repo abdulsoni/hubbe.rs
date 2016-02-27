@@ -41,6 +41,8 @@ class CreateUsersTable extends Migration
             $table->boolean('confirmed')->default(0);
             $table->string('confirmation_code')->nullable();
 
+            $table->longText('bio');
+
             $table->rememberToken();
             $table->timestamps();
         });

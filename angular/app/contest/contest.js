@@ -33,7 +33,7 @@
         };
     });
 
-    angular.module('fundator.controllers').controller('ContestSingleCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $filter, $timeout, FdScroller, $http) {
+    angular.module('fundator.controllers').controller('ContestSingleCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $filter, $timeout, FdScroller, $http, Lightbox) {
         $scope.contestId = $stateParams.contestId;
         $scope.data = {
             addEntry: false,
@@ -87,7 +87,7 @@
             });
 
             if (typeof(judgeable) !== 'undefined') {
-                if (judgeable.length > 0 && $stateParams.role !== 'jury') {
+                if (judgeable.length > 0 && $rootScope.activeRole !== 'jury') {
                     $rootScope.flashNotices.juryView.show = true;
                     $rootScope.flashNotices.juryView.contestId = result.id;
 
@@ -97,7 +97,7 @@
                             contestId: result.id
                         });
                     };
-                } else if($stateParams.role === 'jury') {
+                } else if($rootScope.activeRole === 'jury') {
                     Entry.judgeEntries({
                         contestId: $scope.contestId,
                         judgeId: $rootScope.user.id
@@ -117,7 +117,7 @@
             $scope.data.addEntry = false;
             $scope.data.selectedEntry = entry;
 
-            // var rating = angular.copy($scope.data.selectedEntry.rating);
+            FdScroller.toSection('.entries-list');
 
             var judgeId = null;
 
@@ -130,6 +130,12 @@
                     $scope.data.selectedEntry = result.data;
                     $scope.data.selectedEntry.rating = result.data.rating;
 
+                    $scope.data.selectedEntry.gallery = [
+                        'images/1.png',
+                        'images/2.png',
+                        'images/3.png',
+                    ];
+
                     $timeout(function(){
                         $('.chatbox').animate({scrollTop: 10000});
                     }, 100);
@@ -139,7 +145,11 @@
                     entryId: entry.id
                 }).$promise.then(function(result) {
                     $scope.data.selectedEntry = result;
-                    // $scope.data.selectedEntry.rating = rating;
+                    $scope.data.selectedEntry.gallery = [
+                        'images/1.png',
+                        'images/2.png',
+                        'images/3.png',
+                    ];
 
                     $timeout(function(){
                         $('.chatbox').animate({scrollTop: 10000});
@@ -148,6 +158,16 @@
             }
 
         };
+
+        $scope.openLightbox = function(item) {
+            var index = $scope.data.selectedEntry.gallery.indexOf(item);
+
+            if (index === -1) {
+                index = 0;
+            }
+
+            Lightbox.openModal($scope.data.selectedEntry.gallery, index);
+        }
 
         $scope.showAddEntry = function() {
             console.log('showing add entry form');
@@ -198,6 +218,10 @@
                         console.log('entry rating saved!');
                         $scope.data.savingMarks = false;
                         $scope.data.savedMarks = true;
+
+                        $timeout(function(){
+                            $scope.data.savedMarks = false;
+                        }, 1000);
                     }
                 });
 
@@ -208,6 +232,10 @@
                         console.log('entry rating created!');
                         $scope.data.savingMarks = false;
                         $scope.data.savedMarks = true;
+
+                        $timeout(function(){
+                            $scope.data.savedMarks = false;
+                        }, 1000);
                     }
                 });
             }

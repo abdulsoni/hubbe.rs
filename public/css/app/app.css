@@ -7128,10 +7128,28 @@ ul.prizebox li:nth-child(3) a {
   position: absolute;
   left: 0;
   top: 0;
-  width: 100%; }
-  .carousel_content h5 {
+  width: 100%;
+  height: 100%; }
+  .carousel_content h4, .carousel_content h5 {
     color: #fff;
     padding: 5px 1px 5px 10px; }
+
+.carousel_content .meta-data {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 15px; }
+
+.carousel_content .thumbnail {
+  width: 45px !important;
+  height: 45px !important;
+  -webkit-border-radius: 45px;
+  -moz-border-radius: 45px;
+  -ms-border-radius: 45px;
+  -o-border-radius: 45px;
+  border-radius: 45px;
+  border: rgba(161, 163, 165, 0.58) 2px solid;
+  margin-top: 10px; }
 
 .moreentires {
   background: url(../../images/entries.png);
@@ -9139,42 +9157,38 @@ footer {
   .owl-profiles .owl-controls .owl-buttons .owl-next {
     right: -30px; }
 
-.creator-profile img {
-  border-radius: 50%;
-  border: rgba(161, 163, 165, 0.58) 3px solid; }
-
-.creator-profile hr {
-  margin: 10px; }
-
-.creator-profile .bio {
-  font-size: 15px;
-  font-weight: 300;
-  font-style: italic; }
-
-.creator-profile .rankingMng h4 {
-  font-weight: bold; }
-  .creator-profile .rankingMng h4 span.highlighted {
-    margin-left: 5px;
-    color: #29aae2;
-    font-style: italic;
-    font-weight: lighter; }
-  .creator-profile .rankingMng h4 span.muted {
-    font-size: 16px;
-    font-weight: lighter;
+.creator-profile {
+  overflow: hidden; }
+  .creator-profile img {
+    border-radius: 50%;
+    border: rgba(161, 163, 165, 0.58) 3px solid; }
+  .creator-profile hr {
+    margin: 10px; }
+  .creator-profile .bio {
+    font-size: 15px;
+    font-weight: 300;
     font-style: italic; }
-
-.creator-profile .rankingMng .col-xs-3-5 {
-  width: 29.166665%; }
-
-.creator-profile .rankingMng .col-heading {
-  font-size: 16px;
-  font-weight: 300;
-  text-align: center;
-  margin-bottom: 15px;
-  font-style: italic; }
-
-.creator-profile .rankingMng .countValue {
-  margin-bottom: 33px; }
+  .creator-profile .rankingMng h4 {
+    font-weight: bold; }
+    .creator-profile .rankingMng h4 span.highlighted {
+      margin-left: 5px;
+      color: #29aae2;
+      font-style: italic;
+      font-weight: lighter; }
+    .creator-profile .rankingMng h4 span.muted {
+      font-size: 16px;
+      font-weight: lighter;
+      font-style: italic; }
+  .creator-profile .rankingMng .col-xs-3-5 {
+    width: 29.166665%; }
+  .creator-profile .rankingMng .col-heading {
+    font-size: 16px;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 15px;
+    font-style: italic; }
+  .creator-profile .rankingMng .countValue {
+    margin-bottom: 33px; }
 
 .nav-stacked > li + li {
   margin-top: 3px; }
@@ -9215,6 +9229,16 @@ footer {
   padding: 14px 20px; }
   .btn-success:hover, .btn-success:focus, .btn-success:active {
     background-color: #7aa737; }
+
+.lightbox-modal .modal-content {
+  padding: 0 !important; }
+
+#loading-bar .bar {
+  background: #95c54d !important; }
+
+#loading-bar-spinner .spinner-icon {
+  border-top-color: #95c54d !important;
+  border-left-color: #95c54d !important; }
 
 @font-face {
   font-family: 'icomoon';
@@ -11045,20 +11069,28 @@ footer {
     .profile .profile-info .popover .popover-content {
       background-color: #333;
       padding: 0; }
-      .profile .profile-info .popover .popover-content ul > li > a {
+      .profile .profile-info .popover .popover-content ul > li a {
         display: block;
         padding: 8px 15px;
         color: #fff;
         text-decoration: none; }
-        .profile .profile-info .popover .popover-content ul > li > a:hover {
+        .profile .profile-info .popover .popover-content ul > li a:hover {
           cursor: pointer;
           background-color: #444;
           color: #95c54d; }
+      .profile .profile-info .popover .popover-content ul > li.active a {
+        cursor: pointer;
+        background-color: #444;
+        color: #95c54d; }
 
 .ongoing-contest,
 .contest-list {
   min-height: 294px;
   max-height: 294px; }
+
+.contest-single_entry .contest-list {
+  min-height: 447px;
+  max-height: auto; }
 
 .carousel_content .small {
   padding: 0px 1px 5px 10px;
