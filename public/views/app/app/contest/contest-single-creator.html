@@ -220,10 +220,10 @@
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <div class="owl-demo" owl-carousel="contest.entries"
+                    <div class="owl-demo" owl-carousel="data.selectedEntry.gallery"
                         owl-options='{"pagination": false, "dots": false, "navigation":true, "items": 2, "navigationText": [ "<i class=\"icon-chevron-left icon-white\"></i>", "<i class=\"icon-chevron-right icon-white\"></i>" ]}'>
-                        <div class="item">
-                            <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=350%C3%97150&w=800&h=600" alt="">
+                        <div class="item" ng-click="openLightbox(item)">
+                            <img src="{{item}}" alt="">
                         </div>
                     </div>
                 </div>
