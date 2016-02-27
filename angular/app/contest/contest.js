@@ -170,7 +170,7 @@
         }
 
         $scope.showAddEntry = function() {
-            console.log('showing add entry form');
+            FdScroller.toSection('.entries-list');
 
             $scope.data.selectedEntry = null;
             $scope.data.addEntry = true;
