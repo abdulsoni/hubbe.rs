@@ -271,9 +271,9 @@ class AuthenticateController extends Controller
             }
 
             $token = explode(' ', $request->header('Authorization'))[1];
-            $payload = (array) JWT::decode($token, Config::get('app.token_secret'), array('HS256'));
-
+            $payload = JWTAuth::getPayload($token);
             $user = User::find($payload['sub']);
+
             $user->facebook = $profile['id'];
             $user->email = $user->email ?: $profile['email'];
             $user->name = $user->name ?: $profile['name'];
@@ -340,9 +340,9 @@ class AuthenticateController extends Controller
             }
 
             $token = explode(' ', $request->header('Authorization'))[1];
-            $payload = (array) JWT::decode($token, Config::get('app.token_secret'), array('HS256'));
-
+            $payload = JWTAuth::getPayload($token);
             $user = User::find($payload['sub']);
+
             $user->google = $profile['sub'];
             $user->name = $user->name ?: $profile['name'];
             $user->save();
@@ -403,9 +403,11 @@ class AuthenticateController extends Controller
             {
                 return response()->json(['message' => 'There is already a LinkedIn account that belongs to you'], 409);
             }
+
             $token = explode(' ', $request->header('Authorization'))[1];
             $payload = JWTAuth::getPayload($token);
             $user = User::find($payload['sub']);
+
             $user->linkedin = $profile['id'];
             $user->name = $user->name ?: $profile['firstName'] . ' ' . $profile['lastName'];
             $user->email = $profile['emailAddress'];
