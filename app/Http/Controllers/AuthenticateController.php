@@ -329,6 +329,9 @@ class AuthenticateController extends Controller
         ]);
         $profile = json_decode($profileResponse->getBody(), true);
 
+        var_dump($profile);
+        Log::info($profile);
+
         // Step 3a. If user is already signed in then link accounts.
         if ($request->header('Authorization'))
         {
