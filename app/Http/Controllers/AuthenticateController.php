@@ -29,7 +29,7 @@ class AuthenticateController extends Controller
     public function __construct()
     {
         // Token Based Access
-        $this->middleware('jwt.auth', ['except' => ['index', 'authenticate', 'signup', 'confirm', 'linkedin']]);
+        $this->middleware('jwt.auth', ['except' => ['index', 'authenticate', 'signup', 'confirm', 'linkedin', 'facebook', 'google']]);
     }
 
     /**
@@ -231,6 +231,145 @@ class AuthenticateController extends Controller
     }
 
     /**
+     * Login with Facebook.
+     */
+    public function facebook(Request $request)
+    {
+        $client = new GuzzleHttp\Client();
+
+        $params = [
+            'code' => $request->input('code'),
+            'client_id' => $request->input('clientId'),
+            'redirect_uri' => $request->input('redirectUri'),
+            'client_secret' => Config::get('app.facebook_secret')
+        ];
+
+        // Step 1. Exchange authorization code for access token.
+        $accessTokenResponse = $client->request('GET', 'https://graph.facebook.com/v2.5/oauth/access_token', [
+            'query' => $params
+        ]);
+        $accessToken = json_decode($accessTokenResponse->getBody(), true);
+
+        // Step 2. Retrieve profile information about the current user.
+        $fields = 'id,email,first_name,last_name,link,name';
+        $profileResponse = $client->request('GET', 'https://graph.facebook.com/v2.5/me', [
+            'query' => [
+                'access_token' => $accessToken['access_token'],
+                'fields' => $fields
+            ]
+        ]);
+        $profile = json_decode($profileResponse->getBody(), true);
+
+        // Step 3a. If user is already signed in then link accounts.
+        if ($request->header('Authorization'))
+        {
+            $user = User::where('facebook', '=', $profile['id']);
+
+            if ($user->first())
+            {
+                return response()->json(['message' => 'There is already a Facebook account that belongs to you'], 409);
+            }
+
+            $token = explode(' ', $request->header('Authorization'))[1];
+            $payload = (array) JWT::decode($token, Config::get('app.token_secret'), array('HS256'));
+
+            $user = User::find($payload['sub']);
+            $user->facebook = $profile['id'];
+            $user->email = $user->email ?: $profile['email'];
+            $user->name = $user->name ?: $profile['name'];
+            $user->save();
+
+            return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
+        }
+        // Step 3b. Create a new user account or return an existing one.
+        else
+        {
+            $users = User::where('facebook', '=', $profile['id']);
+            $user = $users->first();
+
+            if ($user)
+            {
+                return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
+            }
+
+            $user = new User;
+            $user->facebook = $profile['id'];
+            $user->name = $profile['name'];
+            $user->confirmed = 1;
+            $user->save();
+
+            return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
+        }
+    }
+
+    /**
+     * Login with Google.
+     */
+    public function google(Request $request)
+    {
+        $client = new GuzzleHttp\Client();
+
+        $params = [
+            'code' => $request->input('code'),
+            'client_id' => $request->input('clientId'),
+            'client_secret' => Config::get('app.google_secret'),
+            'redirect_uri' => $request->input('redirectUri'),
+            'grant_type' => 'authorization_code',
+        ];
+
+        // Step 1. Exchange authorization code for access token.
+        $accessTokenResponse = $client->request('POST', 'https://accounts.google.com/o/oauth2/token', [
+            'form_params' => $params
+        ]);
+        $accessToken = json_decode($accessTokenResponse->getBody(), true);
+
+        // Step 2. Retrieve profile information about the current user.
+        $profileResponse = $client->request('GET', 'https://www.googleapis.com/plus/v1/people/me/openIdConnect', [
+            'headers' => array('Authorization' => 'Bearer ' . $accessToken['access_token'])
+        ]);
+        $profile = json_decode($profileResponse->getBody(), true);
+
+        // Step 3a. If user is already signed in then link accounts.
+        if ($request->header('Authorization'))
+        {
+            $user = User::where('google', '=', $profile['sub']);
+
+            if ($user->first())
+            {
+                return response()->json(['message' => 'There is already a Google account that belongs to you'], 409);
+            }
+
+            $token = explode(' ', $request->header('Authorization'))[1];
+            $payload = (array) JWT::decode($token, Config::get('app.token_secret'), array('HS256'));
+
+            $user = User::find($payload['sub']);
+            $user->google = $profile['sub'];
+            $user->displayName = $user->displayName ?: $profile['name'];
+            $user->save();
+
+            return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
+        }
+        // Step 3b. Create a new user account or return an existing one.
+        else
+        {
+            $users = User::where('google', '=', $profile['sub']);
+            $user = $users->first();
+
+            if ($user)
+            {
+                return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
+            }
+
+            $user = new User;
+            $user->google = $profile['sub'];
+            $user->displayName = $profile['name'];
+            $user->save();
+
+            return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
+        }
+    }
+
+    /**
      * Login with LinkedIn.
      */
     public function linkedin(Request $request)
@@ -268,10 +407,10 @@ class AuthenticateController extends Controller
             $payload = JWTAuth::getPayload($token);
             $user = User::find($payload['sub']);
             $user->linkedin = $profile['id'];
-            $user->name = $user->displayName ?: $profile['firstName'] . ' ' . $profile['lastName'];
+            $user->name = $user->name ?: $profile['firstName'] . ' ' . $profile['lastName'];
             $user->email = $profile['emailAddress'];
             $user->save();
-            return response()->json(['token' => $user->getToken()]);
+            return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
         }
         // Step 3b. Create a new user account or return an existing one.
         else
@@ -281,7 +420,7 @@ class AuthenticateController extends Controller
 
             if ($user)
             {
-                return response()->json(['token' => $user->getToken()]);
+                return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
             }
 
             $user = new User;
@@ -291,7 +430,7 @@ class AuthenticateController extends Controller
             $user->confirmed = 1;
             $user->save();
 
-            return response()->json(['token' => $user->getToken()]);
+            return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
         }
     }
 }

@@ -30,6 +30,7 @@
         $rootScope.$on('$locationChangeSuccess', function(e) {
             if (typeof($rootScope.user) !== 'undefined') {
                 if ($rootScope.user.registered == 0) {
+                    console.log('going to register');
                     $state.go('app.auth.register');
                 }
             }
@@ -53,6 +54,7 @@
                         FdNotifications.init();
 
                         if ($rootScope.user.registered == 0) {
+                            console.log('going to register');
                             $state.go('app.auth.register');
                         }else{
                             var orignalRole = $rootScope.user.role;
@@ -99,7 +101,7 @@
                 if (typeof($rootScope.user) === 'undefined' && fromState.name.indexOf('recover') === -1) {
                     $rootScope.activeState = toState;
                     $rootScope.activeStateParams = toParams;
-                } else if(!$rootScope.initialRoleAssignment) {
+                } else if(!$rootScope.initialRoleAssignment && $rootScope.user.registered == 1) {
                     event.preventDefault();
                 }
                 return;

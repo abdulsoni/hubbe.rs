@@ -12,6 +12,8 @@ return [
     */
 
     'linkedin_secret' => 'MXr4g40gqEz3Lagy',
+    'facebook_secret' => '607adaa9ca882150facdaec1143bd935',
+    'google_secret' => 'gMavzkT72iYYbETg16o2G5TQ',
 
     /*
     |--------------------------------------------------------------------------
