@@ -435,11 +435,12 @@
                     $rootScope.user.last_name = $scope.data.lname;
                     $rootScope.user.role = $scope.data.selectedRole;
                     $rootScope.user.registered = 1;
+                    $rootScope.initialRoleAssignment = true;
 
                     $rootScope.activeRole = $scope.data.selectedRole;
-
                     $state.go('app.contest');
-                    console.log('add in the latest role');
+
+                    $rootScope.switchUserRole($scope.data.selectedRole, null, true);
                 }
             }, function(result){
                 console.log('error');

@@ -344,7 +344,7 @@ class AuthenticateController extends Controller
 
             $user = User::find($payload['sub']);
             $user->google = $profile['sub'];
-            $user->displayName = $user->displayName ?: $profile['name'];
+            $user->name = $user->name ?: $profile['name'];
             $user->save();
 
             return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
@@ -362,7 +362,7 @@ class AuthenticateController extends Controller
 
             $user = new User;
             $user->google = $profile['sub'];
-            $user->displayName = $profile['name'];
+            $user->name = $profile['name'];
             $user->save();
 
             return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);

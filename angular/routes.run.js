@@ -146,7 +146,6 @@
 
             if (!$rootScope.initialRoleAssignment) {
                 $rootScope.initialRoleAssignment = true;
-                // reload = false;
             }
 
             if (typeof($rootScope.user) !== 'undefined') {
