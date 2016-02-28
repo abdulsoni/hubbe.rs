@@ -329,9 +329,6 @@ class AuthenticateController extends Controller
         ]);
         $profile = json_decode($profileResponse->getBody(), true);
 
-        var_dump($profile);
-        Log::info($profile);
-
         // Step 3a. If user is already signed in then link accounts.
         if ($request->header('Authorization'))
         {
@@ -347,7 +344,9 @@ class AuthenticateController extends Controller
             $user = User::find($payload['sub']);
 
             $user->google = $profile['sub'];
-            $user->name = $user->name ?: $profile['name'];
+            $user->name = $user->name ? $user->name : $profile['given_name'];
+            $user->last_name = $user->last_name ? $user->last_name : $profile['family_name'];
+            $user->email = $profile['email'];
             $user->save();
 
             return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
@@ -365,7 +364,9 @@ class AuthenticateController extends Controller
 
             $user = new User;
             $user->google = $profile['sub'];
-            $user->name = $profile['name'];
+            $user->name = $profile['given_name'];
+            $user->last_name = $profile['family_name'];
+            $user->email = $profile['email'];
             $user->save();
 
             return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
