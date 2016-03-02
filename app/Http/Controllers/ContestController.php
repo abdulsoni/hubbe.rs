@@ -73,30 +73,35 @@ class ContestController extends Controller
     {
         $statusCode = 200;
         $response = [];
-        $contest = Contest::where('visible', 1)->where('id', $id)->get();
+        $contest = Contest::where('visible', 1)->where('id', $id)->first();
 
-        $contest_data = $contest->getAttributes();
-        $contest_data['total_entries'] = $contest->entries->groupBy('creator_id')->count();
-        // $contest_data['entries'] = $contest->entries;
-        $contest_data['rating'] = $contest->rating;
-        $contest_data['contestants'] = [];
-        $contest_data['judges'] = $contest->jury;
+        $contest_data = [];
 
-        $contestants = $contest->entries->groupBy('creator_id');
+        if (!is_null($contest)) {
+            $contest_data = $contest->getAttributes();
+            $contest_data['total_entries'] = $contest->entries->groupBy('creator_id')->count();
+            // $contest_data['entries'] = $contest->entries;
+            $contest_data['rating'] = $contest->rating;
+            $contest_data['contestants'] = [];
+            $contest_data['judges'] = $contest->jury;
 
-        foreach($contestants as $creator_id => $entry){
-            $creator_obj = Creator::find($creator_id);
+            $contestants = $contest->entries->groupBy('creator_id');
 
-            if (!is_null($creator_obj)) {
-                $creator = $creator_obj->user;
+            foreach($contestants as $creator_id => $entry){
+                $creator_obj = Creator::find($creator_id);
 
-                if(!is_null($creator) && !is_null($creator->thumbnail)){
-                    $creator['thumbnail'] = $creator->thumbnail->getUrl();
+                if (!is_null($creator_obj)) {
+                    $creator = $creator_obj->user;
+
+                    if(!is_null($creator) && !is_null($creator->thumbnail)){
+                        $creator['thumbnail'] = $creator->thumbnail->getUrl();
+                    }
+
+                    $contest_data['contestants'][] = $creator;
                 }
-
-                $contest_data['contestants'][] = $creator;
             }
         }
+
 
 //        $entries = $contest->entries;
 //        $existingJudges = [];
