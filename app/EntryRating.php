@@ -44,6 +44,6 @@ class EntryRating extends Model
      */
     public function judge()
     {
-        return $this->belongsTo('Fundator\User', 'judge_id');
+        return $this->belongsTo('Fundator\User', 'judge_id')->select('id', 'name');
     }
 }

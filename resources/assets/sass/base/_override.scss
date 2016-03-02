@@ -55,6 +55,26 @@
 
 .contest-single_description{
   max-height: 60px;
+  overflow: hidden;
+}
+
+.contest-single_description-full{
+  position: relative;
+  padding: 30px 30px 22px;
+  background: #eee;
+
+  .close{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    @include transition(all 0.3s);
+
+    &:hover{
+      color: $fd-green;
+      cursor: pointer;
+    }
+  }
 }
 
 .fd-loader{
@@ -112,6 +132,10 @@
   margin-left: 60px;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  &.no-margin{
+    margin-left: 0;
+  }
 }
 
 .owl-demo .owl-item > div img{
@@ -265,4 +289,20 @@
 #loading-bar-spinner .spinner-icon{
   border-top-color: $fd-green !important;
   border-left-color: $fd-green !important;
+}
+
+.revision-list{
+  li {
+    a {
+      text-decoration: none;
+
+      &:hover{
+        cursor: pointer;
+      }
+
+      &.active{
+        color: $fd-green;
+      }
+    }
+  }
 }

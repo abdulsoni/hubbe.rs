@@ -24,7 +24,7 @@ class ContestController extends Controller
     {
         $statusCode = 200;
         $response = [];
-        $contests = Contest::all();
+        $contests = Contest::where('visible', 1)->get();
 
         $i = 0;
         foreach($contests as $contest)
@@ -73,11 +73,11 @@ class ContestController extends Controller
     {
         $statusCode = 200;
         $response = [];
-        $contest = Contest::find($id);
+        $contest = Contest::where('visible', 1)->where('id', $id)->get();
 
         $contest_data = $contest->getAttributes();
         $contest_data['total_entries'] = $contest->entries->groupBy('creator_id')->count();
-        $contest_data['entries'] = $contest->entries;
+        // $contest_data['entries'] = $contest->entries;
         $contest_data['rating'] = $contest->rating;
         $contest_data['contestants'] = [];
         $contest_data['judges'] = $contest->jury;

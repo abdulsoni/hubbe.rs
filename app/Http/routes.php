@@ -61,6 +61,7 @@ $api->version('v1', function ($api) {
     $api->put('entries/{id}', 'Fundator\Http\Controllers\EntryController@update');
 
     $api->get('entries/contest/{contestId}/judge/{judgeId}', 'Fundator\Http\Controllers\EntryController@judgeEntries');
+    $api->get('entries/contest/{contestId}/creator/{creatorId}', 'Fundator\Http\Controllers\EntryController@contestantEntries');
 
     $api->post('entries/{id}/messages', 'Fundator\Http\Controllers\EntryController@postEntryMessage');
 

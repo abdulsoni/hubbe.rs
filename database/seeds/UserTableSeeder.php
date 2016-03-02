@@ -62,7 +62,8 @@ class UserTableSeeder extends Seeder
             'country_residence' => 'us',
             'contact_number' => '+1-510-489-3184',
             'contact_time' => '9-6',
-            'bio' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis error dolor similique dolorum ratione fugit quam fuga modi, dignissimos deserunt libero accusantium esse sequi accusamus nam reiciendis ut odit hic!'
+            'bio' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis error dolor similique dolorum ratione fugit quam fuga modi, dignissimos deserunt libero accusantium esse sequi accusamus nam reiciendis ut odit hic!',
+            'confirmed' => 1
         ])->roles()->attach($creator->id);
 
         User::create([
@@ -76,7 +77,8 @@ class UserTableSeeder extends Seeder
             'country_residence' => 'us',
             'contact_number' => '+1-510-489-3184',
             'contact_time' => '9-6',
-            'bio' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet eaque libero incidunt accusamus quaerat cumque ullam perferendis officia consectetur atque, quis blanditiis. Voluptatem eius quibusdam aut atque explicabo cum cupiditate.'
+            'bio' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet eaque libero incidunt accusamus quaerat cumque ullam perferendis officia consectetur atque, quis blanditiis. Voluptatem eius quibusdam aut atque explicabo cum cupiditate.',
+            'confirmed' => 1
         ])->roles()->attach($creator->id);
 
         User::create([

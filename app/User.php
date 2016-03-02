@@ -85,7 +85,29 @@ class User extends Model implements AuthenticatableContract,
         $userRoles = [];
 
         foreach($roles as $role){
-            $userRoles[] = ['role' => $role->name, 'name' => $role->display_name, 'id' => $role->id];
+            $roleId = null;
+
+            switch ($role->name) {
+                case 'creator':
+                    $roleId = $this->creator->id;
+                    break;
+                case 'investor':
+                    $roleId = $this->investor->id;
+                    break;
+                default:
+                    $roleId = null;
+                    break;
+            }
+
+            $userRoles[] = ['role' => $role->name, 'name' => $role->display_name, 'id' => $roleId];
+        }
+
+        if($this->judging){
+            $userRoles[] = [
+                'role' => 'jury',
+                'name' => 'Jury',
+                'id' => null
+            ];
         }
 
         return $userRoles;

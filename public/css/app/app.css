@@ -6013,6 +6013,10 @@ fd-loader {
 .greybg {
   background-color: #f5f5f5; }
 
+.read-more {
+  margin-left: 5px;
+  cursor: pointer; }
+
 /*--------------- components -----------------------*/
 body {
   color: #6d6e71;
@@ -6025,7 +6029,8 @@ header {
   width: 100%;
   background: #333333;
   color: #fff;
-  padding-top: 10px; }
+  padding-top: 10px;
+  min-height: 60px; }
   header .logo {
     padding: 5px 0px;
     display: inline-block; }
@@ -8784,6 +8789,28 @@ footer {
 .contest-single_entry .contest-single_entry__description {
   padding: 25px 0; }
 
+.contest-single_entry .owl-carousel {
+  padding: 0 35px; }
+  .contest-single_entry .owl-carousel .item {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center; }
+
+.owl-carousel .item {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center; }
+
+.owl-carousel.overlay .item:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000;
+  opacity: 0.2; }
+
 .contest-single_add-entry .ta-toolbar {
   background: #f5f5f5;
   padding: 10px;
@@ -8802,16 +8829,53 @@ footer {
   border-radius: 5px; }
 
 .contest-single_add-entry .image-preview-list {
-  padding: 15px; }
+  padding: 15px 0; }
   .contest-single_add-entry .image-preview-list:before, .contest-single_add-entry .image-preview-list:after {
     content: " ";
     display: table; }
   .contest-single_add-entry .image-preview-list:after {
     clear: both; }
+  .contest-single_add-entry .image-preview-list:before {
+    content: '2 .col-sm-4'; }
   .contest-single_add-entry .image-preview-list .image-preview {
-    background: #eee;
     padding-top: 15px;
     padding-bottom: 15px; }
+    .contest-single_add-entry .image-preview-list .image-preview .image-preview_inner {
+      background: #eee;
+      padding: 5px; }
+      .contest-single_add-entry .image-preview-list .image-preview .image-preview_inner .image-preview_file {
+        text-align: center;
+        padding: 25px 15px 15px;
+        word-wrap: break-word; }
+        .contest-single_add-entry .image-preview-list .image-preview .image-preview_inner .image-preview_file .icon {
+          display: block;
+          font-size: 48px;
+          margin-bottom: 15px; }
+    .contest-single_add-entry .image-preview-list .image-preview .progress {
+      margin-top: 15px;
+      margin-bottom: 10px; }
+    .contest-single_add-entry .image-preview-list .image-preview .form-control {
+      box-shadow: none; }
+    .contest-single_add-entry .image-preview-list .image-preview .image-preview_remove {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 8px;
+      background: #ec1c24;
+      width: 21px;
+      height: 20px;
+      border-radius: 50%;
+      padding: 6px 7px;
+      text-align: center;
+      color: #fff;
+      -webkit-transition: all 0.3s;
+      -moz-transition: all 0.3s;
+      -ms-transition: all 0.3s;
+      -o-transition: all 0.3s;
+      transition: all 0.3s; }
+      .contest-single_add-entry .image-preview-list .image-preview .image-preview_remove:hover {
+        cursor: pointer;
+        opacity: 0.85; }
 
 /*--------------- plugins -----------------------*/
 /* 
@@ -9086,7 +9150,25 @@ footer {
     top: 5px; }
 
 .contest-single_description {
-  max-height: 60px; }
+  max-height: 60px;
+  overflow: hidden; }
+
+.contest-single_description-full {
+  position: relative;
+  padding: 30px 30px 22px;
+  background: #eee; }
+  .contest-single_description-full .close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s; }
+    .contest-single_description-full .close:hover {
+      color: #95c54d;
+      cursor: pointer; }
 
 .center .fd-loader {
   position: absolute;
@@ -9134,6 +9216,8 @@ footer {
   margin-left: 60px;
   left: 50%;
   transform: translate(-50%, -50%); }
+  .no-have.no-margin {
+    margin-left: 0; }
 
 .owl-demo .owl-item > div img {
   transition: all 0.3s; }
@@ -9239,6 +9323,13 @@ footer {
 #loading-bar-spinner .spinner-icon {
   border-top-color: #95c54d !important;
   border-left-color: #95c54d !important; }
+
+.revision-list li a {
+  text-decoration: none; }
+  .revision-list li a:hover {
+    cursor: pointer; }
+  .revision-list li a.active {
+    color: #95c54d; }
 
 @font-face {
   font-family: 'icomoon';

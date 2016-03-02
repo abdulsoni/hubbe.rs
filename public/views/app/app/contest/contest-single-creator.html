@@ -28,9 +28,8 @@
                 <uib-tabset vertical="true" type="pills">
                     <uib-tab heading="General">
                         <div class="row">
-                            <div class="col-xs-12 contest-single_description marginT15" data-ellipsis data-ellipsis-append="read more" data-ellipsis-append-click="showFullText()">
-                                <div ng-bind-html="contest.description | trustedHtml"></div>
-                            </div>
+                            <div class="col-xs-12 contest-single_description marginT15" ng-bind="contest.description | stripTags" ellipsis
+                                ellipsis-append="<a class='read-more'>read more</a>" ellipsis-append-click="showFullText()"></div>
                         </div>
                         <hr />
                         <div class="row">
@@ -142,24 +141,35 @@
                 </uib-tabset>
             </div>
         </div>
+
+        <div class="col-sm-12">
+            <div class="contest-single_description-full" ng-if="data.contestFullDescription">
+                <span class="icon icon-cross close" ng-click="hideFullText()"></span>
+                <h3 class="marginT0 marginB15">Contest Description</h3>
+                <div ng-bind-html="contest.description | trustedHtml"></div>
+            </div>
+        </div>
     </div>
 	<div class="entries-list" ng-if="contest.entries.length > 0">
         <h2>Your Entries</h2>
         <hr/>
         <div class="row">
             <div class="col-sm-9">
-                <div class="owl-demo greybg" owl-carousel="contest.entries"
-                    owl-options='{"pagination": false, "dots": false, "navigation":true, "items":5, "navigationText": [ "<i class=\"icon-chevron-left icon-white\"></i>", "<i class=\"icon-chevron-right icon-white\"></i>" ]}'>
-                    <div class="item" ng-click="selectEntry(item)">
+                <div class="owl-demo overlay" owl-carousel="contest.entries"
+                    owl-options='{"pagination": false, "dots": false, "navigation":true, "items":4, "navigationText": [ "<i class=\"icon-chevron-left icon-white\"></i>", "<i class=\"icon-chevron-right icon-white\"></i>" ]}'>
+                    <div class="item" ng-click="selectEntry(item)" ng-style="{'background-image': (item.thumbnail) ? 'url(/' + item.thumbnail + ')': 'url(/images/1.png)'}">
                         <div class="carousel_content">
                             <div class="row">
                                 <div class="col-xs-8">
-                                    <h5>{{item.name}}</h5>
+                                    <h5>Entry #{{item.id}}</h5>
                                 </div>
-                                <div class="col-xs-4"><span class="icon icon-plus radius-box rbM marginT10"></span></div>
+
+                                <div class="col-xs-4">
+                                    <img class="thumbnail" src="images/icon-user-default.png" alt="" ng-if="!item.contestant.thumbnail">
+                                    <img class="thumbnail" ng-src="{{item.contestant.thumbnail}}" alt="" ng-if="item.contestant.thumbnail">
+                                </div>
                             </div>
                         </div>
-                        <img src="images/1.png" alt="">
                     </div>
                 </div>
             </div>
@@ -176,7 +186,7 @@
             <hr>
             <h3 class="marginB15">
                 Add a new entry
-                <span class="revision-note mute small" ng-if="contest.entries.length > 0">(This entry is your {{contest.entries.length | ordinal}} revision)</span>
+                <span class="revision-note mute small" ng-if="contest.entries.length > 0">(This entry is your {{contest.entries.length + 1 | ordinal}} revision)</span>
             </h3>
             <form name="newEntry">
                 <div class="row">
@@ -187,24 +197,37 @@
                     </div>
 
                     <div class="col-sm-6">
-                        <div flow-init="{target: '/upload'}"
-                            flow-files-submitted="$flow.upload()"
-                            flow-file-success="$file.msg = $message">
-
+                        <div flow-init flow-name="data.addEntryForm.flow" flow-files-submitted="$flow.upload()"
+                            flow-file-progress="entryFileProgress( $file, $flow )"
+                            flow-file-success="entryFileSuccess( $file, $message )"
+                            flow-file-added="entryFileAdded( $event, $file, $flow )">
                             <div class="drop-target" flow-drop flow-drag-enter="style={border:'2px #eee dashed', background: '#f5f5f5'}" flow-drag-leave="style={}" ng-style="style">
                                 <span class="btn btn-info" flow-btn>Upload File</span> &nbsp; or Drag &amp; Drop images to upload
                             </div>
 
-                            <div class="image-preview-list">
-                                <div class="image-preview col-sm-4 col-md-3" ng-repeat="file in $flow.files">
-                                    <img flow-img="file" />
+                            <div class="image-preview-list" data-columns>
+                                <div class="image-preview col-sm-4 col-md-6" ng-repeat="file in $flow.files">
+                                    <div class="image-preview_inner">
+                                        <div ng-if="file.file.type.indexOf('image') !== -1">
+                                            <img flow-img="file" />
+                                        </div>
+                                        <div class="image-preview_file" ng-if="file.file.type.indexOf('image') === -1">
+                                            <span class="icon fa fa-file"></span>
+                                            {{file.file.name}}
+                                        </div>
+                                        <uib-progressbar value="file.progress() * 100">{{file.progress() * 100}}%</uib-progressbar>
+                                        <input type="text" class="form-control" ng-model="file.ref_caption" placeholder="Caption ...">
+                                        <span class="image-preview_remove icon icon-cross" ng-click="entryFileRemove(file, $flow)"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-sm-12 text-center marginT30">
-                        <button class="btn btn-info" ng-disabled="newEntry.$invalid || $flow.files.length === 0">Submit Entry</button>
+                        <button class="btn btn-info" ng-disabled="(newEntry.$invalid || $flow.files.length === 0) || data.savingEntry" ng-click="submitEntry()" ng-class="{'btn-success': data.savedEntry}">
+                            {{data.savingEntry ? 'Submitting ...' : (data.savedEntry ? 'Submitted!' : 'Submit')}}
+                        </button>
                     </div>
                 </div>
             </form>
@@ -215,15 +238,13 @@
             <div class="marginB30"><hr></div>
             <div class="row">
                 <div class="col-sm-6">
-                    <div class="contest-single_entry__description">
-                        {{data.selectedEntry.description}}
-                    </div>
+                    <div class="contest-single_entry__description" ng-bind-html="data.selectedEntry.description | trustedHtml"></div>
                 </div>
                 <div class="col-sm-6">
-                    <div class="owl-demo" owl-carousel="data.selectedEntry.gallery"
+                    <div class="owl-demo" owl-carousel="data.selectedEntry.files"
                         owl-options='{"pagination": false, "dots": false, "navigation":true, "items": 2, "navigationText": [ "<i class=\"icon-chevron-left icon-white\"></i>", "<i class=\"icon-chevron-right icon-white\"></i>" ]}'>
-                        <div class="item" ng-click="openLightbox(item)">
-                            <img src="{{item}}" alt="">
+                        <div class="item" ng-click="openLightbox(item)" style="background-image: url({{item.url}});">
+                            <!-- <img ng-src="{{item.url}}" alt=""> -->
                         </div>
                     </div>
                 </div>
@@ -241,7 +262,11 @@
 	    <div class="col-md-6" ng-if="data.selectedEntry.ratings || data.selectedEntry.ratings === null">
 	        <div class="contest-list contest-list-lb">
 	            <div class="row" ng-repeat="rating in data.selectedEntry.ratings | limitTo: 5">
-	                <div class="col-xs-2 text-center"><img src="images/coolestMember.jpg" alt="" class="coolestMemberLBPick"></div>
+	                <div class="col-xs-2 text-center">
+                        <!-- <img src="images/coolestMember.jpg" alt="" class="coolestMemberLBPick"> -->
+                        <img class="coolestMemberBPick" src="images/icon-user-default.png" alt="" ng-if="!rating.judge.thumbnail">
+                        <img class="coolestMemberBPick" ng-src="{{rating.judge.thumbnail}}" alt="" ng-if="rating.judge.thumbnail">
+                    </div>
 	                <div class="col-xs-2 ">
 	                    <p class="bordRight">{{rating.judge.name}}
 	                        <br> Inventor
@@ -258,7 +283,8 @@
 	                </div>
 	            </div>
 	            <a class="btn btn-block showmorebtn" ng-if="data.selectedEntry.ratings.length > 5">Show more</a> </div>
-	    </div>
+                <p class="no-have no-margin" ng-if="data.selectedEntry.ratings.length === 0">There are currently no ratings.</p>
+	       </div>
 	    <div class="col-md-6" ng-if="data.selectedEntry.messages">
             <div class="chatbox">
                 <div class="chatRow" ng-repeat="message in data.selectedEntry.messages">
@@ -269,6 +295,8 @@
                         {{message.user.name}} <span>{{message.created_at | amDateFormat:'MMM Do YYYY'}}:</span>
                     </div>
                 </div>
+
+                <p class="no-have no-margin" ng-if="data.selectedEntry.messages.length === 0">There are currently no messages.</p>
             </div>
             <form class="chatsendform">
                 <div class="input-group">

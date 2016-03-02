@@ -4,9 +4,10 @@ header{position: relative; z-index: 3; position:fixed; width: 100%;
   background: $primary-color;
   color:$white-color;
   padding-top: 10px;
+  min-height: 60px;
   .logo{padding: 5px 0px;; display: inline-block;}
   .logo img{height: 28px;}
-} 
+}
 
 .header_right{
     &:after{content: ''; display: block; height: 0; clear: both;}

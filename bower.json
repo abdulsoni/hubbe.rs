@@ -25,7 +25,8 @@
     "textAngular": "~1.5.0",
     "ng-flow": "git@github.com:flowjs/ng-flow.git",
     "angular-cookies": "~1.5.0",
-    "angular-bootstrap-lightbox": "~0.10.0"
+    "angular-bootstrap-lightbox": "~0.10.0",
+    "salvattore": "~1.0.9"
   },
   "overrides": {
     "owl-carousel": {

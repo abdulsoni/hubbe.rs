@@ -23,7 +23,8 @@ class CreateContestsTable extends Migration
             $table->dateTime('start_time');
             $table->integer('duration');
 
-            $table->float('budget');
+            // $table->float('budget');
+            $table->boolean('visible');
         });
     }
 

@@ -28,9 +28,8 @@
                 <uib-tabset vertical="true" type="pills">
                     <uib-tab heading="General">
                         <div class="row">
-                            <div class="col-xs-12 contest-single_description marginT15" data-ellipsis data-ellipsis-append="read more" data-ellipsis-append-click="showFullText()">
-                                <div ng-bind-html="contest.description | trustedHtml"></div>
-                            </div>
+                            <div class="col-xs-12 contest-single_description marginT15" ng-bind="contest.description | stripTags" ellipsis
+                                ellipsis-append="<a class='read-more'>read more</a>" ellipsis-append-click="showFullText()"></div>
                         </div>
                         <hr />
                         <div class="row">
@@ -141,22 +140,33 @@
                 </uib-tabset>
             </div>
         </div>
+
+        <div class="col-sm-12">
+            <div class="contest-single_description-full" ng-if="data.contestFullDescription">
+                <span class="icon icon-cross close" ng-click="hideFullText()"></span>
+                <h3 class="marginT0 marginB15">Contest Description</h3>
+                <div ng-bind-html="contest.description | trustedHtml"></div>
+            </div>
+        </div>
     </div>
 	<div class="entries-list" ng-if="contest.entries.length > 0">
         <h2>Entries to evaluate</h2>
         <hr/>
         <div class="row">
             <div class="col-sm-12">
-                <div class="owl-demo" owl-carousel="contest.entries"
+                <div class="owl-demo overlay" owl-carousel="contest.entries"
                     owl-options='{"pagination": false, "dots": false, "navigation":true, "items":5, "navigationText": [ "<i class=\"icon-chevron-left icon-white\"></i>", "<i class=\"icon-chevron-right icon-white\"></i>" ]}'>
-                    <div class="item" ng-click="selectEntry(item)">
+                    <div class="item" ng-click="selectEntry(item)" ng-style="{'background-image': (item.thumbnail) ? 'url(/' + item.thumbnail + ')': 'url(/images/1.png)'}">
                         <div class="carousel_content">
                             <div class="row">
                                 <div class="col-xs-8">
                                     <h4>by {{item.contestant.name}} {{item.contestant.last_name}}</h4>
                                 </div>
+
                                 <div class="col-xs-4">
-                                    <img class="thumbnail" src="images/profile.jpg" alt="">
+                                    <!-- <img class="thumbnail" src="images/profile.jpg" alt=""> -->
+                                    <img class="thumbnail" src="images/icon-user-default.png" alt="" ng-if="!item.contestant.thumbnail">
+                                    <img class="thumbnail" ng-src="{{item.contestant.thumbnail}}" alt="" ng-if="item.contestant.thumbnail">
                                 </div>
 
                                 <div class="meta-data clearfix">
@@ -165,7 +175,7 @@
                                 </div>
                             </div>
                         </div>
-                        <img src="images/1.png" alt="">
+                        <!-- <img src="images/1.png" alt=""> -->
                     </div>
                 </div>
             </div>
@@ -177,9 +187,9 @@
                 <h3>
                     Entry by {{data.selectedEntry.contestant.name}} {{data.selectedEntry.contestant.last_name}}
                     <span class="pull-right">
-                        <ul class="list-unstyled list-inline">
+                        <ul class="list-unstyled list-inline revision-list">
                             <li ng-repeat="revision in data.selectedEntry.revisions | orderBy: '-id'">
-                                <a class="cursor" ng-click="selectEntry(revision)"># {{(data.selectedEntry.revisions.length - $index)}}</a> <span class="divider" ng-if="$index < (data.selectedEntry.revisions.length - 1)">/</span>
+                                <a class="cursor" ng-class="{'active': revision.id === data.selectedEntry.id}" ng-click="selectEntry(revision)"># {{(data.selectedEntry.revisions.length - $index)}}</a> <span class="divider" ng-if="$index < (data.selectedEntry.revisions.length - 1)">/</span>
                             </li>
                         </ul>
                     </span>
@@ -188,15 +198,13 @@
             </div>
             <div class="row">
                 <div class="col-sm-6">
-                    <div class="contest-single_entry__description">
-                        {{data.selectedEntry.description}}
-                    </div>
+                    <div class="contest-single_entry__description" ng-bind-html="data.selectedEntry.description | trustedHtml"></div>
                 </div>
                 <div class="col-sm-6">
-                    <div class="owl-demo" owl-carousel="data.selectedEntry.gallery"
+                    <div class="owl-demo" owl-carousel="data.selectedEntry.files"
                         owl-options='{"pagination": false, "dots": false, "navigation":true, "items": 2, "navigationText": [ "<i class=\"icon-chevron-left icon-white\"></i>", "<i class=\"icon-chevron-right icon-white\"></i>" ]}'>
-                        <div class="item" ng-click="openLightbox(item)">
-                            <img src="{{item}}" alt="">
+                        <div class="item" ng-click="openLightbox(item)" style="background-image: url({{item.url}});">
+                            <!-- <img ng-src="{{item.url}}" alt=""> -->
                         </div>
                     </div>
                 </div>
@@ -213,7 +221,7 @@
         </div>
 	    <div class="col-md-6" ng-if="data.selectedEntry.rating || data.selectedEntry.rating === null">
 	        <div class="entry-details entry-details-marks">
-                <div class="entry-image">
+                <div class="entry-image" ng-style="{'background-image': (data.selectedEntry.thumbnail) ? 'url(/' + data.selectedEntry.thumbnail + ')': 'url(/images/1.png)'}">
                     <h2>{{data.selectedEntry.name}}</h2>
                 </div>
                 <div class="entry-marks">
@@ -269,6 +277,8 @@
                         {{message.user.name}} <span>{{message.created_at | amDateFormat:'MMM Do YYYY'}}:</span>
                     </div>
 	            </div>
+
+                <p class="no-have no-margin" ng-if="data.selectedEntry.messages.length === 0">There are currently no messages.</p>
 	        </div>
             <form class="chatsendform">
                 <div class="input-group">

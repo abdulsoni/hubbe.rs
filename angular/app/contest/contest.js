@@ -36,8 +36,12 @@
     angular.module('fundator.controllers').controller('ContestSingleCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $filter, $timeout, FdScroller, $http, Lightbox) {
         $scope.contestId = $stateParams.contestId;
         $scope.data = {
+            contestFullDescription: false,
             addEntry: false,
-            addEntryForm: {},
+            addEntryForm: {
+                description: '',
+                attachedFiles: []
+            },
             selectedEntry: null,
             rating: {
                 design: '',
@@ -54,6 +58,11 @@
         var Entry = $resource('/api/entries/:entryId', {
             entryId: '@id'
         }, {
+            contestantEntries: {
+                method: 'GET',
+                url: '/api/entries/contest/:contestId/creator/:creatorId',
+                isArray: true
+            },
             judgeEntries: {
                 method: 'GET',
                 url: '/api/entries/contest/:contestId/judge/:judgeId',
@@ -77,6 +86,16 @@
         FdScroller.toTop();
         $rootScope.$broadcast('startLoading');
 
+        $scope.showFullText = function() {
+            FdScroller.toSection('.contest-single', 50);
+            $scope.data.contestFullDescription = true;
+        }
+
+        $scope.hideFullText = function() {
+            FdScroller.toTop();
+            $scope.data.contestFullDescription = false;
+        }
+
         Contest.get({
             contestId: $scope.contestId
         }).$promise.then(function(result) {
@@ -87,7 +106,7 @@
             });
 
             if (typeof(judgeable) !== 'undefined') {
-                if (judgeable.length > 0 && $rootScope.activeRole !== 'jury') {
+                if (judgeable.length > 0 && ($rootScope.activeRole !== 'jury' && $rootScope.activeRole !== 'creator')) {
                     $rootScope.flashNotices.juryView.show = true;
                     $rootScope.flashNotices.juryView.contestId = result.id;
 
@@ -97,13 +116,8 @@
                             contestId: result.id
                         });
                     };
-                } else if($rootScope.activeRole === 'jury') {
-                    Entry.judgeEntries({
-                        contestId: $scope.contestId,
-                        judgeId: $rootScope.user.id
-                    }).$promise.then(function(result){
-                        $scope.contest.entries = angular.copy(result);
-                    });
+                } else if($rootScope.activeRole === 'jury' || $rootScope.activeRole === 'creator') {
+                    $scope.loadEntries($rootScope.activeRole);
                 }
             }
 
@@ -112,6 +126,33 @@
                 $rootScope.$broadcast('stopLoading');
             }, 1000);
         });
+
+        $scope.loadEntries = function(role) {
+            switch(role){
+                case 'jury':
+                    Entry.judgeEntries({
+                        contestId: $scope.contestId,
+                        judgeId: $rootScope.user.id
+                    }).$promise.then(function(result){
+                        $scope.contest.entries = angular.copy(result);
+                    });
+                    break;
+                case 'creator':
+                    var roles = $filter('filter')($rootScope.user.user_roles, {role: 'creator'}, true);
+
+                    if (roles.length > 0) {
+                        var creator = roles[0];
+
+                        Entry.contestantEntries({
+                            contestId: $scope.contestId,
+                            creatorId: creator.id
+                        }).$promise.then(function(result){
+                            $scope.contest.entries = angular.copy(result);
+                        });
+                    }
+                    break;
+            }
+        }
 
         $scope.selectEntry = function(entry) {
             $scope.data.addEntry = false;
@@ -160,13 +201,76 @@
         };
 
         $scope.openLightbox = function(item) {
-            var index = $scope.data.selectedEntry.gallery.indexOf(item);
+            var allFiles = $scope.data.selectedEntry.files;
+            var allImages = [];
+            var currentIndex = 0;
 
-            if (index === -1) {
-                index = 0;
+            for(var aF in allFiles){
+                var file = allFiles[aF];
+                allImages.push(file.url);
+
+                if (file.url === item.url) {
+                    currentIndex = aF;
+                }
             }
 
-            Lightbox.openModal($scope.data.selectedEntry.gallery, index);
+            Lightbox.openModal(allImages, currentIndex);
+        }
+
+        $scope.$on('flow::fileAdded', function (event, $flow, flowFile) {
+            event.preventDefault();
+            console.log('fileAdded');
+            console.log($flow);
+            console.log(flowFile);
+        });
+
+        $scope.entryFileSuccess = function($file, $message) {
+            var message = JSON.parse($message);
+            console.log($file);
+
+            console.log('Adding files : ' + message.file.id);
+            $file.ref_id = message.file.id;
+
+            // var items = $filter('filter')($scope.data.addEntryForm.attachedFiles, {id: message.file.id});
+            // var item = null;
+
+            // if (typeof(items) !== 'undefined' && items.length > 0) {
+            //     item = items[0];
+            // }
+
+            var index = $scope.data.addEntryForm.attachedFiles.indexOf(message.file.id);
+
+            if (index === -1) {
+                $scope.data.addEntryForm.attachedFiles.push({
+                    id: message.file.id,
+                    caption: ''
+                });
+            }
+
+        }
+
+        $scope.entryFileRemove = function(file, $flow) {
+            // var items = $filter('filter')($scope.data.addEntryForm.attachedFiles, {id: file.id});
+            // var item = null;
+
+            // if (typeof(items) !== 'undefined' && items.length > 0) {
+            //     item = items[0];
+            // }
+
+            var index = $scope.data.addEntryForm.attachedFiles.indexOf(file.ref_id);
+
+            if (index !== -1) {
+                $scope.data.addEntryForm.attachedFiles.splice(index, 1);
+            }
+
+            var filesIndex = $flow.files.indexOf(file);
+            if (filesIndex !== -1) {
+                console.log('remove files ... ' + filesIndex);
+                $flow.files.splice(filesIndex, 1);
+            }
+
+            console.log($flow.files);
+            console.log($scope.data.addEntryForm.attachedFiles);
         }
 
         $scope.showAddEntry = function() {
@@ -174,9 +278,61 @@
 
             $scope.data.selectedEntry = null;
             $scope.data.addEntry = true;
-            $scope.data.addEntryForm = {};
+            $scope.data.addEntryForm.description = '';
+            $scope.data.addEntryForm.attachedFiles = [];
 
             $scope.data.addEntryForm.description = $scope.contest.entries[$scope.contest.entries.length - 1].description;
+        }
+
+        $scope.submitEntry = function() {
+            $scope.data.savingEntry = true;
+
+            var attachedFiles = {};
+            var thumbnail_id = null;
+
+            angular.forEach($scope.data.addEntryForm.flow.files, function(file){
+                attachedFiles[file.ref_id] = {
+                    'caption': file.ref_caption
+                };
+
+                console.log('prepare to assign thumbnail');
+                if (file.file.type.indexOf('image') !== -1 && thumbnail_id === null) {
+                    console.log('whoopie it matches');
+                    thumbnail_id = file.ref_id;
+                }
+            });
+
+            var roles = $filter('filter')($rootScope.user.user_roles, {role: 'creator'}, true);
+
+            if (roles.length > 0) {
+                var role = roles[0];
+
+                var entry = new Entry();
+                entry.creator_id = role.id;
+                entry.contest_id = $scope.contest.id;
+                entry.thumbnail_id = thumbnail_id;
+
+                entry.name = $rootScope.user.name + "'s Entry";
+                entry.description = $scope.data.addEntryForm.description;
+                entry.attached_files = attachedFiles;
+
+                console.log(entry.thumbnail_id);
+
+                entry.$save().then(function(result){
+                    console.log('Entry Saved!');
+                    console.log(result);
+
+                    $scope.data.savingEntry = false;
+                    $scope.data.savedEntry = true;
+
+                    $timeout(function(){
+                        $scope.data.selectedEntry =  false;
+                        $scope.selectEntry(result);
+                        $scope.loadEntries('creator');
+                    }, 1000);
+                });
+            }
+
         }
 
         $scope.sendMessage = function(){

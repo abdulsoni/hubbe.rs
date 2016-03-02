@@ -153,7 +153,7 @@
                     $rootScope.user.user_roles.push({
                         id: null,
                         name: role,
-                        role: null
+                        role: role
                     });
                 }
             }
@@ -163,6 +163,7 @@
                 view: 'quickUpdate',
                 roles: {
                     creator: getView('quick-update', 'quick-update-creator'),
+                    expert: getView('quick-update', 'quick-update-expert'),
                     investor: getView('quick-update', 'quick-update-investor'),
                     jury: getView('quick-update', 'quick-update-jury'),
                 },

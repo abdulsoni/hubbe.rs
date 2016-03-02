@@ -66,14 +66,6 @@ class UserController extends Controller
             $response['judging'] = $user->judging;
             $response['user_roles'] = $user->user_roles;
 
-            if($user->judging){
-                $response['user_roles'][] = [
-                    'role' => 'jury',
-                    'name' => 'Jury',
-                    'id' => 5
-                ];
-            }
-
 //            $notifications = $user->getNotifications();
 //
 //            foreach($notifications as $notification){

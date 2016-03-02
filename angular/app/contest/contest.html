@@ -5,7 +5,7 @@
             <uib-tab heading="Ongoing Contests">
                 <ul class="tabProjectList">
                     <li ng-repeat="contest in contests" ui-sref="app.contestsingle({contestId: contest.id})">
-                        <div class="projectImg" style="background-image url(/{{contest.thumbnail}}):">
+                        <div class="projectImg" ng-style="{'background-image': (contest.thumbnail) ? 'url(/' + contest.thumbnail + ')': ''}">
                             <div class="row date-wrap">
                                 <!-- <div class="col-xs-8 col-sm-9 project-date">
                                     <h4>
@@ -14,7 +14,7 @@
                                         ({{ end_time | amDateFormat:'MMM Do YYYY'}}).
                                     </h4>
                                 </div> -->
-                                <div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>
+                                <!-- <div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div> -->
                             </div>
                             <div class="row rankingMng">
                                 <div class="col-xs-3 leftRank">
@@ -36,12 +36,14 @@
                     </li>
                 </ul>
             </uib-tab>
+            <uib-tab heading="Past Contests" ng-disabled="true">
+            </uib-tab>
         </uib-tabset>
     </div>
 </div>
 
-<h2><strong>Wanna put your creativity in motion? New Contest</strong></h2>
-<hr>
+<!-- <h2><strong>Wanna put your creativity in motion? New Contest</strong></h2>
+<hr> -->
 <!-- <div class="row">
     <div class="col-lg-6 col-md-12">
         <ul class="tabProjectList withprojectdetail">

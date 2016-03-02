@@ -5,7 +5,9 @@ namespace Fundator\Http\Controllers;
 use Cmgmyr\Messenger\Models\Message;
 use Cmgmyr\Messenger\Models\Thread;
 use Fundator\Contest;
+use Fundator\Creator;
 use Fundator\Entry;
+use Fundator\File;
 use Fundator\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -28,29 +30,26 @@ class EntryController extends Controller
     {
         $statusCode = 200;
         $response = [];
-        $entries = Entry::all();
 
-        $i = 0;
-        foreach($entries as $entry)
-        {
-            $i++;
-            $entry_data = $entry->getAttributes();
-            $entry_data['rating'] = $entry->getAverageRating();
+        try{
+            $entries = Entry::all();
 
-            $response[] = $entry_data;
+            $i = 0;
+            foreach($entries as $entry)
+            {
+                $i++;
+                $entry_data = $entry->getAttributes();
+                $entry_data['rating'] = $entry->getAverageRating();
+
+                $response[] = $entry_data;
+            }
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
         }
 
-        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -61,74 +60,108 @@ class EntryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $statusCode = 200;
+        $response = [];
+
+        try{
+            $creator = Creator::find($request->creator_id);
+            $contest = Contest::find($request->contest_id);
+
+            $entry = Entry::create([
+                'name' => $request->name,
+                'description' => $request->description
+            ]);
+
+            $entry->creator()->associate($creator);
+            $entry->contest()->associate($contest);
+
+            $entry->files()->sync($request->attached_files);
+
+            if(!is_null($request->thumbnail_id)){
+                $file = File::find($request->thumbnail_id);
+
+                if(!is_null($file)){
+                    $entry->thumbnail = $file->file_url;
+                }
+            }
+
+            if ($entry->save()) {
+                $response = $entry;
+            }
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
+     * @param  int  $judgeId
      * @return \Illuminate\Http\Response
      */
     public function show($id, $judgeId = null)
     {
         $statusCode = 200;
-        $entry = Entry::find($id);
+        $response = [];
 
-        $entry_data = $entry->getAttributes();
-        $entry_data['messages'] = [];
+        try{
+            $entry = Entry::find($id);
 
-        $thread = $entry->getThread();
+            $entry_data = $entry->getAttributes();
 
-        if(!is_null($thread)){
-            $entry_data['messages'] = $thread->messages;
+            $entry_data['messages'] = [];
 
-            foreach($entry_data['messages'] as $message){
-                $user = User::find($message->user_id);
+            $thread = $entry->getThread();
 
-                if(!is_null($user)){
-                    $message['user'] = [
-                        'id' => $user->id,
-                        'name' => $user->name
-                    ];
+            if(!is_null($thread)){
+                $entry_data['messages'] = $thread->messages;
+
+                foreach($entry_data['messages'] as $message){
+                    $user = User::find($message->user_id);
+
+                    if(!is_null($user)){
+                        $message['user'] = [
+                            'id' => $user->id,
+                            'name' => $user->name
+                        ];
+                    }
                 }
             }
-        }
 
-        if(is_null($judgeId)){
-            $entry_data['ratings'] = $entry->ratings;
+            if(is_null($judgeId)){
+                $entry_data['ratings'] = $entry->ratings;
 
-            foreach($entry_data['ratings'] as $rating){
-                $judge = User::find($rating->judge_id);
-                $rating->judge = $judge;
+                foreach($entry_data['ratings'] as $rating){
+                    $judge = User::find($rating->judge_id);
+                    $rating->judge = $judge;
+                }
+            }else{
+                $entry_data['rating'] = $entry->ratings->where('judge_id', $judgeId)->first();
             }
-        }else{
-            $entry_data['rating'] = $entry->ratings->where('judge_id', $judgeId)->first();
+
+            $entry_data['revisions'] = [];
+            $revisions = Entry::where('contest_id', $entry->contest_id)->where('name', $entry->name)->get();
+
+            foreach ($revisions as $revision) {
+                $entry_data['revisions'][] = [
+                    'id' => $revision->id
+                ];
+            }
+
+            $entry_data['files'] = $entry->files;
+
+            $response = $entry_data;
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
         }
 
-        $entry_data['revisions'] = [];
-        $revisions = Entry::where('contest_id', $entry->contest_id)->where('name', $entry->name)->get();
-
-        foreach ($revisions as $revision) {
-            $entry_data['revisions'][] = [
-                'id' => $revision->id
-            ];
-        }
-
-        $response = $entry_data;
-
-        return new Response($response, $statusCode);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -169,6 +202,7 @@ class EntryController extends Controller
 
             foreach($entries as $entry)
             {
+                $entry = Entry::find($entry->id);
                 $entry_data = $entry->getAttributes();
                 $type = '';
 
@@ -197,6 +231,32 @@ class EntryController extends Controller
                     ];
                 }
 
+                $response[] = $entry_data;
+            }
+        }catch(Exception $e){
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    }
+
+    public function contestantEntries($contestId, $creatorId)
+    {
+        $statusCode = 200;
+        $response = [];
+
+        try{
+            $creator = Creator::find($creatorId);
+            $entries = Entry::where('contest_id', $contestId)->where('creator_id', $creatorId)->get();
+
+            if (is_null($creator) || is_null($entries)) {
+                throw new Exception('Invalid Creator or Entry', 1);
+            }
+
+            foreach($entries as $entry)
+            {
+                $entry_data = $entry->getAttributes();
                 $response[] = $entry_data;
             }
         }catch(Exception $e){

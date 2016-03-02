@@ -20,6 +20,8 @@ class File extends Model
      */
     protected $table = 'files';
 
+    protected $appends = ['url'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -33,7 +35,7 @@ class File extends Model
         return $this->hasOne('Fundator\User', 'thumbnail_id');
     }
 
-    public function getUrl()
+    public function getUrlAttribute()
     {
         return url('/') . '/' . $this->file_url;
     }

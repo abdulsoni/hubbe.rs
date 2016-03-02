@@ -10,3 +10,5 @@ Homestead.json
 .DS_Store
 .ai
 .zip
+/public/uploads
+/public/resize

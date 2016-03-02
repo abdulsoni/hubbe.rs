@@ -3,7 +3,9 @@
 	    <div class="col-md-5">
 	        <div class="projectImg lb">
 	            <div class="row date-wrap">
-	                <div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div>
+	                <!-- <div class="col-xs-4 col-sm-3 project-profile">
+                        <img src="images/profile.jpg" alt="">
+                    </div> -->
 	            </div>
 	            <div class="row rankingMng">
                     <div class="col-xs-4 leftRank">
@@ -28,9 +30,8 @@
             	<uib-tabset vertical="true" type="pills">
             		<uib-tab heading="General">
                         <div class="row">
-                            <div class="col-xs-12 contest-single_description marginT15" data-ellipsis data-ellipsis-append="read more" data-ellipsis-append-click="showFullText()">
-                                <div ng-bind-html="contest.description | trustedHtml"></div>
-                            </div>
+                            <div class="col-xs-12 contest-single_description marginT15" ng-bind="contest.description | stripTags" ellipsis
+                                ellipsis-append="<a class='read-more'>read more</a>" ellipsis-append-click="showFullText()"></div>
                         </div>
                         <hr />
 						<div class="row">
@@ -141,5 +142,13 @@
             	</uib-tabset>
 	        </div>
 	    </div>
+
+        <div class="col-sm-12">
+            <div class="contest-single_description-full" ng-if="data.contestFullDescription">
+                <span class="icon icon-cross close" ng-click="hideFullText()"></span>
+                <h3 class="marginT0 marginB15">Contest Description</h3>
+                <div ng-bind-html="contest.description | trustedHtml"></div>
+            </div>
+        </div>
 	</div>
 </div>

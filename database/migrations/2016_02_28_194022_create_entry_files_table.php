@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEntriesTable extends Migration
+class CreateEntryFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,13 @@ class CreateEntriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('entries', function (Blueprint $table) {
+        Schema::create('entry_files', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('contest_id');
-            $table->integer('creator_id');
 
-            $table->string('thumbnail');
+            $table->integer('entry_id');
+            $table->integer('file_id');
 
-            $table->string('name');
-            $table->longText('description');
+            $table->string('caption');
         });
     }
 
@@ -31,6 +29,6 @@ class CreateEntriesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('entries');
+        Schema::drop('entry_files');
     }
 }

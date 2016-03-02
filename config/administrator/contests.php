@@ -30,6 +30,9 @@ return array(
             'title' => '# prizes',
             'relationship' => 'prizes',
             'select' => 'COUNT((:table).id)',
+        ),
+        'visible' => array(
+            'title' => 'Visible ?'
         )
     ),
 
@@ -66,12 +69,20 @@ return array(
             'title' => 'Start Date',
             'type' => 'date'
         ),
-        'budget' => array(
-            'title' => 'Budget',
-            'type' => 'number',
-            'decimals' => 2,
-            'thousands_separator' => ',',
-            'decimal_separator' => '.'
+        'duration' => array(
+            'title' => 'Duration',
+            'type' => 'text'
+        ),
+        // 'budget' => array(
+        //     'title' => 'Budget',
+        //     'type' => 'number',
+        //     'decimals' => 2,
+        //     'thousands_separator' => ',',
+        //     'decimal_separator' => '.'
+        // ),
+        'visible' => array(
+            'type' => 'bool',
+            'title' => 'Visible ?',
         ),
         'jury' => array(
             'type' => 'relationship',

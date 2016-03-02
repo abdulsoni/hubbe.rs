@@ -60,11 +60,21 @@ class Entry extends Model
     /**
      * Relationship between Entries and Contests
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function contest()
     {
         return $this->belongsTo('Fundator\Contest');
+    }
+
+    /**
+     * Relationship between Entries and Files
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function files()
+    {
+        return $this->belongsToMany('Fundator\File', 'entry_files')->withPivot('caption');
     }
 
     public function getContestantAttribute()
