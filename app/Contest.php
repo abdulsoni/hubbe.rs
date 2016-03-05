@@ -28,6 +28,21 @@ class Contest extends Model
      */
     protected $fillable = ['name', 'description', 'status', 'start_time', 'duration', 'budget', 'currency'];
 
+    /**
+     * Appended Attributes
+     *
+     * @var array
+     */
+    protected $appends = ['num_contestants'];
+
+    /**
+     * Get the number of contestants
+     */
+
+    public function getNumContestantsAttribute()
+    {
+        return $contestants = $this->entries->groupBy('creator_id')->count();
+    }
 
     /**
      * Relationship between Entries and Contests

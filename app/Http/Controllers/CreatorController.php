@@ -16,7 +16,7 @@ class CreatorController extends Controller
     public function __construct()
     {
         // Token Based Access
-        $this->middleware('jwt.auth', ['except' => ['index']]);
+//        $this->middleware('jwt.auth', ['except' => ['index']]);
     }
 
     /**

@@ -1,0 +1,54 @@
+<div class="row" ng-if="user.judging.length > 0">
+    <div class="col-sm-12">
+        <uib-tabset class="tabsection">
+            <uib-tab heading="Contests to judge">
+                <ul class="tabProjectList">
+                    <li ng-repeat="contest in user.judging" ui-sref="app.contestsingle({contestId: contest.id})">
+                        <div class="projectImg" ng-style="{'background-image': (contest.thumbnail) ? 'url(/' + contest.thumbnail + ')': ''}">
+                            <div class="row rankingMng">
+                                <div class="col-xs-3 leftRank">
+                                    <h4>Contestants</h4>
+                                    <span class="countValue">{{contest.num_contestants}}</span>
+                                </div>
+                                <div class="col-xs-3">
+                                    <h4>Time to Go</h4>
+                                    {{ end_time = (contest.start_time | amAdd : contest.duration : 'days'); ''}}
+                                    <span class="countValue">{{ end_time | amDifference : null : 'days' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="projectHeading">{{contest.name}}</h3>
+                    </li>
+                </ul>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>
+
+<div ng-if="contests.length > 0">
+    <h2><strong>Wanna put your creativity in motion? New Contest</strong></h2>
+    <hr>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <ul class="tabProjectList">
+                <li ng-repeat="contest in contests" ui-sref="app.contestsingle({contestId: contest.id})">
+                    <div class="projectImg" ng-style="{'background-image': (contest.thumbnail) ? 'url(/' + contest.thumbnail + ')': ''}">
+                        <div class="row rankingMng">
+                            <div class="col-xs-3 leftRank">
+                                <h4>Contestants</h4>
+                                <span class="countValue">{{contest.num_contestants}}</span>
+                            </div>
+                            <div class="col-xs-3">
+                                <h4>Time to Go</h4>
+                                {{ end_time = (contest.start_time | amAdd : contest.duration : 'days'); ''}}
+                                <span class="countValue">{{ end_time | amDifference : null : 'days' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="projectHeading">{{contest.name}}</h3>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -20,6 +20,7 @@ class CreateContestsTable extends Migration
 
             $table->string('name');
             $table->longText('description');
+            $table->longText('rules');
             $table->dateTime('start_time');
             $table->integer('duration');
 

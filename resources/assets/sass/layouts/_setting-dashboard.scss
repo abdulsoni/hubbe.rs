@@ -149,3 +149,175 @@ main {
 .cd-nav .cd-contact-info li, .cd-nav .cd-contact-info a, .cd-nav .cd-contact-info span {font-size: 1.6rem;}
 .mobile-nav-trigger{@include transform(rotate(90deg));}
 .open-mobileNav.mobile-nav-trigger{@include transform(rotate(270deg));}
+
+
+.img-upload-style1 {
+  margin: -35px auto 0;
+  width: 100%;
+  text-align: center;
+  // border: 5px solid #f00;
+
+  .img-upload-title {
+    color: #555;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    // background: #fc9;
+  }
+
+  .img-upload-drag {
+    display: table-cell;
+    vertical-align: middle;
+    color: #a8b5bb;
+    text-transform: uppercase;
+    // background: #ffe;
+
+    .icon {
+      margin: 0 auto;
+      display: block;
+      width: 75px;
+      height: 75px;
+      font-size: 75px;
+    }
+
+    .iud-dec {
+      padding: 26px 0 0;
+      margin: 0;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      // background: #fc9;
+    }
+  }
+
+  .img-upload-crop {
+    background: transparent;
+    // background: #888;
+  }
+
+  .img-upload-show {
+    display: table;
+    width: 100%;
+    height: 340px;
+    border: 2px dashed #b8c5cb;
+    background: #e7eaec;
+    border-radius: 3px;
+    position: relative;
+
+      transition: border-color 0.3s;
+
+      &.dropable{
+        border-color: #3C5F70;
+    }
+
+
+    .img-upload-crop {
+      height: 336px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+    }
+  }
+
+  .img-upload-file {
+    padding: 12px 0 22px;
+    // background: #090;
+
+    .iud-file-img {
+      position: absolute;
+      clip: rect(0 0 0 0);
+    }
+
+    .iud-file-mod {
+      padding: 0 0 0 192px;
+      height: 44px;
+      position: relative;
+      // background: #fc9;
+
+      .iud-file-input {
+        padding: 11px 28px;
+        height: 44px;
+        color: #999;
+        border: 2px solid #e4ecf1;
+        background: #fff;
+        border-radius: 3px;
+        box-shadow: none;
+      }
+
+      .iud-file-label {
+        display: block;
+        margin: 0;
+        width: 196px;
+        height: 44px;
+        line-height: 44px;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        top: 0;
+        border-radius: 3px;
+        background: #6399bb;
+        transition: all 0.3s;
+
+        .icon {
+          display: inline-block;
+          margin-right: 6px;
+          font-size: 30px;
+          vertical-align: -8px;
+        }
+
+        &:hover {
+          background: darken(#6399bb, 12%);
+        }
+      }
+    }
+  }
+}
+
+.user-settings{
+  .bigtext{
+    float: left;
+  }
+
+  .form-group{
+    @include clearfix();
+  }
+
+  .form-control{
+    margin-top: -8px;
+    width: 240px;
+    box-shadow: none;
+    border-radius: 0;
+    background-color: #eee;
+    border-color: #333;
+    float: left;
+  }
+
+  textarea.form-control{
+    width: 400px;
+    min-height: 120px;
+    float: none;
+    margin-top: 25px;
+  }
+
+  .bio{
+    padding-left: 60px;
+    display: block;
+    max-width: 550px;
+    line-height: 1.3;
+  }
+}
+
+.user-settings-controls{
+  a{
+    transition: none !important;
+  }
+}

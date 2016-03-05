@@ -43,6 +43,13 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = ['password', 'remember_token'];
 
+    /**
+     * The attributes included in the model's JSON form.
+     *
+     * @var array
+     */
+    protected $appends = ['thumbnail_url'];
+
 
     public function thumbnail()
     {
@@ -70,6 +77,16 @@ class User extends Model implements AuthenticatableContract,
     }
 
     /**
+     * Relationship between users and investors
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function expert()
+    {
+        return $this->hasOne('Fundator\Expert');
+    }
+
+    /**
      * Relationship between users and creators
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -94,6 +111,9 @@ class User extends Model implements AuthenticatableContract,
                 case 'investor':
                     $roleId = $this->investor->id;
                     break;
+                case 'expert':
+                    $roleId = $this->expert->id;
+                    break;
                 default:
                     $roleId = null;
                     break;
@@ -113,13 +133,12 @@ class User extends Model implements AuthenticatableContract,
         return $userRoles;
     }
 
-    public function getThumbnailAttribute()
+    public function getThumbnailUrlAttribute()
     {
-        $thumbnail = File::find($this->thumbnail_id);
         $thumbnail_url = null;
 
-        if (!is_null($thumbnail_url)) {
-            $thumbnail_url = $thumbnail->getUrl();
+        if (!is_null($this->thumbnail)) {
+            $thumbnail_url = $this->thumbnail->url;
         }
 
         return $thumbnail_url;
@@ -203,6 +222,9 @@ class User extends Model implements AuthenticatableContract,
                     break;
                 case 'investor':
                     $user->investor()->create([]);
+                    break;
+                case 'expert':
+                    $user->expert()->create([]);
                     break;
             }
         });

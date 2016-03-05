@@ -65,6 +65,10 @@ return array(
             'title' => 'Description',
             'type' => 'wysiwyg'
         ),
+        'rules' => array(
+            'title' => 'Official Rules',
+            'type' => 'wysiwyg'
+        ),
         'start_time' => array(
             'title' => 'Start Date',
             'type' => 'date'
@@ -73,13 +77,6 @@ return array(
             'title' => 'Duration',
             'type' => 'text'
         ),
-        // 'budget' => array(
-        //     'title' => 'Budget',
-        //     'type' => 'number',
-        //     'decimals' => 2,
-        //     'thousands_separator' => ',',
-        //     'decimal_separator' => '.'
-        // ),
         'visible' => array(
             'type' => 'bool',
             'title' => 'Visible ?',

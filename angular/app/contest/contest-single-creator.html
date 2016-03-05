@@ -2,17 +2,14 @@
 	<div class="row">
         <div class="col-md-5">
             <div class="projectImg lb" ng-style="{'background-image': (contest.thumbnail) ? 'url(/' + contest.thumbnail + ')': ''}">
-                <div class="row date-wrap">
-                    <!-- <div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div> -->
-                </div>
                 <div class="row rankingMng">
-                    <div class="col-xs-4 leftRank">
+                    <div class="col-xs-4 leftRank" ng-if="activeRole === 'creator'">
                         <h4>Rank</h4>
                         <span class="countValue">{{contest.id | ordinal}}</span>
                     </div>
                     <div class="col-xs-4 leftRank">
                         <h4>Contestants</h4>
-                        <span class="countValue">{{contest.total_entries}}</span>
+                        <span class="countValue">{{contest.num_contestants}}</span>
                     </div>
                     <div class="col-xs-4">
                         <h4>Time to Go</h4>
@@ -81,7 +78,7 @@
                                     </div>
                                     <div class="col-xs-3 col-xs-3-5 leftRank">
                                         <h4 class="col-heading">Notation <br>Number</h4>
-                                        <span class="countValue">{{contest.total_entries}}</span>
+                                        <span class="countValue">{{contest.num_contestants}}</span>
                                     </div>
                                     <div class="col-xs-3 col-xs-3-5">
                                         <h4 class="col-heading">Contest <br>Done</h4>
@@ -120,7 +117,7 @@
                                     </div>
                                     <div class="col-xs-3 col-xs-3-5 leftRank">
                                         <h4 class="col-heading">Notation <br>Number</h4>
-                                        <span class="countValue">{{contest.total_entries}}</span>
+                                        <span class="countValue">{{contest.num_contestants}}</span>
                                     </div>
                                     <div class="col-xs-3 col-xs-3-5">
                                         <h4 class="col-heading">Contest <br>Judged</h4>

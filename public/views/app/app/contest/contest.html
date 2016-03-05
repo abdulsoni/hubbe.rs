@@ -6,24 +6,14 @@
                 <ul class="tabProjectList">
                     <li ng-repeat="contest in contests" ui-sref="app.contestsingle({contestId: contest.id})">
                         <div class="projectImg" ng-style="{'background-image': (contest.thumbnail) ? 'url(/' + contest.thumbnail + ')': ''}">
-                            <div class="row date-wrap">
-                                <!-- <div class="col-xs-8 col-sm-9 project-date">
-                                    <h4>
-                                        {{ end_time = (contest.start_time | amAdd : contest.duration : 'days'); ''}}
-                                        {{ end_time | amDifference : null : 'days' }} days to go
-                                        ({{ end_time | amDateFormat:'MMM Do YYYY'}}).
-                                    </h4>
-                                </div> -->
-                                <!-- <div class="col-xs-4 col-sm-3 project-profile"> <img src="images/profile.jpg" alt=""> </div> -->
-                            </div>
                             <div class="row rankingMng">
-                                <div class="col-xs-3 leftRank">
+                                <div class="col-xs-3 leftRank" ng-if="activeRole === 'creator'">
                                     <h4>Rank</h4>
                                     <span class="countValue">{{contest.rank | ordinal}}</span>
                                 </div>
                                 <div class="col-xs-3 leftRank">
                                     <h4>Contestants</h4>
-                                    <span class="countValue">{{contest.total_entries}}</span>
+                                    <span class="countValue">{{contest.num_contestants}}</span>
                                 </div>
                                 <div class="col-xs-3">
                                     <h4>Time to Go</h4>

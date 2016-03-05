@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.controllers').controller('ContestCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $timeout) {
+    angular.module('fundator.controllers').controller('ContestCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $timeout, $filter) {
 
         $scope.contests = [];
         $rootScope.$broadcast('startLoading');
@@ -12,6 +12,18 @@
 
         Contest.query().$promise.then(function(result) {
             $scope.contests = result;
+            $scope.ongoingContests = [];
+
+            if ($rootScope.activeRole === 'creator' && typeof($rootScope.user.creator) !== 'undefined') {
+                for(var ogc in $rootScope.user.creator.ongoing_contest){
+                    var contest_id = $rootScope.user.creator.ongoing_contest[ogc];
+                    var contest = $filter('filter')($scope.contests, {id: contest_id})[0];
+
+                    if (typeof(contest) !== 'undefined') {
+                        $scope.ongoingContests.push(contest);
+                    }
+                }
+            }
         }).finally(function() {
             $timeout(function() {
                 $rootScope.$broadcast('stopLoading');

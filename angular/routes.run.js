@@ -176,6 +176,14 @@
                     jury: getView('contest', 'contest-single-jury'),
                 },
                 defaultTemplate: getView('contest', 'contest-single')
+            }, {
+                route: 'app.contest',
+                view: 'main@',
+                roles: {
+                    creator: getView('contest', 'contest-creator'),
+                    jury: getView('contest', 'contest-jury')
+                },
+                defaultTemplate: getView('contest')
             }];
 
             angular.forEach(userRoleViews, function(roleView) {

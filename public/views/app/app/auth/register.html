@@ -92,6 +92,37 @@
                     </div>
                     <div class="step-2-right pull-right">
                         <div class="img-upload-style1">
+                            <h3 class="img-upload-title">Upload Your Profile Picture</h3>
+                            <div class="img-upload-show"  ng-class="{'dropable': dropable}">
+                                <div class="img-upload-drag">
+                                    <p class="iud-dec">
+                                        <span ng-if="!dropable">Drag</span>
+                                        <span ng-if="dropable">Drop</span>
+                                        Photo Here To Upload
+                                    </p>
+                                </div>
+                                <div class="img-upload-crop imgcrop-area">
+                                    <img-crop image="thumbnail" result-image="data.croppedThumbnail" area-type="circle"></img-crop>
+                                </div>
+                            </div>
+                            <div class="img-upload-file">
+                                <input id="fileInput" filestyle="" type="file" data-class-button="btn btn-primary" data-class-input="form-control" accept="image/*"
+                                data-button-text="" data-icon-name="fa fa-upload" class="form-control iud-file-img">
+                                <div class="iud-file-mod">
+                                    <input type="text"  ng-value="fileName" class="form-control iud-file-input" disabled>
+                                    <label class="iud-file-label" for="fileInput" tabindex="0">
+                                        <span class="icon icon-cloud-upload"></span>
+                                        Choose File
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="img-upload-buttons">
+                                <button class="btn btn-info" ng-click="confirmImage()" ng-if="thumbnail !== null">Set Thumbnail</button>
+                            </div>
+                            <div class="image-error">{{data.imageError}}</div>
+                            <div class="image-success" ng-if="imageSuccess !== 'null'">{{data.imageSuccess}}</div>
+                        </div>
+                        <!-- <div class="img-upload-style1">
                             <h3 class="img-upload-title font-light">Upload Your Profile Picture</h3>
                             <div class="img-upload-show" ng-class="{'dropable': dropable}">
                                 <div class="img-upload-crop imgcrop-area">
@@ -105,7 +136,7 @@
                             <button class="btn btn-info" ng-click="confirmImage()" ng-if="thumbnail !== null">Set Profile Picture</button>
                             <div class="image-error">{{data.imageError}}</div>
                             <div class="image-success" ng-if="imageSuccess !== 'null'">{{data.imageSuccess}}</div>
-                        </div>
+                        </div> -->
                     </div>
                 </form>
                 <div class="clearfix"></div>

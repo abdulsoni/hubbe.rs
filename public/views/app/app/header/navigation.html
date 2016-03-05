@@ -4,30 +4,75 @@
             <div class="container">
                 <uib-tabset class="dashbord-tab">
                     <uib-tab heading="Account">
-                        <div class="paddingB15">
-                            <h5 class="font-light marginB20"><span class="bigtext paddingR25">Name:</span> {{user.name}} {{user.last_name}}</h5>
-                            <h5 class="font-light marginB20"><span class="bigtext paddingR25">Registered Email Adress:</span> {{user.email}}</h5>
-                            <h5 class="font-light marginB20"><span class="bigtext paddingR25">Registered Phone Number:</span> {{user.contact_number}}</h5>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-5 col-sm-6">
+                                <div class="row">
+                                    <div class="col-lg-12 text-center">
+                                        <img class="editableProfileimage" src="images/icon-user-default.png" alt="" ng-if="!user.thumbnail">
+                                        <img class="editableProfileimage" ng-src="{{user.thumbnail}}" alt="" ng-if="user.thumbnail">
+                                        <h4 class="font-light"><a href="#" class="color-inherit link-text-underline"><span ng-click="changeThumbnail();">change picture</span></a></h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-md-7 col-sm-6 border-left-white">
+                                <div class="user-settings paddingL25">
+                                    <h5 class="font-light marginB20 marginT30">
+                                        <span class="bigtext paddingR25">Name:</span>
+                                        <strong ng-if="data.userSettingsMode === 'view'">{{user.name}} {{user.last_name}}</strong>
+                                        <div ng-if="data.userSettingsMode === 'edit'" class="form-group"><input type="text" class="form-control" placeholder="First Name ..." ng-model="user.name"> <input type="text" class="form-control" placeholder="Last Name ..." ng-model="user.last_name"></div>
+                                    </h5>
+                                    <h5 class="font-light marginB20 marginT30">
+                                        <span class="bigtext paddingR25">Registered Email Adress:</span>
+                                        <strong>{{user.email}}</strong>
+                                    </h5>
+                                    <h5 class="font-light marginB20 marginT30">
+                                        <span class="bigtext paddingR25">Registered Phone Number:</span>
+                                        <strong ng-if="data.userSettingsMode === 'view'">{{user.contact_number}}</strong>
+                                        <div ng-if="data.userSettingsMode === 'edit'" class="form-group"><input type="text" class="form-control" placeholder="Contact Number ..." ng-model="user.contact_number"></div>
+                                    </h5>
+                                    <h5 class="font-light marginB20 marginT30">
+                                        <span class="bigtext paddingR25">Country:</span>
+                                        <strong ng-if="data.userSettingsMode === 'view'">{{user.country_origin}}</strong>
+                                        <div ng-if="data.userSettingsMode === 'edit'" class="form-group"><input type="text" class="form-control" placeholder="Your Country ..." ng-model="user.country_origin"></div>
+                                    </h5>
+                                    <h5 class="font-light marginB20 marginT30">
+                                        <span class="bigtext paddingR25">City:</span>
+                                        <strong ng-if="data.userSettingsMode === 'view'">Shanghai</strong>
+                                        <div ng-if="data.userSettingsMode === 'edit'" class="form-group"><input type="text" class="form-control" placeholder="Your City ..." ng-model="user.city"></div>
+                                    </h5>
+                                    <h5 class="font-light marginB20 marginT30">
+                                        <span class="bigtext paddingR25">Reviews:</span>
+                                        <strong>+0 positive Reviews</strong>
+                                    </h5>
+
+                                    <h5 class="font-light marginB20 marginT30">
+                                        <span class="bigtext paddingR25">Bio:</span>
+                                        <strong class="bio" ng-if="data.userSettingsMode === 'view'">
+                                            <p>{{user.bio}}</p>
+                                        </strong>
+                                        <div ng-if="data.userSettingsMode === 'edit'" class="form-group">
+                                            <textarea type="text" class="form-control" placeholder="Your Bio ..." ng-model="user.bio"></textarea>
+                                        </div>
+                                    </h5>
+                                </div>
+                            </div>
                         </div>
-                        <!-- <a href="#" class="btn btn_default btn-info">Save</a> <a href="#" class="btn btn_default btn-success marginL10">Change Details</a> -->
-                        <a ng-click="logout()" class="btn btn_default btn-danger">Logout</a>
+
+                        <br>
+                        <br>
+                        <br>
+                        <div class="user-settings-controls clearfix">
+                            <a class="btn btn_default btn-info marginL10" ng-if="data.userSettingsMode === 'view'" ng-click="data.userSettingsMode = 'edit'">Change Details</a>
+                            <a class="btn btn_default btn-info marginL10" ng-if="data.userSettingsMode === 'edit' && data.userSettingsSave !== 1" ng-click="saveProfile()">
+                                <span ng-if="data.userSettingsSave === -1">Save</span>
+                                <span ng-if="data.userSettingsSave === 0">Saving</span>
+                            </a>
+                            <a class="btn btn_default btn-success marginL10" ng-if="data.userSettingsMode === 'edit' && data.userSettingsSave === 1">Saved!</a>
+                            &nbsp;&nbsp;<a ng-click="logout()" class="btn btn_default btn-danger">Logout</a>
+                        </div>
                     </uib-tab>
                     <uib-tab heading="Profile / Skills">
                         <div class="row">
-                            <div class="col-lg-4 col-md-5 col-sm-6 border-righ-white">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <img src="images/coolestMember.jpg" alt="" class="editableProfileimage pull-left">
-                                        <h4 class="pull-left font-light"><a href="#" class="color-inherit link-text-underline"><dfn>change picture</dfn></a></h4>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h4 class="marginB20 font-light"><span class="bigtext paddingR25">{{user.name}} {{user.last_name}}</span></h4>
-                                    <h4 class="marginB20 font-light"><span class="bigtext paddingR25">Country:</span>  <span class="font-light"><dfn>{{user.country_origin}}</dfn></span></h4>
-                                    <h4 class="marginB20 font-light"><span class="bigtext paddingR25">City:</span> <span class="font-light"><dfn>Shanghai</dfn></span></h4>
-                                    <h4 class="marginB20 font-light"><span class="bigtext paddingR25">Reviews:</span> <a href="#" class="font-light"><dfn>+34 positive Reviews</dfn></a></h4>
-                                </div>
-                            </div>
                             <div class="col-lg-8 col-md-7 col-sm-6">
                                 <div class="paddingL25">
                                     <h4 class="font-light marginT0"><span class="bigtext">You have <span class="radius-box rbM marginL20">4</span> skills registered</span></h4>
@@ -37,7 +82,7 @@
                                         <h4 class="font-light"><a href="#">skill 3</a></h4>
                                         <h4 class="font-light"><a href="#">skill 4</a></h4>
                                     </div>
-                                    <h4 class="font-light"><a href="#"><dfn>edit skills</dfn></a></h4>
+                                    <h4 class="font-light"><a href="#"0it skills<//a></h4>
                                 </div>
                             </div>
                         </div>

@@ -32,9 +32,8 @@ class ContestController extends Controller
             $i++;
             $contest_data = $contest->getAttributes();
             $contest_data['total_entries'] = $contest->entries->groupBy('creator_id')->count();
-
-            // Calculated rank
-            $contest_data['rank'] = $i;
+            $contest_data['num_contestants'] = $contest->num_contestants;
+            $contest_data['rank'] = 1;
 
             $response[] = $contest_data;
         }
@@ -83,7 +82,9 @@ class ContestController extends Controller
             // $contest_data['entries'] = $contest->entries;
             $contest_data['rating'] = $contest->rating;
             $contest_data['contestants'] = [];
+            $contest_data['num_contestants'] = $contest->num_contestants;
             $contest_data['judges'] = $contest->jury;
+            $contest_data['rank'] = 1;
 
             $contestants = $contest->entries->groupBy('creator_id');
 

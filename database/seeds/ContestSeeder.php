@@ -21,7 +21,7 @@ class ContestSeeder extends Seeder
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'start_time' => new DateTime(),
             'duration' => 60,
-            'budget' => 12000
+            'rules' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         ]);
 
         $contest2 = Contest::create([
@@ -29,7 +29,7 @@ class ContestSeeder extends Seeder
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'start_time' => new DateTime(),
             'duration' => 60,
-            'budget' => 3000
+            'rules' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         ]);
 
         $contest3 = Contest::create([
@@ -37,7 +37,7 @@ class ContestSeeder extends Seeder
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'start_time' => new DateTime(),
             'duration' => 60,
-            'budget' => 198000
+            'rules' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         ]);
 
         $contest4 = Contest::create([
@@ -45,7 +45,7 @@ class ContestSeeder extends Seeder
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'start_time' => new DateTime(),
             'duration' => 60,
-            'budget' => 50000
+            'rules' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         ]);
 
         /*

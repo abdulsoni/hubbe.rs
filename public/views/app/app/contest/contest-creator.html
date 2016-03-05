@@ -1,13 +1,12 @@
-<div class="row">
+<div class="row" ng-if="user.creator.ongoing_contest.length > 0">
     <div class="col-sm-12">
-        <!-- Tabs here-->
         <uib-tabset class="tabsection">
-            <uib-tab heading="Ongoing Contests">
+            <uib-tab heading="My Ongoing Contests">
                 <ul class="tabProjectList">
-                    <li ng-repeat="contest in contests" ui-sref="app.contestsingle({contestId: contest.id})">
+                    <li ng-repeat="contest in ongoingContests" ui-sref="app.contestsingle({contestId: contest.id})">
                         <div class="projectImg" ng-style="{'background-image': (contest.thumbnail) ? 'url(/' + contest.thumbnail + ')': ''}">
                             <div class="row rankingMng">
-                                <div class="col-xs-3 leftRank" ng-if="activeRole === 'creator'">
+                                <div class="col-xs-3 leftRank">
                                     <h4>Rank</h4>
                                     <span class="countValue">{{contest.rank | ordinal}}</span>
                                 </div>
@@ -26,14 +25,42 @@
                     </li>
                 </ul>
             </uib-tab>
-            <uib-tab heading="Past Contests" ng-disabled="true">
-            </uib-tab>
         </uib-tabset>
     </div>
 </div>
 
-<!-- <h2><strong>Wanna put your creativity in motion? New Contest</strong></h2>
-<hr> -->
+<div ng-if="contests.length > 0">
+    <h2><strong>Wanna put your creativity in motion? New Contest</strong></h2>
+    <hr>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <ul class="tabProjectList">
+                <li ng-repeat="contest in contests" ui-sref="app.contestsingle({contestId: contest.id})">
+                    <div class="projectImg" ng-style="{'background-image': (contest.thumbnail) ? 'url(/' + contest.thumbnail + ')': ''}">
+                        <div class="row rankingMng">
+                            <div class="col-xs-3 leftRank">
+                                <h4>Rank</h4>
+                                <span class="countValue">{{contest.rank | ordinal}}</span>
+                            </div>
+                            <div class="col-xs-3 leftRank">
+                                <h4>Contestants</h4>
+                                <span class="countValue">{{contest.num_contestants}}</span>
+                            </div>
+                            <div class="col-xs-3">
+                                <h4>Time to Go</h4>
+                                {{ end_time = (contest.start_time | amAdd : contest.duration : 'days'); ''}}
+                                <span class="countValue">{{ end_time | amDifference : null : 'days' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="projectHeading">{{contest.name}}</h3>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <!-- <div class="row">
     <div class="col-lg-6 col-md-12">
         <ul class="tabProjectList withprojectdetail">

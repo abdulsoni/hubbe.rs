@@ -63,6 +63,10 @@ class UserController extends Controller
             unset($response['password']);
             unset($response['remember_token']);
 
+            if(!is_null($user->thumbnail)){
+                $response['thumbnail'] = $user->thumbnail_url;
+            }
+
             $response['judging'] = $user->judging;
             $response['user_roles'] = $user->user_roles;
 
@@ -75,10 +79,6 @@ class UserController extends Controller
 //            }
 //
 //            $response['notifications'] = $notifications;
-
-            if(!is_null($user->thumbnail)){
-                $response['thumbnail'] = $user->thumbnail->getUrl();
-            }
 
         } catch (TokenExpiredException $e) {
             $statusCode = $e->getStatusCode();
@@ -131,7 +131,7 @@ class UserController extends Controller
             if(isset($request->investor) && is_null($user->investor)){
                 $investor = Investor::create([
                     'investment_budget' => $request->investor['investment_budget'],
-//                    'investment_goal' => $request->investor['investment_goal'],
+                    'investment_goal' => $request->investor['investment_goal'],
                     'investment_reason' => $request->investor['investment_reason']
                 ]);
 
