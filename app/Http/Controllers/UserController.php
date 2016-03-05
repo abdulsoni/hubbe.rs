@@ -127,6 +127,9 @@ class UserController extends Controller
             $user->contact_number = $request->contact_number;
             $user->contact_time = $request->contact_time;
 
+            if (isset($request->bio)) {
+                $user->bio = $request->bio;
+            }
 
             if(isset($request->investor) && is_null($user->investor)){
                 $investor = Investor::create([
