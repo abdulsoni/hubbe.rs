@@ -132,8 +132,9 @@
 						<p class="no-have">There is currently no Market information for this contest.</p>
             		</uib-tab>
             		<uib-tab heading="Contest Official Rules">
-						<p class="no-have">There are currently no rules set for the contest.</p>
-            		</uib-tab>
+                        <div ng-if="contest.rules.length > 0" class="col-xs-12 contest-single_bio marginT15" ng-bind-html="contest.rules | trustedHtml"></div>
+                        <p ng-if="contest.rules.length === 0" class="no-have">There are currently no rules set for the contest.</p>
+                    </uib-tab>
             	</uib-tabset>
 	        </div>
 	    </div>
