@@ -277,11 +277,9 @@ class EntryController extends Controller
 
         $entry = Entry::find($id);
 
-        // if (! $user = JWTAuth::parseToken()->authenticate()) {
-        //     return response()->json(['user_not_found'], 404);
-        // }
-
-        $user = User::find(1);
+        if (! $user = JWTAuth::parseToken()->authenticate()) {
+            return response()->json(['user_not_found'], 404);
+        }
 
         $message = Message::create([
             'thread_id' => $entry->getThreadId(),
