@@ -25,7 +25,14 @@ class Expertise extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'visible'];
+    protected $fillable = ['name', 'description', 'visible'];
+
+    /**
+     * Connected Expert
+     */
+    public function experts(){
+        return $this->belongsToMany('Fundator\Expert', 'expert_expertise');
+    }
 
     /**
      * Expertise Category Connection

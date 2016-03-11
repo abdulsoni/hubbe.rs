@@ -17,7 +17,8 @@ class CreateExpertiseTable extends Migration
             $table->integer('expertise_category_id');
 
             $table->string('name');
-            $table->boolean('visible');
+            $table->string('description');
+            $table->boolean('visible')->default(false);
         });
     }
 

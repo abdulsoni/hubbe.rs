@@ -59,8 +59,8 @@
                             <div class="item creator-profile">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <img src="images/icon-user-default.png" alt="" ng-if="!item.thumbnail" class="coolestMemberLBPick">
-                                        <img ng-src="{{item.thumbnail}}" alt="" ng-if="item.thumbnail">
+                                        <img src="images/icon-user-default.png" alt="" ng-if="!item.thumbnail_url" class="coolestMemberLBPick">
+                                        <img ng-src="{{item.thumbnail_url}}" alt="" ng-if="item.thumbnail_url">
                                     </div>
                                     <div class="col-sm-8 bio">
                                         {{item.bio}}
@@ -98,8 +98,8 @@
                             <div class="item creator-profile">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <img src="images/icon-user-default.png" alt="" ng-if="!item.thumbnail" class="coolestMemberLBPick">
-                                        <img ng-src="{{item.thumbnail}}" alt="" ng-if="item.thumbnail">
+                                        <img src="images/icon-user-default.png" alt="" ng-if="!item.thumbnail_url" class="coolestMemberLBPick">
+                                        <img ng-src="{{item.thumbnail_url}}" alt="" ng-if="item.thumbnail_url">
                                     </div>
                                     <div class="col-sm-8 bio">
                                         {{item.bio}}
@@ -162,8 +162,8 @@
                                 </div>
 
                                 <div class="col-xs-4">
-                                    <img class="thumbnail" src="images/icon-user-default.png" alt="" ng-if="!item.contestant.thumbnail">
-                                    <img class="thumbnail" ng-src="{{item.contestant.thumbnail}}" alt="" ng-if="item.contestant.thumbnail">
+                                    <img class="thumbnail" src="images/icon-user-default.png" alt="" ng-if="!item.contestant.thumbnail_url">
+                                    <img class="thumbnail" ng-src="{{item.contestant.thumbnail_url}}" alt="" ng-if="item.contestant.thumbnail_url">
                                 </div>
                             </div>
                         </div>
@@ -261,8 +261,8 @@
 	            <div class="row" ng-repeat="rating in data.selectedEntry.ratings | limitTo: 5">
 	                <div class="col-xs-2 text-center">
                         <!-- <img src="images/coolestMember.jpg" alt="" class="coolestMemberLBPick"> -->
-                        <img class="coolestMemberBPick" src="images/icon-user-default.png" alt="" ng-if="!rating.judge.thumbnail">
-                        <img class="coolestMemberBPick" ng-src="{{rating.judge.thumbnail}}" alt="" ng-if="rating.judge.thumbnail">
+                        <img class="coolestMemberBPick" src="images/icon-user-default.png" alt="" ng-if="!rating.judge.thumbnail_url">
+                        <img class="coolestMemberBPick" ng-src="{{rating.judge.thumbnail_url}}" alt="" ng-if="rating.judge.thumbnail_url">
                     </div>
 	                <div class="col-xs-2 ">
 	                    <p class="bordRight">{{rating.judge.name}}

@@ -21,7 +21,7 @@
                                         <strong ng-if="data.userSettingsMode === 'view'">{{user.name}} {{user.last_name}}</strong>
                                         <div ng-if="data.userSettingsMode === 'edit'" class="form-group"><input type="text" class="form-control" placeholder="First Name ..." ng-model="user.name"> <input type="text" class="form-control" placeholder="Last Name ..." ng-model="user.last_name"></div>
                                     </h5>
-                                    <h5 class="font-light marginB20 marginT30">
+                                    <!-- <h5 class="font-light marginB20 marginT30">
                                         <span class="bigtext paddingR25">Registered Email Adress:</span>
                                         <strong>{{user.email}}</strong>
                                     </h5>
@@ -29,7 +29,7 @@
                                         <span class="bigtext paddingR25">Registered Phone Number:</span>
                                         <strong ng-if="data.userSettingsMode === 'view'">{{user.contact_number}}</strong>
                                         <div ng-if="data.userSettingsMode === 'edit'" class="form-group"><input type="text" class="form-control" placeholder="Contact Number ..." ng-model="user.contact_number"></div>
-                                    </h5>
+                                    </h5> -->
                                     <h5 class="font-light marginB20 marginT30">
                                         <span class="bigtext paddingR25">Country:</span>
                                         <strong ng-if="data.userSettingsMode === 'view'">{{user.country_origin}}</strong>
@@ -61,7 +61,7 @@
                         <br>
                         <br>
                         <br>
-                        <div class="user-settings-controls clearfix">
+                        <div class="user-settings-controls clearfix text-right">
                             <a class="btn btn_default btn-info marginL10" ng-if="data.userSettingsMode === 'view'" ng-click="data.userSettingsMode = 'edit'">Change Details</a>
                             <a class="btn btn_default btn-info marginL10" ng-if="data.userSettingsMode === 'edit' && data.userSettingsSave !== 1" ng-click="saveProfile()">
                                 <span ng-if="data.userSettingsSave === -1">Save</span>
@@ -77,19 +77,26 @@
                                 <div class="paddingL25">
                                     <h4 class="font-light marginT0"><span class="bigtext">You have <span class="radius-box rbM marginL20">4</span> skills registered</span></h4>
                                     <div class="skillsList">
-                                        <h4 class="font-light"><a href="#">skill 1</a></h4>
-                                        <h4 class="font-light"><a href="#">skill 2</a></h4>
-                                        <h4 class="font-light"><a href="#">skill 3</a></h4>
-                                        <h4 class="font-light"><a href="#">skill 4</a></h4>
+                                        <h4 class="font-light"><a>skill 1</a></h4>
+                                        <h4 class="font-light"><a>skill 2</a></h4>
+                                        <h4 class="font-light"><a>skill 3</a></h4>
+                                        <h4 class="font-light"><a>skill 4</a></h4>
                                     </div>
                                     <h4 class="font-light"><a href="#"0it skills<//a></h4>
                                 </div>
                             </div>
                         </div>
-                        <div class="row paddingT15">
-                            <div class="col-xs-12">
-                                <a href="#" class="btn btn_default btn-info">Save</a> <a href="#" class="btn btn_default btn-success marginL10">Change Details</a>
-                            </div>
+                        <br>
+                        <br>
+                        <br>
+                        <div class="user-settings-controls clearfix text-right">
+                            <a class="btn btn_default btn-info marginL10" ng-if="data.userSettingsMode === 'view'" ng-click="data.userSettingsMode = 'edit'">Change Details</a>
+                            <a class="btn btn_default btn-info marginL10" ng-if="data.userSettingsMode === 'edit' && data.userSettingsSave !== 1" ng-click="saveProfile()">
+                                <span ng-if="data.userSettingsSave === -1">Save</span>
+                                <span ng-if="data.userSettingsSave === 0">Saving</span>
+                            </a>
+                            <a class="btn btn_default btn-success marginL10" ng-if="data.userSettingsMode === 'edit' && data.userSettingsSave === 1">Saved!</a>
+                            &nbsp;&nbsp;<a ng-click="logout()" class="btn btn_default btn-danger">Logout</a>
                         </div>
                     </uib-tab>
 <!--                     <uib-tab heading="Notification">

@@ -206,17 +206,18 @@ class EntryController extends Controller
                 $entry_data = $entry->getAttributes();
                 $type = '';
 
-                $last_entry = Entry::where('name', $entry->name)->orderBy('id', 'desc')->first()->first();
+                $last_entry = Entry::where('name', $entry->name)->orderBy('id', 'desc')->first();
+                $last_entry_rating = $last_entry->ratings->where('judge_id', $judge->id)->first();
 
                 if($entry->ratings->where('judge_id', $judge->id)->count() === 0 && Entry::where('name', $entry->name)->count() === 1){
                     $type = 'new';
                 }
 
-                if(Entry::where('name', $entry->name)->count() > 1 && $last_entry->rating !== null) {
+                if(Entry::where('name', $entry->name)->count() > 0 && $last_entry_rating !== null) {
                     $type = 'ammended';
                 }
 
-                if(Entry::where('name', $entry->name)->count() > 1 && $last_entry->rating === null) {
+                if(Entry::where('name', $entry->name)->count() > 0 && $last_entry_rating === null) {
                     $type = 'waiting review';
                 }
 
@@ -300,6 +301,6 @@ class EntryController extends Controller
             ];
         }
 
-        return new Response($response, $statusCode);
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 }

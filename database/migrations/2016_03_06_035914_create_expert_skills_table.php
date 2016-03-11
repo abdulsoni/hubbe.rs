@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateExpertiseCategoriesTable extends Migration
+class CreateExpertSkillsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,11 @@ class CreateExpertiseCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('expertise_categories', function (Blueprint $table) {
+        Schema::create('expert_skills', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('parent_id')->nullable();
 
-            $table->string('name');
-            $table->string('description');
-            $table->boolean('visible')->default(false);
+            $table->integer('expert_id');
+            $table->integer('skill_id');
         });
     }
 
@@ -29,6 +27,6 @@ class CreateExpertiseCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('expertise_categories');
+        Schema::drop('expert_skills');
     }
 }

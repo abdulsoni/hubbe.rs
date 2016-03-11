@@ -387,6 +387,8 @@
                         $scope.data.savingMarks = false;
                         $scope.data.savedMarks = true;
 
+                        $scope.loadEntries('jury');
+
                         $timeout(function(){
                             $scope.data.savedMarks = false;
                         }, 1000);
@@ -400,6 +402,8 @@
                         console.log('entry rating created!');
                         $scope.data.savingMarks = false;
                         $scope.data.savedMarks = true;
+
+                        $scope.loadEntries('jury');
 
                         $timeout(function(){
                             $scope.data.savedMarks = false;

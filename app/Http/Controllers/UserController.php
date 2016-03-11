@@ -6,6 +6,9 @@ use Fenos\Notifynder\Models\Notification;
 use Fundator\Creator;
 use Fundator\Events\Register;
 use Fundator\Investor;
+use Fundator\Expert;
+use Fundator\ExpertiseCategory;
+use Fundator\Expertise;
 use Fundator\Role;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -69,16 +72,6 @@ class UserController extends Controller
 
             $response['judging'] = $user->judging;
             $response['user_roles'] = $user->user_roles;
-
-//            $notifications = $user->getNotifications();
-//
-//            foreach($notifications as $notification){
-//                unset($notification['from']);
-//                $extra = $notification->extra->toArray();
-//                $notification['extras'] = $extra;
-//            }
-//
-//            $response['notifications'] = $notifications;
 
         } catch (TokenExpiredException $e) {
             $statusCode = $e->getStatusCode();
@@ -157,6 +150,76 @@ class UserController extends Controller
                 if(!is_null($creatorRole)){
                     $user->roles()->attach($creatorRole->id);
                 }
+            }
+
+            if(isset($request->expert) && is_null($user->expert)){
+                $expert = Expert::create([]);
+
+                $expertiseCategory = null;
+                $expertiseSubCategory = null;
+                $expertise = null;
+                $allSkills = [];
+
+                foreach ($request->expert['list'] as $expertData) {
+                    if (!empty($expertData['other_expertise_category']['name'])) {
+                        $expertiseCategory = ExpertiseCategory::create([
+                            'name' => $expertData['other_expertise_category']['name'],
+                            'visible' => false
+                        ]);
+                    }else{
+                        $expertiseCategory = ExpertiseCategory::find($expertData['expertise_category']['id']);
+                    }
+
+                    if(!empty($expertData['other_expertise_sub_category']['name'])){
+                        $expertiseSubCategory = ExpertiseCategory::create([
+                            'name' => $expertData['other_expertise_sub_category']['name'],
+                            'visible' => false
+                        ]);
+                        $expertiseSubCategory->parent()->associate($expertiseCategory);
+                        $expertiseSubCategory->save();
+                    }else{
+                        $expertiseSubCategory = ExpertiseCategory::find($expertData['expertise_sub_category']['id']);
+                    }
+
+                    if (!empty($expertData['other_expertise']['name'])) {
+                        $expertise = Expertise::create([
+                            'name' => $expertData['other_expertise']['name'],
+                            'description' => '',
+                            'visible' => false
+                        ]);
+
+                        $expertise->expertiseCategory()->associate($expertiseSubCategory);
+                        $expertise->save();
+
+                        $expert->expertise()->attach($expertise->id);
+                    }else{
+                        $expertise = Expertise::find($expertData['expertise']['id']);
+                        if (!is_null($expertiseSubCategory)) {
+                            $expertise->expertiseCategory()->associate($expertiseSubCategory);
+                        }
+                        $expert->expertise()->attach($expertise->id);
+                    }
+
+
+                    if (sizeof($expertData['skills']) > 0) {
+                        $skillIds = [];
+
+                        foreach ($expertData['skills'] as $skill) {
+                            $skillIds[] = intval($skill['id']);
+                        }
+
+                        $allSkills = array_merge($skillIds, $allSkills);
+
+                        if (!empty($expertData['other_expertise']['name'])) {
+                            $expertise->skills()->sync($skillIds);
+                        }
+                    }
+
+                }
+
+                $expert->skills()->sync($allSkills);
+
+                $expert->save();
             }
 
             if($user->registered == 0){

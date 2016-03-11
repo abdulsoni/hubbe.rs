@@ -25,9 +25,9 @@ return array(
         'name' => array(
             'title' => 'Name'
         ),
-        'description' => array(
-            'title' => 'Description'
-        ),
+        'visible' => array(
+            'title' => 'Published ?'
+        )
     ),
 
     /**
@@ -52,6 +52,10 @@ return array(
         ),
         'description' => array(
             'title' => 'Description'
+        ),
+        'visible' => array(
+            'type' => 'bool',
+            'title' => 'Published ?',
         )
     ),
 

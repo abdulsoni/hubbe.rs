@@ -25,6 +25,9 @@ return array(
         ),
         'role' => array(
             'title' => 'Role',
+        ),
+        'created_at' => array(
+            'title' => 'Registration Date',
         )
     ),
 
@@ -52,7 +55,7 @@ return array(
         ),
         'role' => array(
             'type' => 'enum',
-            'title' => 'Role',
+            'title' => 'Primary Role',
             'options' => array(
                 'creator' => 'Creator',
                 'expert' => 'Expert',
@@ -60,6 +63,11 @@ return array(
                 'investor' => 'Investor'
             ),
         ),
+        'roles' => array(
+            'type' => 'relationship',
+            'title' => 'All Roles',
+            'name_field' => 'display_name'
+        )
     ),
 
 );

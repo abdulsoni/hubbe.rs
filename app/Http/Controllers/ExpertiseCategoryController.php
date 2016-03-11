@@ -22,13 +22,13 @@ class ExpertiseCategoryController extends Controller
     {
         $statusCode = 200;
         $response = [];
-        $categories = ExpertiseCategory::all();
+        $categories = ExpertiseCategory::where('visible', true)->get();
 
         if(!is_null($parent)){
             if($parent == 0){
-                $categories = ExpertiseCategory::whereNull('parent_id')->get();
+                $categories = ExpertiseCategory::whereNull('parent_id')->where('visible', true)->get();
             }else{
-                $categories = ExpertiseCategory::where('parent_id', $parent)->get();
+                $categories = ExpertiseCategory::where('parent_id', $parent)->where('visible', true)->get();
             }
         }
 

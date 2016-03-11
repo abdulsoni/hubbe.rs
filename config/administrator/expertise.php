@@ -55,6 +55,9 @@ return array(
         'name' => array(
             'title' => 'Name'
         ),
+        'description' => array(
+            'title' => 'Description'
+        ),
         'skills' => array(
             'type' => 'relationship',
             'title' => 'Skills',

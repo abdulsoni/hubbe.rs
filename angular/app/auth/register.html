@@ -55,7 +55,7 @@
 
                 <div class="clearfix"></div>
                 <div class="marginT20" ng-if="data.selectedRole.length > 0">
-                    <button type="button" class="action next btn btn-info rgbBtn" ng-click="form.currentStep = 2">Save &amp; Next</button>
+                    <button type="button" class="action next btn btn-info rgbBtn" ng-click="changeFormStep(2)">Save &amp; Next</button>
                 </div>
             </div>
             <div class="step-registration" ng-if="form.currentStep === 2">
@@ -63,11 +63,17 @@
                     <h3 class="font-light">First step of all!</h3>
                     <h4 class="font-light">Let’s make sure we have all the information to communicate smoothly & understand each other better</h4>
                     <div class="step-2-left pull-left">
-                        <h3 class="font-light">My name is...</h3>
+                        <h3 class="font-light">My name is ...</h3>
                         <div class="myName-wrap">
-                            <input type="text" placeholder="First Name..." class="inputFieldGray" name="fname" required ng-model="data.fname">
-                            <input type="text" placeholder="Last Name..." class="inputFieldGray" name="lname" required ng-model="data.lname">
+                            <input type="text" placeholder="First Name" class="inputFieldGray" name="fname" required ng-model="data.fname">
+                            <input type="text" placeholder="Last Name" class="inputFieldGray" name="lname" required ng-model="data.lname">
                         </div>
+
+                        <h3 class="font-light">My position is ...</h3>
+                        <div class="myName-wrap">
+                            <input type="text" placeholder="" class="inputFieldGray" name="fname" required ng-model="data.position">
+                        </div>
+
                         <h3 class="font-light">I'm over 18 years old*</h3>
                         <div class="primaryinterestList radiobox radioboxGrayBase">
                             <label for="yes-overEighteen">
@@ -88,6 +94,12 @@
                             <label class="select-style">
                                 <select required ng-options="country as country for country in countries" ng-model="data.countryResidence"></select>
                             </label>
+                        </div>
+                        <div ng-if="data.countryResidence">
+                            <h3 class="font-light">City</h3>
+                            <div class="myName-wrap">
+                                <input type="text" placeholder="" class="inputFieldGray" name="city" required ng-model="data.city">
+                            </div>
                         </div>
                     </div>
                     <div class="step-2-right pull-right">
@@ -122,27 +134,12 @@
                             <div class="image-error">{{data.imageError}}</div>
                             <div class="image-success" ng-if="imageSuccess !== 'null'">{{data.imageSuccess}}</div>
                         </div>
-                        <!-- <div class="img-upload-style1">
-                            <h3 class="img-upload-title font-light">Upload Your Profile Picture</h3>
-                            <div class="img-upload-show" ng-class="{'dropable': dropable}">
-                                <div class="img-upload-crop imgcrop-area">
-                                    <img-crop image="thumbnail" result-image="data.croppedThumbnail" area-type="circle"></img-crop>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="img-upload-file">
-                                <input id="fileInput" type="file" accept="image/*" data-icon-name="fa fa-upload" class="iud-file-img" value="{{fileName}}">
-                            </div>
-                            <button class="btn btn-info" ng-click="confirmImage()" ng-if="thumbnail !== null">Set Profile Picture</button>
-                            <div class="image-error">{{data.imageError}}</div>
-                            <div class="image-success" ng-if="imageSuccess !== 'null'">{{data.imageSuccess}}</div>
-                        </div> -->
                     </div>
                 </form>
                 <div class="clearfix"></div>
-                <div class="marginT20" ng-if="data.selectedRole.length > 0">
-                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="form.currentStep = 1">Previous</button>
-                    <button type="button" class="action next btn btn-info rgbBtn" ng-disabled="step1Form.$invalid" ng-click="form.currentStep = 3">Save &amp; Next</button>
+                <div class="marginT30" ng-if="data.selectedRole.length > 0">
+                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="changeFormStep(1)">Previous</button>
+                    <button type="button" class="action next btn btn-info rgbBtn" ng-disabled="step1Form.$invalid" ng-click="changeFormStep(3)">Save &amp; Next</button>
                 </div>
             </div>
             <div class="step-registration" ng-if="form.currentStep === 3">
@@ -161,10 +158,10 @@
                 </form>
 
                 <div class="clearfix"></div>
-                <div class="marginT20">
-                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="form.currentStep = 2">Previous</button>
+                <div class="marginT30">
+                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="changeFormStep(2)">Previous</button>
                     <button type="button" class="action submit btn btn-success rgbBtn" ng-disabled="step2Form.$invalid"  ng-if="totalSteps[data.selectedRole] === 3" ng-click="submitDetails()">Submit</button>
-                    <button type="button" class="action next btn btn-info rgbBtn" ng-disabled="step2Form.$invalid"  ng-if="totalSteps[data.selectedRole] > 3" ng-click="form.currentStep = 4">Save &amp; Next</button>
+                    <button type="button" class="action next btn btn-info rgbBtn" ng-disabled="step2Form.$invalid"  ng-if="totalSteps[data.selectedRole] > 3" ng-click="changeFormStep(4)">Save &amp; Next</button>
                 </div>
             </div>
             <div class="step-registration" ng-if="form.currentStep === 4 && data.selectedRole === 'investor'">
@@ -248,8 +245,8 @@
                 </form>
 
                 <div class="clearfix"></div>
-                <div class="marginT20">
-                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="form.currentStep = 3">Previous</button>
+                <div class="marginT30">
+                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="changeFormStep(3)">Previous</button>
                     <button type="button" class="action submit btn btn-success rgbBtn" ng-disabled="step3Form.$invalid"  ng-if="data.selectedRole === 'investor'" ng-click="submitDetails()">Submit</button>
                 </div>
             </div>
@@ -263,13 +260,6 @@
                         <div class="expertise" ng-repeat="inputtedExpertise in inputtedExpertiseList track by $index" ng-disabled="inputtedExpertise === false">
                             {{inputtedExpertiseIndex=$index;''}}
                             <h3 class="font-light paddingB10">Expertise {{inputtedExpertiseIndex + 1}}</h3>
-
-                            <!-- <div class="expertise_inner">
-                                <div class="expertise_empty" ng-if="typeof(inputtedExpertise.id) !== 'undefined' || inputtedExpertise === false">
-                                    <span class="icon icon-plus"></span>
-                                    Add New
-                                </div>
-                            </div> -->
 
                             <div class="expertise-form">
                                 <div class="expertise-form_steps">
@@ -378,7 +368,8 @@
                                         </div>
                                     </div>
                                     <div class="expertise-form_step-pane" ng-if="inputtedExpertise.step === 4">
-                                        <div class="expertise-category-list" ng-if="inputtedExpertise.otherExpertiseCategory.status === 0 && inputtedExpertise.otherExpertiseSubCategory.status === 0 && inputtedExpertise.otherExpertise.status === 0">
+                                        <!-- <div class="expertise-category-list" ng-if="inputtedExpertise.otherExpertiseCategory.status === 0 && inputtedExpertise.otherExpertiseSubCategory.status === 0 && inputtedExpertise.otherExpertise.status === 0"> -->
+                                        <div class="expertise-category-list">
                                             <div class="expertise-category tag" ng-repeat="skill in inputtedExpertise.skillsList track by $index"
                                                 ng-class="{'active': inSkills(inputtedExpertiseIndex, skill)}"
                                                 ng-click="selectSkill(inputtedExpertiseIndex, skill)">
@@ -388,9 +379,9 @@
                                             </div>
                                         </div>
                                         <div class="expertise-actions">
-                                            <div class="expertise-actions_other-status" ng-if="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0 || inputtedExpertise.otherExpertise.status > 0">
+                                            <!-- <div class="expertise-actions_other-status" ng-if="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0 || inputtedExpertise.otherExpertise.status > 0">
                                                 You have entered a custom Expertise, please select the matching skills below.
-                                            </div>
+                                            </div> -->
                                             <div class="expertise-actions_other-field">
                                                 <select chosen multiple data-placeholder="Other Skills ..."
                                                     no-results-text="'Could not find any skills :('"
@@ -412,8 +403,8 @@
                 </form>
 
                 <div class="clearfix"></div>
-                <div class="marginT20">
-                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="form.currentStep = 3">Previous</button>
+                <div class="marginT30">
+                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="changeFormStep(3)">Previous</button>
                     <button type="button" class="action submit btn btn-success rgbBtn" ng-disabled="step3Form.$invalid" ng-click="submitDetails()">Submit</button>
                 </div>
             </div>

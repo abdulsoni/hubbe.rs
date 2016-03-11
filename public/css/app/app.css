@@ -6533,8 +6533,7 @@ ul.socialList > li.cdNavList {
     float: left;
     width: 66.66666%;
     padding: 15px;
-    max-height: 230px;
-    overflow: scroll; }
+    max-height: 230px; }
 
 .chosen-container.chosen-container-multi {
   width: 100% !important; }
@@ -6850,20 +6849,16 @@ main {
   transform: rotate(270deg); }
 
 .img-upload-style1 {
-  margin: -35px auto 0;
+  margin: 0 auto 0;
   width: 100%;
   text-align: center; }
   .img-upload-style1 .img-upload-title {
-    color: #555;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0.4px;
-    text-transform: uppercase;
-    margin-bottom: 25px; }
+    text-align: left;
+    font-weight: 100; }
   .img-upload-style1 .img-upload-drag {
     display: table-cell;
     vertical-align: middle;
-    color: #a8b5bb;
+    color: #999;
     text-transform: uppercase; }
     .img-upload-style1 .img-upload-drag .icon {
       margin: 0 auto;
@@ -6883,8 +6878,8 @@ main {
     display: table;
     width: 100%;
     height: 340px;
-    border: 2px dashed #b8c5cb;
-    background: #e7eaec;
+    border: 2px dashed #ccc;
+    background: #f5f5f5;
     border-radius: 3px;
     position: relative;
     transition: border-color 0.3s; }
@@ -6930,7 +6925,7 @@ main {
         left: 0;
         top: 0;
         border-radius: 3px;
-        background: #6399bb;
+        background: #95c54d;
         transition: all 0.3s; }
         .img-upload-style1 .img-upload-file .iud-file-mod .iud-file-label .icon {
           display: inline-block;
@@ -6938,7 +6933,7 @@ main {
           font-size: 30px;
           vertical-align: -8px; }
         .img-upload-style1 .img-upload-file .iud-file-mod .iud-file-label:hover {
-          background: #447a9d; }
+          background: #75a134; }
 
 .user-settings .bigtext {
   float: left; }

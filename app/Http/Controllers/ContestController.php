@@ -94,10 +94,6 @@ class ContestController extends Controller
                 if (!is_null($creator_obj)) {
                     $creator = $creator_obj->user;
 
-                    if(!is_null($creator) && !is_null($creator->thumbnail)){
-                        $creator['thumbnail'] = $creator->thumbnail->getUrl();
-                    }
-
                     $contest_data['contestants'][] = $creator;
                 }
             }

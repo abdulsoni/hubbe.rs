@@ -106,13 +106,19 @@ class User extends Model implements AuthenticatableContract,
 
             switch ($role->name) {
                 case 'creator':
-                    $roleId = $this->creator->id;
+                    if (!is_null($this->creator)) {
+                        $roleId = $this->creator->id;
+                    }
                     break;
                 case 'investor':
-                    $roleId = $this->investor->id;
+                    if (!is_null($this->investor)) {
+                        $roleId = $this->investor->id;
+                    }
                     break;
                 case 'expert':
-                    $roleId = $this->expert->id;
+                    if (!is_null($this->expert)) {
+                        $roleId = $this->expert->id;
+                    }
                     break;
                 default:
                     $roleId = null;

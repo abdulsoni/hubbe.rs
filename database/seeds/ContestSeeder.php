@@ -21,7 +21,8 @@ class ContestSeeder extends Seeder
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'start_time' => new DateTime(),
             'duration' => 60,
-            'rules' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+            'rules' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'visible' => 1
         ]);
 
         $contest2 = Contest::create([
@@ -29,7 +30,8 @@ class ContestSeeder extends Seeder
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'start_time' => new DateTime(),
             'duration' => 60,
-            'rules' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+            'rules' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'visible' => 1
         ]);
 
         $contest3 = Contest::create([
@@ -37,7 +39,8 @@ class ContestSeeder extends Seeder
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'start_time' => new DateTime(),
             'duration' => 60,
-            'rules' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+            'rules' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'visible' => 1
         ]);
 
         $contest4 = Contest::create([
@@ -45,7 +48,8 @@ class ContestSeeder extends Seeder
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             'start_time' => new DateTime(),
             'duration' => 60,
-            'rules' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+            'rules' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'visible' => 1
         ]);
 
         /*
