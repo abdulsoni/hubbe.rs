@@ -356,7 +356,7 @@
             };
 
             Entry.sendMessage({entryId: $scope.data.selectedEntry.id}, messageRequest, function(result){
-                $scope.data.selectedEntry.messages.push(result.message);
+                $scope.data.selectedEntry.messages.push(result);
                 $scope.data.messageToSend = '';
 
                 $timeout(function(){
