@@ -38,7 +38,7 @@ $api->version('v1', function ($api) {
     $api->post('authenticate/signup', 'Fundator\Http\Controllers\AuthenticateController@signup');
     $api->post('authenticate/confirm', 'Fundator\Http\Controllers\AuthenticateController@confirm');
 
-    $api->post('authenticate/reset', 'Fundator\Http\Controllers\PasswordController@appReset');
+    $api->post('authenticate/reset', 'Fundator\Http\Controllers\Auth\PasswordController@appReset');
     $api->post('authenticate/forgot', 'Fundator\Http\Controllers\Auth\PasswordController@appRecoverPasswordSend');
     $api->post('authenticate/recover', 'Fundator\Http\Controllers\Auth\PasswordController@appRecoverPasswordProcess');
 
