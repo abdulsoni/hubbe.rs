@@ -50,6 +50,19 @@
                                 </ul>
                             </div>
                         </div>
+
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="actions clearfix" ng-if="!data.showJudgeNdaPending && !data.showContestantNdaPending">
+                                    <div class="pull-right" ng-if="!data.showJudgeNdaSuccess"><a class="btn btn-info" ng-click="becomeContestant()">Participate</a></div>
+                                </div>
+                                <div class="action-pending" ng-if="data.showJudgeNdaPending || data.showContestantNdaPending">
+                                    <span class="icon icon-clock"></span> &nbsp; Your application for '{{data.showJudgeNdaPending ? 'Judge' : 'Contestant'}}' is being processed ...
+                                </div>
+                            </div>
+                        </div>
                     </uib-tab>
                     <uib-tab heading="Contestants">
                         <uib-tab-heading>
@@ -145,6 +158,44 @@
                 <span class="icon icon-cross close" ng-click="hideFullText()"></span>
                 <h3 class="marginT0 marginB15">Contest Description</h3>
                 <div ng-bind-html="contest.description | trustedHtml"></div>
+            </div>
+        </div>
+
+        <div class="col-sm-12" ng-if="data.showContestantNda">
+            <div class="contest-single_description-full">
+                <fd-loader class="center" ng-if="data.showContestantNdaLoading"></fd-loader>
+                <span class="icon icon-cross close" ng-click="data.showContestantNda = false"></span>
+
+                <div ng-if="!data.showContestantNdaLoading && !data.showContestantNdaSuccess">
+                    <h3 class="marginT0 marginB15">Non Disclosure Agreement</h3>
+                    <div>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit facilis aspernatur voluptas temporibus expedita eaque,
+                        veritatis voluptatibus animi blanditiis perspiciatis numquam at nesciunt harum, eveniet ad sunt, commodi vel odio.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit facilis aspernatur voluptas temporibus expedita eaque,
+                        veritatis voluptatibus animi blanditiis perspiciatis numquam at nesciunt harum, eveniet ad sunt, commodi vel odio.
+
+                        <br>
+                        <br>
+
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit facilis aspernatur voluptas temporibus expedita eaque,
+                        veritatis voluptatibus animi blanditiis perspiciatis numquam at nesciunt harum, eveniet ad sunt, commodi vel odio.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit facilis aspernatur voluptas temporibus expedita eaque,
+                        veritatis voluptatibus animi blanditiis perspiciatis numquam at nesciunt harum, eveniet ad sunt, commodi vel odio.
+                    </div>
+
+                    <div class="nda-actions text-center marginT30">
+                        <button class="btn btn-success" ng-click="acceptContestant()">Accept</button>
+                        &nbsp;
+                        &nbsp;
+                        <button class="btn btn-danger" ng-click="data.showContestantNda = false">Decline</button>
+                    </div>
+                </div>
+
+                <div class="text-center padding15" ng-if="data.showContestantNdaSuccess">
+                    <br><br>
+                    <h4>Your application has been submitted!</h4>
+                    <br><br>
+                </div>
             </div>
         </div>
     </div>
