@@ -18,8 +18,6 @@ class CreateJuryApplicationsTable extends Migration
             $table->integer('contest_id');
             $table->boolean('status')->default(false);
             $table->timestamps();
-
-            $table->primary(array('user_id', 'contest_id'));
         });
     }
 
