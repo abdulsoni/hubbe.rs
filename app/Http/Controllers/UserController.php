@@ -392,8 +392,8 @@ class UserController extends Controller
             }
 
             $response = [
-                'contestant' => sizeof($contestantData) > 0 ? $contestantData : null,
-                'jury' => sizeof($juryData) > 0 ? $juryData : null,
+                'contestant' => sizeof($contestantData['ongoing']) > 0 ? $contestantData : null,
+                'jury' => sizeof($juryData['ongoing']) > 0 ? $juryData : null,
                 'creator' => null,
                 'expert' => null,
                 'investor' => null
