@@ -3,6 +3,7 @@
 namespace Fundator\Http\Controllers;
 
 use Fenos\Notifynder\Models\Notification;
+use Fundator\Contest;
 use Fundator\Creator;
 use Fundator\Events\Register;
 use Fundator\Investor;
@@ -10,6 +11,9 @@ use Fundator\Expert;
 use Fundator\ExpertiseCategory;
 use Fundator\Expertise;
 use Fundator\Role;
+use Fundator\Skill;
+use Fundator\JuryApplication;
+use Fundator\ContestantApplication;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -70,8 +74,12 @@ class UserController extends Controller
                 $response['thumbnail'] = $user->thumbnail_url;
             }
 
-            $response['judging'] = $user->judging;
+            $response['judging'] = $user->juryApplications;
+            $response['contesting'] = $user->contestantApplications;
+
             $response['user_roles'] = $user->user_roles;
+
+            $response['skills'] = Skill::where('id', '>', 1)->where('id', '<', 7)->get();
 
         } catch (TokenExpiredException $e) {
             $statusCode = $e->getStatusCode();
@@ -284,4 +292,67 @@ class UserController extends Controller
 
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
+
+    /**
+     * Convert a user to a judge
+     */
+    public function becomeJudge(Request $request)
+    {
+        $statusCode = 200;
+
+        try{
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+
+            $contest = Contest::find($request->contest_id);
+
+            $application = JuryApplication::create([
+                'status' => 0
+            ]);
+
+            $application->user()->associate($user);
+            $application->contest()->associate($contest);
+            $application->save();
+
+            $response = $application;
+        }catch (Exception $e){
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * Convert a user to a creator
+     */
+    public function becomeContestant(Request $request)
+    {
+        $statusCode = 200;
+
+        try{
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+
+            $contest = Contest::find($request->contest_id);
+
+            $application = ContestantApplication::create([
+                'status' => 0
+            ]);
+
+            $application->user()->associate($user);
+            $application->contest()->associate($contest);
+            $application->save();
+
+            $response = $application;
+        }catch (Exception $e){
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    }
+
 }

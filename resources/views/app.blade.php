@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{!! config('app.site_name') !!}</title>
+    <!-- <title>{!! config('app.site_name') !!}</title> -->
+    <title>Fundator | Community of creators</title>
 
     <link rel="stylesheet" href="{!! asset('css/app/chosen.min.css') !!}">
     <link rel="stylesheet" href="{!! asset('css/app/app.css') !!}">
@@ -16,12 +17,13 @@
     <meta name="robots" content="none">
 </head>
 
-<body ng-class="{'navigation-is-open': isNavShown}" flow-prevent-drop>
+<body ng-class="{'navigation-is-open': isNavShown === 1, 'navigation-half-open': isNavShown === 0.5}" flow-prevent-drop>
     <header ui-view="header"></header>
     <div class="navigation" ui-view="navigation"></div>
-    <main>
-        <section class="body-content">
 
+    <main>
+
+        <section class="body-content">
             <div class="container marginB60 ng-hide" ng-show="authenticated && user.registered === 1" ng-if="authenticated && user.registered === 1">
                 <div class="row">
                     <div class="col-sm-12">
@@ -30,7 +32,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-7 col-sm-12">
-                        <div class="contest-list" ui-view="notifications"></div>
+                        <div class="contest-list-wrap" ui-view="notifications"></div>
                     </div>
                     <div class="col-md-5 col-sm-12">
                         <div class="advertisingArea" ui-view="quickUpdate"></div>
@@ -46,9 +48,9 @@
                 </div>
             </div>
         </section>
-    </main>
 
-    <footer ui-view="footer"></footer>
+        <footer ui-view="footer"></footer>
+    </main>
 
     <script src="{!! asset('js/app/jquery.min.js') !!}"></script>
     <script src="{!! asset('js/app/chosen.jquery.min.js') !!}"></script>

@@ -17,10 +17,14 @@ use Cmgmyr\Messenger\Models\Thread;
 
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
+use Trexology\Pointable\Contracts\Pointable;
+use Trexology\Pointable\Traits\Pointable as PointableTrait;
+
 class User extends Model implements AuthenticatableContract,
-                                    CanResetPasswordContract
+                                    CanResetPasswordContract,
+                                    Pointable
 {
-    use Authenticatable, CanResetPassword, EntrustUserTrait, Messagable, Notifable;
+    use Authenticatable, CanResetPassword, EntrustUserTrait, Messagable, Notifable, PointableTrait;
 
     /**
      * The database table used by the model.
@@ -87,15 +91,28 @@ class User extends Model implements AuthenticatableContract,
     }
 
     /**
+     * Relationship between users and judges
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function juryApplications()
+    {
+        return $this->hasMany('Fundator\JuryApplication');
+    }
+
+    /**
      * Relationship between users and creators
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function judging()
+    public function contestantApplications()
     {
-        return $this->belongsToMany('Fundator\Contest', 'contest_jury', 'judge_id');
+        return $this->hasMany('Fundator\ContestantApplication');
     }
 
+    /**
+     * Jury Application
+     */
     public function getUserRolesAttribute()
     {
         $roles = $this->roles;
@@ -128,7 +145,7 @@ class User extends Model implements AuthenticatableContract,
             $userRoles[] = ['role' => $role->name, 'name' => $role->display_name, 'id' => $roleId];
         }
 
-        if($this->judging){
+        if($this->juryApplications->count() > 0){
             $userRoles[] = [
                 'role' => 'jury',
                 'name' => 'Jury',

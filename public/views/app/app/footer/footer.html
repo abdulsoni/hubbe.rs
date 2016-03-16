@@ -9,13 +9,14 @@
             <div class="col-lg-2 col-sm-4 col-xs-6 fcoll">
                 <h4>Creators</h4>
                 <ul class="vertical-nav">
-                    <li><a href="#">Become a Creators</a></li>
-                    <li><a href="#">Who are the Creators</a></li>
-                    <li><a href="#">Creators in 6 Step</a></li>
-                    <li><a href="#">FAQ on Creators</a></li>
+                    <li><a href="/#/create/">Become a Creators</a></li>
+                    <li><a href="/#/create/">Who are the Creators</a></li>
+                    <li><a href="/#/create/">Creators in 6 Step</a></li>
+                    <li><a href="/#/create/">FAQ on Creators</a></li>
                 </ul>
                 <ul class="socialList padding0 navbar-nav marginTB15">
                     <li><a href="#"><span class="icon icon-facebook"></span></a></li>
+                    <li><a href="#"><span class="icon icon-linkedin2"></span></a></li>
                     <li><a href="#"><span class="icon icon-twitter"></span></a></li>
                 </ul>
                 <div><img src="images/barcode.jpg" alt=""></div>
@@ -23,13 +24,14 @@
             <div class="col-lg-2 col-sm-4 col-xs-6 fcoll fcol2">
                 <h4>Experts</h4>
                 <ul class="vertical-nav ">
-                    <li><a href="#">Become an Experts</a></li>
-                    <li><a href="#">Become for Experts</a></li>
-                    <li><a href="#">Tutorial on Experts</a></li>
-                    <li><a href="#">FAQ on Experts</a></li>
+                    <li><a href="/#/expert/">Become an Experts</a></li>
+                    <li><a href="/#/expert/">Become for Experts</a></li>
+                    <li><a href="/#/expert/">Tutorial on Experts</a></li>
+                    <li><a href="/#/expert/">FAQ on Experts</a></li>
                 </ul>
                 <ul class="socialList padding0 navbar-nav marginTB15">
                     <li><a href="#"><span class="icon icon-facebook"></span></a></li>
+                    <li><a href="#"><span class="icon icon-linkedin2"></span></a></li>
                     <li><a href="#"><span class="icon icon-twitter"></span></a></li>
                 </ul>
                 <div><img src="images/barcode.jpg" alt=""></div>
@@ -37,13 +39,14 @@
             <div class="col-lg-2 col-sm-4 col-xs-6 fcoll fcol2">
                 <h4>Investors</h4>
                 <ul class="vertical-nav">
-                    <li><a href="#">Investors in 3 words</a></li>
-                    <li><a href="#">Become an Investor</a></li>
-                    <li><a href="#">Tutorial on Investor</a></li>
-                    <li><a href="#">FAQ on Investor</a></li>
+                    <li><a href="/#/invest/">Investors in 3 words</a></li>
+                    <li><a href="/#/invest/">Become an Investor</a></li>
+                    <li><a href="/#/invest/">Tutorial on Investor</a></li>
+                    <li><a href="/#/invest/">FAQ on Investor</a></li>
                 </ul>
                 <ul class="socialList padding0 navbar-nav marginTB15">
                     <li><a href="#"><span class="icon icon-facebook"></span></a></li>
+                    <li><a href="#"><span class="icon icon-linkedin2"></span></a></li>
                     <li><a href="#"><span class="icon icon-twitter"></span></a></li>
                 </ul>
                 <div><img src="images/barcode.jpg" alt=""></div>
@@ -52,15 +55,15 @@
                 <h4>Ongoing Contest</h4>
                 <div>
                     <ul class="itemWithHover">
-                        <li>
+                        <li ng-repeat="contest in ongoingContests">
                             <div class="thumbnail">
                                 <div class="caption">
-                                    <h4>Project Titile</h4>
-                                    <p><a href="#">View</a></p>
+                                    <h4>{{contest.name}}</h4>
+                                    <p><a ui-sref="app.contestsingle({contestId: contest.id})">View</a></p>
                                 </div>
-                                <img src="images/project1.jpg" alt=""> </div>
+                                <img ng-src="{{contest.thumbnail}}" alt=""> </div>
                         </li>
-                        <li>
+                        <!-- <li>
                             <div class="thumbnail">
                                 <div class="caption">
                                     <h4>Project Titile</h4>
@@ -83,7 +86,7 @@
                                     <p><a href="#">View</a></p>
                                 </div>
                                 <img src="images/project4.jpg" alt=""> </div>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>

@@ -186,7 +186,12 @@ return [
         /*
          * Messenger
          */
-        Cmgmyr\Messenger\MessengerServiceProvider::class
+        Cmgmyr\Messenger\MessengerServiceProvider::class,
+
+        /*
+         * Points System
+         */
+        Trexology\Pointable\PointableServiceProvider::class,
 
     ],
 

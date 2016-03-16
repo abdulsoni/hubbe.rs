@@ -38,7 +38,7 @@ class ContestController extends Controller
             $response[] = $contest_data;
         }
 
-        return new Response($response, $statusCode);
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -122,7 +122,7 @@ class ContestController extends Controller
 
         $response = $contest_data;
 
-        return new Response($response, $statusCode);
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
     /**

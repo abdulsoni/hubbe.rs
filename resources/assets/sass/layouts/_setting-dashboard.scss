@@ -17,6 +17,7 @@ main {
   transition-timing-function: cubic-bezier(0.91, 0.01, 0.6, 0.99);
 }
 .navigation-is-open main{@include transform(translateX(-100%));}
+.navigation-half-open main{@include transform(translateX(-320px));}
 
 .cd-nav-trigger, .mobile-nav-trigger {
   /*position: fixed;*/
@@ -128,7 +129,8 @@ main {
 
 .cd-nav .cd-navigation-wrapper {-webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  @include transform(translateX(100%));
+  // @include transform(translateX(100%));
+  @include transform(translateX(0%));
   @include transition(transform 0.7s);
   -webkit-transition-timing-function: cubic-bezier(0.86, 0.01, 0.77, 0.78);
   -moz-transition-timing-function: cubic-bezier(0.86, 0.01, 0.77, 0.78);
@@ -138,7 +140,7 @@ main {
   visibility: visible; z-index: 2;
   @include transition(visibility 0s 0s);
 }
-.navigation-is-open .cd-nav .cd-navigation-wrapper {@include transform(translateX(0%));
+.navigation-is-open .cd-nav .cd-navigation-wrapper{@include transform(translateX(0%));
   @include transition(transform 0.7s);
   -webkit-transition-timing-function: cubic-bezier(0.82, 0.01, 0.77, 0.78);
   -moz-transition-timing-function: cubic-bezier(0.82, 0.01, 0.77, 0.78);

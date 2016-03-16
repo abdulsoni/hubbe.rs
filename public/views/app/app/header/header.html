@@ -1,42 +1,47 @@
-<div class="container">
-    <div class="row">
-        <div class="col-lg-4 col-md-12">
-            <a href="/#/contest" class="logo"><img src="images/header.png" alt=""></a>
-        </div>
-        <div class="col-lg-8 col-md-12">
-            <div class="header_right">
-                <nav>
-                    <ul class="nav navbar-nav top-nav">
-                        <li><a>Home</a></li>
-                        <li><a>Create</a></li>
-                        <li><a>Expert</a></li>
-                        <li><a>Invest</a></li>
-                        <li><a ui-sref="app.contest" ng-class="{'activenav': $state.current.name.indexOf('contest') !== -1}">Contest</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav top-nav pull-right" ng-if="!authenticated">
-                        <li><a ui-sref="app.auth.login" ng-class="{'activenav': $state.current.name.indexOf('login') !== -1}">Login</a></li>
-                        <li><a ui-sref="app.auth.signup" ng-class="{'activenav': $state.current.name.indexOf('signup') !== -1}">Register</a></li>
-                    </ul>
-                </nav>
-                <ul class="account-list navbar-nav" ng-if="authenticated && user">
-                    <li>
-                        <a class="profile">
-                            <div class="profile-image">
-                                <img src="images/icon-user-default.png" alt="" ng-if="!user.thumbnail">
-                                <img ng-src="{{user.thumbnail}}" alt="" ng-if="user.thumbnail">
-                            </div>
-                            <div class="profile-info">
-                                <span class="profile-name">{{user.name}} {{user.last_name}}</span>
-                                <span class="profile-role" ng-if="$stateParams.role !== 'user' && user.user_roles.length === 1">{{activeRole}}</span>
-                                <span class="profile-role pointer" uib-popover-template="'userRole.html'" popover-title="Use fundator as ..." popover-placement="bottom" ng-if="user.user_roles.length > 1">{{activeRole}}</span>
-                            </div>
-                            <script type="text/ng-template" id="userRole.html"><div><ul class="list-unstyled"><li ng-repeat="role in user.user_roles" ng-class="{active: role.role === activeRole}"><a class="cursor" ng-click="switchUserRole(role.role, role.id, true)">{{role.name}}</a></li></ul></div>
-                            </script>
-                        </a>
-                    </li>
-                    <li class="cdNavList"><a class="cd-nav-trigger pointer" ng-click="toggleNavigation()">Menu <span class="cd-nav-icon"></span> </a></li>
-                </ul>
-            </div>
-        </div>
+<div class="col-lg-5 col-md-12">
+    <a href="/#/contest" class="logo"><img src="images/header.png" alt=""></a>
+</div>
+<div class="col-lg-7 col-md-12">
+    <div class="header_right">
+        <nav>
+            <ul class="nav navbar-nav top-nav">
+                <li><a>Home</a></li>
+                <li><a>Create</a></li>
+                <li><a>Expert</a></li>
+                <li><a>Invest</a></li>
+                <li><a ui-sref="app.contest" ng-class="{'activenav': $state.current.name.indexOf('contest') !== -1}">Contest</a></li>
+            </ul>
+            <ul class="nav navbar-nav top-nav pull-right" ng-if="!authenticated">
+                <li><a ui-sref="app.auth.login" ng-class="{'activenav': $state.current.name.indexOf('login') !== -1}">Login</a></li>
+                <li><a ui-sref="app.auth.signup" ng-class="{'activenav': $state.current.name.indexOf('signup') !== -1}">Register</a></li>
+            </ul>
+        </nav>
+        <ul class="account-list navbar-nav" ng-if="authenticated && user">
+            <li>
+                <a class="profile">
+                    <div class="profile-image">
+                        <img src="images/icon-user-default.png" alt="" ng-if="!user.thumbnail">
+                        <img ng-src="{{user.thumbnail}}" alt="" ng-if="user.thumbnail">
+                    </div>
+                    <div class="profile-info">
+                        <span class="profile-name">{{user.name}} {{user.last_name}}</span>
+                        <span class="profile-role" ng-if="$stateParams.role !== 'user' && user.user_roles.length === 1">{{activeRole}}</span>
+                        <span class="profile-role pointer" uib-popover-template="'userRole.html'" popover-title="Use fundator as ..." popover-placement="bottom" ng-if="user.user_roles.length > 1">{{activeRole}}</span>
+                    </div>
+                    <script type="text/ng-template" id="userRole.html"><div><ul class="list-unstyled"><li ng-repeat="role in user.user_roles" ng-class="{active: role.role === activeRole}"><a class="cursor" ng-click="switchUserRole(role.role, role.id, true)">{{role.name}}</a></li></ul></div>
+                    </script>
+
+<!--                     <div class="profile-finance">
+                        <span class="profile-finance_balance">
+                            <span class="currency">USD</span> 500
+                        </span>
+                        <span class="profile-finance_shares">
+                             10,000 <a href="#">Shares</a>
+                        </span>
+                    </div> -->
+                </a>
+            </li>
+            <li class="cdNavList"><a class="cd-nav-trigger pointer" ng-click="toggleNavigation()">Menu <span class="cd-nav-icon"></span> </a></li>
+        </ul>
     </div>
 </div>

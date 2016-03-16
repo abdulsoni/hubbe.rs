@@ -29,7 +29,7 @@ class EntryRatingController extends Controller
         $judge = User::find($request->judge_id);
         $entry = Entry::find($request->entry_id);
 
-        $entryRating = new EntryRating([
+        $entryRating = EntryRating::create([
             'design' => $request->design,
             'creativity' => $request->creativity,
             'industrial' => $request->industrial,

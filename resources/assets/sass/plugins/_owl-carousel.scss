@@ -1,4 +1,4 @@
-/* 
+/*
  * 	Core Owl Carousel CSS File
  *	v1.3.3
  */
@@ -51,13 +51,15 @@
 .owl-demo.investFundatorSlid .owl-item {margin:0 5px;}
 .owl-demo.investFundatorSlid .owl-item > div{height:345px; color:#6d6e70;}
 .investFundatorSlid .circle-content .img img{padding:1px;}
-.investFundatorSlid.owl-theme .owl-controls .owl-buttons .owl-prev, .investFundatorSlid.owl-theme .owl-controls .owl-buttons .owl-next{width:25px; background-size: 11px;}
+.investFundatorSlid.owl-theme .owl-controls .owl-buttons .owl-prev, .investFundatorSlid.owl-theme .owl-controls .owl-buttons .owl-next{width:65px; background-size: 11px;opacity: 0 !important;}
+.investFundatorSlid.owl-theme .owl-controls .owl-buttons .owl-prev{left: -78px;}
+.investFundatorSlid.owl-theme .owl-controls .owl-buttons .owl-next{right: -78px;}
 .investFundatorSlid.owl-carousel{padding-left: 25px; padding-right: 25px;}
-	
+
 .ongoingproject-slide.owl-carousel{padding: 0 25px 0;}
 .ongoingproject-slide.owl-carousel .owl-item{min-width:138px;}
 .ongoingproject-slide.owl-carousel .owl-item > div{height:100px; margin-left: 4px; margin-right:4px;}
 .ongoingproject-slide.owl-carousel .owl-controls .owl-buttons .owl-prev, .ongoingproject-slide.owl-carousel .owl-controls .owl-buttons .owl-next{background-color: inherit; background-position: 0 center; width: 25px;}
 .ongoingproject-slide.owl-carousel .owl-controls .owl-buttons .owl-prev{background-image: url(#{$imagesPath}/prev.png);}
-.ongoingproject-slide.owl-carousel .owl-controls .owl-buttons .owl-next{background-image: url(#{$imagesPath}/next.png); background-position: right center;} 
+.ongoingproject-slide.owl-carousel .owl-controls .owl-buttons .owl-next{background-image: url(#{$imagesPath}/next.png); background-position: right center;}
 .ongoingproject-slide.owl-carousel .owl-controls{margin-top: 0;}

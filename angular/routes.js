@@ -30,7 +30,8 @@
                         controller: 'FlashNoticeCtrl'
                     },
                     footer: {
-                        templateUrl: getView('footer')
+                        templateUrl: getView('footer'),
+                        controller: 'FooterController'
                     },
                     notifications: {
                         templateUrl: getView('notifications', 'notifications'),

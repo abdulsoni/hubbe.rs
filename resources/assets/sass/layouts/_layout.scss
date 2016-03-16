@@ -226,7 +226,7 @@
 ul.prizebox {
     position: relative;
     padding-left: 50px;
-    margin-top: 12px;
+    margin: 0;
 }
 ul.prizebox:before {
     content: "Prize";
@@ -1198,70 +1198,71 @@ ul.list-inline-group {
     min-height: 500px;
     margin-right: auto;
     margin-left: auto;
-}
-.panel-group {
-    width: 500px;
-    z-index: 100;
-    -webkit-backface-visibility: hidden;
-    @include transform(translateX(-100%) rotate(-90deg));
-    @include transform-origin(right top);
-}
-.panel-default > .panel-heading {
-    color: $white-color;
-    background-color: $secondary-color;
-    @include rounded-corners(0px);
-    @include transition(all .5s ease-out);
-    &:hover,
-    &:focus {
-        background-color: #89b942;
+
+    .panel-group {
+        width: 500px;
+        z-index: 100;
+        -webkit-backface-visibility: hidden;
+        @include transform(translateX(-100%) rotate(-90deg));
+        @include transform-origin(right top);
     }
-}
-.panel-heading {
-    width: 500px;
-    padding: 19px 20px;
-}
-.panel-title {
-    height: auto;
-}
-.panel-title a {
-    text-align: center;
-    text-decoration: none;
-    padding: 0;
-    display: block;
-    margin: 0;
-    font-size: 30px;
-}
-.panel-body {
-    border-top: none !important;
-    height: 855px;
-}
-.panel-group .panel {
-    @include rounded-corners(0px);
-    background: #e8e8e8;
-    border: 0;
-}
-.panel-group .panel + .panel {
-    margin-top: 0;
-}
-.panel-group .panel img {
-    margin-left: 400px;
-    margin-top: 800px;
-    position: absolute;
-}
-.panel_body {
-    @include transform(translateX(-100%) rotate(90deg));
-    width: 820px;
-    padding: 2px 0px 2px 30px;
-    height: 478px;
-    @include transform-origin(80% 134%);
-    font-size: 16px;
-    font-weight: 300;
-    .btn-info {
-        font-weight: normal
+    .panel-default > .panel-heading {
+        color: $white-color;
+        background-color: $secondary-color;
+        @include rounded-corners(0px);
+        @include transition(all .5s ease-out);
+        &:hover,
+        &:focus {
+            background-color: #89b942;
+        }
     }
-    .btn.btn-info {
-        background: $tertiary-color;
-        font-weight: normal;
+    .panel-heading {
+        width: 500px;
+        padding: 19px 20px;
+    }
+    .panel-title {
+        height: auto;
+    }
+    .panel-title a {
+        text-align: center;
+        text-decoration: none;
+        padding: 0;
+        display: block;
+        margin: 0;
+        font-size: 30px;
+    }
+    .panel-body {
+        border-top: none !important;
+        height: 855px;
+    }
+    .panel-group .panel {
+        @include rounded-corners(0px);
+        background: #e8e8e8;
+        border: 0;
+    }
+    .panel-group .panel + .panel {
+        margin-top: 0;
+    }
+    .panel-group .panel img {
+        margin-left: 400px;
+        margin-top: 800px;
+        position: absolute;
+    }
+    .panel_body {
+        @include transform(translateX(-100%) rotate(90deg));
+        width: 820px;
+        padding: 2px 0px 2px 30px;
+        height: 478px;
+        @include transform-origin(80% 134%);
+        font-size: 16px;
+        font-weight: 300;
+        .btn-info {
+            font-weight: normal
+        }
+        .btn.btn-info {
+            background: $tertiary-color;
+            font-weight: normal;
+        }
     }
 }
 .project-form {
@@ -1472,6 +1473,7 @@ ul.list-unstyled.radioboxWhiteBase li {
 .navFixContent {
     overflow-y: auto;
     padding-bottom: 10px;
+    padding-right: 300px;
     .container {
         padding-bottom: 30px;
     }
@@ -1498,7 +1500,7 @@ ul.list-unstyled.radioboxWhiteBase li {
     margin-bottom: 50px;
     li {
         // padding-right: 105px;
-        width: 25%;
+        width: 35%;
         text-align: center;
         a {
             border: 2px solid rgba(41, 170, 226, 0);
@@ -1838,4 +1840,33 @@ label.select-style {
 
 .main-content {
     min-height: 520px;
+}
+
+// Invest
+
+.investors-carousel{
+    // padding-left: 80px !important;
+    // padding-right: 80px !important;
+    // overflow: hidden;
+
+    .owl-wrapper-outer{
+        overflow: visible !important;
+    }
+
+    .investors-carousel_item{
+        padding: 0 20px !important;
+        opacity: 0.85;
+
+        .investor-thumbnail_img{
+            width: 150px;
+            margin-right: 25px;
+            margin-bottom: 15px;
+            float: left;
+        }
+    }
+}
+.investors-carousel-wrap{
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+    overflow: hidden;
 }

@@ -80,49 +80,50 @@ return array(
         'visible' => array(
             'type' => 'bool',
             'title' => 'Visible ?',
-        ),
-        'jury' => array(
-            'type' => 'relationship',
-            'title' => 'Jury',
-            'name_field' => 'name'
         )
+        // ,
+        // 'jury' => array(
+        //     'type' => 'relationship',
+        //     'title' => 'Jury',
+        //     'name_field' => 'name'
+        // )
     ),
 
     /**
      * Notify Judges
      */
-    'actions' => array(
+    // 'actions' => array(
 
-        // Send Notifications to judges
-        'notify_judges' => array(
-            'title' => 'Notify Judges',
-            'messages' => array(
-                'active' => 'Notifying ...',
-                'success' => 'All Judges were notified',
-                'error' => 'There was an error while notifying the judges',
-            ),
-            'permission' => function($model)
-            {
-                return $model->jury->count() >= 1;
-            },
-            'action' => function($model)
-            {
-                // Notify the judges
+    //     // Send Notifications to judges
+    //     'notify_judges' => array(
+    //         'title' => 'Notify Judges',
+    //         'messages' => array(
+    //             'active' => 'Notifying ...',
+    //             'success' => 'All Judges were notified',
+    //             'error' => 'There was an error while notifying the judges',
+    //         ),
+    //         'permission' => function($model)
+    //         {
+    //             return $model->jury->count() >= 1;
+    //         },
+    //         'action' => function($model)
+    //         {
+    //             // Notify the judges
 
 
-                try{
-                    foreach($model->jury as $judge){
-                        Event::fire(new AssignJury($model, $judge));
-                    }
+    //             try{
+    //                 foreach($model->jury as $judge){
+    //                     Event::fire(new AssignJury($model, $judge));
+    //                 }
 
-                    return true;
-                }catch (Exception $e){
-                    Log::error($e);
-                }
+    //                 return true;
+    //             }catch (Exception $e){
+    //                 Log::error($e);
+    //             }
 
-                return false;
-            }
-        )
+    //             return false;
+    //         }
+    //     )
 
-    ),
+    // ),
 );

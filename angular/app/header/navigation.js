@@ -21,7 +21,11 @@
         return new Blob([ia], {type:mimeString});
     }
 
-    angular.module('fundator.controllers').controller('NavigationCtrl', function($rootScope, $scope, $state, $auth, $log, $timeout, $http, $uibModal, FileUploader) {
+    angular.module('fundator.controllers').controller('NavigationCtrl', function($rootScope, $scope, $state, $auth, $log, $timeout, $http, $resource, $uibModal, FileUploader) {
+
+        $scope.allSkills = $resource('api/skills').query();
+
+        console.log($rootScope.user);
 
         $scope.uploader = new FileUploader({
             url: '/api/files',

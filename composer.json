@@ -13,7 +13,8 @@
         "frozennode/administrator": " 5.*",
         "guzzlehttp/guzzle": "~6.1.1",
         "fenos/notifynder": "3.*",
-        "cmgmyr/messenger": "~2.0"
+        "cmgmyr/messenger": "~2.0",
+        "trexology/pointable": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

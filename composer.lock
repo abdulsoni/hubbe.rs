@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c79b2420c423961ab5d6bc03f882e199",
-    "content-hash": "7c4bf67b5e18e0056d8f918881465472",
+    "hash": "ae4484761688d6f4babd801888f1535a",
+    "content-hash": "06bb8c94d373289df2683ed444b63b3d",
     "packages": [
         {
             "name": "ckeditor/ckeditor",
@@ -222,7 +222,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dingo/api/zipball/b36db17c7294e44e6ce7039952ca8f8d57caab37",
+                "url": "https://api.github.com/repos/dingo/api/zipball/b9ff594eedea42d5cd78f09b20cbb66dd46b1204",
                 "reference": "b36db17c7294e44e6ce7039952ca8f8d57caab37",
                 "shasum": ""
             },
@@ -2758,6 +2758,50 @@
             "time": "2016-01-07 11:12:32"
         },
         {
+            "name": "trexology/pointable",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Trexology/laravel-pointable.git",
+                "reference": "59db5080c91db8a52881edaa22d57cdf24d075b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Trexology/laravel-pointable/zipball/59db5080c91db8a52881edaa22d57cdf24d075b0",
+                "reference": "59db5080c91db8a52881edaa22d57cdf24d075b0",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0",
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Trexology\\Pointable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Trex Lim",
+                    "email": "trexlim@gmail.com"
+                }
+            ],
+            "description": "Point system for Laravel 5",
+            "keywords": [
+                "laravel",
+                "loyalty",
+                "pointable",
+                "points",
+                "reward"
+            ],
+            "time": "2016-02-04 05:26:34"
+        },
+        {
             "name": "tymon/jwt-auth",
             "version": "0.5.6",
             "source": {
@@ -2876,7 +2920,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Zizaco/entrust/zipball/be28aa634c44551ae5187894c903094a8ce8baee",
+                "url": "https://api.github.com/repos/Zizaco/entrust/zipball/3936ecf81efe2e124998b657a7adf03106e279e6",
                 "reference": "be28aa634c44551ae5187894c903094a8ce8baee",
                 "shasum": ""
             },

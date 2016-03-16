@@ -1,12 +1,33 @@
 <div class="row marginT20">
     <div class="col-md-7 col-sm-12">
-        <div class="well padding0 marginB30">
+        <div class="well padding0 marginB30 investors-carousel-wrap">
             <div style="padding:20px 40px;">
-                <h4><span class="bigtext">Investor in Fundator</span></h4>
+                <h4><span class="bigtext">Fundator's Investors</span></h4>
             </div>
-            <div class="owl-demo investFundatorSlid" owl-carousel="investors" owl-options='{"pagination": false, "dots": false, "navigation":true, "items":3, "navigationText": [ "<i class=\"icon-chevron-left icon-white\"></i>", "<i class=\"icon-chevron-right icon-white\"></i>" ]}'>
-                <div class="circle-item item">
-                    <div class="circle-content circleEffect">
+            <div class="owl-demo investFundatorSlid investors-carousel" owl-carousel="investors" owl-options='{"pagination": false, "dots": false, "navigation":true, "singleItem": true, "navigationText": [ "<i class=\"icon-chevron-left icon-white\"></i>", "<i class=\"icon-chevron-right icon-white\"></i>" ]}'>
+                <div class="item investors-carousel_item investor">
+                    <div class="investor-thumbnail clearfix">
+                        <div class="investor-thumbnail_img">
+                            <img ng-src="images/investors/{{item.image}}" alt="img">
+                        </div>
+                        <div class="investor-thumbnail_name">
+                            <h3 class="investor-thumbnail_name-highlight" ng-bind-html="item.name | trustedHtml"></h3>
+                            <div class="investor-location marginB20">
+                                <span class="icon icon-location"></span>
+                                &nbsp;{{item.country}}
+                            </div>
+                            <div class="investor-thumbnail_bio">
+                                {{item.bio}}
+                            </div>
+                        </div>
+                        <hr>
+                        <ul class="socialList padding0 navbar-nav">
+                            <li><a><span class="icon icon-facebook"></span></a></li>
+                            <li><a><span class="icon icon-twitter"></span></a></li>
+                            <li><a><span class="icon icon-linkedin2"></span></a></li>
+                        </ul>
+                    </div>
+                    <!-- <div class="circle-content circleEffect">
                         <a class="circle-link">
                             <div class="img"><img ng-src="images/investors/{{item.image}}" alt="img"></div>
                             <div class="info">
@@ -22,7 +43,7 @@
                             <li><a><span class="icon icon-twitter"></span></a></li>
                             <li><a><span class="icon icon-linkedin2"></span></a></li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
                 <!--<div class="circle-item">-->
                     <!--<div class="circle-content circleEffect">-->

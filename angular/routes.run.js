@@ -16,7 +16,7 @@
         $rootScope.isNavShown = false;
 
         $rootScope.toggleNavigation = function () {
-            $rootScope.isNavShown ? $rootScope.isNavShown = false : $rootScope.isNavShown = true;
+            ($rootScope.isNavShown >= 0.5) ? $rootScope.isNavShown = 0 : $rootScope.isNavShown = 0.5;
         };
 
         $rootScope.$on('startLoading', function(){
@@ -227,6 +227,20 @@
             }
 
         };
+
+        // Has User Role
+
+        $rootScope.hasUserRole = function(role) {
+            if (typeof($rootScope.user) !== 'undefined') {
+                var hasRoles = $filter('filter')($rootScope.user.user_roles, {role: role}, true);
+
+                if (hasRoles.length > 0) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
     });
 

@@ -3,8 +3,9 @@ body{color:$primaryText-color; font-family: 'Nunito', sans-serif;}
 header{position: relative; z-index: 3; position:fixed; width: 100%;
   background: $primary-color;
   color:$white-color;
-  padding-top: 10px;
+  padding: 10px 25px 0;
   min-height: 60px;
+  top: 0;
   .logo{padding: 5px 0px;; display: inline-block;}
   .logo img{height: 28px;}
 }

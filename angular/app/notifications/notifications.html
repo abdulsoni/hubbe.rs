@@ -1,23 +1,27 @@
-<div class="notifications">
-    <p class="no-have" ng-if="notifications.length === 0">You have no notifications!</p>
-    <div class="row contestR2 notification" ng-repeat="notification in notifications | limitTo:3">
-        <div class="col-xs-2 notification_thumb" ng-if="notification.extras.icon !== 'thumb'">
-            <span class="notification_icon icon icon-{{notification.extras.icon}}"></span>
-        </div>
-        <div class="col-xs-2 notification_thumb" ng-if="notification.extras.icon === 'thumb'">
-            <img src="images/coolestImg.jpg" alt="" class="contestImg notification_image">
-        </div>
-        <div class="col-xs-7">
-            <div class="content-contest">
-                <strong>{{notification.created_at | amDateFormat:'YYYY - MM - DD' }}</strong>
-                <br>
-                <span ng-bind-html="notification.text | trustedHtml"></span>
+<div class="contest-list">
+    <div class="notifications">
+        <p class="no-have margin0" ng-if="!notifications || notifications.length === 0">You have no notifications!</p>
+        <div class="row contestR2 notification" ng-repeat="notification in notifications | limitTo:3">
+            <div class="col-xs-2 notification_thumb" ng-if="notification.extras.icon">
+                <span class="notification_icon icon icon-{{notification.extras.icon}}"></span>
+            </div>
+            <div class="col-xs-2 notification_thumb" ng-if="notification.extras.thumbnail">
+                <img ng-src="{{notification.extras.thumbnail}}" alt="" class="contestImg notification_image">
+            </div>
+            <div class="col-xs-7">
+                <div class="content-contest">
+                    <strong>{{notification.created_at | amDateFormat:'YYYY - MM - DD' }}</strong>
+                    <br>
+                    <span ng-bind-html="notification.text | trustedHtml"></span>
+                </div>
+            </div>
+            <div class="col-xs-3 notification_actions text-right">
+                <a class="radiusBox pointer sky" ng-if="notification.extras.action !== null" ui-sref="{{notification.extras.action}}">
+                    <span class="icon_search"></span>
+                </a>
+                <a class="radiusBox pointer"><span class="icon_text"></span></a>
             </div>
         </div>
-        <div class="col-xs-3 notification_actions text-right">
-            <a class="radiusBox pointer sky" ng-if="notification.extras.action !== null"><span class="icon_search"></span></a>
-            <a class="radiusBox pointer"><span class="icon_text"></span></a>
-        </div>
+        <a class="btn btn-block showmorebtn" ng-if="notifications.length > 3">Show more</a>
     </div>
-    <a class="btn btn-block showmorebtn" ng-if="notifications.length > 3">Show more</a>
 </div>

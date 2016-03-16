@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.controllers').controller('ContestCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $timeout, $filter) {
+    angular.module('fundator.controllers').controller('ContestCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $http, $timeout, $filter) {
 
         $scope.contests = [];
         $rootScope.$broadcast('startLoading');
@@ -13,14 +13,29 @@
         Contest.query().$promise.then(function(result) {
             $scope.contests = result;
             $scope.ongoingContests = [];
+            $scope.judgingContests = [];
 
             if ($rootScope.activeRole === 'creator' && typeof($rootScope.user.creator) !== 'undefined') {
                 for(var ogc in $rootScope.user.creator.ongoing_contest){
                     var contest_id = $rootScope.user.creator.ongoing_contest[ogc];
-                    var contest = $filter('filter')($scope.contests, {id: contest_id})[0];
+                    var contest = $filter('filter')(result, {id: contest_id}, true)[0];
 
                     if (typeof(contest) !== 'undefined') {
                         $scope.ongoingContests.push(contest);
+
+                        var ogcIndex = $scope.contests.indexOf(contest);
+                        console.log('ogcIndex : ' + ogcIndex);
+                        $scope.contests.splice(ogcIndex, 1);
+                    }
+                }
+            }else if($rootScope.activeRole === 'jury' && $rootScope.user.judging.length > 0){
+                for(var jc in $rootScope.user.judging){
+                    var contest_id = $rootScope.user.judging[jc].contest_id;
+
+                    var contest = $filter('filter')(result, {id: contest_id}, true)[0];
+
+                    if (typeof(contest) !== 'undefined') {
+                        $scope.judgingContests.push(contest);
                     }
                 }
             }
@@ -114,7 +129,23 @@
             $scope.contest = result;
 
             var judgeable = $filter('filter')($rootScope.user.judging, {
-                id: $scope.contestId
+                contest_id: $scope.contestId,
+                status: 1
+            });
+
+            var pendingJudgeable = $filter('filter')($rootScope.user.judging, {
+                contest_id: $scope.contestId,
+                status: 0
+            });
+
+            var contesting = $filter('filter')($rootScope.user.contesting, {
+                contest_id: $scope.contestId,
+                status: 1
+            });
+
+            var pendingContesting = $filter('filter')($rootScope.user.contesting, {
+                contest_id: $scope.contestId,
+                status: 0
             });
 
             if (typeof(judgeable) !== 'undefined') {
@@ -128,8 +159,26 @@
                             contestId: result.id
                         });
                     };
-                } else if($rootScope.activeRole === 'jury' || $rootScope.activeRole === 'creator') {
+                } else if($rootScope.activeRole === 'jury' && judgeable.length > 0) {
                     $scope.loadEntries($rootScope.activeRole);
+                }
+            }
+
+            if (typeof(pendingJudgeable) !== 'undefined') {
+                if (pendingJudgeable.length > 0) {
+                    $scope.data.showJudgeNdaPending = true;
+                }
+            }
+
+            if (typeof(contesting) !== 'undefined') {
+                if (contesting.length > 0 && $rootScope.activeRole === 'creator') {
+                    $scope.loadEntries($rootScope.activeRole);
+                }
+            }
+
+            if (typeof(pendingContesting) !== 'undefined') {
+                if (pendingContesting.length > 0) {
+                    $scope.data.showContestantNdaPending = true;
                 }
             }
 
@@ -348,9 +397,6 @@
         }
 
         $scope.sendMessage = function(){
-            console.log('sending message');
-            console.log($scope.data.messageToSend);
-
             var messageRequest = {
                 message: $scope.data.messageToSend
             };
@@ -412,6 +458,54 @@
                 });
             }
 
+        }
+
+        $scope.becomeJudge = function(){
+            // Show NDA
+            FdScroller.toSection('.contest-single', 50);
+            $scope.data.showJudgeNda = true;
+        }
+
+        $scope.acceptJudge = function(){
+            $scope.data.showJudgeNdaLoading = true;
+
+            $http.post('/api/users/becomeJudge', {contest_id: $scope.contest.id}).then(function(result){
+                console.log(result)
+                if (typeof(result.data.error) === 'undefined') {
+                    $scope.data.showJudgeNdaSuccess = true;
+
+                    $timeout(function(){
+                        FdScroller.toTop();
+                        $scope.data.showJudgeNda = false;
+                    }, 1000);
+                }
+            }).finally(function(){
+                $scope.data.showJudgeNdaLoading = false;
+            });
+        }
+
+        $scope.becomeContestant = function(){
+            // Show NDA
+            FdScroller.toSection('.contest-single', 50);
+            $scope.data.showContestantNda = true;
+        }
+
+        $scope.acceptContestant = function(){
+            $scope.data.showContestantNdaLoading = true;
+
+            $http.post('/api/users/becomeContestant', {contest_id: $scope.contest.id}).then(function(result){
+                console.log(result)
+                if (typeof(result.data.error) === 'undefined') {
+                    $scope.data.showContestantNdaSuccess = true;
+
+                    $timeout(function(){
+                        FdScroller.toTop();
+                        $scope.data.showContestantNda = false;
+                    }, 1000);
+                }
+            }).finally(function(){
+                $scope.data.showContestantNdaLoading = false;
+            });
         }
     });
 
