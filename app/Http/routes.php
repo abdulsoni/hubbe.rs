@@ -34,6 +34,8 @@ $api->version('v1', function ($api) {
     $api->post('users/becomeJudge', 'Fundator\Http\Controllers\UserController@becomeJudge');
     $api->post('users/becomeContestant', 'Fundator\Http\Controllers\UserController@becomeContestant');
 
+    $api->get('users/sideNavigationData', 'Fundator\Http\Controllers\UserController@sideNavigationData');
+
     $api->post('authenticate', 'Fundator\Http\Controllers\AuthenticateController@authenticate');
     $api->post('authenticate/signup', 'Fundator\Http\Controllers\AuthenticateController@signup');
     $api->post('authenticate/confirm', 'Fundator\Http\Controllers\AuthenticateController@confirm');

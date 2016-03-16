@@ -527,27 +527,31 @@
 
                 <div class="quick-access_menu">
                     <uib-accordion close-others="true">
-                        <uib-accordion-group heading="Contest" is-open="'true'" ng-if="hasUserRole('creator')">
-                            <uib-accordion close-others="false" ng-if="user.creator">
-                                <uib-accordion-group is-open="'true'">
+                        <uib-accordion-group heading="Contest" ng-if="hasUserRole('creator')" is-open="'true'">
+                            <uib-accordion close-others="false" ng-if="sideNavigationData.contestant !== null">
+                                <uib-accordion-group ng-if="sideNavigationData.contestant.ongoing.length > 0" is-open="'true'">
                                     <uib-accordion-heading>
                                         Ongoing Contests
-                                        <span class="badge pull-right">3</span>
+                                        <span class="badge pull-right">{{sideNavigationData.contestant.ongoing.length}}</span>
                                     </uib-accordion-heading>
 
                                     <ul class="list-group list-group-transparent">
-                                        <li class="list-group-item">
-                                            <a href="#">Cats and Dogs Connected Devices</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <a href="#">Cats and Dogs Connected Devices</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <a href="#">Cats and Dogs Connected Devices</a>
+                                        <li class="list-group-item" ng-repeat="contest in sideNavigationData.contestant.ongoing">
+                                            <img ng-src="{{contest.thumbnail}}" alt="" class="img-responsive img-rounded">
+                                            <a ui-sref="app.contestsingle({contestId: contest.contest_id})">
+                                                {{contest.name}}
+
+                                                <span class="status success" ng-if="contest.status === 1">
+                                                    <span class="icon icon-checkmark"></span> Accepted
+                                                </span>
+                                                <span class="status waiting" ng-if="contest.status === 0">
+                                                    <span class="icon icon-clock"></span> Waiting for review
+                                                </span>
+                                            </a>
                                         </li>
                                     </ul>
                                 </uib-accordion-group>
-                                <uib-accordion-group is-open="'true'">
+                                <uib-accordion-group ng-if="sideNavigationData.contestant.ongoing.length > 0">
                                     <uib-accordion-heading>
                                         Contest History
                                         <span class="badge pull-right">0</span>
@@ -558,15 +562,54 @@
                                     </span>
                                 </uib-accordion-group>
                             </uib-accordion>
-                            <span class="empty" ng-if="!user.creator">
-                                Please switch to the 'creator' role to view your contests
+                            <span class="empty" ng-if="sideNavigationData.contestant === null">
+                                You have no contests, <a ui-sref="app.contest">Browse Contests</a> to participate in one!
+                            </span>
+                        </uib-accordion-group>
+                        <uib-accordion-group heading="Jury">
+                            <uib-accordion close-others="false" ng-if="sideNavigationData.jury !== null">
+                                <uib-accordion-group ng-if="sideNavigationData.jury.ongoing.length > 0" is-open="'true'">
+                                    <uib-accordion-heading>
+                                        Ongoing Contests
+                                        <span class="badge pull-right">{{sideNavigationData.jury.ongoing.length}}</span>
+                                    </uib-accordion-heading>
+
+                                    <ul class="list-group list-group-transparent">
+                                        <li class="list-group-item" ng-repeat="contest in sideNavigationData.jury.ongoing">
+                                            <img ng-src="{{contest.thumbnail}}" alt="" class="img-responsive img-rounded">
+                                            <a ui-sref="app.contestsingle({contestId: contest.contest_id})">
+                                                {{contest.name}}
+
+                                                <span class="status success" ng-if="contest.status === 1">
+                                                    <span class="icon icon-checkmark"></span> Accepted
+                                                </span>
+                                                <span class="status waiting" ng-if="contest.status === 0">
+                                                    <span class="icon icon-clock"></span> Waiting for review
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </uib-accordion-group>
+                                <uib-accordion-group ng-if="sideNavigationData.jury.ongoing.length > 0">
+                                    <uib-accordion-heading>
+                                        Contest History
+                                        <span class="badge pull-right">0</span>
+                                    </uib-accordion-heading>
+
+                                    <span class="empty">
+                                        You have no past contests
+                                    </span>
+                                </uib-accordion-group>
+                            </uib-accordion>
+                            <span class="empty" ng-if="sideNavigationData.contestant === null">
+                                You have no contests, <a ui-sref="app.contest">Browse Contests</a> to judge in one!
                             </span>
                         </uib-accordion-group>
                         <uib-accordion-group heading="Creator Activity" ng-if="hasUserRole('creator')">
-                            <uib-accordion close-others="false" ng-if="user.creator">
-                                <uib-accordion-group is-open="'true'">
+                            <uib-accordion close-others="false" ng-if="sideNavigationData.creator !== null">
+                                <uib-accordion-group>
                                     <uib-accordion-heading>
-                                        Ongoing Contests
+                                        Ongoing Projects
                                         <span class="badge pull-right">3</span>
                                     </uib-accordion-heading>
 
@@ -582,27 +625,27 @@
                                         </li>
                                     </ul>
                                 </uib-accordion-group>
-                                <uib-accordion-group is-open="'true'">
+                                <uib-accordion-group>
                                     <uib-accordion-heading>
-                                        Contest History
+                                        Project History
                                         <span class="badge pull-right">0</span>
                                     </uib-accordion-heading>
 
                                     <span class="empty">
-                                        You have no past contests
+                                        You have no past projects
                                     </span>
                                 </uib-accordion-group>
                             </uib-accordion>
-                            <span class="empty" ng-if="!user.creator">
-                                Please switch to the 'creator' role to view your projects
+                            <span class="empty" ng-if="sideNavigationData.creator === null">
+                                You have no projects, Click here to create one!
                             </span>
                         </uib-accordion-group>
                         <uib-accordion-group heading="Expert Activity" ng-if="hasUserRole('expert')">
-                            <uib-accordion close-others="false" ng-if="user.expert">
-                                <uib-accordion-group is-open="'true'">
+                            <uib-accordion close-others="false" ng-if="sideNavigationData.expert !== null">
+                                <uib-accordion-group>
                                     <uib-accordion-heading>
-                                        Ongoing Contests
-                                        <span class="badge pull-right">3</span>
+                                        Ongoing Projects
+                                        <span class="badge pull-right">{{sideNavigationData.contestant.ongoing.length}}</span>
                                     </uib-accordion-heading>
 
                                     <ul class="list-group list-group-transparent">
@@ -617,9 +660,9 @@
                                         </li>
                                     </ul>
                                 </uib-accordion-group>
-                                <uib-accordion-group is-open="'true'">
+                                <uib-accordion-group>
                                     <uib-accordion-heading>
-                                        Contest History
+                                        Project History
                                         <span class="badge pull-right">0</span>
                                     </uib-accordion-heading>
 
@@ -628,15 +671,13 @@
                                     </span>
                                 </uib-accordion-group>
                             </uib-accordion>
-                            <span class="empty" ng-if="!user.expert">
-                                Please switch to the 'expert' role to view your projects
+                            <span class="empty" ng-if="sideNavigationData.expert === null">
+                                You have no projects, Click here to browse projects!
                             </span>
                         </uib-accordion-group>
-                        <uib-accordion-group heading="SuperExpert Activity" ng-if="hasUserRole('super-expert')">
-                        </uib-accordion-group>
                         <uib-accordion-group heading="Investor Activity" ng-if="hasUserRole('investor')">
-                            <uib-accordion close-others="false" ng-if="user.investor">
-                                <uib-accordion-group is-open="'true'">
+                            <uib-accordion close-others="false" ng-if="sideNavigationData.investor !== null">
+                                <uib-accordion-group>
                                     <uib-accordion-heading>
                                         Ongoing Contests
                                         <span class="badge pull-right">3</span>
@@ -654,7 +695,7 @@
                                         </li>
                                     </ul>
                                 </uib-accordion-group>
-                                <uib-accordion-group is-open="'true'">
+                                <uib-accordion-group>
                                     <uib-accordion-heading>
                                         Contest History
                                         <span class="badge pull-right">0</span>
@@ -665,15 +706,22 @@
                                     </span>
                                 </uib-accordion-group>
                             </uib-accordion>
-                            <span class="empty" ng-if="!user.investor">
-                                Please switch to the 'investor' role to view your projects
+                            <span class="empty" ng-if="sideNavigationData.investor === null">
+                                You have no projects, Click here to browse projects!
                             </span>
                         </uib-accordion-group>
                         <uib-accordion-group heading="Transaction">
-                          This content is straight in the template.
+                            <span class="empty">
+                                Coming Soon
+                            </span>
                         </uib-accordion-group>
                         <uib-accordion-group heading="Account">
-                          This content is straight in the template.
+                            <ul class="list-group list-group-transparent">
+                                <li class="list-group-item">
+                                    <a ng-click="openFullMenu('account')" class="pointer marginB15">Account Settings</a>
+                                    <a ng-click="openFullMenu('profile')" class="pointer">Profile / Skills</a>
+                                </li>
+                            </ul>
                         </uib-accordion-group>
                         <a ng-click="logout()" class="btn btn_default btn-danger btn-block marginT5">Logout</a>
                     </uib-accordion>

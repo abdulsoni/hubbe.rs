@@ -11363,6 +11363,24 @@ footer {
     .quick-access_menu .list-group-transparent .list-group-item {
       background: transparent;
       border: 0; }
+      .quick-access_menu .list-group-transparent .list-group-item img {
+        width: 50px;
+        height: 50px;
+        float: left;
+        margin-right: 20px; }
+      .quick-access_menu .list-group-transparent .list-group-item a {
+        display: block;
+        color: #fff;
+        font-size: 16px;
+        text-decoration: none; }
+        .quick-access_menu .list-group-transparent .list-group-item a > span {
+          display: block;
+          font-size: 12px;
+          margin-top: 5px; }
+          .quick-access_menu .list-group-transparent .list-group-item a > span.success {
+            color: #95c54d; }
+          .quick-access_menu .list-group-transparent .list-group-item a > span.waiting {
+            color: orange; }
 
 .profile-skills-selection .chosen-container.chosen-container-multi .chosen-choices {
   height: 120px !important; }

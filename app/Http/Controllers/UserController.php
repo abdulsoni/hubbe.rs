@@ -355,4 +355,56 @@ class UserController extends Controller
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
+    /**
+     * Side Navigation
+     */
+    public function sideNavigationData()
+    {
+        $statusCode = 200;
+
+        try{
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+
+            $contestantData = [];
+
+            if (!is_null($user->creator)) {
+                $contestantData['ongoing'] = $user->contestantApplications;
+                $contestantData['past'] = null;
+
+                foreach ($contestantData['ongoing'] as $c) {
+                    $contest = Contest::find($c->contest_id);
+                    $c['name'] = $contest->name;
+                    $c['thumbnail'] = $contest->thumbnail;
+                }
+            }
+
+            $juryData = [];
+
+            $juryData['ongoing'] = $user->juryApplications;
+            $juryData['past'] = null;
+
+            foreach ($juryData['ongoing'] as $j) {
+                $contest = Contest::find($j->contest_id);
+                $j['name'] = $contest->name;
+                $j['thumbnail'] = $contest->thumbnail;
+            }
+
+            $response = [
+                'contestant' => $contestantData,
+                'jury' => $juryData,
+                'creator' => null,
+                'expert' => null,
+                'investor' => null
+            ];
+
+        }catch (Exception $e){
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    }
+
 }

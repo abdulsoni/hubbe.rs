@@ -25,8 +25,6 @@
 
         $scope.allSkills = $resource('api/skills').query();
 
-        console.log($rootScope.user);
-
         $scope.uploader = new FileUploader({
             url: '/api/files',
             removeAfterUpload: true
@@ -113,6 +111,20 @@
 
                 $state.go('app.auth.login', {}, {reload: true});
             });
+        }
+
+        // Populate side navigation
+        $scope.populateSideNavigation = function(){
+            $http.get('/api/users/sideNavigationData').then(function(result){
+                if (typeof(result.data.error) === 'undefined') {
+                    $scope.sideNavigationData = result.data;
+                }
+            });
+        }
+        $scope.populateSideNavigation();
+
+        $scope.openFullMenu = function(){
+            $rootScope.isNavShown = 1;
         }
     });
 
