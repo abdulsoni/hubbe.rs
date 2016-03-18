@@ -30,7 +30,7 @@ return array(
      *
      * @type int
      */
-    'form_width' => 500,
+    'form_width' => 800,
 
     /**
      * The editable fields
