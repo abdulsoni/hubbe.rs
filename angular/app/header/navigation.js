@@ -126,6 +126,11 @@
         $scope.openFullMenu = function(){
             $rootScope.isNavShown = 1;
         }
+
+        $scope.goToLink = function(page, data){
+            $rootScope.isNavShown = 0;
+            $state.go(page, data);
+        }
     });
 
 })();

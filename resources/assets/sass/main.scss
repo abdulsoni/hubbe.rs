@@ -46,6 +46,13 @@ header {
   color:$white-color;
   padding-top: 24px;
   .logo{padding-bottom:24px; display: inline-block;}
+
+  .center-block{
+	float: none;
+	position: absolute;
+	left: 50%;
+	@include translateX(-50%);
+  }
 }
 
 .header_right{

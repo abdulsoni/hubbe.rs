@@ -160,6 +160,7 @@
                         });
                     };
                 } else if($rootScope.activeRole === 'jury' && judgeable.length > 0) {
+                    $scope.data.showJudgeNdaCompleted = true;
                     $scope.loadEntries($rootScope.activeRole);
                 }
             }
@@ -172,6 +173,7 @@
 
             if (typeof(contesting) !== 'undefined') {
                 if (contesting.length > 0 && $rootScope.activeRole === 'creator') {
+                    $scope.data.showContestantNdaCompleted = true;
                     $scope.loadEntries($rootScope.activeRole);
                 }
             }

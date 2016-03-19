@@ -9,7 +9,7 @@
             <div class="col-lg-2 col-sm-4 col-xs-6 fcoll">
                 <h4>Creators</h4>
                 <ul class="vertical-nav">
-                    <li><a href="/#/become-a-creator">Become a Creators</a></li>
+                    <li><a href="/#/become-a-creator">Become a Creator</a></li>
                     <li><a href="/#/who-are-the-creators">Who are the Creators</a></li>
                     <li><a href="/#/creators-in-six-steps">Creators in 6 Step</a></li>
                     <li><a href="/#/faq-on-creators">FAQ on Creators</a></li>
@@ -24,8 +24,8 @@
             <div class="col-lg-2 col-sm-4 col-xs-6 fcoll fcol2">
                 <h4>Experts</h4>
                 <ul class="vertical-nav ">
-                    <li><a href="/#/become-an-expert">Become an Experts</a></li>
-                    <li><a href="/#/become-an-expert">Become for Experts</a></li>
+                    <li><a href="/#/become-an-expert">Become an Expert</a></li>
+                    <li><a href="/#/become-an-expert">Who are the Experts</a></li>
                     <li><a href="/#/tutorial-on-experts">Tutorial on Experts</a></li>
                     <li><a href="/#/faq-on-experts">FAQ on Experts</a></li>
                 </ul>
@@ -52,41 +52,20 @@
                 <div><img src="images/barcode.jpg" alt=""></div>
             </div>
             <div class="col-lg-3 col-md-6 col-xs-6 fcoll fcol3">
-                <h4>Ongoing Contest</h4>
+                <h4>Ongoing Contests</h4>
                 <div>
                     <ul class="itemWithHover">
                         <li ng-repeat="contest in ongoingContests">
-                            <div class="thumbnail">
-                                <div class="caption">
-                                    <h4>{{contest.name}}</h4>
-                                    <p><a ui-sref="app.contestsingle({contestId: contest.id})">View</a></p>
+                            <a ui-sref="app.contestsingle({contestId: contest.id})">
+                                <div class="thumbnail">
+                                    <div class="caption">
+                                        <h4>{{contest.name}}</h4>
+                                        <p>View</p>
+                                    </div>
+                                    <img ng-src="{{contest.thumbnail}}" alt="">
                                 </div>
-                                <img ng-src="{{contest.thumbnail}}" alt=""> </div>
+                            </a>
                         </li>
-                        <!-- <li>
-                            <div class="thumbnail">
-                                <div class="caption">
-                                    <h4>Project Titile</h4>
-                                    <p><a href="#">View</a></p>
-                                </div>
-                                <img src="images/project2.jpg" alt=""> </div>
-                        </li>
-                        <li>
-                            <div class="thumbnail">
-                                <div class="caption">
-                                    <h4>Project Titile</h4>
-                                    <p><a href="#">View</a></p>
-                                </div>
-                                <img src="images/project3.jpg" alt=""></div>
-                        </li>
-                        <li>
-                            <div class="thumbnail">
-                                <div class="caption">
-                                    <h4>Project Titile</h4>
-                                    <p><a href="#">View</a></p>
-                                </div>
-                                <img src="images/project4.jpg" alt=""> </div>
-                        </li> -->
                     </ul>
                 </div>
             </div>

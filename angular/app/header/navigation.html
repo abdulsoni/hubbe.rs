@@ -2,7 +2,7 @@
     <div class="cd-navigation-wrapper">
         <div class="navFixContent">
             <div class="container">
-                <uib-tabset class="dashbord-tab col-sm-8">
+                <uib-tabset class="dashbord-tab col-sm-12">
                     <uib-tab heading="Account">
                         <div class="row">
                             <div class="col-lg-4 col-md-5 col-sm-6">
@@ -527,7 +527,11 @@
 
                 <div class="quick-access_menu">
                     <uib-accordion close-others="true">
-                        <uib-accordion-group heading="Contest" ng-if="hasUserRole('creator')" is-open="'true'">
+                        <uib-accordion-group ng-if="hasUserRole('creator')" is-open="'true'">
+                            <uib-accordion-heading>
+                                Contests
+                                <span class="caret"></span>
+                            </uib-accordion-heading>
                             <uib-accordion close-others="false" ng-if="sideNavigationData.contestant !== null">
                                 <uib-accordion-group ng-if="sideNavigationData.contestant.ongoing.length > 0" is-open="'true'">
                                     <uib-accordion-heading>
@@ -538,7 +542,7 @@
                                     <ul class="list-group list-group-transparent">
                                         <li class="list-group-item" ng-repeat="contest in sideNavigationData.contestant.ongoing">
                                             <img ng-src="{{contest.thumbnail}}" alt="" class="img-responsive img-rounded">
-                                            <a ui-sref="app.contestsingle({contestId: contest.contest_id})">
+                                            <a class="pointer" ng-click="goToLink('app.contestsingle', {contestId: contest.contest_id})">
                                                 {{contest.name}}
 
                                                 <span class="status success" ng-if="contest.status === 1">
@@ -551,7 +555,7 @@
                                         </li>
                                     </ul>
                                 </uib-accordion-group>
-                                <uib-accordion-group ng-if="sideNavigationData.contestant.ongoing.length > 0">
+                                <uib-accordion-group ng-if="sideNavigationData.contestant.past.length > 0" is-open="'true'">
                                     <uib-accordion-heading>
                                         Contest History
                                         <span class="badge pull-right">0</span>
@@ -566,7 +570,11 @@
                                 You have no contests, <a ui-sref="app.contest">Browse Contests</a> to participate in one!
                             </span>
                         </uib-accordion-group>
-                        <uib-accordion-group heading="Jury">
+                        <uib-accordion-group>
+                            <uib-accordion-heading>
+                                Jury
+                                <span class="caret"></span>
+                            </uib-accordion-heading>
                             <uib-accordion close-others="false" ng-if="sideNavigationData.jury !== null">
                                 <uib-accordion-group ng-if="sideNavigationData.jury.ongoing.length > 0" is-open="'true'">
                                     <uib-accordion-heading>
@@ -577,7 +585,7 @@
                                     <ul class="list-group list-group-transparent">
                                         <li class="list-group-item" ng-repeat="contest in sideNavigationData.jury.ongoing">
                                             <img ng-src="{{contest.thumbnail}}" alt="" class="img-responsive img-rounded">
-                                            <a ui-sref="app.contestsingle({contestId: contest.contest_id})">
+                                            <a class="pointer" ng-click="goToLink('app.contestsingle', {contestId: contest.contest_id})">
                                                 {{contest.name}}
 
                                                 <span class="status success" ng-if="contest.status === 1">
@@ -590,7 +598,7 @@
                                         </li>
                                     </ul>
                                 </uib-accordion-group>
-                                <uib-accordion-group ng-if="sideNavigationData.jury.ongoing.length > 0">
+                                <uib-accordion-group ng-if="sideNavigationData.jury.past.length > 0" is-open="'true'">
                                     <uib-accordion-heading>
                                         Contest History
                                         <span class="badge pull-right">0</span>
@@ -606,6 +614,10 @@
                             </span>
                         </uib-accordion-group>
                         <uib-accordion-group heading="Creator Activity" ng-if="hasUserRole('creator')">
+                            <uib-accordion-heading>
+                                Creator Activity
+                                <span class="caret"></span>
+                            </uib-accordion-heading>
                             <uib-accordion close-others="false" ng-if="sideNavigationData.creator !== null">
                                 <uib-accordion-group>
                                     <uib-accordion-heading>
@@ -641,6 +653,10 @@
                             </span>
                         </uib-accordion-group>
                         <uib-accordion-group heading="Expert Activity" ng-if="hasUserRole('expert')">
+                            <uib-accordion-heading>
+                                Expert Activity
+                                <span class="caret"></span>
+                            </uib-accordion-heading>
                             <uib-accordion close-others="false" ng-if="sideNavigationData.expert !== null">
                                 <uib-accordion-group>
                                     <uib-accordion-heading>
@@ -676,6 +692,10 @@
                             </span>
                         </uib-accordion-group>
                         <uib-accordion-group heading="Investor Activity" ng-if="hasUserRole('investor')">
+                            <uib-accordion-heading>
+                                Investor Activity
+                                <span class="caret"></span>
+                            </uib-accordion-heading>
                             <uib-accordion close-others="false" ng-if="sideNavigationData.investor !== null">
                                 <uib-accordion-group>
                                     <uib-accordion-heading>
@@ -710,7 +730,7 @@
                                 You have no projects, Click here to browse projects!
                             </span>
                         </uib-accordion-group>
-                        <uib-accordion-group heading="Transaction">
+                        <!-- <uib-accordion-group heading="Transaction">
                             <span class="empty">
                                 Coming Soon
                             </span>
@@ -722,9 +742,26 @@
                                     <a ng-click="openFullMenu('profile')" class="pointer">Profile / Skills</a>
                                 </li>
                             </ul>
-                        </uib-accordion-group>
-                        <a ng-click="logout()" class="btn btn_default btn-danger btn-block marginT5">Logout</a>
+                        </uib-accordion-group> -->
                     </uib-accordion>
+
+                    <br>
+                    <br>
+
+                    <ul class="account-menu">
+                        <li>
+                            <a class="pointer" ng-click="goToLink('app.transaction', {})">Transactions</a>
+                        </li>
+                        <li>
+                            <a ng-click="openFullMenu('account')" class="pointer marginB15">Account Settings</a>
+                        </li>
+                        <li>
+                            <a ng-click="openFullMenu('profile')" class="pointer">Profile / Skills</a>
+                        </li>
+                    </ul>
+
+                    <br>
+                    <a ng-click="logout()" class="btn btn_default btn-danger btn-block marginT5">Logout</a>
                 </div>
 
             </div>

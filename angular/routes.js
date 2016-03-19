@@ -128,6 +128,15 @@
                     }
                 }
             })
+            .state('app.transaction', {
+                url: '/transaction',
+                views: {
+                    'main@': {
+                        templateUrl: getView('transaction', 'transaction'),
+                        controller: 'TransactionCtrl'
+                    }
+                }
+            })
             .state('app.grabshare', {
                 url: '/grab-a-share',
                 views: {

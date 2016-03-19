@@ -55,11 +55,11 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="actions clearfix" ng-if="!data.showJudgeNdaPending && !data.showContestantNdaPending">
-                                    <div class="pull-right" ng-if="!data.showJudgeNdaSuccess"><a class="btn btn-info" ng-click="becomeContestant()">Participate</a></div>
+                                <div class="actions clearfix" ng-if="!data.showContestantNdaPending && !data.showContestantNdaCompleted">
+                                    <div class="pull-right" ng-if="!data.showContestantNdaSuccess"><a class="btn btn-info" ng-click="becomeContestant()">Participate</a></div>
                                 </div>
-                                <div class="action-pending" ng-if="data.showJudgeNdaPending || data.showContestantNdaPending">
-                                    <span class="icon icon-clock"></span> &nbsp; Your application for '{{data.showJudgeNdaPending ? 'Judge' : 'Contestant'}}' is being processed ...
+                                <div class="action-pending" ng-if="data.showContestantNdaPending">
+                                    <span class="icon icon-clock"></span> &nbsp; Your application for 'Contestant' is being processed ...
                                 </div>
                             </div>
                         </div>
