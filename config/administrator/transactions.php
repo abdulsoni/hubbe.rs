@@ -18,6 +18,11 @@ return array(
      */
     'columns' => array(
         'id',
+        'user' => array(
+            'title' => 'Name',
+            'relationship' => 'user',
+            'select' => 'name'
+        ),
         'amount' => array(
             'title' => 'Amount',
         ),
