@@ -81,6 +81,8 @@ class UserController extends Controller
 
             $response['skills'] = Skill::where('id', '>', 1)->where('id', '<', 7)->get();
 
+            $response['amount'] = $user->currentAmount();
+
         } catch (TokenExpiredException $e) {
             $statusCode = $e->getStatusCode();
             $response['error'] = 'token_expired';

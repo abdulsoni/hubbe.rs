@@ -98,7 +98,7 @@
 
         $rootScope.$watch('user', function(user){
             if (typeof(user) === 'undefined') return;
-            if (user.registered == 1) $state.go('app.contest');
+            if (user.registered == 1) $state.go('app.contests');
 
             $scope.data.email = user.email;
         }, true);
@@ -474,7 +474,7 @@
                     $rootScope.initialRoleAssignment = true;
 
                     $rootScope.activeRole = $scope.data.selectedRole;
-                    $state.go('app.contest');
+                    $state.go('app.contests');
 
                     $rootScope.switchUserRole($scope.data.selectedRole, null, true);
                 }

@@ -169,7 +169,7 @@
                 },
                 defaultTemplate: getView('quick-update')
             }, {
-                route: 'app.contestsingle',
+                route: 'app.contest',
                 view: 'main@',
                 roles: {
                     creator: getView('contest', 'contest-single-creator'),
@@ -177,7 +177,7 @@
                 },
                 defaultTemplate: getView('contest', 'contest-single')
             }, {
-                route: 'app.contest',
+                route: 'app.contests',
                 view: 'main@',
                 roles: {
                     creator: getView('contest', 'contest-creator'),

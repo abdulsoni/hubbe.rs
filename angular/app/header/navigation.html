@@ -542,7 +542,7 @@
                                     <ul class="list-group list-group-transparent">
                                         <li class="list-group-item" ng-repeat="contest in sideNavigationData.contestant.ongoing">
                                             <img ng-src="{{contest.thumbnail}}" alt="" class="img-responsive img-rounded">
-                                            <a class="pointer" ng-click="goToLink('app.contestsingle', {contestId: contest.contest_id})">
+                                            <a class="pointer" ng-click="goToLink('app.contest', {contestId: contest.contest_id})">
                                                 {{contest.name}}
 
                                                 <span class="status success" ng-if="contest.status === 1">
@@ -567,7 +567,7 @@
                                 </uib-accordion-group>
                             </uib-accordion>
                             <span class="empty" ng-if="sideNavigationData.contestant === null">
-                                You have no contests, <a ui-sref="app.contest">Browse Contests</a> to participate in one!
+                                You have no contests, <a ui-sref="app.contests">Browse Contests</a> to participate in one!
                             </span>
                         </uib-accordion-group>
                         <uib-accordion-group>
@@ -585,7 +585,7 @@
                                     <ul class="list-group list-group-transparent">
                                         <li class="list-group-item" ng-repeat="contest in sideNavigationData.jury.ongoing">
                                             <img ng-src="{{contest.thumbnail}}" alt="" class="img-responsive img-rounded">
-                                            <a class="pointer" ng-click="goToLink('app.contestsingle', {contestId: contest.contest_id})">
+                                            <a class="pointer" ng-click="goToLink('app.contest', {contestId: contest.contest_id})">
                                                 {{contest.name}}
 
                                                 <span class="status success" ng-if="contest.status === 1">
@@ -610,7 +610,7 @@
                                 </uib-accordion-group>
                             </uib-accordion>
                             <span class="empty" ng-if="sideNavigationData.contestant === null">
-                                You have no contests, <a ui-sref="app.contest">Browse Contests</a> to judge in one!
+                                You have no contests, <a ui-sref="app.contests">Browse Contests</a> to judge in one!
                             </span>
                         </uib-accordion-group>
                         <uib-accordion-group heading="Creator Activity" ng-if="hasUserRole('creator')">

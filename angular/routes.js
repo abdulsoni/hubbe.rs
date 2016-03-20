@@ -110,7 +110,7 @@
                     }
                 }
             })
-            .state('app.contest', {
+            .state('app.contests', {
                 url: '/contest',
                 views: {
                     'main@': {
@@ -119,7 +119,7 @@
                     }
                 }
             })
-            .state('app.contestsingle', {
+            .state('app.contest', {
                 url: '/contest/:contestId',
                 views: {
                     'main@': {

@@ -8,6 +8,12 @@ header{position: relative; z-index: 3; position:fixed; width: 100%;
   top: 0;
   .logo{padding: 5px 0px;; display: inline-block;}
   .logo img{height: 28px;}
+
+  .center-block{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
 }
 
 .header_right{

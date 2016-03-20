@@ -154,7 +154,7 @@
                     $rootScope.flashNotices.juryView.contestId = result.id;
 
                     $rootScope.flashNotices.juryView.onClick = function() {
-                        $state.go('app.contestsingle', {
+                        $state.go('app.contest', {
                             role: 'jury',
                             contestId: result.id
                         });

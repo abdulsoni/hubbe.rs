@@ -20,8 +20,8 @@ class NotificationCategoriesSeeder extends Seeder
 
 
         // Jury Related Notifications
-        $this->createCategory('jury.invited', 'You have been invited to judge the contest - <a ui-sref="app.contestsingle({contestId: extra.contest.id})">{extra.contest.name}</a>.');
-        $this->createCategory('jury.removed', 'You have been removed as a judge from the contest - <a ui-sref="app.contestsingle({contestId: extra.contest.id})">{extra.contest.name}</a>.');
+        $this->createCategory('jury.invited', 'You have been invited to judge the contest - <a ui-sref="app.contest({contestId: extra.contest.id})">{extra.contest.name}</a>.');
+        $this->createCategory('jury.removed', 'You have been removed as a judge from the contest - <a ui-sref="app.contest({contestId: extra.contest.id})">{extra.contest.name}</a>.');
 
         $this->createCategory('jury.entry.new', 'There is a new entry by {} under the contest {}');
         $this->createCategory('jury.entry.revised', 'There is a revised entry by {} under the contest {}');

@@ -34,6 +34,18 @@ return array(
                 array(200, 150, 'crop', public_path() . '/resize/', 100),
             )
         ),
+        'share_value' => array(
+            'title' => 'Share Value',
+            'type' => 'number',
+            'symbol' => '$',
+            'decimals' => 2,
+            'thousands_separator' => ',',
+            'decimal_separator' => '.'
+        ),
+        'total_shares' => array(
+            'title' => 'Total Shares',
+            'type' => 'number'
+        ),
     ),
 
     /**

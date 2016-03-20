@@ -8,7 +8,7 @@
             <li><a>Create</a></li>
             <li><a>Expert</a></li>
             <li><a>Invest</a></li>
-            <li><a ui-sref="app.contest" ng-class="{'activenav': $state.current.name.indexOf('contest') !== -1}">Contest</a></li>
+            <li><a ui-sref="app.contests" ng-class="{'activenav': $state.current.name.indexOf('contest') !== -1}">Contest</a></li>
         </ul>
         <ul class="nav navbar-nav top-nav pull-right" ng-if="!authenticated">
             <li><a ui-sref="app.auth.login" ng-class="{'activenav': $state.current.name.indexOf('login') !== -1}">Login</a></li>
@@ -37,9 +37,10 @@
                 <a ui-sref="app.transaction">
                     <div class="profile-finance">
                         <span class="profile-finance_amount">
-                            500
-                            <span class="currency pointer" uib-popover-template="'currency.html'" popover-title="Select Currency" popover-placement="bottom">(USD)</span>
-                            <script type="text/ng-template" id="currency.html"><div><ul class="list-unstyled"><li><a class="cursor">CNY</a></li><li><a class="cursor">HKD</a></li><li><a class="cursor">EUR</a></li></ul></div></script>
+                            {{user.amount | currency}}
+                            <!-- <span class="currency pointer">(USD)</span> -->
+                            <!-- <span class="currency pointer" uib-popover-template="'currency.html'" popover-title="Select Currency" popover-placement="bottom">(USD)</span> -->
+                            <!-- <script type="text/ng-template" id="currency.html"><div><ul class="list-unstyled"><li><a class="cursor">CNY</a></li><li><a class="cursor">HKD</a></li><li><a class="cursor">EUR</a></li></ul></div></script> -->
                         </span>
                         <span class="profile-finance_caption">
                            Balance
@@ -48,7 +49,7 @@
                 </a>
             </li>
             <li class="profile-finance_wrap">
-                <a ui-sref="app.grabAShare">
+                <a ui-sref="app.grabshare">
                     <div class="profile-finance">
                         <span class="profile-finance_amount">
                             10,000

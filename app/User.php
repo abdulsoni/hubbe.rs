@@ -20,6 +20,8 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Trexology\Pointable\Contracts\Pointable;
 use Trexology\Pointable\Traits\Pointable as PointableTrait;
 
+use Fundator\Transaction;
+
 class User extends Model implements AuthenticatableContract,
                                     CanResetPasswordContract,
                                     Pointable
@@ -226,6 +228,44 @@ class User extends Model implements AuthenticatableContract,
         }
 
         return $allUsers;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function amountTransactions($amount = null)
+    {
+        return $this->hasMany('Fundator\Transaction')->orderBy('created_at','desc')->take($amount);
+    }
+
+    /**
+     *
+     * @return mix
+     */
+    public function countAmountTransactions(){
+      return $this->amountTransactions()
+          ->count();
+    }
+
+    /**
+     *
+     * @return double
+     */
+    public function currentAmount()
+    {
+        return (new Transaction())->getCurrentAmount($this);
+    }
+
+    /**
+     * @param $amount
+     * @param $message
+     * @param $data
+     *
+     * @return static
+     */
+    public function addAmount($amount, $message, $data = null)
+    {
+        return (new Transaction())->addTransaction($this, $amount, $message, $data = null);
     }
 
     /**

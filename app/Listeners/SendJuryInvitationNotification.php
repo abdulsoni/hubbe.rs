@@ -46,7 +46,7 @@ class SendJuryInvitationNotification
                     'contest' => ['id' => $contest->id, 'name' => $contest->name],
                     'user' => ['id' => $user->id, 'name' => $user->name],
                     'thumbnail' => $contest->thumbnail,
-                    'action' => 'app.contestsingle({contestId: ' . $contest->id . '})'
+                    'action' => 'app.contest({contestId: ' . $contest->id . '})'
                 ])
                 ->send();
 

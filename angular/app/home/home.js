@@ -5,7 +5,7 @@
         console.log('Home View Started');
 
         // Redirect to contest
-        $state.go('app.contest');
+        $state.go('app.contests');
     });
 
 })();

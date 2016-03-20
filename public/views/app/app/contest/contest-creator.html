@@ -3,7 +3,7 @@
         <uib-tabset class="tabsection">
             <uib-tab heading="My Ongoing Contests">
                 <ul class="tabProjectList">
-                    <li ng-repeat="contest in ongoingContests" ui-sref="app.contestsingle({contestId: contest.id})">
+                    <li ng-repeat="contest in ongoingContests" ui-sref="app.contest({contestId: contest.id})">
                         <div class="projectImg" ng-style="{'background-image': (contest.thumbnail) ? 'url(/' + contest.thumbnail + ')': ''}">
                             <div class="row rankingMng">
                                 <div class="col-xs-3 leftRank">
@@ -36,7 +36,7 @@
     <div class="row">
         <div class="col-sm-12">
             <ul class="tabProjectList">
-                <li ng-repeat="contest in contests | filter: { id_key: '!4' }" ui-sref="app.contestsingle({contestId: contest.id})">
+                <li ng-repeat="contest in contests | filter: { id_key: '!4' }" ui-sref="app.contest({contestId: contest.id})">
                     <div class="projectImg" ng-style="{'background-image': (contest.thumbnail) ? 'url(/' + contest.thumbnail + ')': ''}">
                         <div class="row rankingMng">
                             <div class="col-xs-3 leftRank">

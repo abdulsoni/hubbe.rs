@@ -11,7 +11,7 @@
         $rootScope.$broadcast('stopLoading');
 
         if ($auth.isAuthenticated()) {
-            $state.go('app.contest', {});
+            $state.go('app.contests', {});
         }
 
         $scope.data = {};
