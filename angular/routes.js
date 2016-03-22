@@ -38,7 +38,8 @@
                         controller: 'NotificationsCtrl'
                     },
                     quickUpdate: {
-                        templateUrl: getView('quick-update', 'quick-update')
+                        templateUrl: getView('quick-update', 'quick-update'),
+                        controller: 'QuickUpdateCtrl'
                     },
                     main: {}
                 }
@@ -111,7 +112,7 @@
                 }
             })
             .state('app.contests', {
-                url: '/contest',
+                url: '/contests',
                 views: {
                     'main@': {
                         templateUrl: getView('contest'),
@@ -120,11 +121,29 @@
                 }
             })
             .state('app.contest', {
-                url: '/contest/:contestId',
+                url: '/contests/:contestId',
                 views: {
                     'main@': {
                         templateUrl: getView('contest', 'contest-single'),
                         controller: 'ContestSingleCtrl'
+                    }
+                }
+            })
+            .state('app.expert', {
+                url: '/expert',
+                views: {
+                    'main@': {
+                        templateUrl: getView('expert'),
+                        controller: 'ExpertCtrl'
+                    }
+                }
+            })
+            .state('app.invest', {
+                url: '/invest',
+                views: {
+                    'main@': {
+                        templateUrl: getView('invest'),
+                        controller: 'InvestCtrl'
                     }
                 }
             })
@@ -142,7 +161,7 @@
                 views: {
                     'main@': {
                         templateUrl: getView('invest', 'grab-a-share'),
-                        controller: 'InvestCtrl'
+                        controller: 'GrabShareCtrl'
                     }
                 }
             })

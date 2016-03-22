@@ -268,32 +268,32 @@ class UserController extends Controller
         //
     }
 
-    /**
-     * List all the investors
-     */
-    public function indexInvestors()
-    {
-        return response()->json([], 200, [], JSON_NUMERIC_CHECK);
-    }
+    // /**
+    //  * List all the investors
+    //  */
+    // public function indexInvestors()
+    // {
+    //     return response()->json([], 200, [], JSON_NUMERIC_CHECK);
+    // }
 
-    /**
-     * Show a perticular investor
-     */
-    public function showInvestor($id)
-    {
-        $statusCode = 200;
+    // /**
+    //  * Show a perticular investor
+    //  */
+    // public function showInvestor($id)
+    // {
+    //     $statusCode = 200;
 
-        try{
-            $investor = Investor::find($id);
+    //     try{
+    //         $investor = Investor::find($id);
 
-            $response = [];
-        }catch (Exception $e){
-            $statusCode = 400;
-            $response = ['error' => $e->getMessage()];
-        }
+    //         $response = [];
+    //     }catch (Exception $e){
+    //         $statusCode = 400;
+    //         $response = ['error' => $e->getMessage()];
+    //     }
 
-        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
-    }
+    //     return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    // }
 
     /**
      * Convert a user to a judge

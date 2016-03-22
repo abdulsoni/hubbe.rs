@@ -22,6 +22,6 @@
                 <a class="radiusBox pointer"><span class="icon_text"></span></a>
             </div>
         </div>
-        <a class="btn btn-block showmorebtn" ng-if="notifications.length > 3">Show more</a>
     </div>
 </div>
+<a class="btn btn-block showmorebtn empty" ng-class="{'empty': notifications.length < 4}">Show more</a>

@@ -10,6 +10,16 @@ $primaryText-color:#6d6e71;
 $white-color: #fff;
 $black-color: #000;
 
+$primary-color: #333333;
+$secondary-color:#95c54d;
+$tertiary-color:#29aae2;
+$quaternary-color:#e8e8e8;
+
+$primaryText-color:#6d6e71;
+
+$white-color: #fff;
+$black-color: #000;
+
 $brand-primary:         darken(#428bca, 6.5%); // #337ab7
 $brand-success:         #94c44d;
 $brand-info:            #5bc0de;
@@ -20,8 +30,6 @@ $progress-bar-success-bg: $brand-success;
 
 //Background image URL
 $imagesPath : "../../images";
-
-
 
 //Rounded corners misins
 @mixin rounded-corners($radius) {
@@ -84,4 +92,10 @@ $imagesPath : "../../images";
 	-ms-backface-visibility: $backface-visibilitys;
 	-o-backface-visibility: $backface-visibilitys;
 	backface-visibility: $backface-visibilitys;
+}
+
+
+//Rounded corners misins
+@mixin sm-width($make-sm) {
+  width: $make-sm;
 }

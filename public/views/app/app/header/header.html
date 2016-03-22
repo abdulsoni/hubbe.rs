@@ -6,8 +6,8 @@
         <ul class="nav navbar-nav top-nav">
             <li><a>Home</a></li>
             <li><a>Create</a></li>
-            <li><a>Expert</a></li>
-            <li><a>Invest</a></li>
+            <li><a ui-sref="app.expert" ng-class="{'activenav': $state.current.name.indexOf('expert') !== -1}">Expert</a></li>
+            <li><a ui-sref="app.invest" ng-class="{'activenav': $state.current.name.indexOf('invest') !== -1}">Invest</a></li>
             <li><a ui-sref="app.contests" ng-class="{'activenav': $state.current.name.indexOf('contest') !== -1}">Contest</a></li>
         </ul>
         <ul class="nav navbar-nav top-nav pull-right" ng-if="!authenticated">

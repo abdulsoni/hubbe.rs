@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.controllers').controller('InvestCtrl', function($rootScope, $scope, $state, $resource, $timeout, FdScroller) {
+    angular.module('fundator.controllers').controller('GrabShareCtrl', function($rootScope, $scope, $state, $resource, $timeout, FdScroller) {
         console.log('Invest Started');
         $rootScope.$broadcast('startLoading');
 

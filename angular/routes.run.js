@@ -144,6 +144,9 @@
             $rootScope.activeRole = role;
             $cookies.put('fd_active_role', role);
 
+            console.log('roleId');
+            console.log(roleId);
+
             if (!$rootScope.initialRoleAssignment) {
                 $rootScope.initialRoleAssignment = true;
             }

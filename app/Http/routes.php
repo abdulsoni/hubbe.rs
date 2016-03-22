@@ -86,8 +86,9 @@ $api->version('v1', function ($api) {
     /*
      * Investors
      */
-    $api->get('investors/', 'Fundator\Http\Controllers\UserController@indexInvestor');
-    $api->get('investors/{id}', 'Fundator\Http\Controllers\UserController@showInvestor');
+    // $api->get('investors/', 'Fundator\Http\Controllers\InvestorController@index')
+    $api->get('investors/{id}', 'Fundator\Http\Controllers\InvestorController@show');
+    $api->put('investors/{id}', 'Fundator\Http\Controllers\InvestorController@update');
 
     /*
      * Files
