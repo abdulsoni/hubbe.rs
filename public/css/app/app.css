@@ -10329,7 +10329,7 @@ footer {
   left: 50%;
   transform: translate(-50%, -50%); }
   .no-have.no-margin {
-    margin-left: 0; }
+    margin-left: 0 !important; }
 
 .owl-demo .owl-item > div img {
   transition: all 0.3s; }
