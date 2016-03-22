@@ -725,10 +725,15 @@ ul.tabProjectList:after {
 
 ul.tabProjectList li {
     float: left;
-    width: 32.5%;
+    // width: 32.5%;
     list-style: none;
-    margin-right: 1.22%;
-    margin-bottom: 1.2%;
+    // margin-right: 1.22%;
+
+    margin-right:2%; width: 49%;
+    &:nth-child(3n+0){margin-right:2%;}
+    &:nth-child(2n+0){margin-right:0;}
+
+    margin-bottom: 2%;
     cursor: pointer;
     &:nth-child(1n) .projectImg {
         background-image:url(#{$imagesPath}/project1.jpg);
@@ -748,9 +753,9 @@ ul.tabProjectList li {
     &:nth-child(6n) .projectImg {
         background-image:url(#{$imagesPath}/project6.jpg);
     }
-    &:nth-child(3n+0) {
-        margin-right: 0;
-    }
+    // &:nth-child(3n+0) {
+    //     margin-right: 0;
+    // }
 }
 ul.tabProjectList li:hover {
     .projectImg {

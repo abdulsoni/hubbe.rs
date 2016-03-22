@@ -7726,11 +7726,15 @@ ul.tabProjectList:after {
 
 ul.tabProjectList li {
   float: left;
-  width: 32.5%;
   list-style: none;
-  margin-right: 1.22%;
-  margin-bottom: 1.2%;
+  margin-right: 2%;
+  width: 49%;
+  margin-bottom: 2%;
   cursor: pointer; }
+  ul.tabProjectList li:nth-child(3n+0) {
+    margin-right: 2%; }
+  ul.tabProjectList li:nth-child(2n+0) {
+    margin-right: 0; }
   ul.tabProjectList li:nth-child(1n) .projectImg {
     background-image: url(../../images/project1.jpg); }
   ul.tabProjectList li:nth-child(2n) .projectImg {
@@ -7743,8 +7747,6 @@ ul.tabProjectList li {
     background-image: url(../../images/project5.jpg); }
   ul.tabProjectList li:nth-child(6n) .projectImg {
     background-image: url(../../images/project6.jpg); }
-  ul.tabProjectList li:nth-child(3n+0) {
-    margin-right: 0; }
 
 ul.tabProjectList li:hover .projectImg {
   opacity: 0.85; }
