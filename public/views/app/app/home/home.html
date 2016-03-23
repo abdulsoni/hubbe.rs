@@ -1,0 +1,116 @@
+<div class="homepage-banner-section" ng-if="contests.length > 0">
+    <div class="homepage-banner-section_text">
+        Create work &amp; Entrepreneurship inro reality
+    </div>
+    <div class="marginT15">
+        <button class="btn btn-white btn-ujarak" ui-sref="app.auth.signup">Become a Creator</button>
+    </div>
+</div>
+
+<div class="container" ng-if="contests.length > 0">
+    <ul class="tabProjectList">
+        <li ng-repeat="contest in contests" ui-sref="app.contest({contestId: contest.id})">
+            <div class="projectImg" ng-style="{'background-image': (contest.thumbnail) ? 'url(/' + contest.thumbnail + ')': ''}">
+                <div class="row rankingMng">
+                    <div class="col-xs-3 leftRank">
+                        <h4>Contestants</h4>
+                        <span class="countValue">{{contest.num_contestants}}</span>
+                    </div>
+                    <div class="col-xs-3">
+                        <h4>Time to Go</h4>
+                        {{ end_time = (contest.start_time | amAdd : contest.duration : 'days'); ''}}
+                        <span class="countValue">{{ end_time | amDifference : null : 'days' }}</span>
+                    </div>
+                </div>
+            </div>
+            <h3 class="projectHeading">{{contest.name}}</h3>
+        </li>
+    </ul>
+</div>
+
+<div class="homepage-banner-section" ng-if="expertises.length > 0">
+    <div class="homepage-banner-section_text">
+        You have a strong expertise, be part of the 17 experts committing their skills on 7 innovative projects. All types of expert are needed.
+    </div>
+    <div class="marginT15">
+        <button class="btn btn-white btn-ujarak" ui-sref="app.auth.signup">Become an Expert</button>
+    </div>
+</div>
+
+<div class="container" ng-if="expertises.length > 0">
+    <ul class="tabProjectList threeCol">
+        <li ng-repeat="expertise in expertises">
+            <div class="homepage-expertise expertise sliding-tiles">
+                <div class="sliding-tiles_front product-thumbnail" style="background-image:url(images/project1.jpg);">
+                    <div class="product-header">
+                        <h3>{{expertise.name}}</h3>
+                    </div>
+                    <div class="product-footer">TASK TO BE DONE
+                        <div class="radiusBox blankandwhite">C</div>
+                    </div>
+                </div>
+                <div class="sliding-tiles_back expertise well product-thumbnail">
+                    <h3><strong>{{expertise.name}}</strong></h3>
+                    <p>{{expertise.description}}</p>
+                    <ul class="marginT15 list-unstyled clearfix profileList">
+                        <li>
+                            <a class="profilePick smallPick "><img src="images/profile.jpg" alt=""></a>Amanda F. &nbsp; Project Funder
+                        </li>
+                        <li>
+                            <a class="profilePick smallPick "><img src="images/profile.jpg" alt=""></a>Amanda F. &nbsp; Project Programmer
+                        </li>
+                        <li class="profilePick smallPick">
+                            <a href="#"><img src="images/profile.jpg" alt=""></a>
+                            <a href="#"><img src="images/profile.jpg" alt=""></a>
+                            <a href="#"><img src="images/profile.jpg" alt=""></a>
+                            <a href="#"><img src="images/profile.jpg" alt=""></a> <a href="#">and 56 experts</a>
+                        </li>
+                    </ul>
+                    <div class="product-footer headingWithBg">
+                        <h3>Total Budget:  $1200</h3>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </div>
+</div>
+
+<div class="homepage-banner-section">
+    <div class="homepage-banner-section_text">
+        Invest your money in creative projects and earn up to 30% return: <strong>12860 usd</strong> from <strong>{{investors.length}}</strong> investors available. Start from 10usd.
+    </div>
+    <div class="marginT15">
+        <button class="btn btn-white btn-ujarak" ui-sref="app.auth.signup">Become an Investor</button>
+    </div>
+</div>
+
+<div class="container" ng-if="investors.length > 0">
+    <ul class="tabProjectList fourCol">
+        <li ng-repeat="investor in investors">
+            <div class="homepage-investors expertise sliding-tiles">
+                <div class="product-thumbnail" style="background-image:url(images/investors/{{investor.image}});">
+                    <div class="product-header">
+                        <h3>{{investor.name}}</h3>
+                    </div>
+                </div>
+                <div class="sliding-tiles_back expertise well product-thumbnail">
+                    <h3 class="investor-thumbnail_name-highlight">{{investor.name}}</h3>
+                    <br>
+                    <div class="investor-location marginB20">
+                        <span class="icon icon-location"></span>
+                        &nbsp;{{investor.country}}
+                    </div>
+                    <div class="investor-thumbnail_bio" ellipsis ellipsis-append="...">
+                        {{investor.bio}}
+                    </div>
+                    <hr>
+                    <ul class="socialList padding0 navbar-nav">
+                        <li><a><span class="icon icon-facebook"></span></a></li>
+                        <li><a><span class="icon icon-twitter"></span></a></li>
+                        <li><a><span class="icon icon-linkedin2"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+    </div>
+</div>

@@ -40,13 +40,13 @@ $imagesPath : "../../images";
 }
 
 //tranisition
-@mixin transition($transition-animat){
-	-webkit-transition: $transition-animat;
- 	-moz-transition: $transition-animat;
-	-ms-transition: $transition-animat;
-	-o-transition: $transition-animat;
-	transition: $transition-animat;
-}
+// @mixin transition($transition-animat){
+// 	-webkit-transition: $transition-animat;
+//  	-moz-transition: $transition-animat;
+// 	-ms-transition: $transition-animat;
+// 	-o-transition: $transition-animat;
+// 	transition: $transition-animat;
+// }
 
 
 //box shadow

@@ -101,7 +101,18 @@
                 if (typeof($rootScope.user) === 'undefined' && fromState.name.indexOf('recover') === -1) {
                     $rootScope.activeState = toState;
                     $rootScope.activeStateParams = toParams;
-                } else if(!$rootScope.initialRoleAssignment && $rootScope.user.registered == 1) {
+                }
+
+                console.log($rootScope.initialRoleAssignment);
+
+                if (typeof($rootScope.user) === 'undefined') {
+                    if (!$rootScope.initialRoleAssignment) {
+                        console.log('fuck off ...');
+                        // event.preventDefault();
+                        return;
+                    }
+                }else if(!$rootScope.initialRoleAssignment && $rootScope.user.registered == 1){
+                    console.log('fuck off again ...');
                     event.preventDefault();
                 }
                 return;
@@ -143,9 +154,6 @@
         $rootScope.switchUserRole = function(role, roleId, reload) {
             $rootScope.activeRole = role;
             $cookies.put('fd_active_role', role);
-
-            console.log('roleId');
-            console.log(roleId);
 
             if (!$rootScope.initialRoleAssignment) {
                 $rootScope.initialRoleAssignment = true;

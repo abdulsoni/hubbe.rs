@@ -103,6 +103,7 @@ $api->version('v1', function ($api) {
     /*
      * Expertise & Expertise Category
      */
+    $api->get('expertise/', 'Fundator\Http\Controllers\ExpertiseController@index');
     $api->get('expertise/category/{category}', 'Fundator\Http\Controllers\ExpertiseController@index');
     $api->get('expertise/{id}/skills', 'Fundator\Http\Controllers\ExpertiseController@skills');
     $api->get('expertise-category/{parent?}', 'Fundator\Http\Controllers\ExpertiseCategoryController@index');

@@ -1,0 +1,60 @@
+.btn-white{
+	font-size: 18px;
+	font-weight: bold;
+
+	color: #fff;
+	border-radius: 0;
+	padding: 8px 25px 8px;
+	line-height: 26px;
+
+	background-color: transparent;
+	border: 2px solid #fff;
+
+	&:before{
+		background-color: #fff;
+	}
+
+	&:hover, &:active, &:focus{
+		color: $fd-green;
+		border: 2px solid #fff;
+	}
+
+	&.large{
+		padding: 15px 36px 14px;
+	}
+
+	z-index: 10;
+}
+
+.btn-ujarak{
+	position: relative;
+	@include transition(border-color 0.4s cubic-bezier(0.2, 1, 0.3, 1));
+
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+
+	background-color: transparent;
+	border: 2px solid;
+
+	&:before{
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: #fff;
+		z-index: -1;
+		opacity: 0;
+		@include scale(0.7, 1);
+		@include transition(transform 0.4s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.2, 1, 0.3, 1));
+	}
+
+
+	&:hover, &:active, &:focus{
+		&:before{
+			opacity: 1;
+			@include translate3d(0, 0, 0);
+		}
+	}
+}

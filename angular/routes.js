@@ -104,6 +104,9 @@
             })
             .state('app.home', {
                 url: '/',
+                data: {
+                    bodyClass: 'homepage'
+                },
                 views: {
                     'main@': {
                         templateUrl: getView('home'),

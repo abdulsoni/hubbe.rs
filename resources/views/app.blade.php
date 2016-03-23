@@ -17,14 +17,14 @@
     <meta name="robots" content="none">
 </head>
 
-<body ng-class="{'navigation-is-open': isNavShown === 1, 'navigation-half-open': isNavShown === 0.5}" flow-prevent-drop>
+<body class="ng-class:[$state.current.data.bodyClass]" ng-class="{'navigation-is-open': isNavShown === 1, 'navigation-half-open': isNavShown === 0.5}" flow-prevent-drop>
     <header ui-view="header"></header>
     <div class="navigation" ui-view="navigation"></div>
 
     <main>
 
         <section class="body-content">
-            <div class="container marginB60 ng-hide" ng-show="authenticated && user.registered === 1" ng-if="authenticated && user.registered === 1">
+            <div class="notification-section container marginB60 ng-hide" ng-show="authenticated && user.registered === 1" ng-if="authenticated && user.registered === 1">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="flast-notice-list" ui-view="flashNotice"></div>
