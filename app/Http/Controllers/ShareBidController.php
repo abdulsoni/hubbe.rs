@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use Fundator\Http\Requests;
 use Fundator\Http\Controllers\Controller;
 
+use Fundator\User;
+use Fundator\ShareListing;
+use Fundator\ShareBid;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 class ShareBidController extends Controller
 {
     /**
@@ -27,7 +32,35 @@ class ShareBidController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $statusCode = 200;
+        $response = [];
+
+        try{
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                throw new Exception('User not found', 1);
+            }
+
+            $shareListing = ShareListing::find($request->share_listing_id);
+
+            $shareBid = ShareBid::create([
+                'num_shares' => $request->num_shares,
+                'bid_amount' => $request->bid_amount
+            ]);
+
+            $shareBid->user()->associate($user);
+            $shareBid->shareListing()->associate($shareListing);
+
+            if ($shareBid->save()) {
+                $response = $shareBid;
+            }else{
+                throw new Exception('Bid can not be placed', 1);
+            }
+        }catch(Exception $e){
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
     /**

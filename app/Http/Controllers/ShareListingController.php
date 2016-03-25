@@ -46,16 +46,16 @@ class ShareListingController extends Controller
     {
         $statusCode = 200;
         $response = [];
-        $primaryListing = ShareListing::where('id', '>', 0)->with(['shareBids.user' => function($query){
-            $query->addSelect(['id', 'name']);
-        }])->first();
+        $primaryListing = ShareListing::where('id', '>', 0)->first();
 
         try{
             $listing_data = $primaryListing->getAttributes();
             $listing_data['total_amount'] = $primaryListing->shareBids->sum('bid_amount');
             $listing_data['average_amount'] = $primaryListing->shareBids->avg('bid_amount');
             $listing_data['user'] = $primaryListing->user;
-            $listing_data['bids'] = $primaryListing->shareBids;
+            $listing_data['bids'] = $primaryListing->shareBids()->orderBy('bid_amount', 'desc')->with(['user' => function($query){
+                $query->addSelect(['id', 'name']);
+            }])->get();
             $response = $listing_data;
         }catch(Exception $e){
             $statusCode = 400;

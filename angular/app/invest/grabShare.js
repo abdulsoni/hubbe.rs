@@ -12,8 +12,9 @@
             showBidNow: false,
             myBid: {
                 bid_amount: 0.72,
-                num_shares: 10
-            }
+                num_shares: 10,
+                saving: false
+            },
         };
 
         // Scroll to the top
@@ -33,9 +34,35 @@
         ];
 
         // Get all listings
-        $http.get('/api/share-listing/').then(function(result){
-            $scope.data.primaryShareListing = result.data;
-        });
+        function loadPrimaryListing() {
+            $scope.data.primaryShareListing = null;
+
+            $http.get('/api/share-listing/').then(function(result){
+                $scope.data.primaryShareListing = result.data;
+            });
+        }
+
+        loadPrimaryListing();
+
+        $scope.confirmBid = function(){
+            $scope.data.myBid.saving = true;
+
+            var myBid = {
+                'share_listing_id': $scope.data.primaryShareListing.id,
+                'bid_amount': $scope.data.myBid.bid_amount,
+                'num_shares': $scope.data.myBid.num_shares
+            };
+
+            $http.post('/api/share-bids', myBid).then(function(result){
+                $scope.data.myBid.saving = false;
+
+                if (typeof(result.error) === 'undefined') {
+                    console.log(result.data);
+                    $scope.data.showBidNow = false;
+                    loadPrimaryListing();
+                }
+            });
+        }
 
     });
 

@@ -48,7 +48,11 @@
     </div>
 </div>
 
-<fd-loader class="center-block" ng-if="!data.primaryShareListing"></fd-loader>
+<div ng-if="!data.primaryShareListing">
+    <br><br>
+    <fd-loader class="center-block"></fd-loader>
+    <br><br>
+</div>
 
 <div class="row" ng-if="data.primaryShareListing">
     <div class="col-xs-12">
@@ -79,7 +83,7 @@
                     </h4>
                     <h4 class="clearfix paddingTB15">
                         <span class="pull-left">Average Bid:</span>
-                        <span class="pull-left paddingL25">{{data.primaryShareListing.total_amount | currency:'USD '}} / share</span>
+                        <span class="pull-left paddingL25">{{data.primaryShareListing.average_amount | currency:'USD '}} / share</span>
                     </h4>
                     <h4 class="clearfix">
                         <span class="pull-left">Number of Biddee:</span>
@@ -122,7 +126,10 @@
                         </div>
                         <div class="col-xs-2 paddingL0">
                             <span class="total-cost">{{data.myBid.bid_amount * data.myBid.num_shares | currency:'USD '}}</span>
-                            <a class="confirmBid btn btn-info btn-block" ng-disabled="bidNowForm.$invalid" ng-click="confirmBid()">Bid Now</a>
+                            <a class="confirmBid btn btn-info btn-block" ng-disabled="bidNowForm.$invalid" ng-click="confirmBid()">
+                                <span ng-if="!data.myBid.saving">Bid Now</span>
+                                <span ng-if="data.myBid.saving">Saving ...</span>
+                            </a>
                         </div>
                     </form>
                 </div>
