@@ -35,6 +35,6 @@ class ShareBid extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function shareListing(){
-    	return $this->belongsTo('Fundator\shareListing');
+    	return $this->belongsTo('Fundator\ShareListing');
     }
 }
