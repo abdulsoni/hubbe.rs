@@ -24,7 +24,7 @@ return array(
         ),
         'shareListing' => array(
             'title' => 'Share Listing',
-            'relationship' => 'shareListing',
+            'relationship' => 'ShareListing',
             'select' => '(:table).title',
         ),
         'num_shares' => array(
