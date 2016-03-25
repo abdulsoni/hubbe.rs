@@ -1,9 +1,20 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.controllers').controller('GrabShareCtrl', function($rootScope, $scope, $state, $resource, $timeout, FdScroller) {
+    angular.module('fundator.controllers').controller('GrabShareCtrl', function($rootScope, $scope, $state, $http, $timeout, FdScroller) {
         console.log('Invest Started');
         $rootScope.$broadcast('startLoading');
+
+        $scope.Math = window.Math;
+
+        $scope.data = {
+            primaryShareListing: null,
+            showBidNow: false,
+            myBid: {
+                bid_amount: 0.72,
+                num_shares: 10
+            }
+        };
 
         // Scroll to the top
         FdScroller.toTop();
@@ -20,6 +31,12 @@
             {name: 'Xavier Paulin', country: 'Taiwan', image: '5.jpg', 'bio': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure inventore nesciunt illum, pariatur molestias dignissimos ipsa iste est. Sed, assumenda dolorum? Ab blanditiis quasi, voluptates iste iusto vero deserunt sunt.'},
             {name: 'Cindy Chung', country: 'Hong Kong', image: '6.jpg', 'bio': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure inventore nesciunt illum, pariatur molestias dignissimos ipsa iste est. Sed, assumenda dolorum? Ab blanditiis quasi, voluptates iste iusto vero deserunt sunt.'}
         ];
+
+        // Get all listings
+        $http.get('/api/share-listing/').then(function(result){
+            $scope.data.primaryShareListing = result.data;
+        });
+
     });
 
 })();

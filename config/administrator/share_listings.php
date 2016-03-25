@@ -62,6 +62,10 @@ return array(
             'type' => 'number',
             'decimals' => 2,
             'thousands_separator' => ',',
+        ),
+        'duration' => array(
+            'title' => 'Duration',
+            'type' => 'number'
         )
     ),
 

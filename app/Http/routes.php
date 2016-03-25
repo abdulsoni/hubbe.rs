@@ -91,6 +91,18 @@ $api->version('v1', function ($api) {
     $api->put('investors/{id}', 'Fundator\Http\Controllers\InvestorController@update');
 
     /*
+     * Shares Listing
+     */
+    $api->get('share-listing', 'Fundator\Http\Controllers\ShareListingController@primary');
+    $api->put('share-listing/{id}', 'Fundator\Http\Controllers\ShareListingController@show');
+
+    /*
+     * Shares Bid
+     */
+    $api->get('share-bids', 'Fundator\Http\Controllers\ShareBidController@index');
+    $api->put('share-bids/{id}', 'Fundator\Http\Controllers\ShareBidController@show');
+
+    /*
      * Files
      */
     $api->post('files/', 'Fundator\Http\Controllers\FileController@store');

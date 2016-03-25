@@ -1,0 +1,60 @@
+<?php
+use Fundator\Events\AssignJury;
+
+/**
+ * Directors model config
+ */
+
+return array(
+
+    'title' => 'Shares Transactions',
+
+    'single' => 'Share Transaction',
+
+    'model' => 'Trexology\Pointable\Models\Transaction',
+
+    /**
+     * The display columns
+     */
+    'columns' => array(
+        'id',
+        // 'pointable' => array(
+        //     'title' => 'Name',
+        //     'relationship' => 'user',
+        //     'select' => 'name'
+        // ),
+        'amount' => array(
+            'title' => 'Amount',
+        ),
+        'message' => array(
+            'title' => 'Message',
+        ),
+        'created_at' => array(
+            'title' => 'Created At',
+        ),
+        'updated_at' => array(
+            'title' => 'Updated At',
+        )
+    ),
+
+    /**
+     * The width of the model's edit form
+     *
+     * @type int
+     */
+    'form_width' => 500,
+
+    /**
+     * The editable fields
+     */
+    'edit_fields' => array(
+        'id',
+        'amount' => array(
+            'title' => 'Amount',
+        ),
+        'message' => array(
+            'title' => 'Message',
+            'type' => 'wysiwyg'
+        )
+    ),
+);

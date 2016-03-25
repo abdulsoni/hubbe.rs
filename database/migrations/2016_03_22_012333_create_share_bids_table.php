@@ -15,6 +15,7 @@ class CreateShareBidsTable extends Migration
         Schema::create('share_bids', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
+            $table->integer('share_listing_id');
 
             $table->integer('num_shares');
             $table->float('bid_amount');

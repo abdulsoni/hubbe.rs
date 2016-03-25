@@ -66,7 +66,7 @@ return array(
 		'Projects' => array('projects'),
 		'Investments' => array('investments'),
 		'Pages' => array('pages'),
-		'Transactions' => array('transactions'),
+		'Transactions' => array('transactions', 'share_transactions'),
 		'Auctions' => array('share_listings', 'share_bids'),
 		'Users' => array('users', 'roles', 'permissions'),
 		'Settings' => array('settings.site'),

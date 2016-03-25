@@ -22,6 +22,11 @@ return array(
             'relationship' => 'user',
             'select' => '(:table).name',
         ),
+        'shareListing' => array(
+            'title' => 'Share Listing',
+            'relationship' => 'shareListing',
+            'select' => '(:table).title',
+        ),
         'num_shares' => array(
             'title' => 'Number of Shares'
         ),
@@ -46,6 +51,11 @@ return array(
             'type' => 'relationship',
             'title' => 'User',
             'name_field' => 'name'
+        ),
+        'shareListing' => array(
+            'type' => 'relationship',
+            'title' => 'Share Listing',
+            'name_field' => 'title'
         ),
         'num_shares' => array(
             'title' => 'Number of Shares',

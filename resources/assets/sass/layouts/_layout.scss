@@ -2110,12 +2110,24 @@ a.bidNow {
     color: $white-color;
     font-size: 20px;
     margin-left: -15px;
+
+    transition: none;
+
     &:hover,
     &:focus {
         text-decoration: none;
         color: $white-color;
         background-color: $secondary-color;
     }
+
+    &.danger{
+        background-color: $brand-danger;
+
+        &:hover, &:focus{
+            background-color: $brand-danger;
+        }
+    }
+
 }
 
 a.action-bell {
@@ -2176,6 +2188,67 @@ a.action-bell {
     width: 30%;
     text-align: left;
     padding-left: 30px;
+}
+
+// Bid now panel
+
+.bid-now-panel{
+    label{
+        display: block;
+        width: 90%;
+
+        > span{
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .inputgroup{
+            position: relative;
+
+            > span{
+                position: absolute;
+                top: 33px;
+                font-size: 13px;
+                color: #8c8c8c;
+
+                &.prefix{
+                    left: 15px;
+                }
+            }
+
+            input{
+                padding-left: 60px;
+            }
+        }
+
+        input{
+            box-shadow: none;
+            border-radius: 0;
+            margin-bottom: 5px;
+
+            &:focus{
+                border-color: $fd-green;
+                box-shadow: none !important;
+            }
+
+            &.ng-invalid{
+                border-color: $brand-danger !important;
+            }
+        }
+
+        > small{
+                color: #a2a2a2;
+            font-style: italic;
+        }
+    }
+
+    .total-cost{
+        font-weight: bold;
+        text-align: center;
+        display: block;
+        font-size: 20px;
+        margin-bottom: 12px;
+    }
 }
 
 //Registration

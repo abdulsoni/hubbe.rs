@@ -8892,11 +8892,16 @@ a.bidNow {
   text-align: center;
   color: #fff;
   font-size: 20px;
-  margin-left: -15px; }
+  margin-left: -15px;
+  transition: none; }
   a.bidNow:hover, a.bidNow:focus {
     text-decoration: none;
     color: #fff;
     background-color: #95c54d; }
+  a.bidNow.danger {
+    background-color: #ec1c24; }
+    a.bidNow.danger:hover, a.bidNow.danger:focus {
+      background-color: #ec1c24; }
 
 a.action-bell {
   display: block;
@@ -8953,6 +8958,43 @@ a.action-bell {
   width: 30%;
   text-align: left;
   padding-left: 30px; }
+
+.bid-now-panel label {
+  display: block;
+  width: 90%; }
+  .bid-now-panel label > span {
+    margin-bottom: 5px;
+    display: block; }
+  .bid-now-panel label .inputgroup {
+    position: relative; }
+    .bid-now-panel label .inputgroup > span {
+      position: absolute;
+      top: 33px;
+      font-size: 13px;
+      color: #8c8c8c; }
+      .bid-now-panel label .inputgroup > span.prefix {
+        left: 15px; }
+    .bid-now-panel label .inputgroup input {
+      padding-left: 60px; }
+  .bid-now-panel label input {
+    box-shadow: none;
+    border-radius: 0;
+    margin-bottom: 5px; }
+    .bid-now-panel label input:focus {
+      border-color: #95c54d;
+      box-shadow: none !important; }
+    .bid-now-panel label input.ng-invalid {
+      border-color: #ec1c24 !important; }
+  .bid-now-panel label > small {
+    color: #a2a2a2;
+    font-style: italic; }
+
+.bid-now-panel .total-cost {
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  font-size: 20px;
+  margin-bottom: 12px; }
 
 .steps-label {
   font-size: 16px;
@@ -10349,6 +10391,11 @@ footer {
   top: 100px;
   left: 50%;
   transform: translateX(-50%); }
+
+.center-block .fd-loader {
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
 
 .position-relative {
   position: relative; }
