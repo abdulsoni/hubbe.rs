@@ -121,7 +121,12 @@
                 }
             });
         }
-        $scope.populateSideNavigation();
+
+        $rootScope.$watch('user', function(user){
+            if (typeof(user) === 'undefined') return;
+
+            $scope.populateSideNavigation();
+        });
 
         $scope.openFullMenu = function(){
             $rootScope.isNavShown = 1;

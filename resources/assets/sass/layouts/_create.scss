@@ -1,0 +1,29 @@
+.project-accordion{
+	margin-bottom: 25px;
+
+	.accordion-toggle{
+		@include transition(none !important);
+	}
+
+	.panel-collapse.collapsing{
+		.panel-body{
+			@include transition(none !important);
+		}
+	}
+}
+
+.VProgress-aligment{
+	.progress-bar-info{
+		padding: 0 !important;
+	}
+
+	&.completed{
+		.index-value{
+			color: #fff;
+		}
+
+		.progress-bar-info{
+			height: 100% !important;
+		}
+	}
+}

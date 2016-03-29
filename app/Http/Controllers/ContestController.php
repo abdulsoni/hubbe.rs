@@ -35,6 +35,9 @@ class ContestController extends Controller
             $contest_data['num_contestants'] = $contest->num_contestants;
             $contest_data['rank'] = 1;
 
+            unset($contest_data['description']);
+            unset($contest_data['rules']);
+
             $response[] = $contest_data;
         }
 

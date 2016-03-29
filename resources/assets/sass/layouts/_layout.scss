@@ -1720,7 +1720,7 @@ ul.list-inline-group {
     }
     .panel-body {
         border-top: none !important;
-        height: 855px;
+        height: 715px;
     }
     .panel-group .panel {
         @include rounded-corners(0px);
@@ -1736,11 +1736,11 @@ ul.list-inline-group {
         position: absolute;
     }
     .panel_body {
-        @include transform(translateX(-100%) rotate(90deg));
-        width: 820px;
+        @include transform(translateX(-90%) rotate(90deg));
+        width: 700px;
         padding: 2px 0px 2px 30px;
-        height: 478px;
-        @include transform-origin(80% 134%);
+        height: 458px;
+        @include transform-origin(80% 119%);
         font-size: 16px;
         font-weight: 300;
         .btn-info {

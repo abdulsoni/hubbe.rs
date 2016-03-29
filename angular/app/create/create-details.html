@@ -1,0 +1,103 @@
+<div class="well">
+    <form class="project-form" name="projectDetails">
+        <div class="project-form-row">
+            <h4><strong>Your great idea name</strong></h4>
+            <p>
+                <dfn>Your project name is the first thing that outside world will see. make it attractive, descriptive, mysterious, easy to remember and short. Keep it under 100 characters.</dfn>
+            </p>
+            <input type="text" placeholder="Project name..." name="name" ng-model="details.name" required>
+            <div class="VProgress-aligment" ng-class="{'completed': projectDetails.name.$valid }">
+                <div class="progress-vertical">
+                    <div class="progress-bar-vertical progress-bar-info"></div>
+                    <div class="index-value">A</div>
+                </div>
+            </div>
+        </div>
+        <div class="project-form-row">
+            <h4><strong>Describe your idea</strong></h4>
+            <p>
+                <dfn>Here you have to be more specific about your product.
+                    <br> Give details about your product features, size, colors. Tell how you think your product will change the world or what you are going to bring that is different.</dfn>
+            </p>
+            <textarea placeholder="Project description..." name="projectDescription" ng-model="details.projectDescription" required></textarea>
+            <div class="VProgress-aligment" ng-class="{'completed': projectDetails.projectDescription.$valid }">
+                <div class="progress-vertical">
+                    <div class="progress-bar-vertical progress-bar-info"></div>
+                    <div class="index-value">B</div>
+                </div>
+            </div>
+        </div>
+        <div class="project-form-row">
+            <h4><strong>Market (Optional)</strong></h4>
+            <p>
+                <dfn>Here you describe the people who according to you will say "whoaou" to your project. How you see them: Age, gender, occupations. Reasons they will like it.</dfn>
+            </p>
+            <textarea placeholder="Market description..." name="marketDescription" ng-model="details.marketDescription" required></textarea>
+            <div class="VProgress-aligment" ng-class="{'completed': projectDetails.marketDescription.$valid }">
+                <div class="progress-vertical">
+                    <div class="progress-bar-vertical progress-bar-info"></div>
+                    <div class="index-value">C</div>
+                </div>
+            </div>
+        </div>
+        <div class="project-form-row">
+            <h4><strong>Price</strong></h4>
+            <p>
+                <dfn>Here you can make some assumptions about what would look like a good market price for your target audience.</dfn>
+            </p>
+            <input type="text" placeholder="Price" name="price" ng-model="details.price" required>
+            <div class="VProgress-aligment" ng-class="{'completed': projectDetails.price.$valid }">
+                <div class="progress-vertical">
+                    <div class="progress-bar-vertical progress-bar-info"></div>
+                    <div class="index-value">D</div>
+                </div>
+            </div>
+        </div>
+        <div class="project-form-row">
+            <h4><strong>Geography</strong></h4>
+            <p>
+                <dfn>Where you want the team to be from?</dfn>
+            </p>
+            <div class="radiobox geography-radiobox">
+                <label for="geography-wherever">
+                    <input type="radio" name="geography" id="geography-wherever" value="wherever" ng-model="details.geography" checked />
+                    <i></i> <span><dfn>wherever</dfn></span>
+                </label>
+                <label for="geography-countries">
+                    <input type="radio" name="geography" id="geography-countries" value="countries" ng-model="details.geography" />
+                    <i></i> <span><dfn>write specific Countries</dfn></span>
+                </label>
+            </div>
+            <div class="location-project">
+                <input type="text" placeholder="Kenia, United Kingdom, etc..." name="location" ng-model="details.countries" ng-class="{'visually-hidden': details.geography !== 'countries'}">
+            </div>
+            <div class="VProgress-aligment" ng-class="{'completed': details.geography }">
+                <div class="progress-vertical">
+                    <div class="progress-bar-vertical progress-bar-info"></div>
+                    <div class="index-value">E</div>
+                </div>
+            </div>
+        </div>
+        <div class="project-form-row">
+            <h4><strong>Language</strong></h4>
+            <p>
+                <dfn>Which language you would prefer to deal with?</dfn>
+            </p>
+            <input type="text" name="languages" placeholder="For the moment, only english is available. Later stage will allow you to get translated version in main languages" ng-model="details.languages" required>
+            <div class="VProgress-aligment" ng-class="{'completed': projectDetails.languages.$valid }">
+                <div class="progress-vertical">
+                    <div class="progress-bar-vertical progress-bar-info"></div>
+                    <div class="index-value">F</div>
+                </div>
+            </div>
+        </div>
+        <div class="project-form-row">
+            <div class="fileUpload"> <span><dfn>+Add Files</dfn></span>
+                <input type="file" class="upload" />
+            </div>
+        </div>
+        <div class="project-form-row">
+            <input type="submit" value="Save" class="btn btn-info" ng-disabled="!projectDetails.$isValid">
+        </div>
+    </form>
+</div>

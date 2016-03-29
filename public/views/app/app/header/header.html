@@ -5,7 +5,7 @@
     <nav>
         <ul class="nav navbar-nav top-nav">
             <li><a ui-sref="app.home" ng-class="{'activenav': $state.current.name.indexOf('home') !== -1}">Home</a></li>
-            <li><a>Create</a></li>
+            <li><a ui-sref="app.create" ng-class="{'activenav': $state.current.name.indexOf('create') !== -1}">Create</a></li>
             <li><a ui-sref="app.expert" ng-class="{'activenav': $state.current.name.indexOf('expert') !== -1}">Expert</a></li>
             <li><a ui-sref="app.invest" ng-class="{'activenav': $state.current.name.indexOf('invest') !== -1}">Invest</a></li>
             <li><a ui-sref="app.contests" ng-class="{'activenav': $state.current.name.indexOf('contest') !== -1}">Contest</a></li>

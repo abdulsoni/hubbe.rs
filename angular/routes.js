@@ -150,6 +150,69 @@
                     }
                 }
             })
+            .state('app.create', {
+                url: '/create',
+                views: {
+                    'main@': {
+                        templateUrl: getView('create'),
+                        controller: 'CreateCtrl'
+                    }
+                }
+            })
+            .state('app.create.details', {
+                url: '/details',
+                views: {
+                    'steps': {
+                        templateUrl: getView('create', 'create-details'),
+                        controller: 'CreateDetailsCtrl'
+                    }
+                }
+            })
+            .state('app.create.superexpert', {
+                url: '/super-expert',
+                views: {
+                    'steps': {
+                        templateUrl: getView('create', 'create-super-expert'),
+                        controller: 'CreateSECtrl'
+                    }
+                }
+            })
+            .state('app.create.expertise', {
+                url: '/expertise',
+                views: {
+                    'steps': {
+                        templateUrl: getView('create', 'create-expertise'),
+                        controller: 'CreateExpertiseCtrl'
+                    }
+                }
+            })
+            .state('app.create.experts', {
+                url: '/experts',
+                views: {
+                    'steps': {
+                        templateUrl: getView('create', 'create-experts'),
+                        controller: 'CreateExpertCtrl'
+                    }
+                }
+            })
+            .state('app.create.budget', {
+                url: '/budget',
+                views: {
+                    'steps': {
+                        templateUrl: getView('create', 'create-budget'),
+                        controller: 'CreateBudgetCtrl'
+                    }
+                }
+            })
+            .state('app.create.investors', {
+                url: '/investors',
+                views: {
+                    'steps': {
+                        templateUrl: getView('create', 'create-investors'),
+                        controller: 'CreateInvestorsCtrl'
+                    }
+                }
+            })
             .state('app.transaction', {
                 url: '/transaction',
                 views: {

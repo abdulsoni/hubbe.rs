@@ -6083,6 +6083,9 @@ fd-loader {
 .highlight {
   color: #95c54d; }
 
+.visually-hidden {
+  opacity: 0; }
+
 /*--------------- components -----------------------*/
 body {
   color: #6d6e71;
@@ -8553,7 +8556,7 @@ ul.list-inline-group.investors-group li {
 
 .project-accordion .panel-body {
   border-top: none !important;
-  height: 855px; }
+  height: 715px; }
 
 .project-accordion .panel-group .panel {
   -webkit-border-radius: 0px;
@@ -8573,19 +8576,19 @@ ul.list-inline-group.investors-group li {
   position: absolute; }
 
 .project-accordion .panel_body {
-  -webkit-transform: translateX(-100%) rotate(90deg);
-  -moz-transform: translateX(-100%) rotate(90deg);
-  -ms-transform: translateX(-100%) rotate(90deg);
-  -o-transform: translateX(-100%) rotate(90deg);
-  transform: translateX(-100%) rotate(90deg);
-  width: 820px;
+  -webkit-transform: translateX(-90%) rotate(90deg);
+  -moz-transform: translateX(-90%) rotate(90deg);
+  -ms-transform: translateX(-90%) rotate(90deg);
+  -o-transform: translateX(-90%) rotate(90deg);
+  transform: translateX(-90%) rotate(90deg);
+  width: 700px;
   padding: 2px 0px 2px 30px;
-  height: 478px;
-  -webkit-transform-origin: 80% 134%;
-  -moz-transform-origin: 80% 134%;
-  -ms-transform-origin: 80% 134%;
-  -o-transform-origin: 80% 134%;
-  transform-origin: 80% 134%;
+  height: 458px;
+  -webkit-transform-origin: 80% 119%;
+  -moz-transform-origin: 80% 119%;
+  -ms-transform-origin: 80% 119%;
+  -o-transform-origin: 80% 119%;
+  transform-origin: 80% 119%;
   font-size: 16px;
   font-weight: 300; }
   .project-accordion .panel_body .btn-info {
@@ -9826,6 +9829,26 @@ footer {
   float: none;
   max-width: 130px;
   margin: 15px auto 0; }
+
+.project-accordion {
+  margin-bottom: 25px; }
+  .project-accordion .accordion-toggle {
+    -webkit-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important; }
+  .project-accordion .panel-collapse.collapsing .panel-body {
+    -webkit-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important; }
+
+.VProgress-aligment .progress-bar-info {
+  padding: 0 !important; }
+
+.VProgress-aligment.completed .index-value {
+  color: #fff; }
+
+.VProgress-aligment.completed .progress-bar-info {
+  height: 100% !important; }
 
 /*--------------- plugins -----------------------*/
 /*
