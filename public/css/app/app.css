@@ -12443,12 +12443,25 @@ footer {
   float: right;
   top: 0;
   right: 10px;
-  position: absolute; }
+  position: absolute;
+  max-height: calc(100vh - 100px);
+  overflow: auto; }
   .quick-access_menu:before, .quick-access_menu:after {
     content: " ";
     display: table; }
   .quick-access_menu:after {
     clear: both; }
+  .quick-access_menu::-webkit-scrollbar-track {
+    position: absolute;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #F5F5F5; }
+  .quick-access_menu::-webkit-scrollbar {
+    position: absolute;
+    width: 10px;
+    background-color: #F5F5F5; }
+  .quick-access_menu::-webkit-scrollbar-thumb {
+    background-color: #000000;
+    border: 2px solid #555555; }
   .quick-access_menu .panel-group {
     margin-bottom: 0; }
   .quick-access_menu .panel {
