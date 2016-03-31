@@ -26,7 +26,7 @@
     <main>
         <section class="body-content">
             <div class="opacity-hideable opacity_hide" ng-class="{'opacity_hide': appLoading}">
-                <div class="container body-content-container padding0">
+                <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="flast-notice-list" ui-view="flashNotice"></div>
