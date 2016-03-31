@@ -17,6 +17,11 @@ return array(
      */
     'columns' => array(
         'id',
+        'creator' => array(
+            'title' => 'Creator',
+            'relationship' => 'creator.user',
+            'select' => 'name',
+        ),
         'name' => array(
             'title' => 'Name',
         )
@@ -34,6 +39,11 @@ return array(
      */
     'edit_fields' => array(
         'id',
+        'creator' => array(
+            'type' => 'relationship',
+            'title' => 'Creator',
+            'name_field' => 'name'
+        ),
         'thumbnail' => array(
             'title' => 'Image (350 x 370)',
             'type' => 'image',

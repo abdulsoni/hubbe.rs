@@ -2,6 +2,10 @@
 	// margin: 25px -15px;
 	@include clearfix();
 
+	.expertise .well{
+		overflow: hidden;
+	}
+
 	// .expertise_inner{
 	// 	position: relative;
 	// 	background: #eee;

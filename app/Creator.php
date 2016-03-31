@@ -37,6 +37,11 @@ class Creator extends Model
         return $this->hasMany('Fundator\Entry');
     }
 
+    public function projects()
+    {
+        return $this->hasMany('Fundator\Project');
+    }
+
     public function getNameAttribute()
     {
         return $this->user->name;

@@ -16,6 +16,8 @@
 }
 
 .contest-single{
+  margin-top: 30px;
+
   > h2{
     margin-top: 35px;
     margin-bottom: 20px;
@@ -92,6 +94,14 @@
     transform: translateX(-50%);
   }
 
+  .fixed-center &{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%, -50%);
+    z-index: 10;
+  }
+
   .center-block &{
     display: block;
     margin-left: auto;
@@ -107,12 +117,14 @@
   opacity: 1;
   visibility: visible;
 
-  @include transition(all 0.3s);
+  @include transition(all 0.6s 0.5s);
 }
 
 .opacity_hide{
   opacity: 0;
   visibility: hidden;
+
+  @include transition(none);
 }
 
 .carousel_content{

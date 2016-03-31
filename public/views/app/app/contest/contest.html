@@ -4,7 +4,7 @@
         <uib-tabset class="tabsection">
             <uib-tab heading="Ongoing Contests">
                 <ul class="tabProjectList">
-                    <li ng-repeat="contest in contests" ui-sref="app.contest({contestId: contest.id})">
+                    <li ng-repeat="contest in contests" ui-sref="app.contest({contestId: contest.id, contestName: contest.name})">
                         <div class="projectImg" ng-style="{'background-image': (contest.thumbnail) ? 'url(/' + contest.thumbnail + ')': ''}">
                             <div class="row rankingMng">
                                 <div class="col-xs-3 leftRank" ng-if="activeRole === 'creator'">

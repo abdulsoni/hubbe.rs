@@ -13,7 +13,12 @@
         $rootScope.activeStateParams = null;
 
         $rootScope.appLoading = true;
+        $rootScope.notificationCollapse = false;
         $rootScope.isNavShown = false;
+
+        $rootScope.collapseNotification = function(state){
+            $rootScope.notificationCollapse = state;
+        }
 
         $rootScope.toggleNavigation = function () {
             ($rootScope.isNavShown >= 0.5) ? $rootScope.isNavShown = 0 : $rootScope.isNavShown = 0.5;
@@ -54,7 +59,6 @@
                         FdNotifications.init();
 
                         if ($rootScope.user.registered == 0) {
-                            console.log('going to register');
                             $state.go('app.auth.register');
                         }else{
                             var orignalRole = $rootScope.user.role;
@@ -68,9 +72,9 @@
 
                             if (typeof(roles) !== 'undefined' && roles.length > 0) {
                                 var role = roles[0];
-                                $rootScope.switchUserRole(role.role, role.id, true);
+                                $rootScope.switchUserRole(role.role, role.id, !$rootScope.initialRoleAssignment);
                             }else{
-                                $rootScope.switchUserRole(orignalRole.role, orignalRole.id, true);
+                                $rootScope.switchUserRole(orignalRole.role, orignalRole.id, !$rootScope.initialRoleAssignment);
                             }
                         }
                     }
@@ -98,29 +102,34 @@
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
             if ($auth.isAuthenticated()) {
-                if (typeof($rootScope.user) === 'undefined' && fromState.name.indexOf('recover') === -1) {
+                // if (typeof($rootScope.user) === 'undefined' && fromState.name.indexOf('recover') === -1) {
+                //     $rootScope.activeState = toState;
+                //     $rootScope.activeStateParams = toParams;
+                // }
+
+                // if (typeof($rootScope.user) === 'undefined') {
+                //     if (!$rootScope.initialRoleAssignment) {
+                //         // event.preventDefault();
+                //         return;
+                //     }
+                // }else if(!$rootScope.initialRoleAssignment && $rootScope.user.registered == 1){
+                //     event.preventDefault();
+                // }
+
+                if (!$rootScope.initialRoleAssignment) {
                     $rootScope.activeState = toState;
                     $rootScope.activeStateParams = toParams;
-                }
-
-                console.log($rootScope.initialRoleAssignment);
-
-                if (typeof($rootScope.user) === 'undefined') {
-                    if (!$rootScope.initialRoleAssignment) {
-                        console.log('fuck off ...');
-                        // event.preventDefault();
-                        return;
-                    }
-                }else if(!$rootScope.initialRoleAssignment && $rootScope.user.registered == 1){
-                    console.log('fuck off again ...');
                     event.preventDefault();
                 }
+
                 return;
             } else {
                 if (fromState.name.indexOf('auth') === -1 && toState.name.indexOf('auth') !== -1) {
                     return;
                 } else if (fromState.name.indexOf('auth') === -1) {
                     $timeout(function() {
+                        $rootScope.activeState = toState;
+                        $rootScope.activeStateParams = toParams;
                         event.preventDefault();
                         $state.go('app.auth.login', {}, {reload: true});
                     });
@@ -131,6 +140,8 @@
                     return;
                 } else if (toState.name.indexOf('auth') === -1) {
                     $timeout(function() {
+                        $rootScope.activeState = toState;
+                        $rootScope.activeStateParams = toParams;
                         event.preventDefault();
                         $state.go('app.auth.login', {}, {reload: true});
                         return;
@@ -151,9 +162,17 @@
 
         // Switch User Role
 
-        $rootScope.switchUserRole = function(role, roleId, reload) {
+        $rootScope.switchUserRole = function(role, roleId, reload, state, stateParams) {
             $rootScope.activeRole = role;
             $cookies.put('fd_active_role', role);
+
+            if (typeof(state) === 'undefined') {
+                state = $state.current.name;
+            }
+
+            if (typeof(stateParams) === 'undefined') {
+                stateParams = $state.current.params;
+            }
 
             if (!$rootScope.initialRoleAssignment) {
                 $rootScope.initialRoleAssignment = true;
@@ -221,20 +240,20 @@
                 $http.get(model).then(function(result){
                     $rootScope.user[role] = result.data;
 
-                    if ($state.current.name === '') {
-                        $state.current.name = $rootScope.activeState.name;
-                        $state.current.params = $rootScope.activeStateParams;
+                    if (state === '') {
+                        state = $rootScope.activeState.name;
+                        stateParams = $rootScope.activeStateParams;
                     }
 
-                    $state.go($state.current.name, $state.current.params, {reload: reload});
+                    $state.go(state, stateParams, {reload: reload});
                 });
             }else{
-                if ($state.current.name === '') {
-                    $state.current.name = $rootScope.activeState.name;
-                    $state.current.params = $rootScope.activeStateParams;
+                if (state === '') {
+                    state = $rootScope.activeState.name;
+                    stateParams = $rootScope.activeStateParams;
                 }
 
-                $state.go($state.current.name, $state.current.params, {reload: reload});
+                $state.go(state, stateParams, {reload: reload});
             }
 
         };

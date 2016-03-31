@@ -1,5 +1,13 @@
 .notifications{
 	.notification{
+		.notification_thumb{
+			min-height: 74px;
+
+			> span{
+				min-height: 74px;
+			}
+		}
+
 		.notification_icon{
 			font-size: 36px;
 			padding: 18px 20px 20px 28px;
@@ -12,6 +20,55 @@
 		.notification_actions{
 			padding: 0 30px;
 			text-align: right;
+		}
+	}
+}
+
+.notification-section{
+	position: relative;
+
+	.notification-section-toggle{
+		position: absolute;
+		top: -37px;
+		right: 16px;
+		font-size: 20px;
+		color: #999;
+		background-color: #e7e7e7;
+		width: 42px;
+		height: 38px;
+		text-align: center;
+
+		@include transition(background-color 0.3s);
+
+		.icon{
+			display: block;
+			padding: 7px;
+		}
+
+		&:hover{
+			cursor: pointer;
+			background-color: #eee;
+		}
+	}
+
+	.notification-section-label{
+		position: absolute;
+		top: -20px;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		font-size: 12px;
+		color: #999;
+	}
+	.advertisingArea, .contest-list-wrap .contest-list{
+		overflow: hidden;
+
+		@include transition(all 0.3s);
+	}
+
+	&.collapsed{
+		.advertisingArea, .contest-list-wrap .contest-list{
+			min-height: 74px;
+			max-height: 74px;
 		}
 	}
 }

@@ -158,6 +158,34 @@ class User extends Model implements AuthenticatableContract,
         return $userRoles;
     }
 
+    public function getRoleId($role)
+    {
+        $roleId = null;
+
+        switch ($role) {
+            case 'creator':
+                if (!is_null($this->creator)) {
+                    $roleId = $this->creator->id;
+                }
+                break;
+            case 'investor':
+                if (!is_null($this->investor)) {
+                    $roleId = $this->investor->id;
+                }
+                break;
+            case 'expert':
+                if (!is_null($this->expert)) {
+                    $roleId = $this->expert->id;
+                }
+                break;
+            default:
+                $roleId = null;
+                break;
+        }
+
+        return $roleId;
+    }
+
     public function getThumbnailUrlAttribute()
     {
         $thumbnail_url = null;

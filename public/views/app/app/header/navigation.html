@@ -2,7 +2,7 @@
     <div class="cd-navigation-wrapper">
         <div class="navFixContent">
             <div class="container">
-                <uib-tabset class="dashbord-tab col-sm-12">
+                <uib-tabset class="dashbord-tab col-sm-9">
                     <uib-tab heading="Account">
                         <div class="row">
                             <div class="col-lg-4 col-md-5 col-sm-6">
@@ -542,7 +542,7 @@
                                     <ul class="list-group list-group-transparent">
                                         <li class="list-group-item" ng-repeat="contest in sideNavigationData.contestant.ongoing">
                                             <img ng-src="{{contest.thumbnail}}" alt="" class="img-responsive img-rounded">
-                                            <a class="pointer" ng-click="goToLink('app.contest', {contestId: contest.contest_id})">
+                                            <a class="pointer" ng-click="goToLink('app.contest', {contestId: contest.contest_id}, 'creator')">
                                                 {{contest.name}}
 
                                                 <span class="status success" ng-if="contest.status === 1">
@@ -585,7 +585,7 @@
                                     <ul class="list-group list-group-transparent">
                                         <li class="list-group-item" ng-repeat="contest in sideNavigationData.jury.ongoing">
                                             <img ng-src="{{contest.thumbnail}}" alt="" class="img-responsive img-rounded">
-                                            <a class="pointer" ng-click="goToLink('app.contest', {contestId: contest.contest_id})">
+                                            <a class="pointer" ng-click="goToLink('app.contest', {contestId: contest.contest_id}, 'jury')">
                                                 {{contest.name}}
 
                                                 <span class="status success" ng-if="contest.status === 1">
@@ -609,7 +609,7 @@
                                     </span>
                                 </uib-accordion-group>
                             </uib-accordion>
-                            <span class="empty" ng-if="sideNavigationData.contestant === null">
+                            <span class="empty" ng-if="sideNavigationData.jury === null">
                                 You have no contests, <a ui-sref="app.contests">Browse Contests</a> to judge in one!
                             </span>
                         </uib-accordion-group>

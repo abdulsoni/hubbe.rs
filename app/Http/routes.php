@@ -57,6 +57,12 @@ $api->version('v1', function ($api) {
     $api->get('contests/{id}', 'Fundator\Http\Controllers\ContestController@show');
 
     /*
+     * Projects
+     */
+    $api->get('projects/', 'Fundator\Http\Controllers\ProjectController@index');
+    $api->get('projects/{id}', 'Fundator\Http\Controllers\ProjectController@show');
+
+    /*
      * Entries
      */
     $api->get('entries/', 'Fundator\Http\Controllers\EntryController@index');

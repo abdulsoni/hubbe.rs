@@ -11,7 +11,7 @@ class Project extends Model
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * The database table used by the model.
@@ -26,6 +26,15 @@ class Project extends Model
      * @var array
      */
     protected $fillable = ['name', 'description', 'status', 'start_time', 'duration', 'market', 'geography'];
+
+    /**
+     * User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function creator(){
+        return $this->belongsTo('Fundator\Creator');
+    }
 
     /**
      * Project Investment

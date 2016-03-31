@@ -1,30 +1,11 @@
-<div class="row">
-    <div class="col-sm-12">
-        <div class="draft-wraper">
-            <div class="row">
-                <div class="col-md-6 paddingR0">
-                    <div class="well">
-                        <h4>Open an existing Draft</h4>
-                        <hr>
-                        <h4 class="clearfix paddingT10"><span>The Magical Mug</span> <small class="marginL15" style="color:#29aae2"><dfn>Started on 14/10/15</dfn></small></h4>
-                        <h4 class="clearfix"><span>The Hoverboard Project</span> <small class="marginL15"  style="color:#29aae2"><dfn>Started on 14/10/15</dfn></small></h4>
-                    </div>
-                </div>
-                <div class="col-md-6 paddingL0">
-                    <div class="well start-newProject">
-                        <h1 class="clearfix"><a href="start-new-project.html"><span class="icon icon-plus large-plus pull-left"></span> <span class="padding15 marginL10 pull-left">Start a New Project</span></a></h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
+<div class="row" ng-if="$state.current.name !== 'app.create'">
     <div class="col-md-12 marginT25">
-        <div class="project-accordion accordionWrap">
+        <div id="projectSteps" class="project-accordion accordionWrap">
             <uib-accordion close-others="true">
-                <uib-accordion-group heading="Your Project  0%" is-open="true">
+                <uib-accordion-group is-open="$state.current.name === 'app.create.details'">
+                    <uib-accordion-heading>
+                        <span ui-sref="app.create.details">Your Project  0%</span>
+                    </uib-accordion-heading>
                     <div class="panel_body">
                         <h3>Great!</h3>
                         <p>
@@ -42,7 +23,10 @@
                         <p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>
                     </div>
                 </uib-accordion-group>
-                <uib-accordion-group heading="Meet your superexpert  0%">
+                <uib-accordion-group is-open="$state.current.name === 'app.create.superexpert'">
+                    <uib-accordion-heading>
+                        <span ui-sref="app.create.superexpert">Meet your superexpert  0%</span>
+                    </uib-accordion-heading>
                     <div class="panel_body">
                         <h3>Meet your superexpert</h3>
                         <p>
@@ -60,7 +44,10 @@
                         <p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>
                     </div>
                 </uib-accordion-group>
-                <uib-accordion-group heading="Expertise you need  0%">
+                <uib-accordion-group is-open="$state.current.name === 'app.create.expertise'">
+                    <uib-accordion-heading>
+                        <span ui-sref="app.create.expertise">Expertise you need  0%</span>
+                    </uib-accordion-heading>
                     <div class="panel_body">
                         <h3>Expertise you need</h3>
                         <p>
@@ -78,7 +65,10 @@
                         <p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>
                     </div>
                 </uib-accordion-group>
-                <uib-accordion-group heading="Expertise on your team 0%">
+                <uib-accordion-group is-open="$state.current.name === 'app.create.experts'">
+                    <uib-accordion-heading>
+                        <span ui-sref="app.create.experts">Experts on your team 0%</span>
+                    </uib-accordion-heading>
                     <div class="panel_body">
                         <h3>Expertise you need</h3>
                         <p>
@@ -96,7 +86,10 @@
                         <p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>
                     </div>
                 </uib-accordion-group>
-                <uib-accordion-group heading="Validate the budget  0%">
+                <uib-accordion-group is-open="$state.current.name === 'app.create.budget'">
+                    <uib-accordion-heading>
+                        <span ui-sref="app.create.budget">Validate the budget  0%</span>
+                    </uib-accordion-heading>
                     <div class="panel_body">
                         <h3>Validate the budget</h3>
                         <p>
@@ -114,7 +107,10 @@
                         <p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>
                     </div>
                 </uib-accordion-group>
-                <uib-accordion-group heading="Your investors  0%">
+                <uib-accordion-group is-open="$state.current.name === 'app.create.investors'">
+                    <uib-accordion-heading>
+                        <span ui-sref="app.create.investors">Your investors  0%</span>
+                    </uib-accordion-heading>
                     <div class="panel_body">
                         <h3>Validate the budget</h3>
                         <p>
@@ -137,5 +133,28 @@
     </div>
 </div>
 
-<div ui-view="steps" class="main-content"></div>
+<div ui-view="steps" class="steps-content"></div>
 
+<div class="row" ng-if="$state.current.name === 'app.create'">
+    <div class="col-sm-12">
+        <div class="draft-wraper">
+            <div class="row">
+                <div class="col-md-6 paddingR0">
+                    <div class="well draftProjectList">
+                        <h4>Open an existing Draft</h4>
+                        <hr>
+                        <h4 class="clearfix" ng-repeat="project in allProjects">
+                            <span>{{project.name}}</span> <small class="marginL15" style="color:#29aae2"><dfn>Started on {{project.created_at | amDateFormat:'YYYY - MM - DD' }}</dfn></small>
+                        </h4>
+                        <h4 class="clearfix"><span>The Hoverboard Project</span> <small class="marginL15"  style="color:#29aae2"><dfn>Started on 14/10/15</dfn></small></h4>
+                    </div>
+                </div>
+                <div class="col-md-6 paddingL0">
+                    <div class="well start-newProject">
+                        <h1 class="clearfix"><a ui-sref="app.create.details"><span class="icon icon-plus large-plus pull-left"></span> <span class="padding15 marginL10 pull-left">Start a New Project</span></a></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

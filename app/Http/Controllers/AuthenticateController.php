@@ -136,6 +136,7 @@ class AuthenticateController extends Controller
 
             $userData = [
                 'role' => $user->role,
+                'role_id' => $user->getRoleId($user->role),
                 'email' => $user->email
             ];
 

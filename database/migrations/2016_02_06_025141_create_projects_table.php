@@ -14,8 +14,9 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('creator_id');
 
-            $table->integer('status');
+            $table->string('status');
             $table->string('thumbnail');
             $table->dateTime('start_time');
             $table->integer('duration');
@@ -30,6 +31,7 @@ class CreateProjectsTable extends Migration
 
             // Extra Attributes
             $table->boolean('display');
+            $table->timestamps();
         });
     }
 

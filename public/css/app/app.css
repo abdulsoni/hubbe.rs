@@ -6511,6 +6511,9 @@ ul.socialList > li.cdNavList {
 .expertise-list:after {
   clear: both; }
 
+.expertise-list .expertise .well {
+  overflow: hidden; }
+
 .expertise-form {
   position: relative;
   background-color: #e9eaeb; }
@@ -7533,6 +7536,10 @@ ul.prizebox li:nth-child(3) a {
     margin-right: 10px;
     width: 83px; }
 
+.advertisingArea {
+  min-height: 294px;
+  max-height: 294px; }
+
 .AdvertBtn {
   margin-top: -15px; }
 
@@ -7676,7 +7683,7 @@ ul.tabProjectList:after {
   clear: both; }
 
 .projectImg {
-  height: 370px;
+  height: 328px;
   background-image: url(../../images/project1.jpg);
   background-repeat: no-repeat;
   background-size: cover;
@@ -8329,10 +8336,13 @@ ul.list-inline-group.investors-group li {
 .draft-wraper {
   width: 100% !important; }
 
+.draftProjectList {
+  min-height: 150px; }
+
 .start-newProject {
   background: #333333;
-  padding: 29px;
-  height: 157px; }
+  padding: 20px;
+  height: 150px; }
   .start-newProject h1 {
     display: table;
     margin-left: auto;
@@ -9195,10 +9205,14 @@ a.homeLink {
 
 .investBtn {
   background: #29aae2;
-  padding: 15px 19px 15px 30px;
+  padding: 18px 19px 16px 30px;
   color: #fff;
   font-size: 22px;
-  position: relative; }
+  position: relative;
+  position: absolute;
+  bottom: 0;
+  left: 15px;
+  right: 15px; }
 
 .investBtn small {
   font-size: 85%;
@@ -9764,9 +9778,8 @@ footer {
 
 .homepage .body-content {
   padding-top: 0; }
-  .homepage .body-content > .container, .homepage .homepage-banner-section .body-content > .homepage-banner-section_text, .homepage-banner-section .homepage .body-content > .homepage-banner-section_text {
+  .homepage .body-content .body-content-container {
     width: 100%;
-    padding: 0;
     margin: 0; }
 
 .homepage-banner-section {
@@ -10347,20 +10360,21 @@ footer {
   background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.65) 0%, transparent 100%);
   margin-top: -15px; }
 
-.contest-single > h2 {
-  margin-top: 35px;
-  margin-bottom: 20px; }
-
-.contest-single .well {
-  padding: 0;
-  border-radius: 0;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border: none;
-  margin-left: -10px;
-  box-shadow: none;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none; }
+.contest-single {
+  margin-top: 30px; }
+  .contest-single > h2 {
+    margin-top: 35px;
+    margin-bottom: 20px; }
+  .contest-single .well {
+    padding: 0;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border: none;
+    margin-left: -10px;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none; }
 
 .contest-single_info-panel {
   max-height: 380px; }
@@ -10415,6 +10429,13 @@ footer {
   left: 50%;
   transform: translateX(-50%); }
 
+.fixed-center .fd-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%, -50%);
+  z-index: 10; }
+
 .center-block .fd-loader {
   display: block;
   margin-left: auto;
@@ -10426,13 +10447,16 @@ footer {
 .opacity-hideable {
   opacity: 1;
   visibility: visible;
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s; }
+  -webkit-transition: all 0.6s 0.5s;
+  -o-transition: all 0.6s 0.5s;
+  transition: all 0.6s 0.5s; }
 
 .opacity_hide {
   opacity: 0;
-  visibility: hidden; }
+  visibility: hidden;
+  -webkit-transition: none;
+  -o-transition: none;
+  transition: none; }
 
 .carousel_content {
   z-index: 10; }
@@ -12359,6 +12383,11 @@ footer {
 .icon-IcoMoon:before {
   content: "\eaeb"; }
 
+.notifications .notification .notification_thumb {
+  min-height: 74px; }
+  .notifications .notification .notification_thumb > span {
+    min-height: 74px; }
+
 .notifications .notification .notification_icon {
   font-size: 36px;
   padding: 18px 20px 20px 28px;
@@ -12370,6 +12399,43 @@ footer {
 .notifications .notification .notification_actions {
   padding: 0 30px;
   text-align: right; }
+
+.notification-section {
+  position: relative; }
+  .notification-section .notification-section-toggle {
+    position: absolute;
+    top: -37px;
+    right: 16px;
+    font-size: 20px;
+    color: #999;
+    background-color: #e7e7e7;
+    width: 42px;
+    height: 38px;
+    text-align: center;
+    -webkit-transition: background-color 0.3s;
+    -o-transition: background-color 0.3s;
+    transition: background-color 0.3s; }
+    .notification-section .notification-section-toggle .icon {
+      display: block;
+      padding: 7px; }
+    .notification-section .notification-section-toggle:hover {
+      cursor: pointer;
+      background-color: #eee; }
+  .notification-section .notification-section-label {
+    position: absolute;
+    top: -20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 12px;
+    color: #999; }
+  .notification-section .advertisingArea, .notification-section .contest-list-wrap .contest-list {
+    overflow: hidden;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s; }
+  .notification-section.collapsed .advertisingArea, .notification-section.collapsed .contest-list-wrap .contest-list {
+    min-height: 74px;
+    max-height: 74px; }
 
 .quick-access_menu {
   width: 300px;

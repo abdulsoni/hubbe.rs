@@ -11,7 +11,7 @@
             return './views/app/app/' + viewName + '/' + secondaryName + '.html';
         };
 
-        $urlRouterProvider.otherwise('/contest');
+        $urlRouterProvider.otherwise('/contests');
 
         $stateProvider
             .state('app', {
@@ -124,7 +124,7 @@
                 }
             })
             .state('app.contest', {
-                url: '/contests/:contestId',
+                url: '/contests/:contestId/:contestName',
                 views: {
                     'main@': {
                         templateUrl: getView('contest', 'contest-single'),

@@ -2,7 +2,7 @@
     <div class="notifications">
         <p class="no-have no-margin" ng-if="!notifications || notifications.length === 0">You have no notifications!</p>
         <div class="row contestR2 notification" ng-repeat="notification in notifications | limitTo:3">
-            <div class="col-xs-2 notification_thumb" ng-if="notification.extras.icon">
+            <div class="col-xs-2 notification_thumb" ng-if="!notification.extras.thumbnail">
                 <span class="notification_icon icon icon-{{notification.extras.icon}}"></span>
             </div>
             <div class="col-xs-2 notification_thumb" ng-if="notification.extras.thumbnail">
@@ -24,4 +24,4 @@
         </div>
     </div>
 </div>
-<a class="btn btn-block showmorebtn empty" ng-class="{'empty': notifications.length < 4}">Show more</a>
+<!-- <a class="btn btn-block showmorebtn empty" ng-class="{'empty': notifications.length < 4}">Show more</a> -->

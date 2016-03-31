@@ -530,6 +530,11 @@ ul.prizebox li:nth-child(3) a {
         width: 83px;
     }
 }
+.advertisingArea{
+    min-height: 294px;
+    // background: #e7e7e7;
+    max-height: 294px;
+}
 
 .AdvertBtn {
     margin-top: -15px;
@@ -699,7 +704,7 @@ ul.tabProjectList:after {
 }
 
 .projectImg {
-    height: 370px;
+    height: 328px;
     background-image:url(#{$imagesPath}/project1.jpg);
     background-repeat: no-repeat;
     background-size: cover;
@@ -1495,10 +1500,14 @@ ul.list-inline-group {
     width: 100% !important;
 }
 
+.draftProjectList{
+    min-height: 150px;
+}
+
 .start-newProject {
     background: $primary-color;
-    padding: 29px;
-    height: 157px;
+    padding: 20px;
+    height: 150px;
     h1 {
         display: table;
         margin-left: auto;
@@ -2476,10 +2485,16 @@ a.homeLink {
 
 .investBtn {
     background: $tertiary-color;
-    padding: 15px 19px 15px 30px;
+    padding: 18px 19px 16px 30px;
     color: $white-color;
     font-size: 22px;
     position: relative;
+
+    // temp
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    right: 15px;
 }
 
 .investBtn small {

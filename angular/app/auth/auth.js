@@ -11,6 +11,7 @@
         $rootScope.$broadcast('stopLoading');
 
         if ($auth.isAuthenticated()) {
+            console.log('ok my mistake');
             $state.go('app.contests', {});
         }
 
@@ -51,10 +52,23 @@
             };
 
             $auth.login(credentials).then(function(result) {
-                console.log('result');
-                console.log(result.data.token);
                 $auth.setToken(result.data.token);
-                $state.go('app.auth.signup');
+
+                var payload = $auth.getPayload();
+                console.log(payload);
+
+                var activeState = $rootScope.activeState.name;
+                var activeStateParams = $rootScope.activeStateParams;
+
+                $timeout(function(){
+                    if (typeof(activeState) === 'undefined') {
+                        $state.go('app.auth.signup');
+                    }else{
+                        console.log('Finally doing it!');
+                        console.log(activeState);
+                        $rootScope.switchUserRole(payload.role, payload.role_id, true, activeState, activeStateParams);
+                    }
+                }, 100);
             }, function(err){
                 $rootScope.$broadcast('stopLoading');
 

@@ -1,21 +1,40 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.controllers').controller('CreateCtrl', function($rootScope, $scope, $state, $resource, FdScroller) {
+    angular.module('fundator.controllers').controller('CreateCtrl', function($rootScope, $scope, $state, $resource, $timeout, FdScroller) {
         console.log('Create Started');
-        $rootScope.$broadcast('stopLoading');
+        $rootScope.$broadcast('startLoading');
+
+        var Project = $resource('/api/projects/:projectId', {
+            projectId: '@id'
+        });
+
+        if($rootScope.activeRole !== 'creator'){
+            $timeout(function(){
+                $rootScope.$broadcast('stopLoading');
+                $state.go('app.home');
+            }, 2000);
+        }else{
+            Project.query().$promise.then(function(result){
+                $scope.allProjects = result;
+            }).finally(function(){
+                $rootScope.$broadcast('stopLoading');
+            });
+        }
+
+        // Scroll to the top
+        FdScroller.toTop();
+    });
+
+    angular.module('fundator.controllers').controller('CreateDetailsCtrl', function($rootScope, $scope, $state, $resource, FdScroller) {
+        console.log('CreateDetailsCtrl Started');
 
         $scope.details = {
             name: '',
             geography: 'wherever'
         };
 
-        // Scroll to the top
-        FdScroller.toTop();
-    });
-
-    angular.module('fundator.controllers').controller('CreateDetailsCtrl', function($rootScope, $scope, $state, $resource) {
-        console.log('CreateDetailsCtrl Started');
+        FdScroller.toSection('projectSteps');
     });
 
     angular.module('fundator.controllers').controller('CreateSECtrl', function($rootScope, $scope, $state, $resource) {

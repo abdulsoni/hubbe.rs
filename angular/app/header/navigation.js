@@ -21,7 +21,7 @@
         return new Blob([ia], {type:mimeString});
     }
 
-    angular.module('fundator.controllers').controller('NavigationCtrl', function($rootScope, $scope, $state, $auth, $log, $timeout, $http, $resource, $uibModal, FileUploader) {
+    angular.module('fundator.controllers').controller('NavigationCtrl', function($rootScope, $scope, $state, $auth, $log, $timeout, $filter, $http, $resource, $uibModal, FileUploader) {
 
         $scope.allSkills = $resource('api/skills').query();
 
@@ -132,9 +132,15 @@
             $rootScope.isNavShown = 1;
         }
 
-        $scope.goToLink = function(page, data){
+        $scope.goToLink = function(page, data, role){
             $rootScope.isNavShown = 0;
-            $state.go(page, data);
+
+            var roles = $filter('filter')($rootScope.user.user_roles, {role: role}, true);
+
+            if (typeof(roles) !== 'undefined' && roles.length > 0) {
+                var role = roles[0];
+                $rootScope.switchUserRole(role.role, role.id, true, page, data);
+            }
         }
     });
 

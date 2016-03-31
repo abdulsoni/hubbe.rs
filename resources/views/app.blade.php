@@ -17,39 +17,49 @@
     <meta name="robots" content="none">
 </head>
 
-<body class="ng-class:[$state.current.data.bodyClass]" ng-class="{'navigation-is-open': isNavShown === 1, 'navigation-half-open': isNavShown === 0.5}" flow-prevent-drop>
+<!-- <body class="ng-class:[$state.current.data.bodyClass]" ng-class="{'navigation-is-open': isNavShown === 1, 'navigation-half-open': isNavShown === 0.5}" flow-prevent-drop> -->
+<body class="" ng-class="{'navigation-is-open': isNavShown === 1, 'navigation-half-open': isNavShown === 0.5, 'homepage': $state.current.data.bodyClass === 'homepage'}" flow-prevent-drop>
     <header ui-view="header"></header>
     <div class="navigation" ui-view="navigation"></div>
 
+    <fd-loader class="center fixed-center" ng-class="{'opacity_hide': !appLoading}"></fd-loader>
     <main>
-
         <section class="body-content">
-            <div class="notification-section container marginB60 ng-hide" ng-show="authenticated && user.registered === 1" ng-if="authenticated && user.registered === 1">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="flast-notice-list" ui-view="flashNotice"></div>
+            <div class="opacity-hideable opacity_hide" ng-class="{'opacity_hide': appLoading}">
+                <div class="container body-content-container padding0">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="flast-notice-list" ui-view="flashNotice"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-7 col-sm-12">
-                        <div class="contest-list-wrap" ui-view="notifications"></div>
-                    </div>
-                    <div class="col-md-5 col-sm-12">
-                        <div class="advertisingArea" ui-view="quickUpdate"></div>
-                    </div>
+                <div class="notification-section container marginB30 ng-hide" ng-class="{'collapsed': notificationCollapse}" ng-show="authenticated && user.registered === 1" ng-if="authenticated && user.registered === 1">
+                    <div class="row">
+                        <div class="col-md-7 col-sm-12">
+                            <span class="notification-section-label">Notifications</span>
+                            <div class="contest-list-wrap" ui-view="notifications"></div>
+                        </div>
+                        <div class="col-md-5 col-sm-12">
+                            <span class="notification-section-label">Quick View</span>
+                            <div class="advertisingArea" ui-view="quickUpdate"></div>
+                        </div>
 
+                        <div class="notification-section-toggle">
+                            <span class="icon icon-shrink2" ng-click="collapseNotification(true)" ng-if="notificationCollapse === false"></span>
+                            <span class="icon icon-enlarge2" ng-click="collapseNotification(false)" ng-if="notificationCollapse === true"></span>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="container position-relative">
-                <fd-loader class="center" ng-class="{'opacity_hide': !appLoading}"></fd-loader>
-                <div class="opacity-hideable" ng-class="{'opacity_hide': appLoading}">
+                <div class="container position-relative body-content-container">
                     <div ui-view="main" class="main-content"></div>
                 </div>
             </div>
         </section>
 
-        <footer ui-view="footer"></footer>
+        <div class="opacity-hideable opacity_hide" ng-class="{'opacity_hide': appLoading}">
+            <footer ui-view="footer"></footer>
+        </div>
     </main>
 
     <script src="{!! asset('js/app/jquery.min.js') !!}"></script>
