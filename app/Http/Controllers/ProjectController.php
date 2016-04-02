@@ -8,6 +8,10 @@ use Fundator\Http\Requests;
 use Fundator\Http\Controllers\Controller;
 use Fundator\Project;
 
+use Tymon\JWTAuth\Facades\JWTAuth;
+
+use Exception;
+
 class ProjectController extends Controller
 {
     /**
@@ -19,16 +23,32 @@ class ProjectController extends Controller
     {
         $statusCode = 200;
         $response = [];
-        $projects = Project::all();
 
-        $i = 0;
-        foreach($projects as $project)
-        {
-            $i++;
-            $project_data = $project->getAttributes();
+        try{
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
 
-            $response[] = $project_data;
+            $creator = $user->creator;
+            $projects = [];
+
+            if (!is_null($creator)) {
+                $projects = Project::where('creator_id', $creator->id)->get();
+            }
+
+            $i = 0;
+            foreach($projects as $project)
+            {
+                $i++;
+                $project_data = $project->getAttributes();
+
+                $response[] = $project_data;
+            }
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
         }
+
 
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
@@ -41,7 +61,37 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $statusCode = 200;
+        $response = [];
+
+        try{
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+
+            $creator = $user->creator;
+
+            if (!is_null($creator)) {
+                $project = Project::create([
+                    'draft' => 1,
+                    'display' => 0,
+                    'thumbnail' => 0,
+                    'start_time' => date('Y-m-d H:i:s'),
+                    'duration' => 60
+                ]);
+
+                $project->creator()->associate($creator);
+                $project->save();
+
+                $response = $project;
+            }
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -54,16 +104,23 @@ class ProjectController extends Controller
     {
         $statusCode = 200;
         $response = [];
-        $project = Project::where('id', $id)->first();
 
-        $project_data = [];
+        try{
+            $project = Project::find($id);
 
-        if (!is_null($project)) {
-            $project_data = $project->getAttributes();
+            $project_data = [];
+
+            if (!is_null($project)) {
+                $project_data = $project->getAttributes();
+            }else{
+                throw new Exception('Project not found', 1);
+            }
+
+            $response = $project_data;
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
         }
-
-
-        $response = $project_data;
 
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
@@ -77,7 +134,35 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $statusCode = 200;
+        $response = [];
+
+        try{
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+
+            $creator = $user->creator;
+            $project = Project::find($id);
+
+            // Update Logic Happens here
+
+            $project->name = $request->name;
+            $project->description = $request->description;
+            $project->market = $request->market;
+            // $project->price = $request->price;
+            // $project->language = $request->language;
+
+
+
+            $response = $project->save();
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
     /**

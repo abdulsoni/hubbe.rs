@@ -60,7 +60,9 @@ $api->version('v1', function ($api) {
      * Projects
      */
     $api->get('projects/', 'Fundator\Http\Controllers\ProjectController@index');
+    $api->post('projects/', 'Fundator\Http\Controllers\ProjectController@store');
     $api->get('projects/{id}', 'Fundator\Http\Controllers\ProjectController@show');
+    $api->put('projects/{id}', 'Fundator\Http\Controllers\ProjectController@update');
 
     /*
      * Entries
@@ -88,6 +90,13 @@ $api->version('v1', function ($api) {
      */
     $api->get('creators/', 'Fundator\Http\Controllers\CreatorController@index');
     $api->get('creators/{id}', 'Fundator\Http\Controllers\CreatorController@show');
+
+    /*
+     * Experts
+     */
+    $api->get('experts', 'Fundator\Http\Controllers\ExpertController@index');
+    $api->get('super-experts', 'Fundator\Http\Controllers\ExpertController@indexSups');
+    $api->get('experts/{id}', 'Fundator\Http\Controllers\ExpertController@show');
 
     /*
      * Investors

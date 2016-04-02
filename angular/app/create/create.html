@@ -143,15 +143,29 @@
                     <div class="well draftProjectList">
                         <h4>Open an existing Draft</h4>
                         <hr>
-                        <h4 class="clearfix" ng-repeat="project in allProjects">
-                            <span>{{project.name}}</span> <small class="marginL15" style="color:#29aae2"><dfn>Started on {{project.created_at | amDateFormat:'YYYY - MM - DD' }}</dfn></small>
-                        </h4>
-                        <h4 class="clearfix"><span>The Hoverboard Project</span> <small class="marginL15"  style="color:#29aae2"><dfn>Started on 14/10/15</dfn></small></h4>
+                        <div class="draftProjectListInner marginT20">
+                            <h4 class="clearfix cursor" ng-repeat="project in allProjects">
+                                <a ng-click="goToProject(project)" class="pointer">
+                                    <span ng-if="project.name">{{project.name}}</span>
+                                    <span ng-if="!project.name">Untitled Project</span>
+                                </a>
+                                <small class="marginL15" style="color:#29aae2"><dfn>Started on {{project.created_at | amDateFormat:'DD/MM/YYYY' }}</dfn></small>
+                            </h4>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6 paddingL0">
                     <div class="well start-newProject">
-                        <h1 class="clearfix"><a ui-sref="app.create.details"><span class="icon icon-plus large-plus pull-left"></span> <span class="padding15 marginL10 pull-left">Start a New Project</span></a></h1>
+                        <h1 class="clearfix">
+                            <a class="pointer" ng-if="!data.newProjectLoading" ng-click="createNewProject()">
+                                <span class="icon icon-plus large-plus pull-left"></span>
+                                <span class="padding15 marginL10 pull-left">Start a New Project</span>
+                            </a>
+                            <a class="pointer" ng-if="data.newProjectLoading">
+                                <span class="padding15 marginL10 pull-left">Creating new project ... </span>
+                            </a>
+                        </h1>
+                        <br>
                     </div>
                 </div>
             </div>

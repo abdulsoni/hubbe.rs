@@ -5,7 +5,7 @@
             <p>
                 <dfn>Your project name is the first thing that outside world will see. make it attractive, descriptive, mysterious, easy to remember and short. Keep it under 100 characters.</dfn>
             </p>
-            <input type="text" placeholder="Project name..." name="name" ng-model="details.name" required>
+            <input type="text" placeholder="Project name..." name="name" ng-model="details.name" ng-blur="saveProgress(projectDetails.name)" required>
             <div class="VProgress-aligment" ng-class="{'completed': projectDetails.name.$valid }">
                 <div class="progress-vertical">
                     <div class="progress-bar-vertical progress-bar-info"></div>
@@ -19,7 +19,7 @@
                 <dfn>Here you have to be more specific about your product.
                     <br> Give details about your product features, size, colors. Tell how you think your product will change the world or what you are going to bring that is different.</dfn>
             </p>
-            <textarea placeholder="Project description..." name="projectDescription" ng-model="details.projectDescription" required></textarea>
+            <text-angular placeholder="Project description..." name="projectDescription" ng-model="details.description" ng-blur="saveProgress()" required></text-angular>
             <div class="VProgress-aligment" ng-class="{'completed': projectDetails.projectDescription.$valid }">
                 <div class="progress-vertical">
                     <div class="progress-bar-vertical progress-bar-info"></div>
@@ -32,7 +32,8 @@
             <p>
                 <dfn>Here you describe the people who according to you will say "whoaou" to your project. How you see them: Age, gender, occupations. Reasons they will like it.</dfn>
             </p>
-            <textarea placeholder="Market description..." name="marketDescription" ng-model="details.marketDescription" required></textarea>
+            <!-- <textarea placeholder="Market description..." name="marketDescription" ng-model="details.market" required></textarea> -->
+            <text-angular placeholder="Market description..." name="marketDescription" ng-model="details.market" ng-blur="saveProgress()" required></text-angular>
             <div class="VProgress-aligment" ng-class="{'completed': projectDetails.marketDescription.$valid }">
                 <div class="progress-vertical">
                     <div class="progress-bar-vertical progress-bar-info"></div>
@@ -45,7 +46,7 @@
             <p>
                 <dfn>Here you can make some assumptions about what would look like a good market price for your target audience.</dfn>
             </p>
-            <input type="text" placeholder="Price" name="price" ng-model="details.price" required>
+            <input type="text" placeholder="Price" name="price" ng-model="details.price" ng-blur="saveProgress()" required>
             <div class="VProgress-aligment" ng-class="{'completed': projectDetails.price.$valid }">
                 <div class="progress-vertical">
                     <div class="progress-bar-vertical progress-bar-info"></div>

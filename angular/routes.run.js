@@ -124,31 +124,48 @@
 
                 return;
             } else {
-                if (fromState.name.indexOf('auth') === -1 && toState.name.indexOf('auth') !== -1) {
-                    return;
-                } else if (fromState.name.indexOf('auth') === -1) {
-                    $timeout(function() {
-                        $rootScope.activeState = toState;
-                        $rootScope.activeStateParams = toParams;
-                        event.preventDefault();
-                        $state.go('app.auth.login', {}, {reload: true});
-                    });
-                    return;
-                } else if (toState.name.indexOf('auth') === -1 && fromState.name.indexOf('auth') !== -1) {
-                    FdScroller.toTop();
-                    event.preventDefault();
-                    return;
-                } else if (toState.name.indexOf('auth') === -1) {
-                    $timeout(function() {
-                        $rootScope.activeState = toState;
-                        $rootScope.activeStateParams = toParams;
-                        event.preventDefault();
-                        $state.go('app.auth.login', {}, {reload: true});
-                        return;
-                    });
-                } else {
-                    return;
+                var needLogin = false;
+
+                if (typeof(toState.data.needLogin) === 'undefined') {
+                    needLogin = true;
+                }else{
+                    needLogin = toState.data.needLogin;
                 }
+
+                if (needLogin) {
+                    $rootScope.activeState = toState;
+                    $rootScope.activeStateParams = toParams;
+                    event.preventDefault();
+                    $state.go('app.auth.login', {}, {reload: true});
+                }
+
+                return;
+
+                // if (fromState.name.indexOf('auth') === -1 && toState.name.indexOf('auth') !== -1) {
+                //     return;
+                // } else if (fromState.name.indexOf('auth') === -1) {
+                //     $timeout(function() {
+                //         $rootScope.activeState = toState;
+                //         $rootScope.activeStateParams = toParams;
+                //         event.preventDefault();
+                //         $state.go('app.auth.login', {}, {reload: true});
+                //     });
+                //     return;
+                // } else if (toState.name.indexOf('auth') === -1 && fromState.name.indexOf('auth') !== -1) {
+                //     FdScroller.toTop();
+                //     event.preventDefault();
+                //     return;
+                // } else if (toState.name.indexOf('auth') === -1) {
+                //     $timeout(function() {
+                //         $rootScope.activeState = toState;
+                //         $rootScope.activeStateParams = toParams;
+                //         event.preventDefault();
+                //         $state.go('app.auth.login', {}, {reload: true});
+                //         return;
+                //     });
+                // } else {
+                //     return;
+                // }
             }
         });
 

@@ -15,6 +15,8 @@ class CreateExpertsTable extends Migration
         Schema::create('experts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
+
+            $table->boolean('super_expert')->default(0);
         });
     }
 

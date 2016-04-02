@@ -50,6 +50,9 @@
             })
             .state('app.auth.login', {
                 url: '/login',
+                data: {
+                    needLogin: false
+                },
                 views: {
                     'main@': {
                         templateUrl: getView('auth', 'login'),
@@ -59,6 +62,9 @@
             })
             .state('app.auth.signup', {
                 url: '/signup',
+                data: {
+                    needLogin: false
+                },
                 views: {
                     'main@': {
                         templateUrl: getView('auth', 'signup'),
@@ -68,6 +74,9 @@
             })
             .state('app.auth.forgot', {
                 url: '/forgot',
+                data: {
+                    needLogin: false
+                },
                 views: {
                     'main@': {
                         templateUrl: getView('auth', 'forgot'),
@@ -77,6 +86,9 @@
             })
             .state('app.auth.recover', {
                 url: '/recover?token&email',
+                data: {
+                    needLogin: false
+                },
                 views: {
                     'main@': {
                         templateUrl: getView('auth', 'recover'),
@@ -86,6 +98,9 @@
             })
             .state('app.auth.confirm', {
                 url: '/confirm?code&email',
+                data: {
+                    needLogin: false
+                },
                 views: {
                     'main@': {
                         templateUrl: getView('auth', 'confirm'),
@@ -95,6 +110,9 @@
             })
             .state('app.auth.register', {
                 url: '/register',
+                data: {
+                    needLogin: true
+                },
                 views: {
                     'main@': {
                         templateUrl: getView('auth', 'register'),
@@ -105,7 +123,8 @@
             .state('app.home', {
                 url: '/',
                 data: {
-                    bodyClass: 'homepage'
+                    bodyClass: 'homepage',
+                    needLogin: false
                 },
                 views: {
                     'main@': {
@@ -116,6 +135,9 @@
             })
             .state('app.contests', {
                 url: '/contests',
+                data: {
+                    needLogin: true
+                },
                 views: {
                     'main@': {
                         templateUrl: getView('contest'),
@@ -125,6 +147,9 @@
             })
             .state('app.contest', {
                 url: '/contests/:contestId/:contestName',
+                data: {
+                    needLogin: true
+                },
                 views: {
                     'main@': {
                         templateUrl: getView('contest', 'contest-single'),
@@ -134,6 +159,9 @@
             })
             .state('app.expert', {
                 url: '/expert',
+                data: {
+                    needLogin: true
+                },
                 views: {
                     'main@': {
                         templateUrl: getView('expert'),
@@ -143,6 +171,9 @@
             })
             .state('app.invest', {
                 url: '/invest',
+                data: {
+                    needLogin: true
+                },
                 views: {
                     'main@': {
                         templateUrl: getView('invest'),
@@ -151,7 +182,10 @@
                 }
             })
             .state('app.create', {
-                url: '/create',
+                url: '/create?projectId',
+                data: {
+                    needLogin: true
+                },
                 views: {
                     'main@': {
                         templateUrl: getView('create'),
@@ -161,6 +195,9 @@
             })
             .state('app.create.details', {
                 url: '/details',
+                data: {
+                    needLogin: true
+                },
                 views: {
                     'steps': {
                         templateUrl: getView('create', 'create-details'),
@@ -170,6 +207,9 @@
             })
             .state('app.create.superexpert', {
                 url: '/super-expert',
+                data: {
+                    needLogin: true
+                },
                 views: {
                     'steps': {
                         templateUrl: getView('create', 'create-super-expert'),
@@ -179,6 +219,9 @@
             })
             .state('app.create.expertise', {
                 url: '/expertise',
+                data: {
+                    needLogin: true
+                },
                 views: {
                     'steps': {
                         templateUrl: getView('create', 'create-expertise'),
@@ -188,6 +231,9 @@
             })
             .state('app.create.experts', {
                 url: '/experts',
+                data: {
+                    needLogin: true
+                },
                 views: {
                     'steps': {
                         templateUrl: getView('create', 'create-experts'),
@@ -197,6 +243,9 @@
             })
             .state('app.create.budget', {
                 url: '/budget',
+                data: {
+                    needLogin: true
+                },
                 views: {
                     'steps': {
                         templateUrl: getView('create', 'create-budget'),
@@ -206,6 +255,9 @@
             })
             .state('app.create.investors', {
                 url: '/investors',
+                data: {
+                    needLogin: true
+                },
                 views: {
                     'steps': {
                         templateUrl: getView('create', 'create-investors'),
@@ -215,6 +267,9 @@
             })
             .state('app.transaction', {
                 url: '/transaction',
+                data: {
+                    needLogin: true
+                },
                 views: {
                     'main@': {
                         templateUrl: getView('transaction', 'transaction'),
@@ -224,6 +279,9 @@
             })
             .state('app.grabshare', {
                 url: '/grab-a-share',
+                data: {
+                    needLogin: true
+                },
                 views: {
                     'main@': {
                         templateUrl: getView('invest', 'grab-a-share'),
@@ -233,6 +291,9 @@
             })
             .state('app.notifications', {
                 url: '/notifications',
+                data: {
+                    needLogin: true
+                },
                 views: {
                     'main@': {
                         templateUrl: getView('contest'),
@@ -242,6 +303,9 @@
             })
             .state('app.page', {
                 url: '/:slug',
+                data: {
+                    needLogin: false
+                },
                 views: {
                     'main@': {
                         templateUrl: getView('page'),

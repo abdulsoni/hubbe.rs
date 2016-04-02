@@ -1769,6 +1769,26 @@ ul.list-inline-group {
         position: relative;
         margin-bottom: 28px;
     }
+
+    .ta-toolbar{
+        margin-bottom: 20px;
+    }
+
+    .ta-scroll-window > .ta-bind{
+        padding: 0;
+
+        &:before{
+            color: #999;
+        }
+    }
+
+    .ta-scroll-window.form-control{
+        border-radius: 0;
+        box-shadow: none !important;
+        padding: 15px 10px;
+    }
+
+    .form-control,
     input,
     textarea {
         width: 100%;

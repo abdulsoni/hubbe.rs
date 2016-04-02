@@ -28,9 +28,12 @@
     "angular-bootstrap-lightbox": "~0.10.0",
     "salvattore": "~1.0.9",
     "ng-table": "^0.8.3",
-    "angular-isotope": "^0.1.14"
+    "components-font-awesome": "^4.5.0"
   },
   "overrides": {
+    "components-font-awesome": {
+        "main": []
+    },
     "owl-carousel": {
       "main": [
         "./owl-carousel/owl.carousel.js",

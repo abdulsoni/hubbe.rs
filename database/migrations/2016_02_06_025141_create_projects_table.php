@@ -16,7 +16,7 @@ class CreateProjectsTable extends Migration
             $table->increments('id');
             $table->integer('creator_id');
 
-            $table->string('status');
+            $table->boolean('draft'); // Draft or Not Draft
             $table->string('thumbnail');
             $table->dateTime('start_time');
             $table->integer('duration');
