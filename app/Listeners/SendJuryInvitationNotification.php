@@ -2,10 +2,10 @@
 
 namespace Fundator\Listeners;
 
-use Fenos\Notifynder\Facades\Notifynder;
 use Fundator\Events\AssignJury;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Fenos\Notifynder\Facades\Notifynder;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;

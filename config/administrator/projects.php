@@ -1,5 +1,9 @@
 <?php
 
+use Fundator\Expert;
+use Fundator\Events\ProjectApproved;
+use Fundator\Events\ProjectBidSuperExpert;
+
 /**
  * Directors model config
  */
@@ -24,6 +28,12 @@ return array(
         ),
         'name' => array(
             'title' => 'Name',
+        ),
+        'state' => array(
+            'title' => 'State',
+        ),
+        'draft' => array(
+            'title' => 'Is Draft ?',
         )
     ),
 
@@ -71,4 +81,44 @@ return array(
         )
     ),
 
+    /**
+     * Notify Judges
+     */
+    'actions' => array(
+        // Send Notifications to judges
+        'approve_project' => array(
+            'title' => 'Approve Project',
+            'messages' => array(
+                'active' => 'Approving ...',
+                'success' => 'Approved',
+                'error' => 'There was an error while approving the project',
+            ),
+            'permission' => function($model)
+            {
+                return $model->state == 1;
+            },
+            'action' => function($model)
+            {
+                // Notify the judges
+                Log::info('Approved');
+
+                try{
+                    $model->state = 2;
+
+                    $superExpert = Expert::where('super_expert', 1)->first();
+
+                    Event::fire(new ProjectApproved($model));
+                    Event::fire(new ProjectBidSuperExpert($model, $superExpert));
+
+                    if ($model->save()) {
+                        return true;
+                    }
+                }catch (Exception $e){
+                    Log::error($e);
+                }
+
+                return false;
+            }
+        )
+    ),
 );

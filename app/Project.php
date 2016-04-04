@@ -25,7 +25,7 @@ class Project extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'description', 'status', 'start_time', 'duration', 'market', 'geography'];
+    protected $fillable = ['name', 'description', 'state', 'thumbnail', 'start_time', 'duration', 'market', 'geography', 'price', 'language'];
 
     /**
      * User

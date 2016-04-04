@@ -56,11 +56,12 @@ class ExpertController extends Controller
         $response = [];
 
         try{
-            $experts = Expert::where('super_expert', 1);
+            $experts = Expert::where('super_expert', 1)->get();
 
             foreach($experts as $expert)
             {
                 $expert_data = $expert->getAttributes();
+                $expert_data['user'] = $expert->user;
 
                 $response[] = $expert_data;
             }

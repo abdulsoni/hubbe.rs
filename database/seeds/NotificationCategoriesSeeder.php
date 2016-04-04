@@ -29,6 +29,10 @@ class NotificationCategoriesSeeder extends Seeder
         // Contestant related notifications
         $this->createCategory('contestant.accepted', 'There is a new rating on your entry on {}');
         $this->createCategory('contestant.rating', 'There is a new rating on your entry on {}');
+
+        // Contestant related notifications
+        $this->createCategory('project.approved', 'Your project has been approved');
+        $this->createCategory('project.superExpertBid', 'Super Expert {extra.superExpert.name}');
     }
 
     public function createCategory($name,$text) {

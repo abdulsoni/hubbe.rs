@@ -25,6 +25,15 @@ class EventServiceProvider extends ServiceProvider
         'Fundator\Events\Signup' => [
             'Fundator\Listeners\SendEmailVerification'
         ],
+        'Fundator\Events\ProjectApproved' => [
+            'Fundator\Listeners\SendProjectApprovalNotification'
+        ],
+        'Fundator\Events\ProjectBidSuperExpert' => [
+            'Fundator\Listeners\ProjectBidSuperExpertNotification'
+        ],
+        'Fundator\Events\ProjectSuperExpertSelected' => [
+            'Fundator\Listeners\ProjectSuperExpertSelectedtNotification'
+        ]
     ];
 
     /**

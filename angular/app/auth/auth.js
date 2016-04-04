@@ -11,8 +11,9 @@
         $rootScope.$broadcast('stopLoading');
 
         if ($auth.isAuthenticated()) {
-            console.log('ok my mistake');
-            $state.go('app.contests', {});
+            $state.go('app.home', {});
+        }else{
+            FdScroller.toTop();
         }
 
         $scope.data = {};
@@ -64,8 +65,6 @@
                     if (typeof(activeState) === 'undefined') {
                         $state.go('app.auth.signup');
                     }else{
-                        console.log('Finally doing it!');
-                        console.log(activeState);
                         $rootScope.switchUserRole(payload.role, payload.role_id, true, activeState, activeStateParams);
                     }
                 }, 100);

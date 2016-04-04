@@ -7,8 +7,12 @@ use Illuminate\Http\Request;
 use Fundator\Http\Requests;
 use Fundator\Http\Controllers\Controller;
 use Fundator\Project;
+use Fundator\Expert;
+
+use Fundator\Events\ProjectSuperExpertSelected;
 
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Event;
 
 use Exception;
 
@@ -146,14 +150,20 @@ class ProjectController extends Controller
             $project = Project::find($id);
 
             // Update Logic Happens here
-
             $project->name = $request->name;
             $project->description = $request->description;
             $project->market = $request->market;
-            // $project->price = $request->price;
-            // $project->language = $request->language;
+            $project->price = floatval($request->price);
+            $project->geography = $request->geography;
+            $project->language = $request->language;
 
+            $project->state = $request->state;
 
+            if (is_null($project->super_expert_id) && isset($request->super_expert_id)) {
+                $superExpert = Expert::find($request->super_expert_id);
+
+                Event::fire(new ProjectSuperExpertSelected($project, $superExpert));
+            }
 
             $response = $project->save();
         } catch (Exception $e) {

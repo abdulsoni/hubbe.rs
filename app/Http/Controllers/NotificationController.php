@@ -25,8 +25,9 @@ class NotificationController extends Controller
 
         try{
             $user = User::find($id);
+
             if($user !== null){
-                $notifications = $user->getNotificationsNotRead();
+                $notifications = $user->getNotificationsNotRead(); //Notification::where('to_id', $id)->where('read', 0)->get();
 
                 foreach($notifications as $notification){
                     unset($notification['from']);

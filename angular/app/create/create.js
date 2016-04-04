@@ -43,7 +43,17 @@
                 Project.get({projectId: projectId}).$promise.then(function(result){
                     $scope.project = result;
 
-                    $state.go('app.create.details', {projectId: projectId});
+                    switch(result.state){
+                        case 0: $state.go('app.create.details', {projectId: projectId});
+                        break;
+                        case 1: $state.go('app.create.details', {projectId: projectId});
+                        break;
+                        case 2: $state.go('app.create.superexpert', {projectId: projectId});
+                        break;
+                        case 3: $state.go('app.create.expertise', {projectId: projectId});
+                        break;
+                        default: $state.go('app.create.details', {projectId: projectId});
+                    }
                 }).finally(function(){
                     $rootScope.$broadcast('stopLoading');
                 });
@@ -92,6 +102,10 @@
     angular.module('fundator.controllers').controller('CreateDetailsCtrl', function($rootScope, $scope, $state, $stateParams, $resource, FdScroller) {
         console.log('CreateDetailsCtrl Started');
 
+        $scope.data = {
+            featuredImage: {}
+        };
+
         $scope.details = {
             name: '',
             geography: 'wherever'
@@ -106,11 +120,61 @@
             }
         });
 
+        $scope.$on('flow::fileAdded', function (event, $flow, flowFile) {
+            event.preventDefault();
+            console.log('file added');
+        });
+
+        $scope.featuredImageSuccess = function($file, $message) {
+            var message = JSON.parse($message);
+            console.log($file);
+
+            console.log('Adding files : ' + message.file.id);
+            $scope.project.thumbnail_id = message.file.id;
+        }
+
+        $scope.attachedFilesSuccess = function($file, $message) {
+            var message = JSON.parse($message);
+            console.log($file);
+
+            console.log('Adding files : ' + message.file.id);
+
+            var index = $scope.project.attachedFiles.indexOf(message.file.id);
+
+            if (index === -1) {
+                $scope.project.attachedFiles.push(message.file.id);
+            }
+        }
+
+        $scope.submitDraft = function() {
+            $scope.project.state = 1;
+            $scope.saveProgress();
+
+            FdScroller.toSection('.steps-content');
+        }
+
         FdScroller.toSection('#projectSteps');
     });
 
-    angular.module('fundator.controllers').controller('CreateSECtrl', function($rootScope, $scope, $state, $resource) {
+    angular.module('fundator.controllers').controller('CreateSECtrl', function($rootScope, $scope, $state, $http, $timeout, FdScroller) {
         console.log('CreateSECtrl Started');
+
+        $http.get('/api/super-experts').then(function(result){
+            console.log('sups');
+            console.log(result);
+            $scope.superExperts = result.data;
+        });
+
+        $scope.chooseSuperExpert = function(superExpert){
+            $scope.project.super_expert_id = superExpert.id;
+            $scope.saveProgress();
+
+            FdScroller.toSection('.steps-content');
+
+            $timeout(function(){
+                $state.go('app.create.expertise');
+            }, 300);
+        }
     });
 
     angular.module('fundator.controllers').controller('CreateExpertiseCtrl', function($rootScope, $scope, $state, $resource) {

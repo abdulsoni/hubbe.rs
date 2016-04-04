@@ -21,7 +21,7 @@ class EnhanceProjectsTable extends Migration
             $table->string('language')->nullable();
 
             // Step 2
-
+            $table->integer('super_expert_id')->nullable();
         });
     }
 

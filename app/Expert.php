@@ -25,7 +25,7 @@ class Expert extends Model
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = ['super_expert'];
 
 
     public function user(){

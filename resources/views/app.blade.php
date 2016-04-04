@@ -26,13 +26,13 @@
     <main>
         <section class="body-content">
             <div class="opacity-hideable opacity_hide" ng-class="{'opacity_hide': appLoading}">
-                <div class="container">
+                <!-- <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="flast-notice-list" ui-view="flashNotice"></div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="notification-section container marginB30 ng-hide" ng-class="{'collapsed': notificationCollapse}" ng-show="authenticated && user.registered === 1" ng-if="authenticated && user.registered === 1">
                     <div class="row">
                         <div class="col-md-7 col-sm-12">

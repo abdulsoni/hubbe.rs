@@ -3,10 +3,6 @@
 
     angular.module('fundator.controllers').controller('HomeCtrl', function($rootScope, $scope, $state, $stateParams, $http, $resource, FdScroller) {
         console.log('Home View Started');
-
-        console.log($state);
-        console.log($stateParams);
-
         FdScroller.toTop();
 
         $scope.contests = [];

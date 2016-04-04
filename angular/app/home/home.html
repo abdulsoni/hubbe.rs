@@ -6,7 +6,6 @@
         <button class="btn btn-white btn-ujarak" ui-sref="app.auth.signup">Become a Creator</button>
     </div>
 </div>
-
 <div class="container" ng-if="contests.length > 0">
     <ul class="tabProjectList">
         <li ng-repeat="contest in contests" ui-sref="app.contest({contestId: contest.id})">
@@ -17,8 +16,7 @@
                         <span class="countValue">{{contest.num_contestants}}</span>
                     </div>
                     <div class="col-xs-3">
-                        <h4>Time to Go</h4>
-                        {{ end_time = (contest.start_time | amAdd : contest.duration : 'days'); ''}}
+                        <h4>Time to Go</h4> {{ end_time = (contest.start_time | amAdd : contest.duration : 'days'); ''}}
                         <span class="countValue">{{ end_time | amDifference : null : 'days' }}</span>
                     </div>
                 </div>
@@ -27,7 +25,6 @@
         </li>
     </ul>
 </div>
-
 <div class="homepage-banner-section" ng-if="expertises.length > 0">
     <div class="homepage-banner-section_text">
         You have a strong expertise, be part of the 17 experts committing their skills on 7 innovative projects. All types of expert are needed.
@@ -36,7 +33,6 @@
         <button class="btn btn-white btn-ujarak" ui-sref="app.auth.signup">Become an Expert</button>
     </div>
 </div>
-
 <div class="container" ng-if="expertises.length > 0">
     <ul class="tabProjectList threeCol">
         <li ng-repeat="expertise in expertises">
@@ -72,9 +68,8 @@
                 </div>
             </div>
         </li>
-    </div>
 </div>
-
+</div>
 <div class="homepage-banner-section">
     <div class="homepage-banner-section_text">
         Invest your money in creative projects and earn up to 30% return: <strong>12860 usd</strong> from <strong>{{investors.length}}</strong> investors available. Start from 10usd.
@@ -83,7 +78,6 @@
         <button class="btn btn-white btn-ujarak" ui-sref="app.auth.signup">Become an Investor</button>
     </div>
 </div>
-
 <div class="container" ng-if="investors.length > 0">
     <ul class="tabProjectList fourCol">
         <li ng-repeat="investor in investors">
@@ -97,8 +91,7 @@
                     <h3 class="investor-thumbnail_name-highlight">{{investor.name}}</h3>
                     <br>
                     <div class="investor-location marginB20">
-                        <span class="icon icon-location"></span>
-                        &nbsp;{{investor.country}}
+                        <span class="icon icon-location"></span> &nbsp;{{investor.country}}
                     </div>
                     <div class="investor-thumbnail_bio" ellipsis ellipsis-append="...">
                         {{investor.bio}}
@@ -112,5 +105,5 @@
                 </div>
             </div>
         </li>
-    </div>
+    </ul>
 </div>

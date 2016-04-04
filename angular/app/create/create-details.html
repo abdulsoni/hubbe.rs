@@ -1,5 +1,5 @@
 <div class="well">
-    <form class="project-form" name="projectDetails">
+    <form class="project-form" ng-if="project.state === 0 || project.state > 1" name="projectDetails">
         <div class="project-form-row">
             <h4><strong>Your great idea name</strong></h4>
             <p>
@@ -61,16 +61,16 @@
             </p>
             <div class="radiobox geography-radiobox">
                 <label for="geography-wherever">
-                    <input type="radio" name="geography" id="geography-wherever" value="wherever" ng-model="details.geography" checked />
+                    <input type="radio" name="geography" id="geography-wherever" value="wherever" ng-model="details.geography" ng-change="saveProgress()" />
                     <i></i> <span><dfn>wherever</dfn></span>
                 </label>
                 <label for="geography-countries">
-                    <input type="radio" name="geography" id="geography-countries" value="countries" ng-model="details.geography" />
+                    <input type="radio" name="geography" id="geography-countries" value="countries" ng-model="details.geography" ng-change="saveProgress()" />
                     <i></i> <span><dfn>write specific Countries</dfn></span>
                 </label>
             </div>
             <div class="location-project">
-                <input type="text" placeholder="Kenia, United Kingdom, etc..." name="location" ng-model="details.countries" ng-class="{'visually-hidden': details.geography !== 'countries'}">
+                <input type="text" placeholder="Kenia, United Kingdom, etc..." name="location" ng-model="details.countries" ng-class="{'visually-hidden': details.geography !== 'countries'}" ng-blur="saveProgress()">
             </div>
             <div class="VProgress-aligment" ng-class="{'completed': details.geography }">
                 <div class="progress-vertical">
@@ -84,7 +84,7 @@
             <p>
                 <dfn>Which language you would prefer to deal with?</dfn>
             </p>
-            <input type="text" name="languages" placeholder="For the moment, only english is available. Later stage will allow you to get translated version in main languages" ng-model="details.languages" required>
+            <input type="text" name="languages" placeholder="For the moment, only english is available. Later stage will allow you to get translated version in main languages" ng-model="details.language" ng-blur="saveProgress()" required>
             <div class="VProgress-aligment" ng-class="{'completed': projectDetails.languages.$valid }">
                 <div class="progress-vertical">
                     <div class="progress-bar-vertical progress-bar-info"></div>
@@ -93,12 +93,58 @@
             </div>
         </div>
         <div class="project-form-row">
-            <div class="fileUpload"> <span><dfn>+Add Files</dfn></span>
-                <input type="file" class="upload" />
+            <h4><strong>Project Files</strong></h4>
+            <div class="project-files-upload">
+                <div class="file-upload file-upload_featured-image" flow-init flow-name="data.featuredImage.flow" flow-files-submitted="$flow.upload()">
+                    <div class="file-upload_inner" flow-drop>
+                        <button class="btn btn-default" flow-btn>Upload</button> or drop the image here ...
+                    </div>
+                    <div ng-if="$flow.files.length > 0">
+                        {{featuredImage = $flow.files[0];''}}
+                        <div class="image-preview_inner">
+                            <div ng-if="featuredImage.file.type.indexOf('image') !== -1">
+                                <img flow-img="featuredImage" />
+                            </div>
+                            <div class="image-preview_file" ng-if="featuredImage.file.type.indexOf('image') === -1">
+                                <span class="icon fa fa-file"></span> {{featuredImage.file.name}}
+                            </div>
+                            <uib-progressbar value="file.progress() * 100">{{featuredImage.progress() * 100}}%</uib-progressbar>
+                        </div>
+                    </div>
+                    <small class="mute">* Upload your featured image (400x300)</small>
+                </div>
+                <div class="file-upload file-upload_various" flow-init flow-name="data.attachedFiles.flow" flow-files-submitted="$flow.upload()">
+                    <div class="file-upload_inner" flow-drop>
+                        <button class="btn btn-default">Upload</button> or drop the image here ...
+                    </div>
+                    <div class="image-preview-list" data-columns>
+                        <div class="image-preview col-sm-4 col-md-6" ng-repeat="file in $flow.files">
+                            <div class="image-preview_inner">
+                                <div ng-if="file.file.type.indexOf('image') !== -1">
+                                    <img flow-img="file" />
+                                </div>
+                                <div class="image-preview_file" ng-if="file.file.type.indexOf('image') === -1">
+                                    <span class="icon fa fa-file"></span> {{file.file.name}}
+                                </div>
+                                <uib-progressbar value="file.progress() * 100">{{file.progress() * 100}}%</uib-progressbar>
+                                <span class="image-preview_remove icon icon-cross" ng-click="entryFileRemove(file, $flow)"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="mute">Upload other project assets.</small>
+                </div>
             </div>
         </div>
-        <div class="project-form-row">
-            <input type="submit" value="Save" class="btn btn-info" ng-disabled="!projectDetails.$isValid">
+        <div class="project-form-row text-center" ng-if="projectDetails.state = 1">
+            <button class="btn btn-info" type="submit" ng-disabled="projectDetails.$invalid" ng-click="submitProject()">Submit</button>
         </div>
     </form>
+
+    <div class="project-inreview" ng-if="project.state === 1">
+        <span class="icon icon-clock"></span>
+
+        <p>Your project has been submitted for review and our team will post the result in 2 working days.</p>
+
+        <p>For any inquires, please write to <a href="mailto:contact@fundator.co">contact@fundator.co</a></p>
+    </div>
 </div>
