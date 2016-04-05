@@ -134,6 +134,149 @@
 	}
 }
 
+.steps-content .expertise-list{
+	.expertise{
+		position: relative;
+		background: #e7e7e7;
+		@include clearfix();
+
+		.expertise_col{
+			@include make-sm-column(3);
+			overflow: hidden;
+
+			> * {
+				z-index: 10;
+				position: relative;
+			}
+		}
+
+		.expertise_col-list{
+			@include make-sm-column(3.5);
+
+			.expertise-breakdown{
+				position: relative;
+				z-index: 10;
+				list-style: none;
+				padding-left: 0;
+				padding: 20px 10px;
+				margin-bottom: 0;
+
+				> li{
+					@extend .btn;
+					@extend .btn-info;
+					@extend .btn-block;
+					white-space: normal;
+
+					margin-bottom: 15px;
+				}
+			}
+
+			.expertise-status{
+				@extend .btn;
+				@extend .btn-info;
+				@extend .btn-block;
+
+				background-color: #ed5831 !important;
+			}
+
+			.expertise-status{
+				background: #eee;
+			}
+		}
+
+		.expertise_col-info{
+			@include make-sm-column(5);
+
+			h4{
+				margin-bottom: 25px;
+			}
+		}
+
+		.expertise_col-stat{
+			@include make-sm-column(3.5);
+			margin-bottom: 15px;
+		}
+
+		.expertise_col-info, .expertise_col-stat{
+			padding-top: 15px;
+			padding-bottom: 15px;
+		}
+
+		.expertise_col-stat{
+			> h4{
+				position: relative;
+				z-index: 10;
+				margin-bottom: 15px;
+			}
+
+			&:after{
+				content: ' ';
+				background: #ccc;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				width: 1px;
+				margin-left: -15px;
+				z-index: 10;
+			}
+		}
+
+		.expertise_col-list, .expertise_col-stat{
+			position: static;
+			z-index: 10;
+
+			&:before{
+				content: ' ';
+				display: block;
+				background: #eee;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				margin-left: -15px;
+				width: inherit;
+			}
+		}
+	}
+}
+
+.expertise-form_step-pane__details{
+	label{
+		display: block;
+		@include clearfix();
+
+		&.half-way{
+			width: 49%;
+
+			&.first{
+				float: left;
+			}
+			&.last{
+				float: right;
+			}
+		}
+	}
+
+	.form-group{
+		@include clearfix();
+	}
+
+	.form-control{
+		margin-top: 5px;
+		width: 100%;
+		box-shadow: none;
+		border-radius: 0;
+		background-color: #fff;
+		border-color: #eee;
+	}
+
+	textarea.form-control{
+		width: 100%;
+		height: 72px;
+		float: none;
+		margin-top: 5px;
+	}
+}
+
 .sort-filter{
 	list-style: none;
 	padding-left: 0;

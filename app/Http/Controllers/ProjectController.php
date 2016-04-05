@@ -163,6 +163,7 @@ class ProjectController extends Controller
                 $superExpert = Expert::find($request->super_expert_id);
 
                 Event::fire(new ProjectSuperExpertSelected($project, $superExpert));
+                $project->state = 3;
             }
 
             $response = $project->save();

@@ -408,7 +408,7 @@
             }, 2000);
         }
 
-        addNewInputtedExpertise()
+        addNewInputtedExpertise();
 
         // Expert Related Functions
 

@@ -22,59 +22,64 @@
         });
 
         var requiredRole = 'creator';
-        var matchingRoles = $filter('filter')($rootScope.user.user_roles, {role: requiredRole}, true);
+        var matchingRoles = $filter('filter')($rootScope.user.user_roles, { role: requiredRole }, true);
 
         if (typeof(matchingRoles) !== 'undefined' && matchingRoles.length > 0) {
             var matchingRole = matchingRoles[0];
 
-            if($rootScope.activeRole !== requiredRole){
+            if ($rootScope.activeRole !== requiredRole) {
                 $rootScope.switchUserRole(requiredRole, matchingRole.id, true);
             }
 
             var projectId = parseInt($stateParams.projectId);
 
             if (typeof(projectId) === 'undefined' || isNaN(projectId)) {
-                Project.query().$promise.then(function(result){
+                Project.query().$promise.then(function(result) {
                     $scope.allProjects = result;
-                }).finally(function(){
+                }).finally(function() {
                     $rootScope.$broadcast('stopLoading');
                 });
-            }else if(angular.isNumber(projectId) && isFinite(projectId)){
-                Project.get({projectId: projectId}).$promise.then(function(result){
+            } else if (angular.isNumber(projectId) && isFinite(projectId)) {
+                Project.get({ projectId: projectId }).$promise.then(function(result) {
                     $scope.project = result;
 
-                    switch(result.state){
-                        case 0: $state.go('app.create.details', {projectId: projectId});
-                        break;
-                        case 1: $state.go('app.create.details', {projectId: projectId});
-                        break;
-                        case 2: $state.go('app.create.superexpert', {projectId: projectId});
-                        break;
-                        case 3: $state.go('app.create.expertise', {projectId: projectId});
-                        break;
-                        default: $state.go('app.create.details', {projectId: projectId});
+                    switch (result.state) {
+                        case 0:
+                            $state.go('app.create.details', { projectId: projectId });
+                            break;
+                        case 1:
+                            $state.go('app.create.details', { projectId: projectId });
+                            break;
+                        case 2:
+                            $state.go('app.create.superexpert', { projectId: projectId });
+                            break;
+                        case 3:
+                            $state.go('app.create.expertise', { projectId: projectId });
+                            break;
+                        default:
+                            $state.go('app.create.details', { projectId: projectId });
                     }
-                }).finally(function(){
+                }).finally(function() {
                     $rootScope.$broadcast('stopLoading');
                 });
-            }else{
+            } else {
                 console.log('Make up your mind you peice of shit');
             }
-        }else{
-            $timeout(function(){
+        } else {
+            $timeout(function() {
                 $rootScope.$broadcast('stopLoading');
                 $state.go('app.home');
             }, 2000);
         }
 
         $scope.goToProject = function(project) {
-            $state.go('app.create.details', {projectId: project.id});
+            $state.go('app.create.details', { projectId: project.id });
         }
 
         $scope.createNewProject = function() {
             $scope.data.newProjectLoading = true;
 
-            var newProject = new Project().$save().then(function(result){
+            var newProject = new Project().$save().then(function(result) {
                 $scope.goToProject(result);
                 $scope.data.newProjectLoading = false;
             });
@@ -111,16 +116,16 @@
             geography: 'wherever'
         };
 
-        $scope.$watch('project', function(project){
+        $scope.$watch('project', function(project) {
             if (project !== null) {
                 $rootScope.$broadcast('stopLoading');
                 $scope.details = project;
-            }else{
+            } else {
                 console.log('project still loading');
             }
         });
 
-        $scope.$on('flow::fileAdded', function (event, $flow, flowFile) {
+        $scope.$on('flow::fileAdded', function(event, $flow, flowFile) {
             event.preventDefault();
             console.log('file added');
         });
@@ -135,10 +140,6 @@
 
         $scope.attachedFilesSuccess = function($file, $message) {
             var message = JSON.parse($message);
-            console.log($file);
-
-            console.log('Adding files : ' + message.file.id);
-
             var index = $scope.project.attachedFiles.indexOf(message.file.id);
 
             if (index === -1) {
@@ -159,26 +160,199 @@
     angular.module('fundator.controllers').controller('CreateSECtrl', function($rootScope, $scope, $state, $http, $timeout, FdScroller) {
         console.log('CreateSECtrl Started');
 
-        $http.get('/api/super-experts').then(function(result){
+        $http.get('/api/super-experts').then(function(result) {
             console.log('sups');
             console.log(result);
             $scope.superExperts = result.data;
         });
 
-        $scope.chooseSuperExpert = function(superExpert){
+        $scope.chooseSuperExpert = function(superExpert) {
             $scope.project.super_expert_id = superExpert.id;
             $scope.saveProgress();
 
             FdScroller.toSection('.steps-content');
 
-            $timeout(function(){
+            $timeout(function() {
                 $state.go('app.create.expertise');
             }, 300);
         }
     });
 
-    angular.module('fundator.controllers').controller('CreateExpertiseCtrl', function($rootScope, $scope, $state, $resource) {
+    angular.module('fundator.controllers').controller('CreateExpertiseCtrl', function($rootScope, $scope, $state, $resource, $http) {
         console.log('CreateExpertiseCtrl Started');
+
+        $scope.inputtedExpertiseList = [];
+        $scope.expertiseList = [];
+
+        // Demo
+        $scope.expertiseList.push({
+            expertiseCategory: 'Technical',
+            expertiseSubCategory: 'Electronic',
+            expertise: 'PCB',
+            mainExpertise: 'apply IP protection for the US Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat natus quod error, at impedit, deleniti vero ducimus sequi asperiores obcaecati.',
+            budget: 'usd 1500',
+            leadTime: '60 days from the beginning of project',
+            startDate: 'Dec 15, 2015',
+            creator: 'Super Expert'
+        });
+
+        $scope.saveExpertise = function(expertise){
+            $scope.expertiseList.push({
+                expertiseCategory: expertise.selectedExpertiseCategory.name,
+                expertiseSubCategory: expertise.selectedExpertiseSubCategory.name,
+                expertise: expertise.selectedExpertise.name,
+                mainExpertise: expertise.mainTask,
+                budget: expertise.budget,
+                leadTime: expertise.leadTime,
+                startDate: expertise.startDate,
+                creator: 'You'
+            });
+
+            $scope.inputtedExpertiseList = [];
+        }
+
+        $scope.addNewInputtedExpertise = function() {
+            var lastInputtedExpertise = { selectedExpertise: 'null', otherExpertise: { status: 1 } };
+
+            if ($scope.inputtedExpertiseList.length > 0) {
+                $scope.inputtedExpertiseList[$scope.inputtedExpertiseList.length - 1];
+
+            }
+
+            if ($scope.inputtedExpertiseList.length < 3 && (lastInputtedExpertise.selectedExpertise !== null && lastInputtedExpertise.otherExpertise.status !== 0)) {
+                $scope.inputtedExpertiseList.push({
+                    expertiseCategoryList: [],
+                    expertiseSubCategoryList: [],
+                    expertiseList: [],
+                    selectedExpertiseCategory: null,
+                    otherExpertiseCategory: { name: '', status: 0 },
+                    selectedExpertiseSubCategory: null,
+                    otherExpertiseSubCategory: { name: '', status: 0 },
+                    selectedExpertise: null,
+                    otherExpertise: { name: '', status: 0 },
+                    mainExpertise: '',
+                    budget: '',
+                    leadTime: '',
+                    startDate: '',
+                    step: 1,
+                    loading: false
+                })
+            };
+
+            $scope.fetchExpertiseCategory($scope.inputtedExpertiseList.length - 1);
+        }
+
+        $scope.selectExpertiseCategory = function(index, expertiseCategory, level) {
+            if (level === 0) {
+                $scope.inputtedExpertiseList[index].selectedExpertiseCategory = expertiseCategory;
+                $scope.inputtedExpertiseList[index].step = 2;
+                $scope.fetchExpertiseSubCategory(index);
+            } else {
+                $scope.inputtedExpertiseList[index].selectedExpertiseSubCategory = expertiseCategory;
+                $scope.inputtedExpertiseList[index].step = 3;
+                $scope.fetchExpertiseList(index);
+            }
+        }
+
+        $scope.deselectExpertiseCategory = function(e, index, level) {
+            if (level === 0) {
+                $scope.inputtedExpertiseList[index].selectedExpertiseCategory = null;
+                $scope.inputtedExpertiseList[index].otherExpertiseCategory = { name: '', status: 0 };
+                $scope.inputtedExpertiseList[index].selectedExpertiseSubCategory = null;
+                $scope.inputtedExpertiseList[index].otherExpertiseSubCategory = { name: '', status: 0 };
+                $scope.inputtedExpertiseList[index].selectedExpertise = null;
+                $scope.inputtedExpertiseList[index].otherExpertise = { name: '', status: 0 };
+            } else {
+                $scope.inputtedExpertiseList[index].selectedExpertiseSubCategory = null;
+                $scope.inputtedExpertiseList[index].otherExpertiseSubCategory = { name: '', status: 0 };
+                $scope.inputtedExpertiseList[index].selectedExpertise = null;
+                $scope.inputtedExpertiseList[index].otherExpertise = { name: '', status: 0 };
+            }
+            e.stopPropagation();
+        }
+
+        $scope.saveOtherExpertiseCategory = function(index, level) {
+            if (level === 0) {
+                $scope.inputtedExpertiseList[index].selectedExpertiseCategory = null;
+                $scope.inputtedExpertiseList[index].selectedExpertiseSubCategory = null;
+                $scope.inputtedExpertiseList[index].otherExpertiseSubCategory = { name: '', status: 0 };
+                $scope.inputtedExpertiseList[index].selectedExpertise = null;
+                $scope.inputtedExpertiseList[index].otherExpertise = { name: '', status: 0 };
+
+                $scope.inputtedExpertiseList[index].otherExpertiseCategory.status = 1;
+                $scope.inputtedExpertiseList[index].step = 2;
+            } else {
+                $scope.inputtedExpertiseList[index].selectedExpertiseSubCategory = null;
+                $scope.inputtedExpertiseList[index].selectedExpertise = null;
+                $scope.inputtedExpertiseList[index].otherExpertise = { name: '', status: 0 };
+
+                $scope.inputtedExpertiseList[index].otherExpertiseSubCategory.status = 1;
+                $scope.inputtedExpertiseList[index].step = 3;
+            }
+        }
+
+        $scope.removeOtherExpertiseCategory = function(index, level) {
+            if (level === 0) {
+                $scope.inputtedExpertiseList[index].otherExpertiseCategory = { name: '', status: 0 };
+                $scope.inputtedExpertiseList[index].otherExpertiseSubCategory = { name: '', status: 0 };
+                $scope.inputtedExpertiseList[index].otherExpertise = { name: '', status: 0 };
+            } else {
+                $scope.inputtedExpertiseList[index].otherExpertiseSubCategory = { name: '', status: 0 };
+                $scope.inputtedExpertiseList[index].otherExpertise = { name: '', status: 0 };
+            }
+        }
+
+        $scope.selectExpertise = function(index, expertise) {
+            $scope.inputtedExpertiseList[index].selectedExpertise = expertise;
+            $scope.inputtedExpertiseList[index].otherExpertise = { name: '', status: 0 };
+            $scope.inputtedExpertiseList[index].step = 4;
+        }
+
+        $scope.deselectExpertise = function(e, index) {
+            $scope.inputtedExpertiseList[index].selectedExpertise = null;
+            e.stopPropagation(index);
+        }
+
+        $scope.saveOtherExpertise = function(index) {
+            $scope.inputtedExpertiseList[index].selectedExpertise = null;
+
+            $scope.inputtedExpertiseList[index].otherExpertise.status = 1;
+            $scope.inputtedExpertiseList[index].step = 4;
+        }
+
+        $scope.removeOtherExpertise = function(index) {
+            $scope.inputtedExpertiseList[index].otherExpertise = { name: '', status: 0 };
+        }
+
+        $scope.fetchExpertiseCategory = function(index) {
+            $scope.inputtedExpertiseList[index].expertiseCategoryList = [];
+            $scope.inputtedExpertiseList[index].loading = true;
+
+            $http.get('/api/expertise-category/0').then(function(result) {
+                $scope.inputtedExpertiseList[index].expertiseCategoryList = result.data;
+                $scope.inputtedExpertiseList[index].loading = false;
+            });
+        }
+
+        $scope.fetchExpertiseSubCategory = function(index) {
+            $scope.expertiseSubCategoryList = [];
+            $scope.inputtedExpertiseList[index].loading = true;
+
+            $http.get('/api/expertise-category/' + $scope.inputtedExpertiseList[index].selectedExpertiseCategory.id).then(function(result) {
+                $scope.inputtedExpertiseList[index].expertiseSubCategoryList = result.data;
+                $scope.inputtedExpertiseList[index].loading = false;
+            });
+        }
+
+        $scope.fetchExpertiseList = function(index) {
+            $scope.inputtedExpertiseList[index].expertiseList = [];
+            $scope.inputtedExpertiseList[index].loading = true;
+
+            $http.get('/api/expertise/category/' + $scope.inputtedExpertiseList[index].selectedExpertiseSubCategory.id).then(function(result) {
+                $scope.inputtedExpertiseList[index].expertiseList = result.data;
+                $scope.inputtedExpertiseList[index].loading = false;
+            }, 2000);
+        }
     });
 
     angular.module('fundator.controllers').controller('CreateExpertCtrl', function($rootScope, $scope, $state, $resource) {

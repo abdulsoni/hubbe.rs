@@ -42,7 +42,7 @@ class ProjectSuperExpertSelectedtNotification
                     'project' => ['id' => $project->id, 'name' => $project->name],
                     'user' => ['id' => $user->id, 'name' => $user->name],
                     'thumbnail' => $project->thumbnail,
-                    'action' => ''
+                    'action' => null
                 ])
                 ->send();
 
