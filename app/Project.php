@@ -39,9 +39,27 @@ class Project extends Model
     /**
      * Project Investment
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function investments(){
         return $this->hasMany('Fundator\Investment');
+    }
+
+    /**
+     * Project Investment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function expertise(){
+        return $this->hasMany('Fundator\ProjectExpertise');
+    }
+
+    /**
+     * Super Expert
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function superExpert(){
+        return $this->belongsTo('Fundator\Expert', 'super_expert_id');
     }
 }

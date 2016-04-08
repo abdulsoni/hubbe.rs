@@ -161,8 +161,6 @@
         console.log('CreateSECtrl Started');
 
         $http.get('/api/super-experts').then(function(result) {
-            console.log('sups');
-            console.log(result);
             $scope.superExperts = result.data;
         });
 
@@ -184,28 +182,58 @@
         $scope.inputtedExpertiseList = [];
         $scope.expertiseList = [];
 
+        var ProjectExpertise = $resource('/api/projects/:projectId/expertise', {
+            projectId: '@id'
+        });
+
         // Demo
-        $scope.expertiseList.push({
-            expertiseCategory: 'Technical',
-            expertiseSubCategory: 'Electronic',
-            expertise: 'PCB',
-            mainExpertise: 'apply IP protection for the US Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat natus quod error, at impedit, deleniti vero ducimus sequi asperiores obcaecati.',
-            budget: 'usd 1500',
-            leadTime: '60 days from the beginning of project',
-            startDate: 'Dec 15, 2015',
-            creator: 'Super Expert'
+        // $scope.expertiseList.push({
+        //     expertiseCategory: 'Technical',
+        //     expertiseSubCategory: 'Electronic',
+        //     expertise: 'PCB',
+        //     mainTask: 'apply IP protection for the US Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat natus quod error, at impedit, deleniti vero ducimus sequi asperiores obcaecati.',
+        //     budget: 'usd 1500',
+        //     leadTime: '60 days from the beginning of project',
+        //     startDate: 'Dec 15, 2015',
+        //     creator: 'Super Expert'
+        // });
+
+        $scope.fetchExpertise = function(){
+            ProjectExpertise.query({projectId: $scope.project.id}).$promise.then(function(result) {
+                $scope.expertiseList = result;
+            }).finally(function() {
+                $rootScope.$broadcast('stopLoading');
+            });
+        }
+
+        $scope.$watch('project', function(project){
+            console.log(project);
+            if (typeof(project) === 'undefined' || project === null) return;
+            $scope.fetchExpertise();
         });
 
         $scope.saveExpertise = function(expertise){
+            var projectExpertiseData = {
+                'expertise_id': expertise.selectedExpertise.id,
+                'task': expertise.mainTask,
+                'budget': expertise.budget,
+                'lead_time': expertise.leadTime,
+                'start_date': expertise.startDate
+            };
+
+            $http.post('/api/projects/' + $scope.project.id + '/expertise', projectExpertiseData)
+            .then(function(result) {
+                console.log(result);
+            });
+
             $scope.expertiseList.push({
                 expertiseCategory: expertise.selectedExpertiseCategory.name,
                 expertiseSubCategory: expertise.selectedExpertiseSubCategory.name,
                 expertise: expertise.selectedExpertise.name,
-                mainExpertise: expertise.mainTask,
+                mainTask: expertise.mainTask,
                 budget: expertise.budget,
                 leadTime: expertise.leadTime,
                 startDate: expertise.startDate,
-                creator: 'You'
             });
 
             $scope.inputtedExpertiseList = [];
@@ -216,7 +244,6 @@
 
             if ($scope.inputtedExpertiseList.length > 0) {
                 $scope.inputtedExpertiseList[$scope.inputtedExpertiseList.length - 1];
-
             }
 
             if ($scope.inputtedExpertiseList.length < 3 && (lastInputtedExpertise.selectedExpertise !== null && lastInputtedExpertise.otherExpertise.status !== 0)) {
@@ -230,7 +257,7 @@
                     otherExpertiseSubCategory: { name: '', status: 0 },
                     selectedExpertise: null,
                     otherExpertise: { name: '', status: 0 },
-                    mainExpertise: '',
+                    mainTask: '',
                     budget: '',
                     leadTime: '',
                     startDate: '',

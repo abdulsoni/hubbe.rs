@@ -12,7 +12,7 @@ class EnhanceProjectsTable extends Migration
      */
     public function up()
     {
-        Schema::table('projects_table', function (Blueprint $table) {
+        Schema::table('projects', function (Blueprint $table) {
 
             $table->integer('state')->default(0);
 
@@ -32,7 +32,7 @@ class EnhanceProjectsTable extends Migration
      */
     public function down()
     {
-        Schema::table('projects_table', function (Blueprint $table) {
+        Schema::table('projects', function (Blueprint $table) {
             //
         });
     }

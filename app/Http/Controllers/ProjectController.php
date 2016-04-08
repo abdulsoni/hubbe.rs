@@ -8,6 +8,9 @@ use Fundator\Http\Requests;
 use Fundator\Http\Controllers\Controller;
 use Fundator\Project;
 use Fundator\Expert;
+use Fundator\Expertise;
+use Fundator\ProjectExpertise;
+use Fundator\Confirm;
 
 use Fundator\Events\ProjectSuperExpertSelected;
 
@@ -185,5 +188,103 @@ class ProjectController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getExpertise($id)
+    {
+        $statusCode = 200;
+        $response = [];
+
+        try{
+            $project = Project::find($id);
+
+            $project_data = [];
+
+            if (!is_null($project)) {
+                $project_data = $project->expertise;
+            }else{
+                throw new Exception('Project not found', 1);
+            }
+
+            $response = $project_data;
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function storeExpertise(Request $request, $id)
+    {
+        $statusCode = 200;
+        $response = [];
+
+        try{
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                // return response()->json(['user_not_found'], 404);
+                throw new Exception('User not found', 1);
+            }
+
+            $project = Project::find($id);
+            $expertise = Expertise::find($request->expertise_id);
+
+            if (!is_null($project) && !is_null($expertise)) {
+                $projectExpertise = ProjectExpertise::create([
+                    'task' => $request->task,
+                    'budget' => $request->budget,
+                    'lead_time' => $request->lead_time,
+                    'start_date' => $request->start_date
+                ]);
+
+                $projectExpertise->project()->associate($project);
+                $projectExpertise->expertise()->associate($expertise);
+
+                // Create double confirmation here ...
+
+                $confirmation = Confirm::create([
+                    'confirm_status' => 0,
+                    'confirm_time' => null
+                ]);
+
+                $superExpert = $project->superExpert;
+
+                if ($user->id !== $superExpert->id) {
+                    $confirmation->sender()->associate($user);
+                    $confirmation->receiver()->associate($superExpert);
+                }else{
+                    $confirmation->sender()->associate($superExpert);
+                    $confirmation->receiver()->associate($user);
+                }
+                // $confirmation->save();
+
+                $projectExpertise->confirmation()->save($confirmation);
+                $projectExpertise->save();
+
+                $response = $projectExpertise;
+            }else{
+                throw new Exception('Project or Expertise not found', 1);
+            }
+
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 }

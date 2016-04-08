@@ -64,6 +64,9 @@ $api->version('v1', function ($api) {
     $api->get('projects/{id}', 'Fundator\Http\Controllers\ProjectController@show');
     $api->put('projects/{id}', 'Fundator\Http\Controllers\ProjectController@update');
 
+    $api->get('projects/{id}/expertise', 'Fundator\Http\Controllers\ProjectController@getExpertise');
+    $api->post('projects/{id}/expertise', 'Fundator\Http\Controllers\ProjectController@storeExpertise');
+
     /*
      * Entries
      */
@@ -145,4 +148,12 @@ $api->version('v1', function ($api) {
     $api->get('notifications/{userId}', 'Fundator\Http\Controllers\NotificationController@index');
     $api->post('notifications/user/{userId}/read', 'Fundator\Http\Controllers\NotificationController@markAllAsRead');
     $api->post('notifications/{id}/read', 'Fundator\Http\Controllers\NotificationController@markAsRead');
+
+    /*
+     * Transactions
+     */
+
+    $api->get('transactions', 'Fundator\Http\Controllers\TransactionController@index');
+    $api->get('transactions/earnings/{type}', 'Fundator\Http\Controllers\TransactionController@earnings');
+    // $api->get('transactions/{transactionId}', 'Fundator\Http\Controllers\NotificationController@index');
 });

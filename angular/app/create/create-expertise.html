@@ -14,23 +14,23 @@
         <div class="expertise marginB30" ng-repeat="expertise in expertiseList track by $index">
             <div class="expertise expertise_col-list">
                 <ul class="expertise-breakdown">
-                    <li>{{expertise.expertiseCategory}}</li>
-                    <li>{{expertise.expertiseSubCategory}}</li>
-                    <li>{{expertise.expertise}}</li>
+                    <li ng-if="expertise.expertise_category">{{expertise.expertise_category.name}}</li>
+                    <li ng-if="expertise.expertise_subcategory">{{expertise.expertise_subcategory.name}}</li>
+                    <li>{{expertise.expertise.name}}</li>
                 </ul>
                 <span class="expertise-status">Waiting</span>
             </div>
             <div class="expertise expertise_col-info">
                 <h4>Main Task<br>
-                    <small>{{expertise.mainTask}}</small>
+                    <small>{{expertise.task}}</small>
                 </h4>
                 <h4>Estimated budget: &nbsp;<small>{{expertise.budget}}</small></h4>
-                <h4>Lead time: &nbsp; <small>{{expertise.leadTime}}</small></h4>
-                <h4>Expected starting date: &nbsp; <small>{{expertise.startDate}}</small></h4>
+                <h4>Lead time: &nbsp; <small>{{expertise.lead_time}}</small></h4>
+                <h4>Expected starting date: &nbsp; <small>{{expertise.start_date | amDateFormat:'MMM Do YYYY' }}</small></h4>
             </div>
             <div class="expertise expertise_col-stat">
                 <h4>Matching skill expert: &nbsp; <small>5</small></h4>
-                <h4>Task added on: &nbsp; <small>{{expertise.startDate}}</small></h4>
+                <h4>Task added on: &nbsp; <small>{{expertise.start_date}}</small></h4>
                 <h4>Task added by: &nbsp; <small>{{expertise.creator}}</small></h4>
 
                 <br>
