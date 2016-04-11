@@ -64,8 +64,11 @@ $api->version('v1', function ($api) {
     $api->get('projects/{id}', 'Fundator\Http\Controllers\ProjectController@show');
     $api->put('projects/{id}', 'Fundator\Http\Controllers\ProjectController@update');
 
-    $api->get('projects/{id}/expertise', 'Fundator\Http\Controllers\ProjectController@getExpertise');
+    $api->get('projects/{id}/expertise', 'Fundator\Http\Controllers\ProjectController@indexExpertise');
     $api->post('projects/{id}/expertise', 'Fundator\Http\Controllers\ProjectController@storeExpertise');
+
+    $api->get('project-expertise/{id}', 'Fundator\Http\Controllers\ProjectController@getExpertise');
+    $api->post('project-expertise/{id}/bid', 'Fundator\Http\Controllers\ProjectController@storeExpertiseBid');
 
     /*
      * Entries
@@ -141,6 +144,8 @@ $api->version('v1', function ($api) {
 
     $api->get('skills/', 'Fundator\Http\Controllers\SkillsController@index');
 
+    $api->get('expertise/available', 'Fundator\Http\Controllers\ExpertiseController@availableIndex');
+    $api->get('expertise/matching', 'Fundator\Http\Controllers\ExpertiseController@matchingIndex');
 
     /*
      * Notifications
@@ -156,4 +161,16 @@ $api->version('v1', function ($api) {
     $api->get('transactions', 'Fundator\Http\Controllers\TransactionController@index');
     $api->get('transactions/earnings/{type}', 'Fundator\Http\Controllers\TransactionController@earnings');
     // $api->get('transactions/{transactionId}', 'Fundator\Http\Controllers\NotificationController@index');
+
+    /*
+     * Confirmation
+     */
+    $api->get('confirmation/{id}', 'Fundator\Http\Controllers\ConfirmationController@show');
+    $api->put('confirmation/{id}', 'Fundator\Http\Controllers\ConfirmationController@update');
+
+    /*
+     * Messages
+     */
+    $api->post('messages/', 'Fundator\Http\Controllers\MessagesController@store');
+    $api->get('messages/{id}', 'Fundator\Http\Controllers\MessagesController@show');
 });

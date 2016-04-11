@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProjectExpertiseTable extends Migration
+class CreateProjectExpertiseBidsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,14 @@ class CreateProjectExpertiseTable extends Migration
      */
     public function up()
     {
-        Schema::create('project_expertise', function (Blueprint $table) {
+        Schema::create('project_expertise_bids', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('project_id');
-            $table->integer('expertise_id');
+
+            $table->integer('project_expertise_id');
             $table->integer('expert_id');
 
-            $table->longtext('task');
-            $table->string('budget');
-            $table->string('lead_time');
-            $table->dateTime('start_date');
+            $table->float('bid_amount');
+            $table->text('description');
 
             $table->timestamps();
         });
@@ -34,6 +32,6 @@ class CreateProjectExpertiseTable extends Migration
      */
     public function down()
     {
-        Schema::drop('project_expertise');
+        Schema::drop('project_expertise_bids');
     }
 }

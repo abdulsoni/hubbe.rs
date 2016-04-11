@@ -3,7 +3,7 @@
 
     angular.module('fundator.controllers').controller('CreateCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $timeout, $filter, FdScroller) {
         console.log('Create Started');
-        $rootScope.$broadcast('startLoading');
+        // $rootScope.$broadcast('startLoading');
 
         // Available Views : List, Create
         $scope.view = 'list';
@@ -55,6 +55,9 @@
                             break;
                         case 3:
                             $state.go('app.create.expertise', { projectId: projectId });
+                            break;
+                        case 4:
+                            $state.go('app.create.experts', { projectId: projectId });
                             break;
                         default:
                             $state.go('app.create.details', { projectId: projectId });
@@ -176,7 +179,7 @@
         }
     });
 
-    angular.module('fundator.controllers').controller('CreateExpertiseCtrl', function($rootScope, $scope, $state, $resource, $http) {
+    angular.module('fundator.controllers').controller('CreateExpertiseCtrl', function($rootScope, $scope, $state, $resource, $http, FdScroller) {
         console.log('CreateExpertiseCtrl Started');
 
         $scope.inputtedExpertiseList = [];
@@ -186,17 +189,6 @@
             projectId: '@id'
         });
 
-        // Demo
-        // $scope.expertiseList.push({
-        //     expertiseCategory: 'Technical',
-        //     expertiseSubCategory: 'Electronic',
-        //     expertise: 'PCB',
-        //     mainTask: 'apply IP protection for the US Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat natus quod error, at impedit, deleniti vero ducimus sequi asperiores obcaecati.',
-        //     budget: 'usd 1500',
-        //     leadTime: '60 days from the beginning of project',
-        //     startDate: 'Dec 15, 2015',
-        //     creator: 'Super Expert'
-        // });
 
         $scope.fetchExpertise = function(){
             ProjectExpertise.query({projectId: $scope.project.id}).$promise.then(function(result) {
@@ -207,7 +199,6 @@
         }
 
         $scope.$watch('project', function(project){
-            console.log(project);
             if (typeof(project) === 'undefined' || project === null) return;
             $scope.fetchExpertise();
         });
@@ -237,6 +228,18 @@
             });
 
             $scope.inputtedExpertiseList = [];
+        }
+
+        $scope.saveExpertiseSelection = function(){
+            $scope.project.state = 4;
+            $scope.saveProgress();
+
+            FdScroller.toSection('.steps-content');
+
+            $timeout(function() {
+                $state.go('app.create.expertise');
+            }, 300);
+
         }
 
         $scope.addNewInputtedExpertise = function() {
@@ -384,6 +387,38 @@
 
     angular.module('fundator.controllers').controller('CreateExpertCtrl', function($rootScope, $scope, $state, $resource) {
         console.log('CreateExpertCtrl Started');
+
+        $scope.data = {};
+
+        var ProjectExpertise = $resource('/api/projects/:projectId/expertise', {
+            projectId: '@id'
+        });
+
+        $scope.fetchExpertise = function(){
+            ProjectExpertise.query({projectId: $scope.project.id}).$promise.then(function(result) {
+                $scope.expertiseList = result;
+            }).finally(function() {
+                $rootScope.$broadcast('stopLoading');
+            });
+        }
+
+        $scope.$watch('project', function(project){
+            if (typeof(project) === 'undefined' || project === null) return;
+            $scope.fetchExpertise();
+        });
+
+        $scope.shortlistExpert = function(expertise, bid){
+            if (typeof(expertise.shortlist) === 'undefined') {
+                expertise.shortlist = [];
+            }
+
+            expertise.shortlist.push(bid);
+        }
+
+        $scope.discussExpert = function(expertise, bid){
+            $scope.data.selectedBid = bid
+        }
+
     });
 
     angular.module('fundator.controllers').controller('CreateBudgetCtrl', function($rootScope, $scope, $state, $resource) {

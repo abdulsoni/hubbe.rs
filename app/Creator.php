@@ -27,6 +27,13 @@ class Creator extends Model
      */
     protected $fillable = [];
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $appends = ['name', 'last_name', 'thumbnail_url'];
+
 
     public function user(){
         return $this->belongsTo('Fundator\User');
@@ -45,6 +52,16 @@ class Creator extends Model
     public function getNameAttribute()
     {
         return $this->user->name;
+    }
+
+    public function getLastNameAttribute()
+    {
+        return $this->user->last_name;
+    }
+
+    public function getThumbnailUrlAttribute()
+    {
+        return $this->user->thumbnail_url;
     }
 
     public function getOngoingContests()

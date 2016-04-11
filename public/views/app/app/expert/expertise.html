@@ -1,0 +1,94 @@
+<div class="expertise-list marginB60">
+    <div class="expertise marginB30">
+        <div class="expertise expertise_col-list">
+            <ul class="expertise-breakdown">
+                <li ng-if="expertise.expertise_category">{{expertise.expertise_category.name}}</li>
+                <li ng-if="expertise.expertise_subcategory">{{expertise.expertise_subcategory.name}}</li>
+                <li>{{expertise.expertise.name}}</li>
+            </ul>
+            <span class="expertise-status">Waiting</span>
+        </div>
+        <div class="expertise expertise_col-info">
+            <h4>Main Task<br>
+                    <small>{{expertise.task}}</small>
+                </h4>
+            <h4>Estimated budget: &nbsp;<small>{{expertise.budget | currency}}</small></h4>
+            <h4>Lead time: &nbsp; <small>{{expertise.lead_time}}</small></h4>
+            <h4>Expected starting date: &nbsp; <small>{{expertise.start_date | amDateFormat:'MMM Do YYYY' }}</small></h4>
+        </div>
+        <div class="expertise expertise_col-stat margin0">
+            <div class="relative" ng-if="expertise.bid === null">
+                <h4 class="marginB25">My Bid</h4>
+                <div class="expertise-bid_amount">
+                    <label for="bid_amount">Bid Amount</label>
+                    <input id="bid_amount" class="form-control" type="text" ng-model="data.bid_amount">
+                </div>
+                <div class="expertise-bid_description">
+                    <label for="bid_description">Bid Description</label>
+                    <textarea id="bid_description" rows="3" class="form-control" ng-model="data.bid_description"></textarea>
+                </div>
+                <button type="submit" class="btn btn-block btn-info" ng-click="submitBid()">
+                    Submit
+                </button>
+            </div>
+            <div class="relative" ng-if="expertise.bid !== null">
+                <h4 class="marginB20">Bid Amount <br>
+                    <small>{{expertise.bid.bid_amount}}</small>
+                </h4>
+                <h4 class="marginB20">Bid Description <br>
+                    <small>{{expertise.bid.description}}</small>
+                </h4>
+                <h4>Bid Placed on <br>
+                    <small>{{expertise.bid.created_at | amDateFormat:'MMM Do, YYYY'}}</small>
+                </h4>
+            </div>
+        </div>
+    </div>
+    <div class="well padding0 margin0">
+        <div class="row ">
+            <div class="col-lg-7 isotopeSubDivid">
+                <div class="grid3">
+                    <div class="isotope-subItem">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="expertise-thumbnail" style="background-image:url({{expertise.project.creator.thumbnail_url}});"></div>
+                            </div>
+                            <div class="col-md-8 col-sm-8">
+                                <div class="row paddingTB18">
+                                    <div class="col-md-5 col-sm-5 border_right">
+                                        <h3 class="marginT0 marginB15">{{expertise.project.creator.name}} {{expertise.project.creator.last_name}}</h3>
+                                        <h4 class="marginB15">Creator</h4>
+                                    </div>
+                                    <div class="col-md-7 col-sm-7">
+                                        <h3 class="margin0">Review: <small>4.5</small> <br>Expertise: <small>4.6</small> <br>Professionalism: <small>3.5</small> </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="isotope-subItem">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="expertise-thumbnail" style="background-image:url({{expertise.project.super_expert.thumbnail_url}});"></div>
+                            </div>
+                            <div class="col-md-8 col-sm-8">
+                                <div class="row paddingTB18">
+                                    <div class="col-md-5 col-sm-5 border_right">
+                                        <h3 class="marginT0 marginB15">{{expertise.project.super_expert.name}} {{expertise.project.super_expert.last_name}}</h3>
+                                        <h4 class="marginB15">Super Expert</h4>
+                                    </div>
+                                    <div class="col-md-7 col-sm-7">
+                                        <h3 class="margin0">Review: <small>4.5</small> <br>Expertise: <small>4.6</small> <br>Professionalism: <small>3.5</small> </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 isotopeChatDivid">
+                <fd-messenger thread-id="expertise.thread_id"></fd-messenger>
+            </div>
+        </div>
+    </div>
+</div>

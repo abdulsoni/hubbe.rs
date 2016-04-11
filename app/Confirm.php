@@ -71,12 +71,25 @@ class Confirm extends Model
 
     public function getSenderAttribute()
     {
-        return $this->sender()->first();
+        $sender = User::find($this->sender_id);
+
+        return [
+            'id' => $sender->id,
+            'name' => $sender->name,
+            'last_name' => $sender->last_name,
+            'thumbnail_url' => $sender->thumbnail_url
+        ];
     }
 
     public function getReceiverAttribute()
     {
-    	// $receiver = User::find($this->receiver_id);
-        return $this->receiver()->first();
+    	$receiver = User::find($this->receiver_id);
+
+        return [
+            'id' => $receiver->id,
+            'name' => $receiver->name,
+            'last_name' => $receiver->last_name,
+            'thumbnail_url' => $receiver->thumbnail_url
+        ];
     }
 }

@@ -24,10 +24,9 @@ class TransactionController extends Controller
         $response = [];
 
         try{
-            // if (! $user = JWTAuth::parseToken()->authenticate()) {
-            //     throw new Exception('User not found', 1);
-            // }
-            $user = User::find(1);
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                throw new Exception('User not found', 1);
+            }
 
             $transactions = $user->amountTransactions;
             $response = $transactions;
@@ -50,6 +49,10 @@ class TransactionController extends Controller
         $response = [];
 
         try{
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                throw new Exception('User not found', 1);
+            }
+
             if ($type === 'prize') {
                 $response = [
                 [

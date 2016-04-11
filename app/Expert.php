@@ -27,6 +27,28 @@ class Expert extends Model
      */
     protected $fillable = ['super_expert'];
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $appends = ['name', 'last_name', 'thumbnail_url'];
+
+
+    public function getNameAttribute()
+    {
+        return $this->user->name;
+    }
+
+    public function getLastNameAttribute()
+    {
+        return $this->user->last_name;
+    }
+
+    public function getThumbnailUrlAttribute()
+    {
+        return $this->user->thumbnail_url;
+    }
 
     public function user(){
         return $this->belongsTo('Fundator\User');

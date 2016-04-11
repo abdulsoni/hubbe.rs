@@ -2,6 +2,11 @@
 
 namespace Fundator;
 
+use Fundator\Project;
+use Fundator\Expertise;
+use Fundator\Confirm;
+use Cmgmyr\Messenger\Models\Thread;
+
 use Illuminate\Database\Eloquent\Model;
 
 class ProjectExpertise extends Model
@@ -39,7 +44,7 @@ class ProjectExpertise extends Model
      *
      * @var array
      */
-    protected $appends = ['expertise', 'expertise_category', 'expertise_subcategory', 'expertise', 'confirmation'];
+    protected $appends = ['project', 'expertise', 'expertise_category', 'expertise_subcategory', 'expertise', 'confirmation', 'bids'];
 
     /**
      * Project Attachment
@@ -62,6 +67,16 @@ class ProjectExpertise extends Model
     }
 
     /**
+     * Attachment to the bids
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function bids()
+    {
+        return $this->hasMany('Fundator\ProjectExpertiseBid');
+    }
+
+    /**
      * Confirmation
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
@@ -69,6 +84,24 @@ class ProjectExpertise extends Model
     public function confirmation()
     {
         return $this->morphMany('Fundator\Confirm', 'confirmable');
+    }
+
+    public function getProjectAttribute()
+    {
+        $project = Project::find($this->project_id);
+        $project_data = null;
+
+        if (!is_null($project)) {
+            $project_data = [
+                'id' => $project->id,
+                'name' => $project->name,
+                'thumbnail' => $project->thumbnail_url,
+                'creator' => $project->creator,
+                'super_expert' => $project->superExpert
+            ];
+        }
+
+        return $project_data;
     }
 
     public function getExpertiseAttribute()
@@ -96,5 +129,36 @@ class ProjectExpertise extends Model
     {
         $confirmation = Confirm::where('confirmable_id', $this->id)->where('confirmable_type', 'Fundator\ProjectExpertise')->first();
         return $confirmation;
+    }
+
+    public function getBidsAttribute()
+    {
+        $bids = ProjectExpertiseBid::where('project_expertise_id', $this->id)->get();
+
+        foreach ($bids as $bid) {
+            $expert = Expert::find($bid->expert_id);
+            $bid['expert'] = $expert;
+            $bid['thread_id'] = $this->getThreadId($expert->id);
+        }
+
+        return $bids;
+    }
+
+    /*
+     * Messages
+     */
+    public function getThreadId($expertId)
+    {
+        $threadSubject = 'Discussion with expert : ' . $this->expertId . ' on ' . $this->id;
+        $thread = Thread::where('subject', $threadSubject)->first();
+
+        if(!is_null($thread)){
+            return $thread->id;
+        }else{
+            $thread = Thread::create(['subject' => $threadSubject]);
+            return $thread->id;
+        }
+
+        return null;
     }
 }

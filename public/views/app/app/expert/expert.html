@@ -159,16 +159,15 @@
         </uib-tabset>
     </div>
 </div>
-
 <div class="container marginT25">
     <h2><strong>Bring your expertise to great products and projects</strong></h2>
     <hr>
+
     <div class="row">
         <div class="col-xs-12">
             <ul class="list-inline-group filters-button-group button-group">
                 <li class="separator-nav"><a class="isotopeNav is-checked" href="javascript:void(0)" data-filter="*">All</a></li>
                 <li><a class="isotopeNav" href="javascript:void(0)" data-filter=".matching-work">MATCHING WORK EXPERTISE</a></li>
-                <!--<li><a class="isotopeNav" href="javascript:void(0)" data-filter=".transition">transition</a></li><-->
                 <li>
                     <div class="search marginL15">
                         <input type="text" placeholder="Searching for...">
@@ -177,69 +176,39 @@
                 </li>
             </ul>
         </div>
-        <div class="col-md-12 overflow-hidden">
-            <div class="grid">
-                <div class="element-item transition" data-category="transition">
-                    <div class="product-thumbnail" style="background-image:url(images/PluginSetup.jpg);">
-                        <div class="product-header">
-                            <h3>Wordpress Update</h3>
+        <div class="col-md-12 overflow-hidden" ng-if="matchingExpertise.length > 0">
+            <ul class="tabProjectList threeCol">
+                <li ng-repeat="expertise in matchingExpertise" ui-sref="app.expertise({expertiseId: expertise.id})">
+                    <div class="homepage-expertise expertise sliding-tiles">
+                        <div class="sliding-tiles_front product-thumbnail" style="background-image:url({{expertise.project.thumbnail}});">
+                            <div class="product-header">
+                                <h3>{{expertise.expertise.name}}</h3>
+                            </div>
                         </div>
-                        <div class="product-footer">TASK TO BE DONE
-                            <div class="radiusBox blankandwhite">C</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="element-item matching-work" data-category="matching-work">
-                    <div class="product-thumbnail" style="background-image:url(images/PluginSetup.jpg);">
-                        <div class="product-header">
-                            <h3>wordpress Page Setup</h3>
-                        </div>
-                        <div class="product-footer">TASK TO BE DONE
-                            <div class="radiusBox blankandwhite">C</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="element-item item-small transition" data-category="transition">
-                    <div class="product-thumbnail" style="background-image:url(images/project1.jpg);">
-                        <div class="product-header">
-                            <h3>wordpress Setup</h3>
-                        </div>
-                        <div class="product-footer">TASK TO BE DONE
-                            <div class="radiusBox blankandwhite">C</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="element-item item-small matching-work" data-category="matching-work">
-                    <div class="product-thumbnail" style="background-image:url(images/project1.jpg);">
-                        <div class="product-header">
-                            <h3>wordpress Setup</h3>
-                        </div>
-                        <div class="product-footer">TASK TO BE DONE
-                            <div class="radiusBox blankandwhite">C</div>
+                        <div class="sliding-tiles_back expertise well product-thumbnail">
+                            <h3><strong>{{expertise.expertise.name}}</strong></h3>
+                            <p>{{expertise.description}}</p>
+                            <ul class="marginT15 list-unstyled clearfix profileList">
+                                <li>
+                                    <a class="profilePick smallPick "><img src="images/profile.jpg" alt=""></a>Amanda F. &nbsp; Project Funder
+                                </li>
+                                <li>
+                                    <a class="profilePick smallPick "><img src="images/profile.jpg" alt=""></a>Amanda F. &nbsp; Project Programmer
+                                </li>
+                                <li class="profilePick smallPick">
+                                    <a href="#"><img src="images/profile.jpg" alt=""></a>
+                                    <a href="#"><img src="images/profile.jpg" alt=""></a>
+                                    <a href="#"><img src="images/profile.jpg" alt=""></a>
+                                    <a href="#"><img src="images/profile.jpg" alt=""></a> <a href="#">and 56 experts</a>
+                                </li>
+                            </ul>
+                            <div class="product-footer headingWithBg">
+                                <h3>Total Budget: {{expertise.budget | currency}}</h3>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="element-item item-xs-12 matching-work" data-category="matching-work">
-                    <div class="well product-thumbnail">
-                        <h3><strong>Wordpress Plugin Setup</strong></h3>
-                        <p>A little description of this product added here.</p>
-                        <ul class="list-unstyled">
-                            <li class="marginB15">
-                                <a href="#" class="profilePick smallPick "><img src="images/profile.jpg" alt=""></a> Amanda F. Project Funder</li>
-                            <li>
-                                <a href="#" class="profilePick smallPick"><img src="images/profile.jpg" alt=""></a> Amanda F. Project Programmer</li>
-                        </ul>
-                        <div class="profilePick smallPick">
-                            <a href="#"><img src="images/profile.jpg" alt=""></a>
-                            <a href="#"><img src="images/profile.jpg" alt=""></a>
-                            <a href="#"><img src="images/profile.jpg" alt=""></a>
-                            <a href="#"><img src="images/profile.jpg" alt=""></a> <a href="#">and 56 experts</a></div>
-                        <div class="product-footer headingWithBg">
-                            <h3>Total Budget:  $1200</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

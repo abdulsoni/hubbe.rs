@@ -12,7 +12,7 @@
     </ul>
     <div class="expertise-list marginB60">
         <div class="expertise marginB30" ng-repeat="expertise in expertiseList track by $index">
-            <div class="expertise expertise_col-list">
+            <div class="expertise_col expertise_col-list">
                 <ul class="expertise-breakdown">
                     <li ng-if="expertise.expertise_category">{{expertise.expertise_category.name}}</li>
                     <li ng-if="expertise.expertise_subcategory">{{expertise.expertise_subcategory.name}}</li>
@@ -20,21 +20,35 @@
                 </ul>
                 <span class="expertise-status">Waiting</span>
             </div>
-            <div class="expertise expertise_col-info">
+            <div class="expertise_col expertise_col-info">
                 <h4>Main Task<br>
                     <small>{{expertise.task}}</small>
                 </h4>
-                <h4>Estimated budget: &nbsp;<small>{{expertise.budget}}</small></h4>
+                <h4>Estimated budget: &nbsp;<small>{{expertise.budget | currency}}</small></h4>
                 <h4>Lead time: &nbsp; <small>{{expertise.lead_time}}</small></h4>
                 <h4>Expected starting date: &nbsp; <small>{{expertise.start_date | amDateFormat:'MMM Do YYYY' }}</small></h4>
             </div>
-            <div class="expertise expertise_col-stat">
+            <div class="expertise_col expertise_col-stat">
                 <h4>Matching skill expert: &nbsp; <small>5</small></h4>
-                <h4>Task added on: &nbsp; <small>{{expertise.start_date}}</small></h4>
-                <h4>Task added by: &nbsp; <small>{{expertise.creator}}</small></h4>
-
-                <br>
-                <button class="btn btn-info btn-block" ng-click="">Confirm</button>
+                <h4>Task added on: &nbsp; <small>{{expertise.created_at | amDateFormat:'MMM Do YYYY' }}</small></h4>
+                <div ng-if="expertise.confirmation !== null" class="expertise_col-confimation">
+                    <h4>
+                        Task added by:
+                        <img ng-src="{{expertise.confirmation.sender.thumbnail_url}}">
+                        <small>{{expertise.confirmation.sender.name}} {{expertise.confirmation.sender.last_name}}</small>
+                    </h4>
+                    <div class="expertise_col-confimation__status">
+                        <div class="waiting" ng-if="expertise.confirmation.confirm_status === 0">
+                            <span class="icon icon-clock"></span> Waiting for confirmation
+                        </div>
+                        <div class="confirmed" ng-if="expertise.confirmation.confirm_status === 1">
+                            <span class="icon icon-checkmark"></span> Confirmed
+                        </div>
+                    </div>
+                    <button ng-if="expertise.confirmation.confirm_status === 0 && expertise.confirmation.sender.id !== user.id" class="btn btn-info btn-block">
+                        Confirm
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -118,24 +132,31 @@
                         </div> -->
                     </div>
                     <div class="expertise-form_step-pane expertise-form_step-pane__details" ng-if="inputtedExpertise.step === 4">
-                        <label>Main Task <br>
+                        <label>Main Task
+                            <br>
                             <textarea class="form-control" name="" rows="3" ng-model="inputtedExpertise.mainTask" required>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis tempore incidunt nobis totam, iure facilis? Doloremque deleniti eius omnis, tempora vitae, ullam harum molestiae, sequi dolore voluptate quibusdam, temporibus commodi!</textarea>
                         </label>
-                        <label class="half-way first">Estimated budget:<br>
+                        <label class="half-way first">Estimated budget:
+                            <br>
                             <input class="form-control" type="text" placeholder="USD 1500" ng-model="inputtedExpertise.budget" required>
                         </label>
-                        <label class="half-way last">Expected starting date:<br>
+                        <label class="half-way last">Expected starting date:
+                            <br>
                             <input class="form-control" type="text" placeholder="Dec 15, 2015" ng-model="inputtedExpertise.startDate" required>
                         </label>
-                        <label>Lead time:<br>
+                        <label>Lead time:
+                            <br>
                             <input class="form-control" type="text" placeholder="60 days" ng-model="inputtedExpertise.leadTime" required>
                         </label>
                     </div>
                 </div>
                 <fd-loader ng-if="inputtedEpxertise.loading"></fd-loader>
-
                 <button class="btn btn-info btn-block marginT30" ng-if="inputtedExpertise.step === 4" ng-disabled="expertiseForm.$invalid" ng-click="saveExpertise(inputtedExpertise)">Save</button>
             </div>
         </div>
     </form>
+
+    <br>
+
+    <button class="btn btn-success btn-block" ng-click="saveExpertiseSelection()">Save Selection</button>
 </div>

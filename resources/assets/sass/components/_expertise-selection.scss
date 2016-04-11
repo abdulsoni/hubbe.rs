@@ -46,6 +46,28 @@
 	// 		pointer-events: none;
 	// 	}
 	// }
+
+	.expertise-bid_amount, .expertise-bid_description{
+		margin-bottom: 15px;
+
+		.form-control{
+			box-shadow: none;
+			border-color: transparent;
+			border-radius: 0;
+
+			&:focus, &:active{
+				border-color: $brand-info;
+			}
+		}
+	}
+
+	.expertise-bid_amount{
+
+	}
+
+	.expertise-bid_description{
+
+	}
 }
 
 .expertise-form{

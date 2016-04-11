@@ -169,6 +169,18 @@
                     }
                 }
             })
+            .state('app.expertise', {
+                url: '/expertise/:expertiseId',
+                data: {
+                    needLogin: true
+                },
+                views: {
+                    'main@': {
+                        templateUrl: getView('expert', 'expertise'),
+                        controller: 'ExpertiseCtrl'
+                    }
+                }
+            })
             .state('app.invest', {
                 url: '/invest',
                 data: {

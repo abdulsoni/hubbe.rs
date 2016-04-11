@@ -3,6 +3,7 @@
 namespace Fundator;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\URL;
 
 class Project extends Model
 {
@@ -61,5 +62,9 @@ class Project extends Model
      */
     public function superExpert(){
         return $this->belongsTo('Fundator\Expert', 'super_expert_id');
+    }
+
+    public function thumbnailUrl(){
+        return URL::to('/' . $this->thumbnail);
     }
 }

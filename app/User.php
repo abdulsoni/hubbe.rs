@@ -197,6 +197,18 @@ class User extends Model implements AuthenticatableContract,
         return $thumbnail_url;
     }
 
+    public function basicAttributes()
+    {
+        $basicAttributes = [
+            'id' => $this->id,
+            'name' => $this->name,
+            'last_name' => $this->last_name,
+            'thumbnail_url' => $this->thumbnail_url
+        ];
+
+        return $basicAttributes;
+    }
+
     /*
      * Create a JWT token with additional parameters
      */

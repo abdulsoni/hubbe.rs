@@ -10,6 +10,7 @@ use Fundator\Project;
 use Fundator\Expert;
 use Fundator\Expertise;
 use Fundator\ProjectExpertise;
+use Fundator\ProjectExpertiseBid;
 use Fundator\Confirm;
 
 use Fundator\Events\ProjectSuperExpertSelected;
@@ -197,7 +198,7 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getExpertise($id)
+    public function indexExpertise($id)
     {
         $statusCode = 200;
         $response = [];
@@ -228,6 +229,39 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function getExpertise($id)
+    {
+        $statusCode = 200;
+        $response = [];
+
+        try{
+            $expertise = ProjectExpertise::find($id);
+
+            if (!is_null($expertise)) {
+                $response = $expertise;
+                $user = JWTAuth::parseToken()->authenticate();
+
+                if (!is_null($user) && !is_null($user->expert)) {
+                    $response['bid'] = ProjectExpertiseBid::where('project_expertise_id', $expertise->id)->where('expert_id', $user->expert->id)->first();
+                    $response['thread_id'] = $expertise->getThreadId($user->expert->id);
+                }
+            }else{
+                throw new Exception('Project Expertise not found', 1);
+            }
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function storeExpertise(Request $request, $id)
     {
         $statusCode = 200;
@@ -235,7 +269,6 @@ class ProjectController extends Controller
 
         try{
             if (! $user = JWTAuth::parseToken()->authenticate()) {
-                // return response()->json(['user_not_found'], 404);
                 throw new Exception('User not found', 1);
             }
 
@@ -277,6 +310,50 @@ class ProjectController extends Controller
                 $response = $projectExpertise;
             }else{
                 throw new Exception('Project or Expertise not found', 1);
+            }
+
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function storeExpertiseBid(Request $request, $id)
+    {
+        $statusCode = 200;
+        $response = [];
+
+        try{
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                throw new Exception('User not found', 1);
+            }
+
+            $projectExpertise = ProjectExpertise::find($id);
+
+            if (!is_null($projectExpertise) && !is_null($user->expert)) {
+                $projectExpertiseBid = ProjectExpertiseBid::create([
+                    'bid_amount' => $request->bid_amount,
+                    'description' => $request->description
+                ]);
+
+                $projectExpertiseBid->projectExpertise()->associate($projectExpertise);
+                $projectExpertiseBid->expert()->associate($user->expert);
+
+                $projectExpertiseBid->save();
+
+                $response = $projectExpertiseBid;
+            }else{
+                throw new Exception('Project or Expert not found', 1);
             }
 
         } catch (Exception $e) {

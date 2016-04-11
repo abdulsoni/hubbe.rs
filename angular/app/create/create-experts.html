@@ -1,0 +1,82 @@
+<div class="row">
+    <div class="col-xs-12">
+        <ul class="list-inline-group expertise-group group2">
+            <li class="separator-nav"><a class="isotopeNav2 is-checked" href="javascript:void(0)" data-filter="*">EXPERT UNDER SELECTION <span class="circle">3</span></a></li>
+            <li><a class="isotopeNav2" href="javascript:void(0)" data-filter=".expertise">EXPERT SELECTED <span class="circle">0</span></a></li>
+        </ul>
+    </div>
+</div>
+<div class="grid2">
+    <div class="expertise-list fourcols marginB60">
+        <div class="expertise-wrap" ng-repeat="expertise in expertiseList track by $index">
+            <div class="expertise marginB30">
+                <div class="expertise_col expertise_col-list">
+                    <ul class="expertise-breakdown">
+                        <li ng-if="expertise.expertise_category">{{expertise.expertise_category.name}}</li>
+                        <li ng-if="expertise.expertise_subcategory">{{expertise.expertise_subcategory.name}}</li>
+                        <li>{{expertise.expertise.name}}</li>
+                    </ul>
+                </div>
+                <div class="expertise_col expertise_col-info">
+                    <h4>Main Task<br>
+	                    <small>{{expertise.task}}</small>
+	                </h4>
+                    <h4>Estimated budget: <br><small>{{expertise.budget | currency}}</small></h4>
+                    <h4>Lead time: <br> <small>{{expertise.lead_time}}</small></h4>
+                    <h4>Expected starting date: <br> <small>{{expertise.start_date | amDateFormat:'MMM Do YYYY' }}</small></h4>
+                </div>
+                <div class="expertise_col expertise_col-shortlist">
+                    <h4>Shortlisted Experts: {{expertise.shortlist === undefined ? 0 : expertise.shortlist.length }}</h4>
+                    <div class="clearfix" ng-repeat="shortlistBid in expertise.shortlist">
+                    <div class="profilePick smallPick pull-left marginR5"><img ng-src="{{shortlistBid.expert.thumbnail_url}}"></div>
+                    	<h3 class="pull-left marginT10">{{shortlistBid.expert.name}} {{shortlistBid.expert.last_name}}
+                    	<br>Bid: <small><a>{{shortlistBid.bid_amount | currency}}</a></small> </h3>
+                    </div>
+                </div>
+                <div class="expertise_col expertise_col-stat">
+                    <h4>Average Bidding: &nbsp; <small>{{1000 | currency}}</small></h4>
+                    <h4>Number of Bids: &nbsp; <small>{{expertise.bids.length}}</small></h4>
+                </div>
+            </div>
+            <div class="well padding0 experts-bid-list" ng-if="expertise.bids.length > 0">
+                <div class="row">
+                    <div class="col-lg-7 isotopeSubDivid">
+                        <div class="grid3">
+                            <div class="isotope-subItem" ng-repeat="bid in expertise.bids">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="expertise-thumbnail" style="background-image:url({{bid.expert.thumbnail_url}});"></div>
+                                    </div>
+                                    <div class="col-md-8 col-sm-8">
+                                        <div class="row paddingTB18">
+                                            <div class="col-md-5 col-sm-5 border_right">
+                                                <!-- <h3 class="margin0">{{bid.expert.name}} {{bid.expert.last_name}} <br>Mechanical <br>English</h3> -->
+                                                <h3 class="marginT0 marginB15">{{bid.expert.name}} {{bid.expert.last_name}}</h3>
+                                                <h4 class="marginB15"><strong>Bid: </strong>{{bid.bid_amount | currency}}</h4>
+                                            </div>
+                                            <div class="col-md-7 col-sm-7">
+                                            	<h5 class="marginT0">Summary:</h5>
+                                                <p>{{bid.description}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 col-xs-4"><a class="btn btn-info marginT10 ">Select</a></div>
+                                            <div class="col-md-4 col-xs-4"><a class="btn btn-info tbn-orrange marginT10 marginL10 marginR10">Hide</a></div>
+                                            <div class="col-md-4 col-xs-4">
+                                                <div class="text-right paddingR15"><a class="link-text-underline" ng-click="shortlistExpert(expertise, bid)">Shortlist</a></div>
+                                                <div class="text-right paddingR15"><a class="link-text-underline" ng-click="discussExpert(expertise, bid)">Discuss</a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 isotopeChatDivid">
+                        <fd-messenger thread-id="data.selectedBid.thread_id" ng-if="data.selectedBid"></fd-messenger>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
