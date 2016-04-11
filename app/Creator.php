@@ -51,17 +51,17 @@ class Creator extends Model
 
     public function getNameAttribute()
     {
-        return $this->user->name;
+        return !is_null($this->user) ? $this->user->name : '';
     }
 
     public function getLastNameAttribute()
     {
-        return $this->user->last_name;
+        return !is_null($this->user) ? $this->user->last_name : '';
     }
 
     public function getThumbnailUrlAttribute()
     {
-        return $this->user->thumbnail_url;
+        return !is_null($this->user) ? $this->user->thumbnail_url : '';
     }
 
     public function getOngoingContests()
