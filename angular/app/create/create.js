@@ -179,7 +179,7 @@
         }
     });
 
-    angular.module('fundator.controllers').controller('CreateExpertiseCtrl', function($rootScope, $scope, $state, $resource, $http, FdScroller) {
+    angular.module('fundator.controllers').controller('CreateExpertiseCtrl', function($rootScope, $scope, $state, $resource, $http, $timeout, FdScroller) {
         console.log('CreateExpertiseCtrl Started');
 
         $scope.inputtedExpertiseList = [];
