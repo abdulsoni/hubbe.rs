@@ -214,18 +214,19 @@
 
             $http.post('/api/projects/' + $scope.project.id + '/expertise', projectExpertiseData)
             .then(function(result) {
-                console.log(result);
+                console.log(result.data);
+                $scope.expertiseList.push(result.data);
             });
 
-            $scope.expertiseList.push({
-                expertiseCategory: expertise.selectedExpertiseCategory.name,
-                expertiseSubCategory: expertise.selectedExpertiseSubCategory.name,
-                expertise: expertise.selectedExpertise.name,
-                mainTask: expertise.mainTask,
-                budget: expertise.budget,
-                leadTime: expertise.leadTime,
-                startDate: expertise.startDate,
-            });
+            // $scope.expertiseList.push({
+            //     expertiseCategory: expertise.selectedExpertiseCategory.name,
+            //     expertiseSubCategory: expertise.selectedExpertiseSubCategory.name,
+            //     expertise: expertise.selectedExpertise.name,
+            //     mainTask: expertise.mainTask,
+            //     budget: expertise.budget,
+            //     leadTime: expertise.leadTime,
+            //     startDate: expertise.startDate,
+            // });
 
             $scope.inputtedExpertiseList = [];
         }
