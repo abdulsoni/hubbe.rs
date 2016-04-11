@@ -64,7 +64,7 @@ class Project extends Model
         return $this->belongsTo('Fundator\Expert', 'super_expert_id');
     }
 
-    // public function thumbnailUrl(){
-    //     return URL::to('/' . $this->thumbnail);
-    // }
+    public function thumbnailUrl(){
+        return URL::to('/' . $this->thumbnail);
+    }
 }
