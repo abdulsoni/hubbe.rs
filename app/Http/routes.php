@@ -165,8 +165,8 @@ $api->version('v1', function ($api) {
     /*
      * Confirmation
      */
-    $api->get('confirmation/{id}', 'Fundator\Http\Controllers\ConfirmationController@show');
-    $api->put('confirmation/{id}', 'Fundator\Http\Controllers\ConfirmationController@update');
+    $api->get('confirmation/{id}', 'Fundator\Http\Controllers\ConfirmController@show');
+    $api->put('confirmation/{id}', 'Fundator\Http\Controllers\ConfirmController@update');
 
     /*
      * Messages
