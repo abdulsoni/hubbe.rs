@@ -58,3 +58,11 @@
 		}
 	}
 }
+
+.btn-info.ladda-button{
+	background-color: $brand-info;
+
+	&:hover, &:active, &:focus{
+		background-color: darken($brand-info, 10%);
+	}
+}

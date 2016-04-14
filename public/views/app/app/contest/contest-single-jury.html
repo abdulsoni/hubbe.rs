@@ -238,35 +238,32 @@
                                 <span class="label-prefix">C</span>
                                 Creativity
                             </label>
-                            <input id="creativity" ng-model="data.selectedEntry.rating.creativity" type="text" min="1" max="10" class="form-control" placeholder="introduce mark ...">
+                            <input id="creativity" ng-model="data.selectedEntry.rating.creativity" type="text" ng-min="1" ng-max="10" class="form-control" placeholder="introduce mark ..." required>
                         </fieldset>
                         <fieldset>
                             <label for="design">
                                 <span class="label-prefix">D</span>
                                 Design
                             </label>
-                            <input id="design" ng-model="data.selectedEntry.rating.design" type="text" min="1" max="10" class="form-control" placeholder="introduce mark ...">
+                            <input id="design" ng-model="data.selectedEntry.rating.design" type="text" ng-min="1" ng-max="10" class="form-control" placeholder="introduce mark ..." required>
                         </fieldset>
                         <fieldset>
                             <label for="industrialization">
                                 <span class="label-prefix">I</span>
                                 Industrialization
                             </label>
-                            <input id="industrialization" ng-model="data.selectedEntry.rating.industrial" type="text" min="1" max="10" class="form-control" placeholder="introduce mark ...">
+                            <input id="industrialization" ng-model="data.selectedEntry.rating.industrial" type="text" ng-min="1" ng-max="10" class="form-control" placeholder="introduce mark ..." required>
                         </fieldset>
                         <fieldset>
                             <label for="market">
                                 <span class="label-prefix">M</span>
                                 Market
                             </label>
-                            <input id="market" ng-model="data.selectedEntry.rating.market" type="text" min="1" max="10" class="form-control" placeholder="introduce mark ...">
+                            <input id="market" ng-model="data.selectedEntry.rating.market" type="text" ng-min="1" ng-max="10" class="form-control" placeholder="introduce mark ..." required>
                         </fieldset>
 
-                        <button class="btn btn-info btn-block marginT20" ng-click="saveMarks()" ng-if="!data.selectedEntry.rating.id" ng-disabled="data.savingMarks" ng-class="{'btn-success': data.savedMarks}">
-                            {{data.savingMarks ? 'Saving ...' : (data.savedMarks ? 'Saved' : 'Submit')}}
-                        </button>
-                        <button class="btn btn-info btn-block marginT20" ng-click="saveMarks(data.selectedEntry.rating.id)" ng-if="data.selectedEntry.rating.id" ng-disabled="data.savingMarks" ng-class="{'btn-success': data.savedMarks}">
-                            {{data.savingMarks ? 'Saving ...' : (data.savedMarks ? 'Saved' : 'Save')}}
+                        <button class="btn btn-info btn-block marginT20" ladda="data.savingMarks" ng-click="saveMarks(data.selectedEntry.rating.id)" ng-disabled="entryMarks.$invalid && entryMarks.$drity" data-style="expand-right">
+                            {{data.savingMarks ? 'Saving ...' : (data.savedMarks ? 'Saved' : (data.selectedEntry.rating.id ? 'Save' : 'Submit'))}}
                         </button>
                     </form>
                 </div>

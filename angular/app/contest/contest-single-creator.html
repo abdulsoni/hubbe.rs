@@ -279,7 +279,7 @@
                     </div>
 
                     <div class="col-sm-12 text-center marginT30">
-                        <button class="btn btn-info" ng-disabled="(newEntry.$invalid || $flow.files.length === 0) || data.savingEntry" ng-click="submitEntry()" ng-class="{'btn-success': data.savedEntry}">
+                        <button class="btn btn-info" ladda="data.savingEntry" ng-disabled="(newEntry.$invalid || $flow.files.length === 0) || data.savingEntry" ng-click="submitEntry()" data-style="expand-right">
                             {{data.savingEntry ? 'Submitting ...' : (data.savedEntry ? 'Submitted!' : 'Submit')}}
                         </button>
                     </div>
@@ -288,7 +288,16 @@
         </div>
     </div>
 	<div class="row contest-single_entry" ng-if="data.selectedEntry !== null">
-        <div class="col-sm-12">
+        <div class="col-md-12 center-block" ng-if="!data.selectedEntry.ratings && data.selectedEntry.ratings !== null">
+            <fd-loader class="center"></fd-loader>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
+        <div class="col-sm-12" ng-if="data.selectedEntry.ratings">
             <div class="marginB30"><hr></div>
             <div class="row">
                 <div class="col-sm-6">
@@ -304,20 +313,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12 center-block" ng-if="!data.selectedEntry.ratings && data.selectedEntry.ratings !== null">
-            <fd-loader class="center"></fd-loader>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-        </div>
 	    <div class="col-md-6" ng-if="data.selectedEntry.ratings || data.selectedEntry.ratings === null">
 	        <div class="contest-list contest-list-lb">
-	            <div class="row" ng-repeat="rating in data.selectedEntry.ratings | limitTo: 5">
+	            <div class="row" ng-repeat="rating in data.selectedEntry.ratings">
 	                <div class="col-xs-2 text-center">
-                        <!-- <img src="images/coolestMember.jpg" alt="" class="coolestMemberLBPick"> -->
                         <img class="coolestMemberBPick" src="images/icon-user-default.png" alt="" ng-if="!rating.judge.thumbnail_url">
                         <img class="coolestMemberBPick" ng-src="{{rating.judge.thumbnail_url}}" alt="" ng-if="rating.judge.thumbnail_url">
                     </div>
@@ -336,9 +335,10 @@
 	                    <h4 class="clearfix"><strong class="pull-left">Market P.</strong> <small class="pull-right">{{rating.market}}</small></h4>
 	                </div>
 	            </div>
-	            <a class="btn btn-block showmorebtn" ng-if="data.selectedEntry.ratings.length > 5">Show more</a> </div>
+	            <!-- <a class="btn btn-block showmorebtn" ng-if="data.selectedEntry.ratings.length > 5">Show more</a> </div> -->
                 <p class="no-have no-margin" ng-if="data.selectedEntry.ratings.length === 0">There are currently no ratings.</p>
-	       </div>
+            </div>
+        </div>
 	    <div class="col-md-6" ng-if="data.selectedEntry.messages">
             <div class="chatbox">
                 <div class="chatRow" ng-repeat="message in data.selectedEntry.messages">

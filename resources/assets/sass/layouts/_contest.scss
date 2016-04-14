@@ -144,3 +144,35 @@
 		}
 	}
 }
+
+.entry-marks{
+	form{
+		fieldset{
+			position: relative;
+
+			&:after{
+				content: '/ 10';
+				position: absolute;
+				right: 5px;
+				top: 36px;
+				font-size: 16px;
+				color: #999;
+			}
+
+			input{
+				padding-right: 44px;
+			}
+		}
+	}
+}
+
+.entries-list{
+	.owl-buttons {
+		.owl-prev{
+			left: -35px;
+		}
+		.owl-next{
+			right: -35px;
+		}
+	}
+}
