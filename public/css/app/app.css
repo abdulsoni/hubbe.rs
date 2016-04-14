@@ -8505,6 +8505,11 @@ ul.socialList > li.cdNavList {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0); }
 
+.btn-info.ladda-button, .expertise-list .expertise .expertise_col-list .expertise-breakdown > li.ladda-button, .expertise-list .expertise .expertise_col-list .ladda-button.expertise-status {
+  background-color: #5bc0de; }
+  .btn-info.ladda-button:hover, .expertise-list .expertise .expertise_col-list .expertise-breakdown > li.ladda-button:hover, .expertise-list .expertise .expertise_col-list .ladda-button.expertise-status:hover, .btn-info.ladda-button:active, .expertise-list .expertise .expertise_col-list .expertise-breakdown > li.ladda-button:active, .expertise-list .expertise .expertise_col-list .ladda-button.expertise-status:active, .btn-info.ladda-button:focus, .expertise-list .expertise .expertise_col-list .expertise-breakdown > li.ladda-button:focus, .expertise-list .expertise .expertise_col-list .ladda-button.expertise-status:focus {
+    background-color: #31b0d5; }
+
 .chatPIwrap {
   padding: 20px 20px 15px 20px; }
 
@@ -9327,7 +9332,8 @@ main {
 
 .contest-list {
   background-color: #e8e8e8;
-  overflow: hidden; }
+  overflow: hidden;
+  overflow: scroll; }
   .contest-list .contestImg {
     width: 100%;
     height: 75px; }
@@ -9601,8 +9607,11 @@ ul.prizebox li:nth-child(3) a {
   background: url(../../images/entries.png);
   display: block;
   height: 170px;
+  width: 240px;
   text-align: center;
-  color: #95c54d;
+  color: #fff;
+  background: #95c54d;
+  padding: 28px;
   padding: 22px;
   font-weight: 300;
   background-size: cover;
@@ -11955,6 +11964,24 @@ body.modal-open .body-content {
       .image-preview-list .image-preview .image-preview_remove:hover {
         cursor: pointer;
         opacity: 0.85; }
+
+.entry-marks form fieldset {
+  position: relative; }
+  .entry-marks form fieldset:after {
+    content: '/ 10';
+    position: absolute;
+    right: 5px;
+    top: 36px;
+    font-size: 16px;
+    color: #999; }
+  .entry-marks form fieldset input {
+    padding-right: 44px; }
+
+.entries-list .owl-buttons .owl-prev {
+  left: -35px; }
+
+.entries-list .owl-buttons .owl-next {
+  right: -35px; }
 
 .profile-finance_wrap {
   font-size: 15px;
@@ -15231,6 +15258,9 @@ body.modal-open .body-content {
       background-size: cover;
       background-position: center; }
       .entry-details.entry-details-marks .entry-image h2 {
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0, rgba(0, 0, 0, 0.14) 61%, rgba(0, 0, 0, 0.06) 75%, transparent 100%);
+        margin: 0;
+        padding: 20px 15px 50px;
         padding-left: 15px;
         color: #fff; }
     .entry-details.entry-details-marks .entry-marks {

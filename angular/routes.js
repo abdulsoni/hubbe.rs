@@ -123,6 +123,19 @@
                     }
                 }
             })
+            .state('app.home', {
+                url: '/',
+                data: {
+                    bodyClass: 'homepage',
+                    needLogin: false
+                },
+                views: {
+                    'main@': {
+                        templateUrl: getView('home'),
+                        controller: 'HomeCtrl'
+                    }
+                }
+            })
             // .state('app.home', {
             //     url: '/',
             //     data: {

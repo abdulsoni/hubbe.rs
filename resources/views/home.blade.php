@@ -18,8 +18,8 @@
 				<p>Accumsan feugiat mi commodo erat lorem ipsum, sed magna<br />
 				lobortis feugiat sapien sed etiam volutpat accumsan.</p>
 				<ul class="actions">
-					<li><a href="/app/#/signin" class="button scrolly">Login</a></li>
-					<li><a href="/app/#/signup" class="button scrolly">Signup</a></li>
+					<li><a href="/app/#/auth/signin" class="button scrolly">Login</a></li>
+					<li><a href="/app/#/auth/signup" class="button scrolly">Signup</a></li>
 				</ul>
 			</div>
 		</section>
@@ -30,7 +30,7 @@
 					<h2>Create work &amp; Entrepreneurship inro reality</h2>
 				</header>
 				<ul class="actions uniform">
-					<li><a href="/app/#/signup" class="button special">Become a Creator</a></li>
+					<li><a href="/app/#/auth/signup" class="button special">Become a Creator</a></li>
 					<li><a href="#" class="button">Learn More</a></li>
 				</ul>
 			</div>
@@ -54,7 +54,7 @@
 					<p>Be part of the 17 experts committing their skills on 7 innovative projects. <br>All types of expert are needed.</p>
 				</header>
 				<ul class="actions uniform">
-					<li><a href="/app/#/signup" class="button special">Become an Expert</a></li>
+					<li><a href="/app/#/auth/signup" class="button special">Become an Expert</a></li>
 					<li><a href="#" class="button">Learn More</a></li>
 				</ul>
 			</div>
@@ -78,7 +78,7 @@
 					<p>Earn up to 30% return with 12,860 USD from 6 investors available. <br>Start investing from just 10 USD!</p>
 				</header>
 				<ul class="actions uniform">
-					<li><a href="/app/#/signup" class="button special">Become an Investor</a></li>
+					<li><a href="/app/#/auth/signup" class="button special">Become an Investor</a></li>
 					<li><a href="#" class="button">Learn More</a></li>
 				</ul>
 			</div>
@@ -107,6 +107,7 @@
 		<script src="{!! asset('js/app/skel.min.js') !!}"></script>
 		<script src="{!! asset('js/app/util.js') !!}"></script>
 		<script src="{!! asset('js/app/hogan-3.0.2.js') !!}"></script>
+		<script src="{!! asset('js/app/flickity.pkgd.min.js') !!}"></script>
 		<script src="{!! asset('js/app/home.js') !!}"></script>
 
 	</body>

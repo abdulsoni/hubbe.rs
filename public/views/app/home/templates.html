@@ -3,26 +3,28 @@
         {{#contests}}
         <div class="contest">
         	<a href="/app/#/contests/{{id}}">
-	            <div class="contest-details" style="background-image: url({{thumbnail}});">
+        		<div class="sliding-tiles">
+		            <div class="contest-details" style="background-image: url({{thumbnail}});">
 
-	            	<div class="contest-details_inner">
-		                <div class="contest-detail">
-		                    <h4>Contestants</h4>
-		                    <span class="contest-detail-value">
-								{{num_contestants}}
-							</span>
-		                </div>
-		                <div class="contest-detail">
-		                    <h4>Time to Go</h4>
-		                    <span class="contest-detail-value">
-								60 Days
-							</span>
-		                </div>
-	            	</div>
-	            </div>
-	            <div class="contest-name">
-	                {{name}}
-	            </div>
+		            	<div class="contest-details_inner">
+			                <div class="contest-detail">
+			                    <h4>Contestants</h4>
+			                    <span class="contest-detail-value">
+									{{num_contestants}}
+								</span>
+			                </div>
+			                <div class="contest-detail">
+			                    <h4>Time to Go</h4>
+			                    <span class="contest-detail-value">
+									60 Days
+								</span>
+			                </div>
+		            	</div>
+		            </div>
+		            <div class="contest-name">
+		                {{name}}
+		            </div>
+        		</div>
         	</a>
         </div>
         {{/contests}}
@@ -33,23 +35,23 @@
 		{{#expertise}}
 			<div class="expertise">
 				<div class="sliding-tiles">
-					<div class="sliding-tile_front" style="background-image: url(updzocLWYcH5Beiww7sArSppFaj22lnD.jpg);">
+					<div class="sliding-tile_front" style="background-image: url({{project.thumbnail}});">
 						<div class="expertise-name">
-							{{name}}
+							{{expertise.name}}
 						</div>
 					</div>
 					<div class="sliding-tile_back">
 						<div class="expertise-name-description">
 							<div class="expertise-name">
-								{{name}}
+								{{expertise.name}}
 							</div>
 							<div class="expertise-description">
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore voluptatibus totam quia culpa nobis ipsum magni.
+								{{task}}
 							</div>
 						</div>
 
 						<div class="expertise-budget">
-							Total Budget: $1,000
+							Total Budget: ${{budget}}
 						</div>
 					</div>
 				</div>
@@ -58,31 +60,40 @@
 	</div>
 </script>
 <script id="investors-tpl" type="text/ng-template">
-	<div class="investors-list">
-		<!-- {{#investors}}
+	<div class="investors-list" data-flickity-options='{ "cellAlign": "left", "contain": true }'>
+		<!-- <div class="carousel js-flickity">
+			<div class="carousel-cell">Investor 2</div>
+			<div class="carousel-cell">Investor 2</div>
+			<div class="carousel-cell">Investor 2</div>
+			<div class="carousel-cell">Investor 2</div>
+			<div class="carousel-cell">Investor 2</div>
+			<div class="carousel-cell">Investor 2</div>
+			<div class="carousel-cell">Investor 2</div>
+			<div class="carousel-cell">Investor 2</div>
+			<div class="carousel-cell">Investor 2</div>
+			<div class="carousel-cell">Investor 2</div>
+		</div> -->
+		{{#investors}}
 			<div class="investor">
-				<div class="sliding-tile_front">
-					<div class="investor-name">
-						{{name}}
+				<div class="sliding-tiles">
+					<div class="sliding-tile_front" style="background-image:url(images/investors/{{image}});">
+						<div class="investor-name">
+							{{name}}
+						</div>
 					</div>
-				</div>
-				<div class="sliding-time_back">
-					<div class="investor-name">
-						{{name}}
+					<div class="sliding-tile_back">
+						<div class="investor-name">
+							{{name}}
+						</div>
+						<div class="investor-location">
+							{{location}}
+						</div>
+						<div class="investor-bio">
+							{{bio}}
+						</div>
 					</div>
-					<div class="investor-location">
-						{{location}}
-					</div>
-					<div class="investor-bio">
-						{{bio}}
-					</div>
-					<ul class="investor-social">
-						<li><a href="#" class="icon icon-facebook"></a></li>
-						<li><a href="#" class="icon icon-twitter"></a></li>
-						<li><a href="#" class="icon icon-linkedin"></a></li>
-					</ul>
 				</div>
 			</div>
-		{{/investors}} -->
+		{{/investors}}
 	</div>
 </script>

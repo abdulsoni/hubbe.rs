@@ -14,7 +14,11 @@
     				ctrl.$setViewValue(ctrl.$viewValue);
     			});
     			var minValidator = function (value) {
+                    console.log('minValidator');
     				var min = scope.$eval(attr.ngMin) || 0;
+                    console.log(min);
+                    console.log(value);
+                    console.log(!isEmpty(value) && value < min);
     				if (!isEmpty(value) && value < min) {
     					ctrl.$setValidity('ngMin', false);
     					return undefined;
@@ -39,7 +43,11 @@
     				ctrl.$setViewValue(ctrl.$viewValue);
     			});
     			var maxValidator = function (value) {
+                    console.log('maxValidator');
     				var max = scope.$eval(attr.ngMax) || Infinity;
+                    console.log(max);
+                    console.log(value);
+                    console.log(!isEmpty(value) && value > max);
     				if (!isEmpty(value) && value > max) {
     					ctrl.$setValidity('ngMax', false);
     					return undefined;

@@ -59,6 +59,15 @@ class ExpertiseController extends Controller
             {
                 $expertise_item_data = $expertise_item->getAttributes();
 
+                // $expertise_item_data['project'] = [
+                //     'id' => $expertise_item->project['id'],
+                //     'name' => $expertise_item->project['name'],
+                //     'thumbnail' => $expertise_item->project['thumbnail']
+                // ];
+
+                $expertise_item_data['project'] = $expertise_item->project()->select('id', 'name', 'thumbnail')->get()[0];
+                $expertise_item_data['expertise'] = $expertise_item->expertise;
+
                 $response[] = $expertise_item_data;
             }
         }catch(Exception $e){

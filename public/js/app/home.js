@@ -46,7 +46,7 @@
 		// Load Contests Data
 
 		var apiContests = '/api/contests';
-		var apiExpertise = '/api/expertise';
+		var apiExpertise = '/api/expertise/available';
 
 		var fetchContests = function() {
 			$.get(apiContests, function(result){
@@ -93,6 +93,12 @@
 		fetchContests();
 		fetchExpertise();
 		fetchInvestors();
+
+		$('.investors-list .carousel').flickity({
+  			// options
+  			cellAlign: 'left',
+  			contain: true
+		});
 	});
 
 })(jQuery);
