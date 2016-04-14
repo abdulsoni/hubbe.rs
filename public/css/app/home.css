@@ -1875,7 +1875,8 @@ button,
 .contests-list .contest {
   width: 50%;
   float: left;
-  padding: 0 15px; }
+  padding: 0 15px;
+  margin-bottom: 30px; }
   .contests-list .contest:hover {
     cursor: pointer; }
   .contests-list .contest .contest-details {
@@ -1942,6 +1943,7 @@ button,
   width: 25%;
   float: left;
   padding: 0 15px;
+  margin-bottom: 30px;
   height: 250px; }
   .expertise-list .expertise:hover {
     cursor: pointer; }
