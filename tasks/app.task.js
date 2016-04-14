@@ -41,7 +41,7 @@ elixir.extend('app', function(src, output, outputFilename) {
             }));
     }).watch(baseDir + '/**/*.js');
 
-    new Task('do sass', function() {
+    new Task('do app sass', function() {
         return gulp.src(elixir.config.appConfig.sass.main)
             .pipe(sass())
             .pipe(rename({
@@ -49,6 +49,15 @@ elixir.extend('app', function(src, output, outputFilename) {
             }))
             .pipe(gulp.dest(elixir.config.appConfig.css.outputFolder))
     }).watch(elixir.config.appConfig.sass.src);
+
+    new Task('do home sass', function() {
+        return gulp.src(elixir.config.appConfig.homesass.main)
+            .pipe(sass())
+            .pipe(rename({
+                basename: "home"
+            }))
+            .pipe(gulp.dest(elixir.config.appConfig.css.outputFolder))
+    }).watch(elixir.config.appConfig.homesass.src);
 
     new Task('do IE 9', function() {
         return gulp.src(elixir.config.appConfig.sass.ie)

@@ -1,7 +1,10 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.routes').config(function($stateProvider, $urlRouterProvider) {
+    angular.module('fundator.routes').config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+
+        // Remove the # for the non html5 browsers
+        // $locationProvider.html5Mode(true)
 
         var getView = function(viewName, secondaryName) {
             if (typeof secondaryName === 'undefined') {
@@ -120,19 +123,19 @@
                     }
                 }
             })
-            .state('app.home', {
-                url: '/',
-                data: {
-                    bodyClass: 'homepage',
-                    needLogin: false
-                },
-                views: {
-                    'main@': {
-                        templateUrl: getView('home'),
-                        controller: 'HomeCtrl'
-                    }
-                }
-            })
+            // .state('app.home', {
+            //     url: '/',
+            //     data: {
+            //         bodyClass: 'homepage',
+            //         needLogin: false
+            //     },
+            //     views: {
+            //         'main@': {
+            //             templateUrl: getView('home'),
+            //             controller: 'HomeCtrl'
+            //         }
+            //     }
+            // })
             .state('app.contests', {
                 url: '/contests',
                 data: {

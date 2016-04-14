@@ -54,12 +54,17 @@
                         <hr />
 
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-12" ng-if="!data.showJudgeNdaPending">
                                 <div class="actions clearfix" ng-if="!data.showContestantNdaPending && !data.showContestantNdaCompleted">
                                     <div class="pull-right" ng-if="!data.showContestantNdaSuccess"><a class="btn btn-info" ng-click="becomeContestant()">Participate</a></div>
                                 </div>
                                 <div class="action-pending" ng-if="data.showContestantNdaPending">
                                     <span class="icon icon-clock"></span> &nbsp; Your application for 'Contestant' is being processed ...
+                                </div>
+                            </div>
+                            <div class="col-md-12" ng-if="data.showJudgeNdaPending">
+                                <div class="action-pending">
+                                    <span class="icon icon-clock"></span> &nbsp; Your application for 'Judge'' is being processed ...
                                 </div>
                             </div>
                         </div>

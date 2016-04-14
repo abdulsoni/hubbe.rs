@@ -11,7 +11,8 @@
 |
 */
 
-Route::get('/', 'AppController@serveApp');
+Route::get('/', 'AppController@serveHomepage');
+Route::get('/app', 'AppController@serveApp');
 
 /*
  * Authentication Routes

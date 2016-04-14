@@ -1,8 +1,13 @@
 {
   "appConfig": {
     "sass": {
-      "src": ["./resources/assets/sass/**/*.scss", "./angular/**/*.scss"],
+      "src": ["./resources/assets/sass/**/*.scss", "./angular/**/*.scss", "!./resources/assets/sass/home/**/*.scss"],
       "main": "./resources/assets/sass/app.scss",
+      "ie": "./resources/assets/sass/ie9.scss"
+    },
+    "homesass": {
+      "src": ["./resources/assets/sass/home/**/*.scss"],
+      "main": "./resources/assets/sass/home.scss",
       "ie": "./resources/assets/sass/ie9.scss"
     },
     "js": {

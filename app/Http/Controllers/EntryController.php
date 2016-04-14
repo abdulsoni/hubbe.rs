@@ -210,11 +210,11 @@ class EntryController extends Controller
                 $last_entry_rating = $last_entry->ratings->where('judge_id', $judge->id)->first();
 
                 if($entry->ratings->where('judge_id', $judge->id)->count() === 0 && Entry::where('name', $entry->name)->count() === 1){
-                    $type = 'new';
+                    $type = 'new entry';
                 }
 
                 if(Entry::where('name', $entry->name)->count() > 0 && $last_entry_rating !== null) {
-                    $type = 'ammended';
+                    $type = 'improved entry';
                 }
 
                 if(Entry::where('name', $entry->name)->count() > 0 && $last_entry_rating === null) {

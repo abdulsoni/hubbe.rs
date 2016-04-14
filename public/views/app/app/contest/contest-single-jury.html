@@ -50,6 +50,13 @@
                                 </ul>
                             </div>
                         </div>
+
+                        <hr>
+
+                        <div class="action-pending" ng-if="data.showJudgeNdaPending">
+                            <span class="icon icon-clock"></span> &nbsp; Your application for 'Judge'' is being processed ...
+                        </div>
+
                     </uib-tab>
                     <uib-tab heading="Contestants">
                         <uib-tab-heading>
@@ -163,7 +170,6 @@
                                 </div>
 
                                 <div class="col-xs-4">
-                                    <!-- <img class="thumbnail" src="images/profile.jpg" alt=""> -->
                                     <img class="thumbnail" src="images/icon-user-default.png" alt="" ng-if="!item.contestant.thumbnail_url">
                                     <img class="thumbnail" ng-src="{{item.contestant.thumbnail_url}}" alt="" ng-if="item.contestant.thumbnail_url">
                                 </div>
