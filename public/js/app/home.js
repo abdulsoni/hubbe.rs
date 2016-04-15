@@ -59,6 +59,7 @@
 			});
 		};
 
+
 		var fetchExpertise = function() {
 			$.get(apiExpertise, function(result){
 				console.log('result for expertise');
