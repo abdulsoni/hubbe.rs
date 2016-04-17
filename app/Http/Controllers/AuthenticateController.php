@@ -7,6 +7,8 @@ use Fundator\Events\Signup;
 use Fundator\Exceptions\InvalidConfirmationCodeException;
 use Fundator\Http\Requests;
 use Fundator\Role;
+use Fundator\LinkedinProfile;
+use Fundator\FacebookProfile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Fundator\Http\Controllers\Controller;
@@ -232,6 +234,57 @@ class AuthenticateController extends Controller
     }
 
     /**
+     * Unlink Facebook
+     */
+    public function unlinkFacebook(Request $request)
+    {
+        $statusCode = 200;
+        $response = [];
+
+        try{
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                throw new Exception('User not found', 1);
+            }
+
+            $facebookProfile = FacebookProfile::where('user_id', $user->id)->first();
+            $facebookProfile->delete();
+
+            $user->facebook = null;
+            $response = $user->save();
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * Unlink Linkedin
+     */
+    public function unlinkLinkedin() {
+        $statusCode = 200;
+        $response = [];
+
+        try{
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                throw new Exception('User not found', 1);
+            }
+
+            $linkedinProfile = LinkedinProfile::where('user_id', $user->id)->first();
+            $linkedinProfile->delete();
+
+            $user->linkedin = null;
+            $response = $user->save();
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
      * Login with Facebook.
      */
     public function facebook(Request $request)
@@ -252,7 +305,7 @@ class AuthenticateController extends Controller
         $accessToken = json_decode($accessTokenResponse->getBody(), true);
 
         // Step 2. Retrieve profile information about the current user.
-        $fields = 'id,email,first_name,last_name,link,name';
+        $fields = 'id,email,first_name,last_name,picture.type(large),link,bio,website,birthday,currency,gender,work';
         $profileResponse = $client->request('GET', 'https://graph.facebook.com/v2.5/me', [
             'query' => [
                 'access_token' => $accessToken['access_token'],
@@ -260,14 +313,17 @@ class AuthenticateController extends Controller
             ]
         ]);
         $profile = json_decode($profileResponse->getBody(), true);
-
+        // var_dump($profile);
+        // die();
         // Step 3a. If user is already signed in then link accounts.
         if ($request->header('Authorization'))
         {
-            $user = User::where('facebook', '=', $profile['id']);
+            $facebookProfile = FacebookProfile::where('facebook_id', $profile['id'])->first();
 
-            if ($user->first())
+            if (!is_null($facebookProfile))
             {
+                $facebookProfile->facebook_token = $accessToken['access_token'];
+                $facebookProfile->save();
                 return response()->json(['message' => 'There is already a Facebook account that belongs to you'], 409);
             }
 
@@ -275,9 +331,27 @@ class AuthenticateController extends Controller
             $payload = JWTAuth::getPayload($token);
             $user = User::find($payload['sub']);
 
+            // Save Facebook Details
+            $facebookProfile = FacebookProfile::create([
+                'thumbnail_url' => isset($profile['picture']['data']['url']) ? $profile['picture']['data']['url'] : null,
+                'first_name' => $profile['first_name'],
+                'last_name' => $profile['last_name'],
+                'email' => $profile['email'],
+                'profile_url' => isset($profile['profile_url']) ? $profile['profile_url'] : '',
+                'website' => isset($profile['website']) ? $profile['website'] : '',
+                'birthday' => isset($profile['birthday']) ? $profile['birthday'] : '',
+                'currency' => isset($profile['currency']['user_currency']) ? $profile['currency']['user_currency'] : '',
+                'gender' => isset($profile['gender']) ? $profile['gender'] : '',
+                'summary' => isset($profile['about']) ? $profile['about'] : '',
+                'bio' => isset($profile['bio']) ? $profile['bio'] : '',
+            ]);
+
+            $facebookProfile->facebook_id = $profile['id'];
+            $facebookProfile->facebook_token = $accessToken['access_token'];
+            $facebookProfile->user()->associate($user);
+            $facebookProfile->save();
+
             $user->facebook = $profile['id'];
-            $user->email = $user->email ?: $profile['email'];
-            $user->name = $user->name ?: $profile['name'];
             $user->save();
 
             return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
@@ -285,18 +359,47 @@ class AuthenticateController extends Controller
         // Step 3b. Create a new user account or return an existing one.
         else
         {
-            $users = User::where('facebook', '=', $profile['id']);
-            $user = $users->first();
+            $facebookProfile = FacebookProfile::where('facebook_id', $profile['id'])->first();
 
-            if ($user)
+            if (!is_null($facebookProfile))
             {
+                $user = User::find($facebookProfile->user_id);
+                $facebookProfile->facebook_token = $accessToken['access_token'];
+                $facebookProfile->save();
                 return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
             }
 
-            $user = new User;
+            $user = User::where('email', $profile['email'])->first();
+
+            if (is_null($user)) {
+                $user = new User;
+                $user->name =  $profile['first_name'] . ' ' . $profile['last_name'];
+                $user->email = $profile['email'];
+                $user->position = '';
+                $user->confirmed = 1;
+                $user->save();
+            }
+
+            $facebookProfile = FacebookProfile::create([
+                'thumbnail_url' => isset($profile['picture']['data']['url']) ? $profile['picture']['data']['url'] : null,
+                'first_name' => $profile['first_name'],
+                'last_name' => $profile['last_name'],
+                'email' => $profile['email'],
+                'profile_url' => isset($profile['profile_url']) ? $profile['profile_url'] : '',
+                'website' => isset($profile['website']) ? $profile['website'] : '',
+                'birthday' => isset($profile['birthday']) ? $profile['birthday'] : '',
+                'currency' => isset($profile['currency']['user_currency']) ? $profile['currency']['user_currency'] : '',
+                'gender' => isset($profile['gender']) ? $profile['gender'] : '',
+                'summary' => isset($profile['about']) ? $profile['about'] : '',
+                'bio' => isset($profile['bio']) ? $profile['bio'] : '',
+            ]);
+
+            $facebookProfile->facebook_id = $profile['id'];
+            $facebookProfile->facebook_token = $accessToken['access_token'];
+            $facebookProfile->user()->associate($user);
+            $facebookProfile->save();
+
             $user->facebook = $profile['id'];
-            $user->name = $profile['name'];
-            $user->confirmed = 1;
             $user->save();
 
             return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
@@ -395,19 +498,24 @@ class AuthenticateController extends Controller
         ]);
         $accessToken = json_decode($accessTokenResponse->getBody(), true);
         // Step 2. Retrieve profile information about the current user.
-        $profileResponse = $client->request('GET', 'https://api.linkedin.com/v1/people/~:(id,first-name,last-name,email-address)', [
+        // $profileResponse = $client->request('GET', 'https://api.linkedin.com/v1/people/~:(id,first-name,last-name,email-address)', [
+        $profileResponse = $client->request('GET', 'https://api.linkedin.com/v1/people/~:(id,first-name,last-name,picture-url,industry,formatted-name,headline,location,summary,specialties,positions,public-profile-url,email-address)', [
             'query' => [
                 'oauth2_access_token' => $accessToken['access_token'],
                 'format' => 'json'
             ]
         ]);
         $profile = json_decode($profileResponse->getBody(), true);
+
         // Step 3a. If user is already signed in then link accounts.
         if ($request->header('Authorization'))
         {
-            $user = User::where('linkedin', '=', $profile['id']);
-            if ($user->first())
+            $linkedinProfile = LinkedinProfile::where('linkedin_id', $profile['id'])->first();
+
+            if (!is_null($linkedinProfile))
             {
+                $linkedinProfile->linkedin_token = $accessToken['access_token'];
+                $linkedinProfile->save();
                 return response()->json(['message' => 'There is already a LinkedIn account that belongs to you'], 409);
             }
 
@@ -415,29 +523,71 @@ class AuthenticateController extends Controller
             $payload = JWTAuth::getPayload($token);
             $user = User::find($payload['sub']);
 
-            $user->linkedin = $profile['id'];
-            $user->name = $user->name ?: $profile['firstName'] . ' ' . $profile['lastName'];
-            $user->email = $profile['emailAddress'];
-            $user->save();
+            // Save Linkedin Details
+            $linkedinProfile = LinkedinProfile::create([
+                'thumbnail_url' => isset($profile['pictureUrl']) ? $profile['pictureUrl'] : null,
+                'first_name' => $profile['firstName'],
+                'last_name' => $profile['lastName'],
+                'email' => $profile['emailAddress'],
+                'position' => isset($profile['headline']) ? $profile['headline'] : '',
+                'industry' => isset($profile['industry']) ? $profile['industry'] : '',
+                'country' => isset($profile['location']['country']['code']) ? $profile['location']['country']['code'] : '',
+                'city' => isset($profile['location']['name']) ? $profile['location']['name'] : '',
+                'summary' => isset($profile['summary']) ? $profile['summary'] : '',
+                'specialties' => isset($profile['specialties']) ? $profile['specialties'] : '',
+                'profile_url' => $profile['publicProfileUrl']
+            ]);
+
+            $linkedinProfile->linkedin_id = $profile['id'];
+            $linkedinProfile->linkedin_token = $accessToken['access_token'];
+            $linkedinProfile->user()->associate($user);
+            $linkedinProfile->save();
+
             return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
         }
         // Step 3b. Create a new user account or return an existing one.
         else
         {
-            $users = User::where('linkedin', '=', $profile['id']);
-            $user = $users->first();
+            $linkedinProfile = LinkedinProfile::where('linkedin_id', $profile['id'])->first();
 
-            if ($user)
+            if (!is_null($linkedinProfile))
             {
+                $user = User::find($linkedinProfile->user_id);
+                $linkedinProfile->linkedin_token = $accessToken['access_token'];
+                $linkedinProfile->save();
                 return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
             }
 
-            $user = new User;
-            $user->linkedin = $profile['id'];
-            $user->name =  $profile['firstName'] . ' ' . $profile['lastName'];
-            $user->email = $profile['emailAddress'];
-            $user->confirmed = 1;
-            $user->save();
+            $user = User::where('email', $profile['emailAddress'])->first();
+
+            if (is_null($user)) {
+                $user = new User;
+                $user->name =  $profile['firstName'] . ' ' . $profile['lastName'];
+                $user->email = $profile['emailAddress'];
+                $user->position = isset($profile['headline']) ? $profile['headline'] : '';
+                $user->confirmed = 1;
+                $user->save();
+            }
+
+            // Save Linkedin Details
+            $linkedinProfile = LinkedinProfile::create([
+                'thumbnail_url' => isset($profile['pictureUrl']) ? $profile['pictureUrl'] : null,
+                'first_name' => $profile['firstName'],
+                'last_name' => $profile['lastName'],
+                'email' => $profile['emailAddress'],
+                'position' => isset($profile['headline']) ? $profile['headline'] : '',
+                'industry' => isset($profile['industry']) ? $profile['industry'] : '',
+                'country' => isset($profile['location']['country']['code']) ? $profile['location']['country']['code'] : '',
+                'city' => isset($profile['location']['name']) ? $profile['location']['name'] : '',
+                'summary' => isset($profile['summary']) ? $profile['summary'] : '',
+                'specialties' => isset($profile['specialties']) ? $profile['specialties'] : '',
+                'profile_url' => $profile['publicProfileUrl']
+            ]);
+
+            $linkedinProfile->linkedin_id = $profile['id'];
+            $linkedinProfile->linkedin_token = $accessToken['access_token'];
+            $linkedinProfile->user()->associate($user);
+            $linkedinProfile->save();
 
             return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
         }

@@ -40,7 +40,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'last_name', 'email', 'role', 'needs_reset', 'registered', 'linkedin', 'dob', 'age_gate', 'country_origin', 'country_residence', 'contact_number', 'contact_time'];
+    protected $fillable = ['name', 'last_name', 'email', 'role', 'needs_reset', 'registered', 'linkedin', 'bio', 'position', 'age_gate', 'country_origin', 'country_residence', 'contact_number', 'contact_time'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -113,7 +113,27 @@ class User extends Model implements AuthenticatableContract,
     }
 
     /**
-     * Jury Application
+     * Relationship between users and judges
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function linkedinProfile()
+    {
+        return $this->hasOne('Fundator\LinkedinProfile');
+    }
+
+    /**
+     * Relationship between users and judges
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function facebookProfile()
+    {
+        return $this->hasOne('Fundator\FacebookProfile');
+    }
+
+    /**
+     * User Role Attributes
      */
     public function getUserRolesAttribute()
     {
@@ -190,8 +210,10 @@ class User extends Model implements AuthenticatableContract,
     {
         $thumbnail_url = null;
 
-        if (!is_null($this->thumbnail)) {
+        if (!is_null($this->thumbnail) && is_null($this->thumbnail_file_url)) {
             $thumbnail_url = $this->thumbnail->url;
+        }else{
+            $thumbnail_url = $this->thumbnail_file_url;
         }
 
         return $thumbnail_url;
@@ -283,8 +305,7 @@ class User extends Model implements AuthenticatableContract,
      * @return mix
      */
     public function countAmountTransactions(){
-      return $this->amountTransactions()
-          ->count();
+      return $this->amountTransactions()->count();
     }
 
     /**

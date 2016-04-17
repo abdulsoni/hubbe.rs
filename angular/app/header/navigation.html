@@ -15,14 +15,53 @@
                                 </div>
                             </div>
                             <div class="col-lg-8 col-md-7 col-sm-6 border-left-white">
-                                <div class="user-settings paddingL25">
+                                <div class="user-account_section">
+                                    <div class="user-account_heading">Social Connections</div>
+                                    <div class="user-account_sub-section">
+                                        <h5>Connect to Facebook<span ng-if="user.facebook"><span class="icon icon-checkmark"></span></span></h5>
+                                        <p>Connect your account to Facebook. This helps as it instils confidence in other users that your identity is known.</p>
+                                        <div ng-if="user.facebook">
+                                            <button class="btn btn-danger" ladda="data.socialConnect.facebook.loading" ng-click="socialUnlink('facebook')" data-style="expand-right">Unlink Now</button>
+                                        </div>
+                                        <div ng-if="!user.facebook">
+                                            <button class="btn btn-info-rg" ladda="data.socialConnect.facebook.loading" ng-click="socialConnect('facebook')" data-style="expand-right">Connect Now</button>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="user-account_sub-section">
+                                        <h5>Login with LinkedIn<span ng-if="user.linkedin"><span class="icon icon-checkmark"></span></span></h5>
+                                        <p>Linking your LinkedIn profile with Fundator gives other users extra confidence in you. They know that you're willing to tie your account and your identity to a site other than Fundator.</p>
+                                        <div ng-if="user.linkedin">
+                                            <button class="btn btn-danger" ladda="data.socialConnect.linkedin.loading" ng-click="socialUnlink('linkedin')" data-style="expand-right">Unlink Now</button>
+                                        </div>
+                                        <div ng-if="!user.linkedin">
+                                            <button class="btn btn-info-rg" ladda="data.socialConnect.linkedin.loading" ng-click="socialConnect('linkedin')" data-style="expand-right">Connect Now</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="user-account_section">
+                                    <div class="user-account_heading">Account Verification</div>
+                                    <div class="user-account_sub-section">
+                                        <h5>(2FA) Two Factor Authentication</h5>
+                                        <p>Connect your account to Facebook. This helps as it instils confidence in other users that your identity is known.</p>
+                                        <div ng-if="user.phone_verified">
+                                            <button class="btn btn-danger">Change Number</button>
+                                        </div>
+                                        <div ng-if="!user.phone_verified">
+                                            <button class="btn btn-info-rg" ladda="data.twoFA.loading" ng-click="twoFAVerify()" data-style="expand-right">Verify now</button>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <br>
+                                </div>
+                                <!-- <div class="user-settings paddingL25">
                                     <h5 class="font-light marginB20 marginT30">
                                         <span class="bigtext paddingR25">Name:</span>
                                         <strong ng-if="data.userSettingsMode === 'view'">{{user.name}} {{user.last_name}}</strong>
                                         <br>
                                         <div ng-if="data.userSettingsMode === 'edit'" class="form-group"><input type="text" class="form-control" placeholder="First Name ..." ng-model="user.name"> <input type="text" class="form-control" placeholder="Last Name ..." ng-model="user.last_name"></div>
                                     </h5>
-                                    <!-- <h5 class="font-light marginB20 marginT30">
+                                    <h5 class="font-light marginB20 marginT30">
                                         <span class="bigtext paddingR25">Registered Email Adress:</span>
                                         <strong>{{user.email}}</strong>
                                     </h5>
@@ -30,7 +69,7 @@
                                         <span class="bigtext paddingR25">Registered Phone Number:</span>
                                         <strong ng-if="data.userSettingsMode === 'view'">{{user.contact_number}}</strong>
                                         <div ng-if="data.userSettingsMode === 'edit'" class="form-group"><input type="text" class="form-control" placeholder="Contact Number ..." ng-model="user.contact_number"></div>
-                                    </h5> -->
+                                    </h5>
                                     <h5 class="font-light marginB20 marginT30">
                                         <span class="bigtext paddingR25">Country:</span>
                                         <strong ng-if="data.userSettingsMode === 'view'">{{user.country_origin}}</strong>
@@ -55,37 +94,142 @@
                                             <textarea type="text" class="form-control" placeholder="Your Bio ..." ng-model="user.bio"></textarea>
                                         </div>
                                     </h5>
-                                </div>
+                                </div> -->
+                                <!-- <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="social-detail">
+                                            <div class="social-detail_label">
+                                                <span class="icon icon-facebook"></span>
+                                                Facebook
+                                            </div>
+
+                                            <div class="social-detail_connection" ng-if="user.linkedin">
+                                                <button class="btn btn-info">Login with Facebook</button>
+                                            </div>
+
+                                            <div class="social-detail_fields">
+                                                <h5 class="font-light marginB20 marginT30">
+                                                    <span class="bigtext paddingR25">Name:</span>
+                                                    <strong>{{user.name}} {{user.last_name}}</strong>
+                                                </h5>
+                                                <h5 class="font-light marginB20 marginT30">
+                                                    <span class="bigtext paddingR25">Country:</span>
+                                                    <strong>{{user.country_origin}}</strong>
+                                                </h5>
+                                                <h5 class="font-light marginB20 marginT30">
+                                                    <span class="bigtext paddingR25">City:</span>
+                                                    <strong>Shanghai</strong>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="social-detail">
+                                            <div class="social-detail_label">
+                                                <span class="icon icon-linkedin2"></span>
+                                                Linked In
+                                            </div>
+
+                                            <div class="social-detail_connection" ng-if="user.linkedin">
+                                                <button class="btn btn-info">Login with Linked In</button>
+                                            </div>
+
+                                            <div class="social-detail_fields">
+                                                <h5 class="font-light marginB20 marginT30">
+                                                    <span class="bigtext paddingR25">Name:</span>
+                                                    <strong>{{user.name}} {{user.last_name}}</strong>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="social-detail">
+                                            <div class="social-detail_label">
+                                                <span class="icon icon-googleplus"></span>
+                                                Google
+                                            </div>
+
+                                            <div class="social-detail_connection" ng-if="user.linkedin">
+                                                <button class="btn btn-info">Login with Google</button>
+                                            </div>
+
+                                            <div class="social-detail_fields">
+                                                <h5 class="font-light marginB20 marginT30">
+                                                    <span class="bigtext paddingR25">Name:</span>
+                                                    <strong>{{user.name}} {{user.last_name}}</strong>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
                             </div>
                         </div>
-
                         <br>
                         <br>
                         <br>
-                        <div class="user-settings-controls clearfix text-right">
+                        <!-- <div class="user-settings-controls clearfix text-right">
                             <a class="btn btn_default btn-info marginL10" ng-if="data.userSettingsMode === 'view'" ng-click="data.userSettingsMode = 'edit'">Change Details</a>
                             <a class="btn btn_default btn-info marginL10" ng-if="data.userSettingsMode === 'edit' && data.userSettingsSave !== 1" ng-click="saveProfile()">
                                 <span ng-if="data.userSettingsSave === -1">Save</span>
                                 <span ng-if="data.userSettingsSave === 0">Saving</span>
                             </a>
                             <a class="btn btn_default btn-success marginL10" ng-if="data.userSettingsMode === 'edit' && data.userSettingsSave === 1">Saved!</a>
-                            <!-- &nbsp;&nbsp;<a ng-click="logout()" class="btn btn_default btn-danger">Logout</a> -->
-                        </div>
+                        </div> -->
                     </uib-tab>
-                    <uib-tab heading="Profile / Skills">
+                    <uib-tab heading="Profile">
+                        <uib-tabset class="profile-tab">
+                            <uib-tab heading="as a creator" ng-if="user.creator">
+                                <form name="creatorProfile">
+                                    <div class="profile-section">
+                                        <div class="profile-section_label">Basic Profile</div>
+                                        <div class="profile-section_fields">
+                                            <fd-profile-input form="creatorProfile" type="text" label="First Name" placeholder="First Name ..." facebook-value="" ng-model="user.name"></fd-profile-input>
+                                            <fd-profile-input form="creatorProfile" type="text" label="Last Name" placeholder="Last Name ..." facebook-value="Virwani" linkedin-value="Veerwani" ng-model="user.last_name"></fd-profile-input>
+                                            <fd-profile-input form="creatorProfile" type="text" label="Country" placeholder="Your Country ..." facebook-value="" ng-model="user.country_origin"></fd-profile-input>
+                                        </div>
+
+                                    </div>
+                                    <div class="profile-section">
+                                        <div class="profile-section_label">Creator Profile</div>
+                                        <div class="profile-section_fields">
+                                            <fd-profile-input form="creatorProfile" type="textarea" label="Creator Profile" placeholder="Creator Profile ..." facebook-value="" ng-model="user.creator.bio"></fd-profile-input>
+                                        </div>
+                                    </div>
+                                </form>
+                            </uib-tab>
+                            <uib-tab heading="as an expert" ng-if="user.expert">
+                                Expert
+                            </uib-tab>
+                            <uib-tab heading="as an investor" ng-if="user.investor">
+                                <form name="investorProfile">
+                                    <div class="profile-section">
+                                        <div class="profile-section_label">Basic Profile</div>
+                                        <div class="profile-section_fields">
+                                            <fd-profile-input form="investorProfile" type="text" label="First Name" placeholder="First Name ..." facebook-value="" ng-model="user.name"></fd-profile-input>
+                                            <fd-profile-input form="creatorProfile" type="text" label="Last Name" placeholder="Last Name ..." facebook-value="Virwani" linkedin-value="Veerwani" ng-model="user.last_name"></fd-profile-input>
+                                            <fd-profile-input form="investorProfile" type="text" label="Country" placeholder="Your Country ..." facebook-value="" ng-model="user.country_origin"></fd-profile-input>
+                                        </div>
+                                    </div>
+                                    <div class="profile-section">
+                                        <div class="profile-section_label">Investor Profile</div>
+                                        <div class="profile-section_fields">
+                                            <fd-profile-input form="investorProfile" type="text" label="Position" placeholder="Position ..." facebook-value="" ng-model="user.position"></fd-profile-input>
+                                            <fd-profile-input form="investorProfile" type="textarea" label="Investor Profile" placeholder="Investor Profile ..." facebook-value="" linkedin-value="" ng-model="user.investor.bio"></fd-profile-input>
+                                        </div>
+                                    </div>
+                                </form>
+                            </uib-tab>
+                        </uib-tabset>
+                    </uib-tab>
+                    <uib-tab heading="Skills">
                         <div class="row">
                             <div class="col-lg-8 col-md-7 col-sm-6">
                                 <div class="paddingL25">
                                     <h4 class="font-light marginT0 marginB20"><span class="bigtext">You have &nbsp;<span class="radius-box rbM">{{user.skills.length}}</span>&nbsp; skills registered</span></h4>
-
                                     <div class="profile-skills-selection marginB20" ng-if="data.userSettingsMode === 'edit'">
-                                        <select chosen multiple data-placeholder="Select Skills ..."
-                                            no-results-text="'Could not find any skills :('"
-                                            ng-model="user.skills"
-                                            ng-options="skill as skill.name for skill in allSkills">
+                                        <select chosen multiple data-placeholder="Select Skills ..." no-results-text="'Could not find any skills :('" ng-model="user.skills" ng-options="skill as skill.name for skill in allSkills">
                                         </select>
                                     </div>
-
                                     <div class="skillsList">
                                         <h4 class="font-light pointer" ng-repeat="skill in user.skills"><a>{{skill.name}}</a></h4>
                                     </div>
@@ -102,10 +246,9 @@
                                 <span ng-if="data.userSettingsSave === 0">Saving</span>
                             </a>
                             <a class="btn btn_default btn-success marginL10" ng-if="data.userSettingsMode === 'edit' && data.userSettingsSave === 1">Saved!</a>
-                            <!-- &nbsp;&nbsp;<a ng-click="logout()" class="btn btn_default btn-danger">Logout</a> -->
                         </div>
                     </uib-tab>
-<!--                     <uib-tab heading="Notification">
+                    <!--                     <uib-tab heading="Notification">
                         <ul class="list-inline-group">
                             <li class="separator-nav"><a href="javascript:void(0)">EXPERT ROLE</a></li>
                             <li class="separator-nav"><a href="javascript:void(0)">INVESTOR</a></li>
@@ -521,28 +664,28 @@
                           </div>
                     </uib-tab> -->
                 </uib-tabset>
-
-
-                <!-- Qucik Access -->
-
-                <div class="quick-access_menu">
-                    <uib-accordion close-others="true">
-                        <uib-accordion-group ng-if="hasUserRole('creator')" is-open="'true'">
-                            <uib-accordion-heading>
-                                Contests
-                                <span class="caret"></span>
-                            </uib-accordion-heading>
-                            <uib-accordion close-others="false" ng-if="sideNavigationData.contestant !== null">
-                                <uib-accordion-group ng-if="sideNavigationData.contestant.ongoing.length > 0" is-open="'true'">
-                                    <uib-accordion-heading>
-                                        Ongoing Contests
-                                        <span class="badge pull-right">{{sideNavigationData.contestant.ongoing.length}}</span>
-                                    </uib-accordion-heading>
-
-                                    <ul class="list-group list-group-transparent">
-                                        <li class="list-group-item" ng-repeat="contest in sideNavigationData.contestant.ongoing">
-                                            <img ng-src="{{contest.thumbnail}}" alt="" class="img-responsive img-rounded">
-                                            <a class="pointer" ng-click="goToLink('app.contest', {contestId: contest.contest_id}, 'creator')">
+            </div>
+        </div>
+    </div>
+    <!-- .cd-navigation-wrapper -->
+    <!-- Qucik Access -->
+    <div class="quick-access_menu">
+        <uib-accordion close-others="true">
+            <uib-accordion-group ng-if="hasUserRole('creator')" is-open="'true'">
+                <uib-accordion-heading>
+                    Contests
+                    <span class="caret"></span>
+                </uib-accordion-heading>
+                <uib-accordion close-others="false" ng-if="sideNavigationData.contestant !== null">
+                    <uib-accordion-group ng-if="sideNavigationData.contestant.ongoing.length > 0" is-open="'true'">
+                        <uib-accordion-heading>
+                            Ongoing Contests
+                            <span class="badge pull-right">{{sideNavigationData.contestant.ongoing.length}}</span>
+                        </uib-accordion-heading>
+                        <ul class="list-group list-group-transparent">
+                            <li class="list-group-item" ng-repeat="contest in sideNavigationData.contestant.ongoing">
+                                <img ng-src="{{contest.thumbnail}}" alt="" class="img-responsive img-rounded">
+                                <a class="pointer" ng-click="goToLink('app.contest', {contestId: contest.contest_id}, 'creator')">
                                                 {{contest.name}}
 
                                                 <span class="status success" ng-if="contest.status === 1">
@@ -552,40 +695,38 @@
                                                     <span class="icon icon-clock"></span> Waiting for review
                                                 </span>
                                             </a>
-                                        </li>
-                                    </ul>
-                                </uib-accordion-group>
-                                <uib-accordion-group ng-if="sideNavigationData.contestant.past.length > 0" is-open="'true'">
-                                    <uib-accordion-heading>
-                                        Contest History
-                                        <span class="badge pull-right">0</span>
-                                    </uib-accordion-heading>
-
-                                    <span class="empty">
+                            </li>
+                        </ul>
+                    </uib-accordion-group>
+                    <uib-accordion-group ng-if="sideNavigationData.contestant.past.length > 0" is-open="'true'">
+                        <uib-accordion-heading>
+                            Contest History
+                            <span class="badge pull-right">0</span>
+                        </uib-accordion-heading>
+                        <span class="empty">
                                         You have no past contests
                                     </span>
-                                </uib-accordion-group>
-                            </uib-accordion>
-                            <span class="empty" ng-if="sideNavigationData.contestant === null">
+                    </uib-accordion-group>
+                </uib-accordion>
+                <span class="empty" ng-if="sideNavigationData.contestant === null">
                                 You have no contests, <a ui-sref="app.contests">Browse Contests</a> to participate in one!
                             </span>
-                        </uib-accordion-group>
-                        <uib-accordion-group>
-                            <uib-accordion-heading>
-                                Jury
-                                <span class="caret"></span>
-                            </uib-accordion-heading>
-                            <uib-accordion close-others="false" ng-if="sideNavigationData.jury !== null">
-                                <uib-accordion-group ng-if="sideNavigationData.jury.ongoing.length > 0" is-open="'true'">
-                                    <uib-accordion-heading>
-                                        Ongoing Contests
-                                        <span class="badge pull-right">{{sideNavigationData.jury.ongoing.length}}</span>
-                                    </uib-accordion-heading>
-
-                                    <ul class="list-group list-group-transparent">
-                                        <li class="list-group-item" ng-repeat="contest in sideNavigationData.jury.ongoing">
-                                            <img ng-src="{{contest.thumbnail}}" alt="" class="img-responsive img-rounded">
-                                            <a class="pointer" ng-click="goToLink('app.contest', {contestId: contest.contest_id}, 'jury')">
+            </uib-accordion-group>
+            <uib-accordion-group>
+                <uib-accordion-heading>
+                    Jury
+                    <span class="caret"></span>
+                </uib-accordion-heading>
+                <uib-accordion close-others="false" ng-if="sideNavigationData.jury !== null">
+                    <uib-accordion-group ng-if="sideNavigationData.jury.ongoing.length > 0" is-open="'true'">
+                        <uib-accordion-heading>
+                            Ongoing Contests
+                            <span class="badge pull-right">{{sideNavigationData.jury.ongoing.length}}</span>
+                        </uib-accordion-heading>
+                        <ul class="list-group list-group-transparent">
+                            <li class="list-group-item" ng-repeat="contest in sideNavigationData.jury.ongoing">
+                                <img ng-src="{{contest.thumbnail}}" alt="" class="img-responsive img-rounded">
+                                <a class="pointer" ng-click="goToLink('app.contest', {contestId: contest.contest_id}, 'jury')">
                                                 {{contest.name}}
 
                                                 <span class="status success" ng-if="contest.status === 1">
@@ -595,142 +736,135 @@
                                                     <span class="icon icon-clock"></span> Waiting for review
                                                 </span>
                                             </a>
-                                        </li>
-                                    </ul>
-                                </uib-accordion-group>
-                                <uib-accordion-group ng-if="sideNavigationData.jury.past.length > 0" is-open="'true'">
-                                    <uib-accordion-heading>
-                                        Contest History
-                                        <span class="badge pull-right">0</span>
-                                    </uib-accordion-heading>
-
-                                    <span class="empty">
+                            </li>
+                        </ul>
+                    </uib-accordion-group>
+                    <uib-accordion-group ng-if="sideNavigationData.jury.past.length > 0" is-open="'true'">
+                        <uib-accordion-heading>
+                            Contest History
+                            <span class="badge pull-right">0</span>
+                        </uib-accordion-heading>
+                        <span class="empty">
                                         You have no past contests
                                     </span>
-                                </uib-accordion-group>
-                            </uib-accordion>
-                            <span class="empty" ng-if="sideNavigationData.jury === null">
+                    </uib-accordion-group>
+                </uib-accordion>
+                <span class="empty" ng-if="sideNavigationData.jury === null">
                                 You have no contests, <a ui-sref="app.contests">Browse Contests</a> to judge in one!
                             </span>
-                        </uib-accordion-group>
-                        <uib-accordion-group heading="Creator Activity" ng-if="hasUserRole('creator')">
-                            <uib-accordion-heading>
-                                Creator Activity
-                                <span class="caret"></span>
-                            </uib-accordion-heading>
-                            <uib-accordion close-others="false" ng-if="sideNavigationData.creator !== null">
-                                <uib-accordion-group>
-                                    <uib-accordion-heading>
-                                        Ongoing Projects
-                                        <span class="badge pull-right">3</span>
-                                    </uib-accordion-heading>
-
-                                    <ul class="list-group list-group-transparent">
-                                        <li class="list-group-item">
-                                            <a href="#">Cats and Dogs Connected Devices</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <a href="#">Cats and Dogs Connected Devices</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <a href="#">Cats and Dogs Connected Devices</a>
-                                        </li>
-                                    </ul>
-                                </uib-accordion-group>
-                                <uib-accordion-group>
-                                    <uib-accordion-heading>
-                                        Project History
-                                        <span class="badge pull-right">0</span>
-                                    </uib-accordion-heading>
-
-                                    <span class="empty">
+            </uib-accordion-group>
+            <uib-accordion-group heading="Creator Activity" ng-if="hasUserRole('creator')">
+                <uib-accordion-heading>
+                    Creator Activity
+                    <span class="caret"></span>
+                </uib-accordion-heading>
+                <uib-accordion close-others="false" ng-if="sideNavigationData.creator !== null">
+                    <uib-accordion-group>
+                        <uib-accordion-heading>
+                            Ongoing Projects
+                            <span class="badge pull-right">3</span>
+                        </uib-accordion-heading>
+                        <ul class="list-group list-group-transparent">
+                            <li class="list-group-item">
+                                <a href="#">Cats and Dogs Connected Devices</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Cats and Dogs Connected Devices</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Cats and Dogs Connected Devices</a>
+                            </li>
+                        </ul>
+                    </uib-accordion-group>
+                    <uib-accordion-group>
+                        <uib-accordion-heading>
+                            Project History
+                            <span class="badge pull-right">0</span>
+                        </uib-accordion-heading>
+                        <span class="empty">
                                         You have no past projects
                                     </span>
-                                </uib-accordion-group>
-                            </uib-accordion>
-                            <span class="empty" ng-if="sideNavigationData.creator === null">
+                    </uib-accordion-group>
+                </uib-accordion>
+                <span class="empty" ng-if="sideNavigationData.creator === null">
                                 You have no projects, Click here to create one!
                             </span>
-                        </uib-accordion-group>
-                        <uib-accordion-group heading="Expert Activity" ng-if="hasUserRole('expert')">
-                            <uib-accordion-heading>
-                                Expert Activity
-                                <span class="caret"></span>
-                            </uib-accordion-heading>
-                            <uib-accordion close-others="false" ng-if="sideNavigationData.expert !== null">
-                                <uib-accordion-group>
-                                    <uib-accordion-heading>
-                                        Ongoing Projects
-                                        <span class="badge pull-right">{{sideNavigationData.contestant.ongoing.length}}</span>
-                                    </uib-accordion-heading>
-
-                                    <ul class="list-group list-group-transparent">
-                                        <li class="list-group-item">
-                                            <a href="#">Cats and Dogs Connected Devices</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <a href="#">Cats and Dogs Connected Devices</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <a href="#">Cats and Dogs Connected Devices</a>
-                                        </li>
-                                    </ul>
-                                </uib-accordion-group>
-                                <uib-accordion-group>
-                                    <uib-accordion-heading>
-                                        Project History
-                                        <span class="badge pull-right">0</span>
-                                    </uib-accordion-heading>
-
-                                    <span class="empty">
+            </uib-accordion-group>
+            <uib-accordion-group heading="Expert Activity" ng-if="hasUserRole('expert')">
+                <uib-accordion-heading>
+                    Expert Activity
+                    <span class="caret"></span>
+                </uib-accordion-heading>
+                <uib-accordion close-others="false" ng-if="sideNavigationData.expert !== null">
+                    <uib-accordion-group>
+                        <uib-accordion-heading>
+                            Ongoing Projects
+                            <span class="badge pull-right">{{sideNavigationData.contestant.ongoing.length}}</span>
+                        </uib-accordion-heading>
+                        <ul class="list-group list-group-transparent">
+                            <li class="list-group-item">
+                                <a href="#">Cats and Dogs Connected Devices</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Cats and Dogs Connected Devices</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Cats and Dogs Connected Devices</a>
+                            </li>
+                        </ul>
+                    </uib-accordion-group>
+                    <uib-accordion-group>
+                        <uib-accordion-heading>
+                            Project History
+                            <span class="badge pull-right">0</span>
+                        </uib-accordion-heading>
+                        <span class="empty">
                                         You have no past contests
                                     </span>
-                                </uib-accordion-group>
-                            </uib-accordion>
-                            <span class="empty" ng-if="sideNavigationData.expert === null">
+                    </uib-accordion-group>
+                </uib-accordion>
+                <span class="empty" ng-if="sideNavigationData.expert === null">
                                 You have no projects, Click here to browse projects!
                             </span>
-                        </uib-accordion-group>
-                        <uib-accordion-group heading="Investor Activity" ng-if="hasUserRole('investor')">
-                            <uib-accordion-heading>
-                                Investor Activity
-                                <span class="caret"></span>
-                            </uib-accordion-heading>
-                            <uib-accordion close-others="false" ng-if="sideNavigationData.investor !== null">
-                                <uib-accordion-group>
-                                    <uib-accordion-heading>
-                                        Ongoing Contests
-                                        <span class="badge pull-right">3</span>
-                                    </uib-accordion-heading>
-
-                                    <ul class="list-group list-group-transparent">
-                                        <li class="list-group-item">
-                                            <a href="#">Cats and Dogs Connected Devices</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <a href="#">Cats and Dogs Connected Devices</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <a href="#">Cats and Dogs Connected Devices</a>
-                                        </li>
-                                    </ul>
-                                </uib-accordion-group>
-                                <uib-accordion-group>
-                                    <uib-accordion-heading>
-                                        Contest History
-                                        <span class="badge pull-right">0</span>
-                                    </uib-accordion-heading>
-
-                                    <span class="empty">
+            </uib-accordion-group>
+            <uib-accordion-group heading="Investor Activity" ng-if="hasUserRole('investor')">
+                <uib-accordion-heading>
+                    Investor Activity
+                    <span class="caret"></span>
+                </uib-accordion-heading>
+                <uib-accordion close-others="false" ng-if="sideNavigationData.investor !== null">
+                    <uib-accordion-group>
+                        <uib-accordion-heading>
+                            Ongoing Contests
+                            <span class="badge pull-right">3</span>
+                        </uib-accordion-heading>
+                        <ul class="list-group list-group-transparent">
+                            <li class="list-group-item">
+                                <a href="#">Cats and Dogs Connected Devices</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Cats and Dogs Connected Devices</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Cats and Dogs Connected Devices</a>
+                            </li>
+                        </ul>
+                    </uib-accordion-group>
+                    <uib-accordion-group>
+                        <uib-accordion-heading>
+                            Contest History
+                            <span class="badge pull-right">0</span>
+                        </uib-accordion-heading>
+                        <span class="empty">
                                         You have no past contests
                                     </span>
-                                </uib-accordion-group>
-                            </uib-accordion>
-                            <span class="empty" ng-if="sideNavigationData.investor === null">
+                    </uib-accordion-group>
+                </uib-accordion>
+                <span class="empty" ng-if="sideNavigationData.investor === null">
                                 You have no projects, Click here to browse projects!
                             </span>
-                        </uib-accordion-group>
-                        <!-- <uib-accordion-group heading="Transaction">
+            </uib-accordion-group>
+            <!-- <uib-accordion-group heading="Transaction">
                             <span class="empty">
                                 Coming Soon
                             </span>
@@ -743,29 +877,21 @@
                                 </li>
                             </ul>
                         </uib-accordion-group> -->
-                    </uib-accordion>
-
-                    <br>
-                    <br>
-
-                    <ul class="account-menu">
-                        <li>
-                            <a class="pointer" ng-click="goToLink('app.transaction', {})">Transactions</a>
-                        </li>
-                        <li>
-                            <a ng-click="openFullMenu('account')" class="pointer marginB15">Account Settings</a>
-                        </li>
-                        <li>
-                            <a ng-click="openFullMenu('profile')" class="pointer">Profile / Skills</a>
-                        </li>
-                    </ul>
-
-                    <br>
-                    <a ng-click="logout()" class="btn btn_default btn-danger btn-block marginT5">Logout</a>
-                </div>
-
-            </div>
-        </div>
+        </uib-accordion>
+        <br>
+        <br>
+        <ul class="account-menu">
+            <li>
+                <a class="pointer" ng-click="goToLink('app.transaction', {})">Transactions</a>
+            </li>
+            <li>
+                <a ng-click="openFullMenu('account')" class="pointer marginB15">Account Settings</a>
+            </li>
+            <li>
+                <a ng-click="openFullMenu('profile')" class="pointer">Profile / Skills</a>
+            </li>
+        </ul>
+        <br>
+        <a ng-click="logout()" class="btn btn_default btn-danger btn-block marginT5">Logout</a>
     </div>
-    <!-- .cd-navigation-wrapper -->
 </div>

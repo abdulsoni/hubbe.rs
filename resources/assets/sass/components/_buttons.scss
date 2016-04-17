@@ -60,9 +60,21 @@
 }
 
 .btn-info.ladda-button{
-	background-color: $brand-info;
+	color: #fff !important;
+	background-color: $brand-info !important;
 
 	&:hover, &:active, &:focus{
-		background-color: darken($brand-info, 10%);
+		color: #fff !important;
+		background-color: darken($brand-info, 10%) !important;
+	}
+}
+
+.btn-danger.ladda-button{
+	color: #fff !important;
+	background-color: $brand-danger !important;
+
+	&:hover, &:active, &:focus{
+		color: #fff !important;
+		background-color: darken($brand-danger, 10%) !important;
 	}
 }

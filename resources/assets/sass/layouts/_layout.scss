@@ -989,6 +989,18 @@ ul.priceList li {
     }
 }
 
+.btn-info-rg {
+    color: #fff;
+    background-color: #5bc0de !important;
+    border-color: #46b8da !important;
+
+    &:hover, &:active, &:focus{
+        color: #fff;
+        background-color: darken(#5bc0de, 10%) !important;
+        border-color: darken(#46b8da, 10%) !important;
+    }
+}
+
 .btn-black {
     font-size: 18px;
     font-weight: bold;
@@ -2057,7 +2069,8 @@ ul.list-unstyled.radioboxWhiteBase li {
     margin-bottom: 50px;
     li {
         // padding-right: 105px;
-        width: 35%;
+        // width: 35%;
+        width: 33.33333%;
         text-align: center;
         a {
             border: 2px solid rgba(41, 170, 226, 0);
@@ -2086,6 +2099,161 @@ ul.list-unstyled.radioboxWhiteBase li {
     border: 2px solid rgba(41, 170, 226, 0);
     border-bottom-color: $tertiary-color;
 }
+
+.profile-tab{
+    .nav-tabs{
+        margin: -35px auto 35px;
+        display: table;
+        border-color: #444;
+
+        > li {
+            > a{
+                color: #fff;
+                padding-left: 30px;
+                padding-right: 30px;
+
+                &:active, &:hover, &:focus{
+                    color: $fd-green;
+                    background-color: transparent;
+                    border: 1px solid transparent;
+                }
+            }
+
+            &.active{
+                > a{
+                    &, &:active, &:hover, &:focus{
+                        color: $fd-green;
+                        background-color: transparent;
+                        border: 1px solid transparent;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.profile-section{
+    margin-bottom: 50px;
+
+    .profile-section_label{
+        margin-bottom: 15px;
+        font-size: 12px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: #ccc;
+    }
+
+    .profile-section_fields{
+        fd-profile-input > div{
+            @include clearfix();
+            margin-bottom: 30px;
+            margin-top: 10px;
+            font-weight: 300;
+
+            label{
+                min-width: 150px;
+                position: relative;
+                top: 6px;
+                font-weight: 300;
+                font-size: larger;
+                padding-right: 25px;
+                float: left;
+            }
+
+            .form-group{
+                width: calc(100% - 150px);
+                margin-bottom: 0;
+                float: left;
+
+                .form-control{
+                    width: calc(100% - 136px);
+                    box-shadow: none;
+                    border-radius: 0;
+                    background-color: #fff;
+                    border-color: #333;
+                    float: left;
+
+                    &.textarea{
+                        width: 100%;
+                    }
+                }
+
+                .social-alternative{
+                    float: left;
+                    padding: 0 10px;
+
+                    > span{
+                        font-size: 16px;
+                        padding: 7px 14px;
+                        background-color: #333;
+                        border: 2px solid #333;
+                        display: block;
+                        float: left;
+                        margin: 0 5px;
+
+                        &[disabled]{
+                            opacity: 0.5;
+                            pointer-events: none;
+                        }
+
+                        &:hover{
+                            cursor: pointer;
+                            background-color: #666;
+                            border-color: #666;
+                        }
+
+                        &.checked{
+                            border-color: $fd-green;
+                            background-color: $fd-green;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.user-account_section{
+    margin-bottom: 50px;
+
+    .user-account_heading{
+        font-size: 22px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 4px;
+        margin-bottom: 20px;
+    }
+
+    .user-account_sub-section{
+        @include clearfix();
+
+        > h5{
+            font-weight: bold;
+
+            .icon{
+                color: $fd-green;
+                margin-left: 10px;
+                font-size: 20px;
+                line-height: 0px;
+                position: relative;
+                top: 2px;
+            }
+        }
+
+        > p {
+            font-size: 13px;
+            opacity: 0.75;
+        }
+
+        button{
+            float: right;
+        }
+    }
+}
+
+#cd-nav{
+    overflow-y: scroll;
+}
+
 
 img.editableProfileimage {
     @include rounded-corners(100px);

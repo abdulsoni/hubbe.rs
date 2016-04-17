@@ -4,9 +4,9 @@
 .quick-access_menu{
 	width: 300px;
 	float: right;
-	top: 0;
+	top: 80px;
+    position: fixed;
 	right: 10px;
-	position: absolute;
 
 	@include clearfix();
 

@@ -32,17 +32,53 @@
 
         $scope.data = {
             userSettingsMode: 'view',
-            userSettingsSave: -1
+            userSettingsSave: -1,
+            socialConnect: {
+                facebook: {},
+                linkedin: {}
+            }
         };
+
+        $scope.socialConnect = function(provider) {
+            $scope.data.socialConnect[provider].loading = true;
+
+            $auth.authenticate(provider).then(function(response) {
+                console.log('Logged in ');
+                console.log(response);
+                $rootScope.user[provider] = true;
+                $scope.data.socialConnect[provider].loading = false;
+            }).catch(function(response) {
+                console.log('Not Logged in ');
+                console.log(response);
+                $scope.data.socialConnect[provider].loading = false;
+            });
+        }
+
+        $scope.socialUnlink = function(provider) {
+            var method = null;
+
+            $scope.data.socialConnect[provider].loading = true;
+
+            switch(provider){
+                case 'facebook': method = 'unlinkFacebook';
+                break;
+                case 'linkedin': method = 'unlinkLinkedin';
+                break;
+            }
+
+            $http.post('/api/authenticate/' + method, {}).then(function(result){
+                console.log(result);
+                $rootScope.user[provider] = null;
+            }).finally(function(){
+                $scope.data.socialConnect[provider].loading = false;
+            });
+        }
 
         $scope.saveProfile = function(){
             var userData = angular.copy($rootScope.user);
             delete userData['creator'];
             delete userData['investor'];
             delete userData['judging'];
-
-            console.log('saving');
-            console.log(userData);
 
             $scope.data.userSettingsSave = 0;
 

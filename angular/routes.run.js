@@ -33,13 +33,6 @@
         });
 
         $rootScope.$on('$locationChangeSuccess', function(e) {
-            if (typeof($rootScope.user) !== 'undefined') {
-                if ($rootScope.user.registered == 0) {
-                    console.log('going to register');
-                    $state.go('app.auth.register');
-                }
-            }
-
             // UserService is an example service for managing user state
             if (typeof($rootScope.user) !== 'undefined') return;
             if ($rootScope.initialLocationSetup === true) return;
@@ -59,6 +52,7 @@
                         FdNotifications.init();
 
                         if ($rootScope.user.registered == 0) {
+                            $rootScope.initialRoleAssignment = true;
                             $state.go('app.auth.register');
                         }else{
                             var orignalRole = $rootScope.user.role;
@@ -101,21 +95,11 @@
         });
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+            console.log('Is Authenticated');
+            console.log($auth.isAuthenticated());
+            console.log($rootScope.initialRoleAssignment);
+
             if ($auth.isAuthenticated()) {
-                // if (typeof($rootScope.user) === 'undefined' && fromState.name.indexOf('recover') === -1) {
-                //     $rootScope.activeState = toState;
-                //     $rootScope.activeStateParams = toParams;
-                // }
-
-                // if (typeof($rootScope.user) === 'undefined') {
-                //     if (!$rootScope.initialRoleAssignment) {
-                //         // event.preventDefault();
-                //         return;
-                //     }
-                // }else if(!$rootScope.initialRoleAssignment && $rootScope.user.registered == 1){
-                //     event.preventDefault();
-                // }
-
                 if (!$rootScope.initialRoleAssignment) {
                     $rootScope.activeState = toState;
                     $rootScope.activeStateParams = toParams;

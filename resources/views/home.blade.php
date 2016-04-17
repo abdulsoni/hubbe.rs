@@ -27,7 +27,7 @@
 		<section class="main style2 special contests">
 			<div class="container">
 				<header class="">
-					<h2>Create work &amp; Entrepreneurship inro reality</h2>
+					<h2>Create work &amp; Entrepreneurship into reality</h2>
 				</header>
 				<ul class="actions uniform">
 					<li><a href="/app/#/auth/signup" class="button special">Become a Creator</a></li>
