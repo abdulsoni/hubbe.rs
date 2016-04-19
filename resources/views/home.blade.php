@@ -14,9 +14,7 @@
 		<section id="header">
 			<div class="inner">
 				<img src="images/home/logo.svg" alt="Fundator Community of Makers" class="logo">
-				<h1>where creation begins</h1>
-				<p>Accumsan feugiat mi commodo erat lorem ipsum, sed magna<br />
-				lobortis feugiat sapien sed etiam volutpat accumsan.</p>
+				<h1>where creation begins ...</h1>
 				<ul class="actions">
 					<li><a href="/app/#/auth/signin" class="button scrolly">Login</a></li>
 					<li><a href="/app/#/auth/signup" class="button scrolly">Signup</a></li>
