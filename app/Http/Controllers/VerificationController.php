@@ -81,6 +81,8 @@ class VerificationController extends Controller
             }
 
             $user->phone_verified = true;
+            $user->contact_number = $request->phone_number;
+            $user->contact_number_country_code = $request->country_code;
             $user->save();
 
             $response = json_decode($authy_response->getBody(), true);
