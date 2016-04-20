@@ -90,7 +90,7 @@
             }
 
             var verificationData = {
-                country_code: parseInt($scope.data.twoFA.countryCode),
+                country_code: parseInt(countryCode),
                 phone_number: parseInt($scope.data.twoFA.number),
                 verification_code: parseInt($scope.data.twoFA.verificationCode)
             };
