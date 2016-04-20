@@ -12,8 +12,8 @@
                 label: '@',
                 ngModel: '=',
                 placeholder: '@',
-                facebookValue: '@',
-                linkedinValue: '@'
+                facebookValue: '=',
+                linkedinValue: '='
             },
 
             controller: function($scope, $element, $attrs) {

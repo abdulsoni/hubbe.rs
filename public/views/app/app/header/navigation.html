@@ -40,16 +40,46 @@
                                     </div>
                                 </div>
                                 <div class="user-account_section">
-                                    <div class="user-account_heading">Account Verification</div>
+                                    <div class="user-account_heading">Account Verification<span ng-if="user.phone_verified"><span class="icon icon-checkmark"></span></span></div>
                                     <div class="user-account_sub-section">
-                                        <h5>(2FA) Two Factor Authentication</h5>
+                                        <h5>Two Factor Authentication (2FA)</h5>
                                         <p>Connect your account to Facebook. This helps as it instils confidence in other users that your identity is known.</p>
-                                        <div ng-if="user.phone_verified">
+                                        <br>
+                                        <div ng-if="user.phone_verified && !data.twoFA.verify">
                                             <button class="btn btn-danger">Change Number</button>
                                         </div>
                                         <div ng-if="!user.phone_verified">
-                                            <button class="btn btn-info-rg" ladda="data.twoFA.loading" ng-click="twoFAVerify()" data-style="expand-right">Verify now</button>
+                                            <button class="btn btn-info-rg" ng-if="!data.twoFA.verify" ladda="" ng-click="data.twoFA.verify = true" data-style="expand-right">Begin Verification</button>
+
+                                            <div class="pull-right" ng-if="data.twoFA.verify && !data.twoFA.codeSent">
+                                                <script type="text/ng-template" id="countryCodeTemplate.html">
+                                                    <a>
+                                                        <flag country="{{match.model.country}}" size="16"></flag>
+                                                        <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+                                                    </a>
+                                                </script>
+                                                <div class="phone-number phone-number_verification">
+                                                    <div class="code">
+                                                        <input type="text" class="form-control" ng-model="data.twoFA.countryCode" uib-typeahead="code as code.code for code in countryCodes | filter:$viewValue | limitTo:8" typeahead-template-url="countryCodeTemplate.html">
+                                                    </div>
+                                                    <div class="number">
+                                                        <input type="text" class="form-control" ng-model="data.twoFA.number">
+                                                    </div>
+                                                </div>
+                                                <button class="btn btn-info-rg" ladda="data.twoFA.loading" ng-click="startTwoFAVerify()" data-style="expand-right">Send</button>
+                                            </div>
+
+                                            <div class="pull-right" ng-if="data.twoFA.verify && data.twoFA.codeSent">
+                                                <div class="code-number_verification">
+                                                    <div class="code-number">
+                                                        <input type="text" class="form-control" ng-model="data.twoFA.verificationCode">
+                                                        <span class="code-number_label">Input the verfication code</span>
+                                                    </div>
+                                                </div>
+                                                <button class="btn btn-info-rg" ladda="data.twoFA.loading" ng-click="completeTwoFAVerfiy()" data-style="expand-right">Verify</button>
+                                            </div>
                                         </div>
+
                                     </div>
                                     <br>
                                     <br>
@@ -178,13 +208,13 @@
                     </uib-tab>
                     <uib-tab heading="Profile">
                         <uib-tabset class="profile-tab">
-                            <uib-tab heading="as a creator" ng-if="user.creator">
+                            <uib-tab heading="as a creator" ng-disabled="user.creator">
                                 <form name="creatorProfile">
                                     <div class="profile-section">
                                         <div class="profile-section_label">Basic Profile</div>
                                         <div class="profile-section_fields">
-                                            <fd-profile-input form="creatorProfile" type="text" label="First Name" placeholder="First Name ..." facebook-value="" ng-model="user.name"></fd-profile-input>
-                                            <fd-profile-input form="creatorProfile" type="text" label="Last Name" placeholder="Last Name ..." facebook-value="Virwani" linkedin-value="Veerwani" ng-model="user.last_name"></fd-profile-input>
+                                            <fd-profile-input form="creatorProfile" type="text" label="First Name" placeholder="First Name ..." facebook-value="user.facebook.first_name" linkedin-value="user.linkedin.first_name" ng-model="user.name"></fd-profile-input>
+                                            <fd-profile-input form="creatorProfile" type="text" label="Last Name" placeholder="Last Name ..." facebook-value="user.facebook.last_name" linkedin-value="user.linkedin.last_name" ng-model="user.last_name"></fd-profile-input>
                                             <fd-profile-input form="creatorProfile" type="text" label="Country" placeholder="Your Country ..." facebook-value="" ng-model="user.country_origin"></fd-profile-input>
                                         </div>
 
@@ -192,29 +222,47 @@
                                     <div class="profile-section">
                                         <div class="profile-section_label">Creator Profile</div>
                                         <div class="profile-section_fields">
-                                            <fd-profile-input form="creatorProfile" type="textarea" label="Creator Profile" placeholder="Creator Profile ..." facebook-value="" ng-model="user.creator.bio"></fd-profile-input>
+                                            <fd-profile-input form="creatorProfile" type="textarea" label="Creator Profile" placeholder="Creator Profile ..." facebook-value="user.facebook.bio" linkedin-value="user.linkedin.summary" ng-model="user.creator.bio"></fd-profile-input>
                                         </div>
                                     </div>
                                 </form>
                             </uib-tab>
-                            <uib-tab heading="as an expert" ng-if="user.expert">
-                                Expert
+                            <uib-tab heading="as an expert" ng-disabled="user.expert">
+                                <form name="expertProfile">
+                                    <div class="profile-section">
+                                        <div class="profile-section_label">Basic Profile</div>
+                                        <div class="profile-section_fields">
+                                            <fd-profile-input form="expertProfile" type="text" label="First Name" placeholder="First Name ..." facebook-value="user.facebook.first_name" linkedin-value="user.linkedin.first_name" ng-model="user.name"></fd-profile-input>
+                                            <fd-profile-input form="expertProfile" type="text" label="Last Name" placeholder="Last Name ..." facebook-value="user.facebook.last_name" linkedin-value="user.linkedin.last_name" linkedin-value="Veerwani" ng-model="user.last_name"></fd-profile-input>
+                                            <fd-profile-input form="expertProfile" type="text" label="Country" placeholder="Your Country ..." facebook-value="" ng-model="user.country_origin"></fd-profile-input>
+                                        </div>
+                                    </div>
+                                    <div class="profile-section">
+                                        <div class="profile-section_label">Investor Profile</div>
+                                        <div class="profile-section_fields">
+                                            <fd-profile-input form="expertProfile" type="text" label="Position" placeholder="Position ..." facebook-value="" linkedin-value="user.linkedin.position" ng-model="user.position"></fd-profile-input>
+                                            <fd-profile-input form="expertProfile" type="text" label="Industry" placeholder="Position ..." facebook-value="" linkedin-value="user.linkedin.industry" ng-model="user.industry"></fd-profile-input>
+                                            <fd-profile-input form="expertProfile" type="textarea" label="Investor Profile" placeholder="Investor Profile ..." facebook-value="user.facebook.bio" linkedin-value="user.linkedin.summary" ng-model="user.investor.bio"></fd-profile-input>
+                                        </div>
+                                    </div>
+                                </form>
+                            </ui
                             </uib-tab>
-                            <uib-tab heading="as an investor" ng-if="user.investor">
+                            <uib-tab heading="as an investor" ng-disabled="user.investor">
                                 <form name="investorProfile">
                                     <div class="profile-section">
                                         <div class="profile-section_label">Basic Profile</div>
                                         <div class="profile-section_fields">
-                                            <fd-profile-input form="investorProfile" type="text" label="First Name" placeholder="First Name ..." facebook-value="" ng-model="user.name"></fd-profile-input>
-                                            <fd-profile-input form="creatorProfile" type="text" label="Last Name" placeholder="Last Name ..." facebook-value="Virwani" linkedin-value="Veerwani" ng-model="user.last_name"></fd-profile-input>
+                                            <fd-profile-input form="investorProfile" type="text" label="First Name" placeholder="First Name ..." facebook-value="user.facebook.first_name" linkedin-value="user.linkedin.first_name" ng-model="user.name"></fd-profile-input>
+                                            <fd-profile-input form="investorProfile" type="text" label="Last Name" placeholder="Last Name ..." facebook-value="user.facebook.last_name" linkedin-value="user.linkedin.last_name" linkedin-value="Veerwani" ng-model="user.last_name"></fd-profile-input>
                                             <fd-profile-input form="investorProfile" type="text" label="Country" placeholder="Your Country ..." facebook-value="" ng-model="user.country_origin"></fd-profile-input>
                                         </div>
                                     </div>
                                     <div class="profile-section">
                                         <div class="profile-section_label">Investor Profile</div>
                                         <div class="profile-section_fields">
-                                            <fd-profile-input form="investorProfile" type="text" label="Position" placeholder="Position ..." facebook-value="" ng-model="user.position"></fd-profile-input>
-                                            <fd-profile-input form="investorProfile" type="textarea" label="Investor Profile" placeholder="Investor Profile ..." facebook-value="" linkedin-value="" ng-model="user.investor.bio"></fd-profile-input>
+                                            <fd-profile-input form="investorProfile" type="text" label="Position" placeholder="Position ..." facebook-value="" linkedin-value="user.linkedin.position" ng-model="user.position"></fd-profile-input>
+                                            <fd-profile-input form="investorProfile" type="textarea" label="Investor Profile" placeholder="Investor Profile ..." facebook-value="user.facebook.bio" linkedin-value="user.linkedin.summary" ng-model="user.investor.bio"></fd-profile-input>
                                         </div>
                                     </div>
                                 </form>

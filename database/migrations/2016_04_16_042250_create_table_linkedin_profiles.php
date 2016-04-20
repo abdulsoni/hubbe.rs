@@ -19,7 +19,7 @@ class CreateTableLinkedinProfiles extends Migration
             $table->string('linkedin_id');
             $table->string('linkedin_token');
 
-            $table->string('thumbnail_url');
+            $table->string('thumbnail_url')->nullable();
 
             $table->string('email');
             $table->string('first_name');

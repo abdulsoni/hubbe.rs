@@ -9136,7 +9136,7 @@ main {
 
 .navigation-is-open .cd-nav {
   visibility: visible;
-  z-index: 20;
+  z-index: 2;
   -webkit-transition: visibility 0s 0s;
   -o-transition: visibility 0s 0s;
   transition: visibility 0s 0s; }
@@ -11016,7 +11016,12 @@ input.inputFieldGray {
   border: none;
   padding: 10px;
   font-size: 18px;
-  font-weight: 300; }
+  font-weight: 300;
+  width: 49%; }
+  input.inputFieldGray:first-child {
+    margin: 0; }
+  input.inputFieldGray.full-width {
+    width: 100%; }
 
 textarea.grayTextareaFiled {
   background-color: #f2f2f2;
@@ -11194,6 +11199,52 @@ ul.list-unstyled.radioboxWhiteBase li {
     opacity: 0.75; }
   .user-account_section .user-account_sub-section button {
     float: right; }
+  .user-account_section .phone-number.phone-number_verification {
+    width: auto;
+    display: block;
+    float: left;
+    margin-right: 20px; }
+    .user-account_section .phone-number.phone-number_verification .code {
+      width: 120px;
+      margin-right: 0; }
+      .user-account_section .phone-number.phone-number_verification .code:before {
+        padding: 5px 13px; }
+      .user-account_section .phone-number.phone-number_verification .code input {
+        padding: 15px 15px 16px 50px !important; }
+    .user-account_section .phone-number.phone-number_verification .number {
+      width: auto; }
+    .user-account_section .phone-number.phone-number_verification input.form-control {
+      box-shadow: none;
+      border-radius: 0;
+      background-color: #fff;
+      border-color: #333;
+      float: left;
+      font-size: 16px;
+      width: 100%;
+      padding: 15px 15px 16px;
+      height: auto !important; }
+  .user-account_section .code-number_verification {
+    width: auto;
+    display: block;
+    float: left;
+    margin-right: 20px;
+    width: 200px; }
+    .user-account_section .code-number_verification input.form-control {
+      box-shadow: none;
+      border-radius: 0;
+      background-color: #fff;
+      border-color: #333;
+      float: left;
+      font-size: 16px;
+      width: 100%;
+      padding: 15px 15px 16px;
+      height: auto !important; }
+    .user-account_section .code-number_verification .code-number_label {
+      padding-top: 5px;
+      font-size: 12px;
+      font-style: italic;
+      font-weight: lighter;
+      opacity: 0.75; }
 
 #cd-nav {
   overflow-y: scroll; }
@@ -11438,14 +11489,62 @@ a.action-bell {
 
 .step-registration {
   padding-bottom: 12px; }
-  .step-registration .inputFieldGray {
-    margin-right: 8px; }
+  .step-registration .inputFieldGray.second {
+    margin-left: 1%; }
   .step-registration textarea.grayTextareaFiled {
     width: 100%; }
 
+.phone-number.phone-number_verification {
+  width: 50%;
+  display: block; }
+  .phone-number.phone-number_verification:before, .phone-number.phone-number_verification:after {
+    content: " ";
+    display: table; }
+  .phone-number.phone-number_verification:after {
+    clear: both; }
+  .phone-number.phone-number_verification .code {
+    width: 25%;
+    margin-right: 1%;
+    float: left; }
+    .phone-number.phone-number_verification .code:before {
+      color: #a2a2a2;
+      content: '+';
+      font-size: 36px;
+      position: absolute;
+      line-height: 38px;
+      padding: 0 13px;
+      height: 45px; }
+    .phone-number.phone-number_verification .code input {
+      width: 100%;
+      height: auto;
+      box-shadow: none;
+      border-radius: 0px;
+      padding-left: 50px; }
+  .phone-number.phone-number_verification .number {
+    width: 74%;
+    float: left; }
+    .phone-number.phone-number_verification .number input {
+      width: 100%; }
+  .phone-number.phone-number_verification .phone-number_label {
+    font-size: 12px;
+    font-style: italic;
+    color: #999;
+    margin-top: 5px;
+    display: block; }
+
 label.select-style {
   position: relative;
-  margin-right: 5px; }
+  margin-right: 5px;
+  margin: 0; }
+  label.select-style.full-width {
+    width: 100%; }
+  label.select-style .flag {
+    position: relative;
+    top: 1px; }
+  label.select-style input {
+    width: 100%;
+    box-shadow: none !important;
+    height: auto; }
   label.select-style select {
     min-width: 208px;
     padding: 8px 46px 8px 20px;
@@ -11462,7 +11561,7 @@ label.select-style {
     appearance: none;
     cursor: pointer; }
   label.select-style:before {
-    ontent: '';
+    content: '';
     right: 6px;
     top: 0px;
     width: 20px;
@@ -13291,8 +13390,12 @@ body.modal-open .body-content {
 .register-main-style1 {
   padding-bottom: 60px; }
 
-.step-2-left, .step-2-right {
+.step-2-left {
   width: 50%;
+  margin-top: 25px; }
+
+.step-2-right {
+  width: 45%;
   margin-top: 25px; }
 
 .imgcrop-area {

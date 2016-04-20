@@ -29,7 +29,8 @@
     "salvattore": "~1.0.9",
     "ng-table": "^0.8.3",
     "components-font-awesome": "^4.5.0",
-    "angular-ladda": "^0.3.4"
+    "angular-ladda": "^0.3.4",
+    "ng-flags": "^0.0.2"
   },
   "overrides": {
     "components-font-awesome": {

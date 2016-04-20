@@ -19,7 +19,7 @@ class CreateFacebookProfilesTable extends Migration
             $table->string('facebook_id');
             $table->string('facebook_token');
 
-            $table->string('thumbnail_url');
+            $table->string('thumbnail_url')->nullable();
 
             $table->string('email');
             $table->string('first_name');

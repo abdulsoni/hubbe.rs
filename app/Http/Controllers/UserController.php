@@ -76,10 +76,20 @@ class UserController extends Controller
 
             $response['judging'] = $user->juryApplications;
             $response['contesting'] = $user->contestantApplications;
-
             $response['user_roles'] = $user->user_roles;
-
             $response['skills'] = Skill::where('id', '>', 1)->where('id', '<', 7)->get();
+
+            // Social Profiles
+            $response['facebook'] = null;
+            $response['linkedin'] = null;
+
+            if ($user->facebookProfile) {
+                $response['facebook'] = $user->facebookProfile;
+            }
+
+            if ($user->linkedinProfile) {
+                $response['linkedin'] = $user->linkedinProfile;
+            }
 
             $response['amount'] = $user->currentAmount();
 
@@ -128,6 +138,7 @@ class UserController extends Controller
             $user->country_residence = $request->country_residence;
 
             $user->contact_number = $request->contact_number;
+            $user->contact_number_country_code = $request->contact_number_country_code;
             $user->contact_time = $request->contact_time;
 
             if (isset($request->bio)) {

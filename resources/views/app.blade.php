@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{!! asset('css/app/chosen.min.css') !!}">
     <link rel="stylesheet" href="{!! asset('css/app/app.css') !!}">
     <link rel="stylesheet" href="{!! asset('css/app/vendor.css') !!}">
+    <link rel="stylesheet" type="text/css" href="http://cloud.github.com/downloads/lafeber/world-flags-sprite/flags16.css" />
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha256-3dkvEK0WLHRJ7/Csr0BZjAWxERc5WH7bdeUya2aXxdU= sha512-+L4yy6FRcDGbXJ9mPG8MT/3UCDzwR9gPeyFNMCtInsol++5m3bk2bXWKdZjvybmohrAsn3Ua5x8gfLnbE1YkOg==" crossorigin="anonymous"> -->
 
     <meta name="renderer" content="webkit">

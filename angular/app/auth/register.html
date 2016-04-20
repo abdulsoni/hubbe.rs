@@ -66,12 +66,12 @@
                         <h3 class="font-light">My name is ...</h3>
                         <div class="myName-wrap">
                             <input type="text" placeholder="First Name" class="inputFieldGray" name="fname" required ng-model="data.fname">
-                            <input type="text" placeholder="Last Name" class="inputFieldGray" name="lname" required ng-model="data.lname">
+                            <input type="text" placeholder="Last Name" class="inputFieldGray second" name="lname" required ng-model="data.lname">
                         </div>
 
                         <h3 class="font-light">My position is ...</h3>
                         <div class="myName-wrap">
-                            <input type="text" placeholder="" class="inputFieldGray" name="fname" required ng-model="data.position">
+                            <input type="text" placeholder="" class="inputFieldGray full-width" name="fname" required ng-model="data.position">
                         </div>
 
                         <h3 class="font-light">I'm over 18 years old*</h3>
@@ -83,16 +83,24 @@
                                 <input type="radio" name="iam-overEighteen" id="no-overEighteen" value="no" ng-model="data.ageGate">
                                 <i></i> <span>No</span> </label>
                         </div>
+                        <script type="text/ng-template" id="countryTemplate.html">
+                            <a>
+                                <flag country="{{match.model.code}}" size="16"></flag>
+                                <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+                            </a>
+                        </script>
                         <div>
                             <h3 class="font-light">I am from</h3>
-                            <label class="select-style">
-                                <select required ng-options="country as country for country in countries" ng-model="data.countryOrigin"></select>
+                            <label class="select-style full-width">
+                                <!-- <select required ng-options="country as country for country in countries" ng-model="data.countryOrigin"></select> -->
+                                <input type="text" ng-model="data.countryOrigin" uib-typeahead="country as country.name for country in countries | filter:$viewValue | limitTo:8" typeahead-template-url="countryTemplate.html" class="form-control inputFieldGray">
                             </label>
                         </div>
                         <div>
                             <h3 class="font-light">I Live in</h3>
-                            <label class="select-style">
-                                <select required ng-options="country as country for country in countries" ng-model="data.countryResidence"></select>
+                            <label class="select-style full-width">
+                                <input type="text" ng-model="data.countryResidence" uib-typeahead="country as country.name for country in countries | filter:$viewValue | limitTo:8" typeahead-template-url="countryTemplate.html" class="form-control inputFieldGray">
+                                <!-- <select required ng-options="country as country for country in countries" ng-model="data.countryResidence"></select> -->
                             </label>
                         </div>
                         <div ng-if="data.countryResidence">
@@ -148,7 +156,22 @@
                     <h3 class="font-light paddingB5">My email adress is</h3>
                     <input type="text" placeholder="{{user.email}}" class="inputFieldGray" ng-model="data.email" required>
                     <h3 class="font-light paddingTB5">My phone number is</h3>
-                    <input type="text" placeholder="" class="inputFieldGray" ng-model="data.contactNumber" required>
+                    <script type="text/ng-template" id="countryCodeTemplate.html">
+                        <a>
+                            <flag country="{{match.model.country}}" size="16"></flag>
+                            <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+                        </a>
+                    </script>
+                    <div class="phone-number phone-number_verification">
+                        <div class="code">
+                            <input type="text" ng-model="data.contactNumberCountryCode" uib-typeahead="code as code.code for code in countryCodes | filter:$viewValue | limitTo:8" typeahead-template-url="countryCodeTemplate.html" class="form-control inputFieldGray">
+                            <span class="phone-number_label">Country Code</span>
+                        </div>
+                        <div class="number">
+                            <input type="text" placeholder="" class="inputFieldGray" ng-model="data.contactNumber" required>
+                            <span class="phone-number_label">Phone Number</span>
+                        </div>
+                    </div>
                     <div>
                         <h3 class="font-light paddingTB5">The best time to contact me is</h3>
                         <label class="select-style">

@@ -21,7 +21,7 @@
         return new Blob([ia], {type:mimeString});
     }
 
-    angular.module('fundator.controllers').controller('NavigationCtrl', function($rootScope, $scope, $state, $auth, $log, $timeout, $filter, $http, $resource, $uibModal, FileUploader) {
+    angular.module('fundator.controllers').controller('NavigationCtrl', function($rootScope, $scope, $state, $auth, $log, $timeout, $filter, $http, $resource, $uibModal, FileUploader, CountryCodes) {
 
         $scope.allSkills = $resource('api/skills').query();
 
@@ -36,8 +36,60 @@
             socialConnect: {
                 facebook: {},
                 linkedin: {}
-            }
+            },
+            twoFA: {}
         };
+
+        if (typeof($rootScope.user) !== 'undefined') {
+            $scope.data.twoFA = {
+                countryCode: angular.copy($rootScope.user.contact_number_country_code),
+                number: angular.copy($rootScope.user.contact_number),
+                verificationCode: ''
+            }
+        }
+
+        $scope.countryCodes = CountryCodes();
+
+        $scope.startTwoFAVerify = function() {
+            $scope.data.twoFA.loading = true;
+
+            var verificationData = {
+                via: 'sms',
+                country_code: parseInt($scope.data.twoFA.countryCode),
+                phone_number: parseInt($scope.data.twoFA.number),
+                locale: 'en'
+            };
+
+            $http.post('/api/verification/start', verificationData).then(function(result){
+                console.log(result.data);
+
+                if (result.data.success) {
+                    $scope.data.twoFA.loading = false;
+                    $scope.data.twoFA.codeSent = true;
+                }
+            });
+        }
+
+        $scope.completeTwoFAVerfiy = function() {
+            $scope.data.twoFA.loading = true;
+
+            var verificationData = {
+                country_code: parseInt($scope.data.twoFA.countryCode),
+                phone_number: parseInt($scope.data.twoFA.number),
+                verification_code: parseInt($scope.data.twoFA.verificationCode)
+            };
+
+            $http.post('/api/verification/check', verificationData).then(function(result){
+                console.log('verification data');
+                console.log(result.data);
+
+                if (result.data.success) {
+                    $scope.data.twoFA.codeSent = false;
+                    $scope.data.twoFA.verify = false;
+                    $rootScope.user.phone_verified = 1;
+                }
+            });
+        }
 
         $scope.socialConnect = function(provider) {
             $scope.data.socialConnect[provider].loading = true;

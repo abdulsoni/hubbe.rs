@@ -54,6 +54,12 @@ $api->version('v1', function ($api) {
     $api->post('authenticate/unlinkLinkedin', 'Fundator\Http\Controllers\AuthenticateController@unlinkLinkedin');
 
     /*
+     * Verification
+     */
+    $api->post('verification/start', 'Fundator\Http\Controllers\VerificationController@requestVerificationCode');
+    $api->post('verification/check', 'Fundator\Http\Controllers\VerificationController@processVerificationCode');
+
+    /*
      * Contests
      */
     $api->get('contests/', 'Fundator\Http\Controllers\ContestController@index');
