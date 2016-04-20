@@ -45,12 +45,10 @@
                                         <h5>Two Factor Authentication (2FA) <span ng-if="user.phone_verified"><span class="icon icon-checkmark"></span></span></h5>
                                         <p>Connect your account to Facebook. This helps as it instils confidence in other users that your identity is known.</p>
                                         <br>
-                                        <div ng-if="user.phone_verified && !data.twoFA.verify">
-                                            <button class="btn btn-info-rg" ladda="" ng-click="data.twoFA.verify = true" data-style="expand-right">Change Number</button>
-                                        </div>
-                                        <div ng-if="!user.phone_verified">
-                                            <button class="btn btn-info-rg" ng-if="!data.twoFA.verify" ladda="" ng-click="data.twoFA.verify = true" data-style="expand-right">Begin Verification</button>
+                                        <button class="btn btn-info-rg" ng-if="!user.phone_verified && !data.twoFA.verify" ladda="" ng-click="data.twoFA.verify = true" data-style="expand-right">Begin Verification</button>
+                                        <button class="btn btn-info-rg" ladda="" ng-if="user.phone_verified && !data.twoFA.verify" ng-click="data.twoFA.verify = true" data-style="expand-right">Change Number</button>
 
+                                        <div>
                                             <div class="pull-right" ng-if="data.twoFA.verify && !data.twoFA.codeSent">
                                                 <script type="text/ng-template" id="countryCodeTemplate.html">
                                                     <a>
