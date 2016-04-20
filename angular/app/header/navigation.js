@@ -53,9 +53,17 @@
         $scope.startTwoFAVerify = function() {
             $scope.data.twoFA.loading = true;
 
+            var countryCode = 1;
+
+            if (typeof($scope.data.twoFA.countryCode.code) !== 'undefined') {
+                countryCode = $scope.data.twoFA.countryCode.code;
+            }else{
+                countryCode = $scope.data.twoFA.countryCode;
+            }
+
             var verificationData = {
                 via: 'sms',
-                country_code: parseInt($scope.data.twoFA.countryCode),
+                country_code: parseInt(countryCode),
                 phone_number: parseInt($scope.data.twoFA.number),
                 locale: 'en'
             };
@@ -72,6 +80,14 @@
 
         $scope.completeTwoFAVerfiy = function() {
             $scope.data.twoFA.loading = true;
+
+            var countryCode = 1;
+
+            if (typeof($scope.data.twoFA.countryCode.code) !== 'undefined') {
+                countryCode = $scope.data.twoFA.countryCode.code;
+            }else{
+                countryCode = $scope.data.twoFA.countryCode;
+            }
 
             var verificationData = {
                 country_code: parseInt($scope.data.twoFA.countryCode),
