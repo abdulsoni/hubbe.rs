@@ -11,8 +11,15 @@
 |
 */
 
+Route::group(['domain' => 'desk.fundator.co'], function() {
+    Route::get('/', [
+        'as' => 'fundator.desk',
+        'uses' => 'AppController@serveApp',
+    ]);
+});
+
 Route::get('/', 'AppController@serveHomepage');
-Route::get('/app', 'AppController@serveApp');
+Route::get('/desk', 'AppController@serveApp');
 
 /*
  * Authentication Routes

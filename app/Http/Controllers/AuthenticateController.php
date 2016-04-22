@@ -247,7 +247,10 @@ class AuthenticateController extends Controller
             }
 
             $facebookProfile = FacebookProfile::where('user_id', $user->id)->first();
-            $facebookProfile->delete();
+
+            if (!is_null($facebookProfile)) {
+                $facebookProfile->delete();
+            }
 
             $user->facebook = null;
             $response = $user->save();
@@ -272,7 +275,9 @@ class AuthenticateController extends Controller
             }
 
             $linkedinProfile = LinkedinProfile::where('user_id', $user->id)->first();
-            $linkedinProfile->delete();
+            if (!is_null($linkedinProfile)) {
+                $linkedinProfile->delete();
+            }
 
             $user->linkedin = null;
             $response = $user->save();
