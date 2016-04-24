@@ -52,7 +52,7 @@ class ExpertiseController extends Controller
     {
         $statusCode = 200;
         $response = [];
-        $expertise = ProjectExpertise::where('expert_id', null)->get();
+        $expertise = ProjectExpertise::where('selected_bid_id', null)->get();
 
         try{
             $expertise_item_data = [];
@@ -98,7 +98,7 @@ class ExpertiseController extends Controller
         }
 
         try{
-            $expertise = ProjectExpertise::where('expert_id', null)->get();
+            $expertise = ProjectExpertise::where('selected_bid_id', null)->get();
             $userSkills = [];
 
             if (!is_null($user->expert) && !is_null($user->expert->skills)) {

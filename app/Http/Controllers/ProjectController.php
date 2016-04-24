@@ -252,9 +252,9 @@ class ProjectController extends Controller
             if (!is_null($expertise)) {
                 $response = $expertise;
                 $response['project'] = $expertise->getProject();
-                $response['project']['description'] = $expertise->project->description;
+                // $response['project']['description'] = $expertise->project->description;
                 $response['expertise'] = $expertise->getExpertise();
-                $response['selected_bid'] = $expertise->selectedBid();
+                $response['selected_bid'] = $expertise->selectedBid;
 
                 $user = JWTAuth::parseToken()->authenticate();
 

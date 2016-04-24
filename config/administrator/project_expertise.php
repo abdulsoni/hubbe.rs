@@ -20,7 +20,7 @@ return array(
     'columns' => array(
         'id',
         'project' => array(
-            'title' => 'Creator',
+            'title' => 'Project',
             'relationship' => 'project',
             'select' => 'name',
         ),
