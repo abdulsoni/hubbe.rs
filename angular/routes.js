@@ -14,6 +14,7 @@
             return './views/app/app/' + viewName + '/' + secondaryName + '.html';
         };
 
+
         $urlRouterProvider.otherwise('/contests');
 
         $stateProvider

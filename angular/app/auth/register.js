@@ -36,7 +36,7 @@
     });
 
 
-    angular.module('fundator.controllers').controller('RegisterCtrl', function($rootScope, $scope, $state, $auth, $timeout, $http, $resource, FdScroller, $filter, FileUploader, Countries, CountryCodes) {
+    angular.module('fundator.controllers').controller('RegisterCtrl', function($rootScope, $scope, $state, $auth, $timeout, $http, $resource, FdScroller, $filter, FileUploader, Countries, CountryCodes, API) {
 
         $scope.form = {
             currentStep: 1,
@@ -180,7 +180,7 @@
         });
 
         $scope.uploader = new FileUploader({
-            url: '/api/files',
+            url: API.path('files'),
             removeAfterUpload: true
         });
 
@@ -377,7 +377,7 @@
             $scope.inputtedExpertiseList[index].expertiseCategoryList = [];
             $scope.inputtedExpertiseList[index].loading = true;
 
-            $http.get('/api/expertise-category/0').then(function(result){
+            $http.get(API.path('expertise-category/0')).then(function(result){
                 $scope.inputtedExpertiseList[index].expertiseCategoryList = result.data;
                 $scope.inputtedExpertiseList[index].loading = false;
             });
@@ -387,7 +387,7 @@
             $scope.expertiseSubCategoryList = [];
             $scope.inputtedExpertiseList[index].loading = true;
 
-            $http.get('/api/expertise-category/' + $scope.inputtedExpertiseList[index].selectedExpertiseCategory.id).then(function(result){
+            $http.get(API.path('expertise-category/') + $scope.inputtedExpertiseList[index].selectedExpertiseCategory.id).then(function(result){
                 $scope.inputtedExpertiseList[index].expertiseSubCategoryList = result.data;
                 $scope.inputtedExpertiseList[index].loading = false;
             });
@@ -397,7 +397,7 @@
             $scope.inputtedExpertiseList[index].expertiseList = [];
             $scope.inputtedExpertiseList[index].loading = true;
 
-            $http.get('/api/expertise/category/' + $scope.inputtedExpertiseList[index].selectedExpertiseSubCategory.id).then(function(result){
+            $http.get(API.path('expertise/category/') + $scope.inputtedExpertiseList[index].selectedExpertiseSubCategory.id).then(function(result){
                 $scope.inputtedExpertiseList[index].expertiseList = result.data;
                 $scope.inputtedExpertiseList[index].loading = false;
             }, 2000);
@@ -407,7 +407,7 @@
             $scope.inputtedExpertiseList[index].skillsList = [];
             $scope.inputtedExpertiseList[index].loading = true;
 
-            $http.get('/api/expertise/' + $scope.inputtedExpertiseList[index].selectedExpertise.id + '/skills/').then(function(result){
+            $http.get(API.path('expertise/') + $scope.inputtedExpertiseList[index].selectedExpertise.id + '/skills/').then(function(result){
                 $scope.inputtedExpertiseList[index].skillsList = result.data;
                 $scope.inputtedExpertiseList[index].selectedSkills = result.data;
                 $scope.inputtedExpertiseList[index].loading = false;
@@ -470,7 +470,7 @@
             $rootScope.$broadcast('startLoading');
             FdScroller.toTop();
 
-            $http.put('/api/users/' + $rootScope.user.id, userData).then(function(result){
+            $http.put(API.path('users/') + $rootScope.user.id, userData).then(function(result){
                 if (result.data === 'Updated') {
                     $rootScope.user.name = $scope.data.fname;
                     $rootScope.user.last_name = $scope.data.lname;

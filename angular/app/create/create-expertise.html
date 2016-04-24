@@ -1,7 +1,7 @@
 <div class="marginT25">
-    <ul class="sort-filter">
+    <ul class="sort-filter" ng-if="expertiseList.length > 0">
         <li class="">
-            <a>Tasks under selection <span class="badge">0</span></a>
+            <a>Tasks under selection <span class="badge">{{expertiseList.length}}</span></a>
         </li>
         <li>
             <a>Tasks confirmed <span class="badge">0</span></a>
@@ -11,14 +11,13 @@
         </li>
     </ul>
     <div class="expertise-list marginB60">
-        <div class="expertise marginB30" ng-repeat="expertise in expertiseList track by $index">
+        <div class="expertise marginB30" ng-repeat="expertise in expertiseList track by $index" ng-if="expertiseList.length > 0">
             <div class="expertise_col expertise_col-list">
                 <ul class="expertise-breakdown">
                     <li ng-if="expertise.expertise_category">{{expertise.expertise_category.name}}</li>
                     <li ng-if="expertise.expertise_subcategory">{{expertise.expertise_subcategory.name}}</li>
                     <li>{{expertise.expertise.name}}</li>
                 </ul>
-                <!-- <span class="expertise-status">Waiting</span> -->
             </div>
             <div class="expertise_col expertise_col-info">
                 <h4>Main Task<br>
@@ -51,6 +50,9 @@
                 </div>
             </div>
         </div>
+        <div class="no-have" ng-if="expertiseList.length === 0">
+            There are currently no selected expertise! <br> Click 'Add Expertise' below to add a new expertise.
+        </div>
     </div>
     <form name="expertiseForm">
         <div class="expertise-add">
@@ -76,6 +78,7 @@
                         <span class="expertise-form_step__count">4</span> Details
                     </div>
                 </div>
+                <fd-loader ng-if="inputtedEpxertise.loading"></fd-loader>
                 <div class="expertise-form_panes" ng-if="!inputtedEpxertise.loading">
                     <div class="expertise-form_step-pane" ng-if="inputtedExpertise.step === 1">
                         <div class="expertise-category-list" ng-if="inputtedExpertise.otherExpertiseCategory.status === 0">
@@ -84,7 +87,7 @@
                                 <span class="expertise-category_cancel icon icon-cross" ng-click="deselectExpertiseCategory($event, inputtedExpertiseIndex, 0)"></span>
                             </div>
                         </div>
-                        <!-- <div class="expertise-actions">
+                        <div class="expertise-actions">
                             <div class="expertise-actions_other-status" ng-if="inputtedExpertise.otherExpertiseCategory.status > 0">
                                 You have opted to enter a custom Expertise Category, enter your Expertise Category below
                             </div>
@@ -93,7 +96,7 @@
                             </div>
                             <button class="expertise-actions_other-submit btn btn-info" ng-click="saveOtherExpertiseCategory(inputtedExpertiseIndex, 0)" ng-if="inputtedExpertise.otherExpertiseCategory.status === 0">Save</button>
                             <button class="expertise-actions_other-submit btn btn-danger" ng-click="removeOtherExpertiseCategory(inputtedExpertiseIndex, 0)" ng-if="inputtedExpertise.otherExpertiseCategory.status > 0">Remove</button>
-                        </div> -->
+                        </div>
                     </div>
                     <div class="expertise-form_step-pane" ng-if="inputtedExpertise.step === 2">
                         <div class="expertise-category-list" ng-if="inputtedExpertise.otherExpertiseCategory.status === 0 && inputtedExpertise.otherExpertiseSubCategory.status === 0">
@@ -102,7 +105,7 @@
                                 <span class="expertise-category_cancel icon icon-cross" ng-click="deselectExpertiseCategory($event, inputtedExpertiseIndex, 1)"></span>
                             </div>
                         </div>
-                        <!-- <div class="expertise-actions">
+                        <div class="expertise-actions">
                             <div class="expertise-actions_other-status" ng-if="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0">
                                 You have opted to enter a custom Sub Expertise Category, enter your Expertise Category below
                             </div>
@@ -111,7 +114,7 @@
                             </div>
                             <button class="expertise-actions_other-submit btn btn-info" ng-click="saveOtherExpertiseCategory(inputtedExpertiseIndex, 1)" ng-if="inputtedExpertise.otherExpertiseSubCategory.status === 0">Save</button>
                             <button class="expertise-actions_other-submit btn btn-danger" ng-click="removeOtherExpertiseCategory(inputtedExpertiseIndex, 1)" ng-if="inputtedExpertise.otherExpertiseSubCategory.status > 0">Remove</button>
-                        </div> -->
+                        </div>
                     </div>
                     <div class="expertise-form_step-pane" ng-if="inputtedExpertise.step === 3">
                         <div class="expertise-category-list" ng-if="inputtedExpertise.otherExpertiseCategory.status === 0 && inputtedExpertise.otherExpertiseSubCategory.status === 0 && inputtedExpertise.otherExpertise.status === 0">
@@ -120,7 +123,7 @@
                                 <span class="expertise-category_cancel icon icon-cross" ng-click="deselectExpertise($event, inputtedExpertiseIndex)"></span>
                             </div>
                         </div>
-                        <!-- <div class="expertise-actions">
+                        <div class="expertise-actions">
                             <div class="expertise-actions_other-status" ng-if="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0 || inputtedExpertise.otherExpertise.status > 0">
                                 You have opted to enter a custom Expertise, enter your Expertise below
                             </div>
@@ -129,7 +132,7 @@
                             </div>
                             <button class="expertise-actions_other-submit btn btn-info" ng-click="saveOtherExpertise(inputtedExpertiseIndex)" ng-if="inputtedExpertise.otherExpertise.status === 0">Save</button>
                             <button class="expertise-actions_other-submit btn btn-danger" ng-click="removeOtherExpertise(inputtedExpertiseIndex)" ng-if="inputtedExpertise.otherExpertise.status > 0">Remove</button>
-                        </div> -->
+                        </div>
                     </div>
                     <div class="expertise-form_step-pane expertise-form_step-pane__details" ng-if="inputtedExpertise.step === 4">
                         <label>Main Task
@@ -138,19 +141,23 @@
                         </label>
                         <label class="half-way first">Estimated budget:
                             <br>
-                            <input class="form-control" type="text" placeholder="USD 1500" ng-model="inputtedExpertise.budget" required>
+                            <input class="form-control" type="text" placeholder="USD 1500" ng-model="inputtedExpertise.budget" required numbers-only>
                         </label>
                         <label class="half-way last">Expected starting date:
                             <br>
-                            <input class="form-control" type="text" placeholder="Dec 15, 2015" ng-model="inputtedExpertise.startDate" required>
+                            <p class="input-group">
+                            <input type="text" class="form-control" ng-model="inputtedExpertise.startDate" uib-datepicker-popup="yyyy/MM/dd" is-open="data.datepicker.isOpen" ng-required="true" close-text="Close">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="data.datepicker.isOpen = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
                         </label>
                         <label>Lead time:
                             <br>
-                            <input class="form-control" type="text" placeholder="60 days" ng-model="inputtedExpertise.leadTime" required>
+                            <input class="form-control" type="text" placeholder="60 days" ng-model="inputtedExpertise.leadTime" required numbers-only>
                         </label>
                     </div>
                 </div>
-                <fd-loader ng-if="inputtedEpxertise.loading"></fd-loader>
                 <button class="btn btn-info btn-block marginT30" ng-if="inputtedExpertise.step === 4" ng-disabled="expertiseForm.$invalid" ng-click="saveExpertise(inputtedExpertise)">Save</button>
             </div>
         </div>
@@ -158,5 +165,5 @@
 
     <br>
 
-    <button class="btn btn-success btn-block" ng-click="saveExpertiseSelection()">Save Selection</button>
+    <button class="btn btn-info center-block marginT30" ng-click="saveExpertiseSelection()" ladda="savingExpertise">Save Selection</button>
 </div>

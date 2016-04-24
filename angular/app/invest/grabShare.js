@@ -1,8 +1,7 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.controllers').controller('GrabShareCtrl', function($rootScope, $scope, $state, $http, $timeout, FdScroller) {
-        console.log('Invest Started');
+    angular.module('fundator.controllers').controller('GrabShareCtrl', function($rootScope, $scope, $state, $http, $timeout, FdScroller, API) {
         $rootScope.$broadcast('startLoading');
 
         $scope.Math = window.Math;
@@ -37,7 +36,7 @@
         function loadPrimaryListing() {
             $scope.data.primaryShareListing = null;
 
-            $http.get('/api/share-listing/').then(function(result){
+            $http.get(API.path('share-listing')).then(function(result){
                 $scope.data.primaryShareListing = result.data;
             });
         }
@@ -53,7 +52,7 @@
                 'num_shares': $scope.data.myBid.num_shares
             };
 
-            $http.post('/api/share-bids', myBid).then(function(result){
+            $http.post(API.path('share-bids'), myBid).then(function(result){
                 $scope.data.myBid.saving = false;
 
                 if (typeof(result.error) === 'undefined') {

@@ -1,12 +1,12 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.controllers').controller('ContestCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $http, $timeout, $filter) {
+    angular.module('fundator.controllers').controller('ContestCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $http, $timeout, $filter, API) {
 
         $scope.contests = [];
-        $rootScope.$broadcast('startLoading');
+        $scope.sectionLoading = true;
 
-        var Contest = $resource('/api/contests/:contestId', {
+        var Contest = $resource(API.path('contests/:contestId'), {
             contestId: '@id'
         });
 
@@ -24,7 +24,6 @@
                         $scope.ongoingContests.push(contest);
 
                         var ogcIndex = $scope.contests.indexOf(contest);
-                        console.log('ogcIndex : ' + ogcIndex);
                         $scope.contests.splice(ogcIndex, 1);
                     }
                 }
@@ -41,26 +40,12 @@
             }
         }).finally(function() {
             $timeout(function() {
-                $rootScope.$broadcast('stopLoading');
+                $scope.sectionLoading = false;
             }, 1000);
         });
     });
 
-    angular.module('fundator.directives').directive('fdEnter', function () {
-        return function (scope, element, attrs) {
-            element.bind("keydown keypress", function (event) {
-                if(event.which === 13) {
-                    scope.$apply(function (){
-                        scope.$eval(attrs.fdEnter);
-                    });
-
-                    event.preventDefault();
-                }
-            });
-        };
-    });
-
-    angular.module('fundator.controllers').controller('ContestSingleCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $filter, $timeout, FdScroller, $http, Lightbox) {
+    angular.module('fundator.controllers').controller('ContestSingleCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $filter, $timeout, FdScroller, $http, Lightbox, API) {
         $scope.contestId = $stateParams.contestId;
         $scope.data = {
             contestFullDescription: false,
@@ -78,31 +63,31 @@
             }
         };
 
-        var Contest = $resource('/api/contests/:contestId', {
+        var Contest = $resource(API.path('contests/:contestId'), {
             contestId: '@id'
         });
 
-        var Entry = $resource('/api/entries/:entryId', {
+        var Entry = $resource(API.path('entries/:entryId'), {
             entryId: '@id'
         }, {
             contestantEntries: {
                 method: 'GET',
-                url: '/api/entries/contest/:contestId/creator/:creatorId',
+                url: API.path('entries/contest/:contestId/creator/:creatorId'),
                 isArray: true
             },
             judgeEntries: {
                 method: 'GET',
-                url: '/api/entries/contest/:contestId/judge/:judgeId',
+                url: API.path('entries/contest/:contestId/judge/:judgeId'),
                 isArray: true
             },
             sendMessage: {
                 method: 'POST',
-                url: '/api/entries/:entryId/messages',
+                url: API.path('entries/:entryId/messages'),
                 isArray: false
             }
         });
 
-        var EntryRating = $resource('/api/entry-ratings/:entryRatingId', function(){
+        var EntryRating = $resource(API.path('entry-ratings/:entryRatingId'), function(){
             entryRatingId: '@id'
         }, {
             update: {
@@ -111,7 +96,7 @@
         });
 
         FdScroller.toTop();
-        $rootScope.$broadcast('startLoading');
+        // $rootScope.$broadcast('startLoading');
 
         $scope.showFullText = function() {
             FdScroller.toSection('.contest-single', 50);
@@ -230,7 +215,7 @@
             }
 
             if (judgeId !== null) {
-                $http.get('/api/entries/' + entry.id + '/judge/' + judgeId).then(function(result){
+                $http.get(API.path('entries/') + entry.id + '/judge/' + judgeId).then(function(result){
                     $scope.data.selectedEntry = result.data;
                     $scope.data.selectedEntry.rating = result.data.rating;
 
@@ -471,7 +456,7 @@
         $scope.acceptJudge = function(){
             $scope.data.showJudgeNdaLoading = true;
 
-            $http.post('/api/users/becomeJudge', {contest_id: $scope.contest.id}).then(function(result){
+            $http.post(API.path('users/becomeJudge'), {contest_id: $scope.contest.id}).then(function(result){
                 console.log(result)
                 if (typeof(result.data.error) === 'undefined') {
                     $scope.data.showJudgeNdaSuccess = true;
@@ -495,7 +480,7 @@
         $scope.acceptContestant = function(){
             $scope.data.showContestantNdaLoading = true;
 
-            $http.post('/api/users/becomeContestant', {contest_id: $scope.contest.id}).then(function(result){
+            $http.post(API.path('users/becomeContestant'), {contest_id: $scope.contest.id}).then(function(result){
                 console.log(result)
                 if (typeof(result.data.error) === 'undefined') {
                     $scope.data.showContestantNdaSuccess = true;

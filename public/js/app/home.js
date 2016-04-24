@@ -45,8 +45,8 @@
 
 		// Load Contests Data
 
-		var apiContests = '/api/contests';
-		var apiExpertise = '/api/expertise/available';
+		var apiContests = '/api/v1/contests';
+		var apiExpertise = '/api/v1/expertise/available';
 
 		var fetchContests = function() {
 			$.get(apiContests, function(result){

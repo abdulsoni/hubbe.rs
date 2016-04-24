@@ -1,7 +1,7 @@
 (function(){
     "use strict";
 
-    angular.module('fundator.controllers').controller('AuthCtrl', function($rootScope, $scope, $state, $auth, $http, $timeout, FdScroller){
+    angular.module('fundator.controllers').controller('AuthCtrl', function($rootScope, $scope, $state, $auth, $http, $timeout, FdScroller, API){
         $scope.$on('$viewContentLoaded', function() {
             $timeout(function(){
                 $rootScope.appLoaded = true;
@@ -25,7 +25,7 @@
                 password: $scope.data.password
             }
 
-            $http.post('/api/authenticate/signup', userInfo).then(function(result){
+            $http.post(API.path('authenticate/signup'), userInfo).then(function(result){
                 if (typeof(result.data.error) === 'undefined') {
 
                     if (result.data.success === true && typeof(result.data.message) !== 'undefined') {
@@ -104,7 +104,7 @@
 
     });
 
-    angular.module('fundator.controllers').controller('AuthConfirmCtrl', function($rootScope, $scope, $state, $stateParams, $auth, $timeout, $http){
+    angular.module('fundator.controllers').controller('AuthConfirmCtrl', function($rootScope, $scope, $state, $stateParams, $auth, $timeout, $http, API){
         $rootScope.$broadcast('stopLoading');
 
         if (typeof($stateParams.code) !== 'undefined' && typeof($stateParams.email) !== 'undefined') {
@@ -115,7 +115,7 @@
 
             $scope.loading = true;
 
-            $http.post('/api/authenticate/confirm', params).then(function(result) {
+            $http.post(API.path('authenticate/confirm'), params).then(function(result) {
                 console.log('result');
                 console.log(result);
                 $state.go('app.auth.login');
@@ -132,7 +132,7 @@
         }
     });
 
-    angular.module('fundator.controllers').controller('AuthRecoverCtrl', function($rootScope, $scope, $state, $stateParams, $auth, $timeout, $http){
+    angular.module('fundator.controllers').controller('AuthRecoverCtrl', function($rootScope, $scope, $state, $stateParams, $auth, $timeout, $http, API){
         $rootScope.$broadcast('stopLoading');
 
         $scope.data = {
@@ -155,7 +155,7 @@
                 email: $scope.data.recoveryEmail
             };
 
-            $http.post('/api/authenticate/forgot', params).then(function(result) {
+            $http.post(API.path('authenticate/forgot'), params).then(function(result) {
 
                 if (typeof(result.data.error) === 'undefined') {
                     $scope.successMessage = 'A password reset link has been sent to your email.';
@@ -194,7 +194,7 @@
                         password_confirmation: $scope.data.password_repeat
                     };
 
-                    $http.post('/api/authenticate/recover', params).then(function(result) {
+                    $http.post(API.path('authenticate/recover'), params).then(function(result) {
                         if (typeof(result.data.error) === 'undefined') {
                             $auth.removeToken();
                             $auth.setToken(result.data);

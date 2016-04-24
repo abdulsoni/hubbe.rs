@@ -165,9 +165,10 @@ class ProjectController extends Controller
 
             if (is_null($project->super_expert_id) && isset($request->super_expert_id)) {
                 $superExpert = Expert::find($request->super_expert_id);
-
                 Event::fire(new ProjectSuperExpertSelected($project, $superExpert));
-                $project->state = 3;
+
+                $project->super_expert_id = $request->super_expert_id;
+                $project->state = 2;
             }
 
             $response = $project->save();
@@ -210,6 +211,17 @@ class ProjectController extends Controller
 
             if (!is_null($project)) {
                 $project_data = $project->expertise;
+
+                foreach ($project_data as $project_expertise) {
+                    $project_expertise['project'] = $project_expertise->getProject();
+                    $project_expertise['expertise'] = $project_expertise->getExpertise();
+
+                    if (!is_null($project_expertise->selected_bid_id)) {
+                        $projectExpertiseBid = ProjectExpertiseBid::find($project_expertise->selected_bid_id);
+                        $project_expertise['selected_bid'] = $projectExpertiseBid;
+                        $project_expertise['selected_bid']['expert'] = $projectExpertiseBid->expert;
+                    }
+                }
             }else{
                 throw new Exception('Project not found', 1);
             }
@@ -239,6 +251,11 @@ class ProjectController extends Controller
 
             if (!is_null($expertise)) {
                 $response = $expertise;
+                $response['project'] = $expertise->getProject();
+                $response['project']['description'] = $expertise->project->description;
+                $response['expertise'] = $expertise->getExpertise();
+                $response['selected_bid'] = $expertise->selectedBid();
+
                 $user = JWTAuth::parseToken()->authenticate();
 
                 if (!is_null($user) && !is_null($user->expert)) {
@@ -302,7 +319,6 @@ class ProjectController extends Controller
                     $confirmation->sender()->associate($superExpert);
                     $confirmation->receiver()->associate($user);
                 }
-                // $confirmation->save();
 
                 $projectExpertise->confirmation()->save($confirmation);
                 $projectExpertise->save();
@@ -317,6 +333,44 @@ class ProjectController extends Controller
             $response = ['error' => $e->getMessage()];
         }
 
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function selectProjectExpertiseBid(Request $request, $projectExpertiseId, $bidId)
+    {
+        $statusCode = 200;
+        $response = [];
+
+        try{
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                throw new Exception('User not found', 1);
+            }
+
+            $projectExpertise = ProjectExpertise::find($projectExpertiseId);
+            $selectedBid = ProjectExpertiseBid::find($bidId);
+
+            if ((!is_null($projectExpertise) && !is_null($selectedBid)) && $user->id === $projectExpertise->project->creator->user->id) {
+                $projectExpertise->selectedBid()->associate($selectedBid);
+
+                 if($projectExpertise->save()){
+                    $response = $projectExpertise->selectedBid;
+                 }
+            }else{
+                throw new Exception('ProjectExpertise or Bid not found', 1);
+            }
+
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
 
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }

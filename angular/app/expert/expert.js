@@ -1,12 +1,16 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.controllers').controller('ExpertCtrl', function($rootScope, $scope, $state, $resource, $filter, FdScroller) {
+    angular.module('fundator.controllers').controller('ExpertCtrl', function($rootScope, $scope, $state, $resource, $filter, FdScroller, API) {
         console.log('Expert Started');
+        $scope.expertiseSource = null;
+        $scope.availableExpertise = [];
+        $scope.matchingExpertise = [];
+        $scope.data = {};
 
-        var AvailableExpertise = $resource('/api/expertise/available');
+        var AvailableExpertise = $resource(API.path('expertise/available'));
 
-        var MatchingExpertise = $resource('/api/expertise/matching', {}, {
+        var MatchingExpertise = $resource(API.path('expertise/matching'), {}, {
         	query: {
         		method: 'GET',
         		isArray: false
@@ -37,26 +41,26 @@
         	$rootScope.$broadcast('stopLoading');
 
         	AvailableExpertise.query().$promise.then(function(result){
-        		console.log('All available expertise');
-        		console.log(result);
-        	});
+                $scope.availableExpertise = result;
+                $scope.expertiseSource = $scope.availableExpertise;
+            });
 
-        	MatchingExpertise.query().$promise.then(function(result){
-        		console.log('All matching expertise');
-        		console.log(result);
+            MatchingExpertise.query().$promise.then(function(result){
+                $scope.matchingExpertise = result.expertise;
+            });
 
-        		$scope.matchingExpertise = result.expertise;
-        	});
         }
     });
 
-    angular.module('fundator.controllers').controller('ExpertiseCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $http) {
+    angular.module('fundator.controllers').controller('ExpertiseCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $http, FdScroller, API) {
         console.log('Expertise Started');
-        console.log($stateParams.expertiseId);
+
+        FdScroller.toTop();
 
         $scope.data = {};
+        $scope.expertise = null;
 
-        var ProjectExpertise = $resource('/api/project-expertise/:expertiseId', {
+        var ProjectExpertise = $resource(API.path('/project-expertise/:expertiseId'), {
         	expertiseId: '@id'
         });
 
@@ -66,13 +70,17 @@
         });
 
         $scope.submitBid = function(){
+            $scope.data.bidLoading = true;
+
             var bidData = {
                 'bid_amount': $scope.data.bid_amount,
                 'description': $scope.data.bid_description
             };
 
-            $http.post('/api/project-expertise/' + $stateParams.expertiseId + '/bid', bidData).then(function(result){
-                $scope.expertise.bid = result;
+            $http.post(API.path('/project-expertise/') + $stateParams.expertiseId + '/bid', bidData).then(function(result){
+                $scope.expertise.bid = result.data;
+            }).finally(function(){
+                $scope.data.bidLoading = false;
             });
         }
     });

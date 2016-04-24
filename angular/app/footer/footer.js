@@ -1,10 +1,10 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.controllers').controller('FooterController', function($rootScope, $scope, $state, $stateParams, $resource, $http, $timeout, $filter) {
+    angular.module('fundator.controllers').controller('FooterController', function($rootScope, $scope, $state, $stateParams, $resource, $http, $timeout, $filter, API) {
         $scope.notifications = null;
 
-        var Contest = $resource('/api/contests/:contestId', {
+        var Contest = $resource(API.path('/contests/:contestId'), {
             contestId: '@id'
         });
 

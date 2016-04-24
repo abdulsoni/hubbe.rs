@@ -1,14 +1,23 @@
-<div class="expertise-list marginB60">
+<div class="relative" ng-if="!expertise">
+    <fd-loader class="center center-top fixed-center" ng-class="{'opacity_hide': expertise !== null}"></fd-loader>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>
+
+<div class="expertise-list marginB60" ng-class="{'opacity_hide': expertise === null}">
     <div class="expertise marginB30">
-        <div class="expertise expertise_col-list">
+        <div class="expertise_col expertise_col-list">
             <ul class="expertise-breakdown">
                 <li ng-if="expertise.expertise_category">{{expertise.expertise_category.name}}</li>
                 <li ng-if="expertise.expertise_subcategory">{{expertise.expertise_subcategory.name}}</li>
                 <li>{{expertise.expertise.name}}</li>
             </ul>
-            <span class="expertise-status">Waiting</span>
+            <!-- <span class="expertise-status">Waiting</span> -->
         </div>
-        <div class="expertise expertise_col-info">
+        <div class="expertise_col expertise_col-info">
             <h4>Main Task<br>
                     <small>{{expertise.task}}</small>
                 </h4>
@@ -16,18 +25,20 @@
             <h4>Lead time: &nbsp; <small>{{expertise.lead_time}}</small></h4>
             <h4>Expected starting date: &nbsp; <small>{{expertise.start_date | amDateFormat:'MMM Do YYYY' }}</small></h4>
         </div>
-        <div class="expertise expertise_col-stat margin0">
+        <div class="expertise_col expertise_col-stat margin0">
             <div class="relative" ng-if="expertise.bid === null">
-                <h4 class="marginB25">My Bid</h4>
-                <div class="expertise-bid_amount">
-                    <label for="bid_amount">Bid Amount</label>
-                    <input id="bid_amount" class="form-control" type="text" ng-model="data.bid_amount">
-                </div>
-                <div class="expertise-bid_description">
-                    <label for="bid_description">Bid Description</label>
-                    <textarea id="bid_description" rows="3" class="form-control" ng-model="data.bid_description"></textarea>
-                </div>
-                <button type="submit" class="btn btn-block btn-info" ng-click="submitBid()">
+                <form name="expertiseBid">
+                    <h4 class="marginB25">My Bid</h4>
+                    <div class="expertise-bid_amount">
+                        <label for="bid_amount">Bid Amount (USD)</label>
+                        <input id="bid_amount" class="form-control" type="text" ng-model="data.bid_amount" numbers-only required>
+                    </div>
+                    <div class="expertise-bid_description">
+                        <label for="bid_description">Bid Description</label>
+                        <textarea id="bid_description" rows="3" class="form-control" ng-model="data.bid_description" required></textarea>
+                    </div>
+                </form>
+                <button type="submit" class="btn btn-block btn-info-rg" ng-click="submitBid()" ng-disabled="expertiseBid.$invalid" ladda="data.bidLoading" data-style="expand-right">
                     Submit
                 </button>
             </div>
@@ -83,6 +94,11 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="project-details">
+                        <h2>{{expertise.project.name}}</h2>
+                        <div class="project-description" ng-bind-html="expertise.project.description"></div>
                     </div>
                 </div>
             </div>

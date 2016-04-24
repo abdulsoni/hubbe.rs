@@ -82,7 +82,7 @@ return array(
     ),
 
     /**
-     * Notify Judges
+     * Project Actions
      */
     'actions' => array(
         // Send Notifications to judges
@@ -95,7 +95,7 @@ return array(
             ),
             'permission' => function($model)
             {
-                return $model->state == 1;
+                return $model->state == 0.9;
             },
             'action' => function($model)
             {
@@ -103,7 +103,7 @@ return array(
                 Log::info('Approved');
 
                 try{
-                    $model->state = 2;
+                    $model->state = 1;
 
                     $superExpert = Expert::where('super_expert', 1)->first();
 

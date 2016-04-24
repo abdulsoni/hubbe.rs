@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.controllers').controller('PageCtrl', function($rootScope, $scope, $state, $stateParams, $http, FdScroller) {
+    angular.module('fundator.controllers').controller('PageCtrl', function($rootScope, $scope, $state, $stateParams, $http, FdScroller, API) {
         $rootScope.$broadcast('startLoading');
         FdScroller.toTop();
 
@@ -10,7 +10,7 @@
         	content: ''
         };
 
-        $http.get('/api/pages/' + $stateParams.slug).then(function(result){
+        $http.get(API.path('pages') + $stateParams.slug).then(function(result){
         	console.log('Success');
         	console.log(result);
         	$scope.page = result.data;

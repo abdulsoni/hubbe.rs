@@ -311,6 +311,10 @@ fd-loader {
     margin: 0 auto;
 }
 
+.untouchable{
+    pointer-events: none;
+}
+
 .pointer:hover {
     cursor: pointer;
 }

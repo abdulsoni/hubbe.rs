@@ -55,6 +55,8 @@ class ExpertiseController extends Controller
         $expertise = ProjectExpertise::where('expert_id', null)->get();
 
         try{
+            $expertise_item_data = [];
+
             foreach($expertise as $expertise_item)
             {
                 $expertise_item_data = $expertise_item->getAttributes();
@@ -65,7 +67,7 @@ class ExpertiseController extends Controller
                 //     'thumbnail' => $expertise_item->project['thumbnail']
                 // ];
 
-                $expertise_item_data['project'] = $expertise_item->project()->select('id', 'name', 'thumbnail')->get()[0];
+                $expertise_item_data['project'] = $expertise_item->project()->select('id', 'name', 'thumbnail')->first();
                 $expertise_item_data['expertise'] = $expertise_item->expertise;
 
                 $response[] = $expertise_item_data;
@@ -95,21 +97,24 @@ class ExpertiseController extends Controller
             throw new Exception('User not found', 1);
         }
 
-        $expertise = ProjectExpertise::where('expert_id', null)->get();
-        $userSkills = [];
-
-        if (!is_null($user->expert) && !is_null($user->expert->skills)) {
-            $userSkills = $user->expert->skills->lists('id')->toArray();
-        }
-
         try{
-            foreach($expertise as $expertise_item)
-            {
-                $matchingSkills = array_intersect($expertise_item->expertise->skills->lists('id')->toArray(), $userSkills);
+            $expertise = ProjectExpertise::where('expert_id', null)->get();
+            $userSkills = [];
+
+            if (!is_null($user->expert) && !is_null($user->expert->skills)) {
+                $userSkills = $user->expert->skills->lists('id')->toArray();
+            }
+
+            foreach($expertise as $expertise_item) {
+                $matchingSkills = [];
+
+                if (!is_null($expertise_item->expertise)) {
+                    $matchingSkills = array_intersect($expertise_item->expertise->skills->lists('id')->toArray(), $userSkills);
+                }
 
                 if (sizeof($matchingSkills) > 0) {
                     $expertise_item_data = $expertise_item->getAttributes();
-                    $expertise_item_data['project'] = $expertise_item->project;
+                    $expertise_item_data['project'] = $expertise_item->project()->select('id', 'name', 'thumbnail')->first();
                     $expertise_item_data['expertise'] = $expertise_item->expertise;
                     $expertise_item_data['matching_skills'] = $matchingSkills;
 
@@ -119,7 +124,7 @@ class ExpertiseController extends Controller
             }
         }catch(Exception $e){
             $statusCode = 400;
-            $response = $e;
+            $response = $e->getMessage();
         }
 
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);

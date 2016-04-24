@@ -10,8 +10,7 @@
     <link rel="stylesheet" href="{!! asset('css/app/chosen.min.css') !!}">
     <link rel="stylesheet" href="{!! asset('css/app/app.css') !!}">
     <link rel="stylesheet" href="{!! asset('css/app/vendor.css') !!}">
-    <link rel="stylesheet" type="text/css" href="http://cloud.github.com/downloads/lafeber/world-flags-sprite/flags16.css" />
-    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha256-3dkvEK0WLHRJ7/Csr0BZjAWxERc5WH7bdeUya2aXxdU= sha512-+L4yy6FRcDGbXJ9mPG8MT/3UCDzwR9gPeyFNMCtInsol++5m3bk2bXWKdZjvybmohrAsn3Ua5x8gfLnbE1YkOg==" crossorigin="anonymous"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="http://cloud.github.com/downloads/lafeber/world-flags-sprite/flags16.css" /> -->
 
     <meta name="renderer" content="webkit">
     <meta name="keywords" content="">
@@ -19,15 +18,15 @@
     <meta name="robots" content="none">
 </head>
 
-<!-- <body class="ng-class:[$state.current.data.bodyClass]" ng-class="{'navigation-is-open': isNavShown === 1, 'navigation-half-open': isNavShown === 0.5}" flow-prevent-drop> -->
 <body class="" ng-class="{'navigation-is-open': isNavShown === 1, 'navigation-half-open': isNavShown === 0.5, 'homepage': $state.current.data.bodyClass === 'homepage'}" flow-prevent-drop>
-    <header ui-view="header"></header>
-    <div class="navigation" ui-view="navigation"></div>
-
     <fd-loader class="center fixed-center" ng-class="{'opacity_hide': !appLoading}"></fd-loader>
-    <main>
-        <section class="body-content">
-            <div class="opacity-hideable opacity_hide" ng-class="{'opacity_hide': appLoading}">
+
+    <div class="opacity-hideable opacity_hide" ng-class="{'opacity_hide': appLoading}">
+        <header ui-view="header"></header>
+        <div class="navigation" ui-view="navigation"></div>
+
+        <main>
+            <section class="body-content">
                 <!-- <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
@@ -35,7 +34,8 @@
                         </div>
                     </div>
                 </div> -->
-                <div class="notification-section container marginB30 ng-hide" ng-class="{'collapsed': notificationCollapse}" ng-show="authenticated && user.registered === 1" ng-if="authenticated && user.registered === 1">
+                <div class="notification-section container marginB30 ng-hide" ng-class="{'collapsed': notificationCollapse}"
+                    ng-show="authenticated && user.registered === 1" ng-if="authenticated && user.registered === 1">
                     <div class="row">
                         <div class="col-md-7 col-sm-12">
                             <span class="notification-section-label">Notifications</span>
@@ -56,13 +56,11 @@
                 <div class="container position-relative body-content-container">
                     <div ui-view="main" class="main-content"></div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <div class="opacity-hideable opacity_hide" ng-class="{'opacity_hide': appLoading}">
             <footer ui-view="footer"></footer>
-        </div>
-    </main>
+        </main>
+    </div>
 
     <script src="{!! asset('js/app/jquery.min.js') !!}"></script>
     <script src="{!! asset('js/app/chosen.jquery.min.js') !!}"></script>

@@ -121,6 +121,13 @@
 }
 
 .expertise-list {
+    min-height: 70px;
+    position: relative;
+
+    .no-have{
+        margin-left: 0;
+    }
+
     .expertise {
         .expertise_col {
             @include make-sm-column(3);
@@ -348,5 +355,26 @@
                 color: #000;
             }
         }
+    }
+}
+.steps-content{
+    min-height: 350px;
+
+    .center-top{
+        .fd-loader{
+            top: 50px;
+            @include translate(-50%, 0);
+        }
+    }
+}
+.buttons-shortlist{
+    width: 100%;
+    border-bottom: 1px solid #CCC;
+    padding: 10px 0;
+    float: left;
+
+    .btn{
+        width: 50%;
+        float: left;
     }
 }

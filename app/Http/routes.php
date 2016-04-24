@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['domain' => 'desk.fundator.co'], function() {
+Route::group(['domain' => 'desk.fundator.{tld}'], function() {
     Route::get('/', [
         'as' => 'fundator.desk',
         'uses' => 'AppController@serveApp',
@@ -28,10 +28,10 @@ Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
+
+
 $api = app('Dingo\Api\Routing\Router');
-
-$api->version('v1', function ($api) {
-
+$api->version('v1', ['prefix' => 'api/v1'], function ($api) {
     /*
      * Authentication
      */
@@ -85,6 +85,7 @@ $api->version('v1', function ($api) {
 
     $api->get('project-expertise/{id}', 'Fundator\Http\Controllers\ProjectController@getExpertise');
     $api->post('project-expertise/{id}/bid', 'Fundator\Http\Controllers\ProjectController@storeExpertiseBid');
+    $api->put('project-expertise/{projectExpertiseId}/bid/{bidId}', 'Fundator\Http\Controllers\ProjectController@selectProjectExpertiseBid');
 
     /*
      * Entries

@@ -1,7 +1,9 @@
 <div class="row">
     <div class="col-sm-12">
+        <fd-loader class="center fixed-center" ng-class="{'opacity_hide': !sectionLoading}"></fd-loader>
+
         <!-- Tabs here-->
-        <uib-tabset class="tabsection">
+        <uib-tabset class="tabsection" ng-class="{'opacity_hide': sectionLoading}">
             <uib-tab heading="Ongoing Contests">
                 <ul class="tabProjectList">
                     <li ng-repeat="contest in contests" ui-sref="app.contest({contestId: contest.id, contestName: contest.name})">

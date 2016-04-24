@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.services').factory('FdNotifications', function($rootScope, $q, $interval, $http, $state) {
+    angular.module('fundator.services').factory('FdNotifications', function($rootScope, $q, $interval, $http, $state, API) {
         var globalNotifications = {
             notifications: [],
             unread: 0
@@ -23,7 +23,7 @@
                     if (typeof(notifications) !== 'undefined') {
                         globalNotifications = notifications;
                     }else{
-                        $http.get('/api/notifications/' + user.id).then(function(result){
+                        $http.get(API.path('notifications/') + user.id).then(function(result){
                             globalNotifications = result.data;
                         });
                     }
@@ -45,12 +45,12 @@
                 return getLatestNotificationsDeferred.promise;
             },
             readNotification: function(notification) {
-                return $http.post('/api/notifications/' + notificationId + '/read').then(function(result){
+                return $http.post(API.path('notifications/') + notificationId + '/read').then(function(result){
                 	notification.read = 1;
                 });
             },
             readAllNotifications: function() {
-                return $http.post('/api/notifications/user/' + $rootScope.user.id + '/read').then(function(result){
+                return $http.post(API.path('notifications/user/') + $rootScope.user.id + '/read').then(function(result){
                     globalNotifications.unread = 0;
                 });
             },

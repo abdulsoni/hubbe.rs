@@ -21,12 +21,12 @@
         return new Blob([ia], {type:mimeString});
     }
 
-    angular.module('fundator.controllers').controller('NavigationCtrl', function($rootScope, $scope, $state, $auth, $log, $timeout, $filter, $http, $resource, $uibModal, FileUploader, CountryCodes) {
+    angular.module('fundator.controllers').controller('NavigationCtrl', function($rootScope, $scope, $state, $auth, $log, $timeout, $filter, $http, $resource, $uibModal, FileUploader, CountryCodes, API) {
 
-        $scope.allSkills = $resource('api/skills').query();
+        $scope.allSkills = $resource(API.path('skills')).query();
 
         $scope.uploader = new FileUploader({
-            url: '/api/files',
+            url: API.path('files'),
             removeAfterUpload: true
         });
 
@@ -68,7 +68,7 @@
                 locale: 'en'
             };
 
-            $http.post('/api/verification/start', verificationData).then(function(result){
+            $http.post(API.path('/verification/start'), verificationData).then(function(result){
                 console.log(result.data);
 
                 if (result.data.success) {
@@ -95,7 +95,7 @@
                 verification_code: parseInt($scope.data.twoFA.verificationCode)
             };
 
-            $http.post('/api/verification/check', verificationData).then(function(result){
+            $http.post(API.path('/verification/check'), verificationData).then(function(result){
                 console.log('verification data');
                 console.log(result.data);
 
@@ -134,7 +134,7 @@
                 break;
             }
 
-            $http.post('/api/authenticate/' + method, {}).then(function(result){
+            $http.post(API.path('authenticate/') + method, {}).then(function(result){
                 console.log(result);
                 $rootScope.user[provider] = null;
             }).finally(function(){
@@ -150,7 +150,7 @@
 
             $scope.data.userSettingsSave = 0;
 
-            $http.put('/api/users/' + $rootScope.user.id, userData).then(function(result){
+            $http.put(API.path('users/') + $rootScope.user.id, userData).then(function(result){
                 if (result.data === 'Updated') {
 
                     $scope.data.userSettingsSave = 1;
@@ -219,7 +219,7 @@
 
         // Populate side navigation
         $scope.populateSideNavigation = function(){
-            $http.get('/api/users/sideNavigationData').then(function(result){
+            $http.get(API.path('users/sideNavigationData')).then(function(result){
                 if (typeof(result.data.error) === 'undefined') {
                     $scope.sideNavigationData = result.data;
                 }

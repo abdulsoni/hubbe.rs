@@ -4,7 +4,7 @@
 
     angular.module('fundator.directives')
 
-    .directive('fdMessenger', function($rootScope, $resource, $timeout) {
+    .directive('fdMessenger', function($rootScope, $resource, $timeout, API) {
         return {
             template: '<div class="chatbox" ng-if="threadId">' +
                 '<div class="chatRow" ng-repeat="message in messages">' +

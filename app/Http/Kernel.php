@@ -17,6 +17,7 @@ class Kernel extends HttpKernel
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        \Fundator\Http\Middleware\Cors::class,
         \Fundator\Http\Middleware\VerifyCsrfToken::class,
     ];
 
@@ -27,6 +28,6 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'jwt.auth' => 'Tymon\JWTAuth\Middleware\GetUserFromToken',
-        'jwt.refresh' => 'Tymon\JWTAuth\Middleware\RefreshToken',
+        'jwt.refresh' => 'Tymon\JWTAuth\Middleware\RefreshToken'
     ];
 }

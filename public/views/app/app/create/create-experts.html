@@ -1,8 +1,12 @@
 <div class="row">
     <div class="col-xs-12">
-        <ul class="list-inline-group expertise-group group2">
-            <li class="separator-nav"><a class="isotopeNav2 is-checked" href="javascript:void(0)" data-filter="*">EXPERT UNDER SELECTION <span class="circle">3</span></a></li>
-            <li><a class="isotopeNav2" href="javascript:void(0)" data-filter=".expertise">EXPERT SELECTED <span class="circle">0</span></a></li>
+        <ul class="sort-filter" ng-if="expertiseList.length > 0">
+            <li class="">
+                <a>EXPERT UNDER SELECTION <span class="badge">{{expertiseList.length}}</span></a>
+            </li>
+            <li>
+                <a>EXPERT SELECTED <span class="badge">0</span></a>
+            </li>
         </ul>
     </div>
 </div>
@@ -25,20 +29,34 @@
                     <h4>Lead time: <br> <small>{{expertise.lead_time}}</small></h4>
                     <h4>Expected starting date: <br> <small>{{expertise.start_date | amDateFormat:'MMM Do YYYY' }}</small></h4>
                 </div>
-                <div class="expertise_col expertise_col-shortlist">
+                <div class="expertise_col expertise_col-shortlist" ng-if="expertise.selected_bid === null">
                     <h4>Shortlisted Experts: {{expertise.shortlist === undefined ? 0 : expertise.shortlist.length }}</h4>
                     <div class="clearfix" ng-repeat="shortlistBid in expertise.shortlist">
                     <div class="profilePick smallPick pull-left marginR5"><img ng-src="{{shortlistBid.expert.thumbnail_url}}"></div>
-                    	<h3 class="pull-left marginT10">{{shortlistBid.expert.name}} {{shortlistBid.expert.last_name}}
-                    	<br>Bid: <small><a>{{shortlistBid.bid_amount | currency}}</a></small> </h3>
+                    	<h3 class="pull-left margin0">{{shortlistBid.expert.name}} {{shortlistBid.expert.last_name}}
+                    	<br><small>Bid: <a>{{shortlistBid.bid_amount | currency}}</a></small> </h3>
+                        <div class="buttons-shortlist clearfix">
+                            <button class="btn btn-mini btn-info btn-sm" ng-click="selectExpert(expertise, shortlistBid)">Select</button>
+                            <button class="btn btn-mini btn-danger btn-sm" ng-click="removeShortlistExpert(expertise, shortlistBid)">Hide</button>
+                        </div>
                     </div>
                 </div>
                 <div class="expertise_col expertise_col-stat">
                     <h4>Average Bidding: &nbsp; <small>{{1000 | currency}}</small></h4>
                     <h4>Number of Bids: &nbsp; <small>{{expertise.bids.length}}</small></h4>
+                    <div class="selected-expert" ng-if="expertise.selected_bid !== null">
+                        <h3>Selected Expert</h3>
+                        <div class="clearfix">
+                            <div class="profilePick largeimg pull-left marginR10"><img ng-src="{{expertise.selected_bid.expert.thumbnail_url}}"></div>
+                            <h3 class="marginT10">
+                                {{expertise.selected_bid.expert.name}} {{expertise.selected_bid.expert.last_name}}
+                                <br> 5.0<br> <small>Bid: {{expertise.selected_bid.bid_amount | currency}}</small>
+                            </h3>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="well padding0 experts-bid-list" ng-if="expertise.bids.length > 0">
+            <div class="well padding0 experts-bid-list" ng-if="expertise.bids.length > 0 && expertise.selected_bid === null">
                 <div class="row">
                     <div class="col-lg-7 isotopeSubDivid">
                         <div class="grid3">
@@ -50,7 +68,6 @@
                                     <div class="col-md-8 col-sm-8">
                                         <div class="row paddingTB18">
                                             <div class="col-md-5 col-sm-5 border_right">
-                                                <!-- <h3 class="margin0">{{bid.expert.name}} {{bid.expert.last_name}} <br>Mechanical <br>English</h3> -->
                                                 <h3 class="marginT0 marginB15">{{bid.expert.name}} {{bid.expert.last_name}}</h3>
                                                 <h4 class="marginB15"><strong>Bid: </strong>{{bid.bid_amount | currency}}</h4>
                                             </div>
@@ -60,7 +77,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4 col-xs-4"><a class="btn btn-info marginT10 ">Select</a></div>
+                                            <div class="col-md-4 col-xs-4"><a class="btn btn-info marginT10" ng-click="selectExpert(expertise, bid)">Select</a></div>
                                             <div class="col-md-4 col-xs-4"><a class="btn btn-info tbn-orrange marginT10 marginL10 marginR10">Hide</a></div>
                                             <div class="col-md-4 col-xs-4">
                                                 <div class="text-right paddingR15"><a class="link-text-underline" ng-click="shortlistExpert(expertise, bid)">Shortlist</a></div>
@@ -79,4 +96,8 @@
             </div>
         </div>
     </div>
+
+    <button class="btn btn-info center-block marginT30" ng-click="confirmExperts()" ladda="confirmingExperts">
+        Confirm Experts
+    </button>
 </div>

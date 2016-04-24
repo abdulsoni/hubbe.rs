@@ -31,6 +31,7 @@ class CreateProjectsTable extends Migration
 
             // Extra Attributes
             $table->boolean('display');
+            $table->float('state');
             $table->timestamps();
         });
     }

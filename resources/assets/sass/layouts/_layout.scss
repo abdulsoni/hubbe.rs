@@ -1723,13 +1723,42 @@ ul.list-inline-group {
         @include transform-origin(right top);
     }
     .panel-default > .panel-heading {
+        opacity: 0.5;
+        pointer-events: none;
         color: $white-color;
-        background-color: $secondary-color;
+        background-color: $fd-blue;
         @include rounded-corners(0px);
         @include transition(all .5s ease-out);
+
         &:hover,
         &:focus {
-            background-color: #89b942;
+            background-color: darken($fd-blue, 10%);
+        }
+    }
+    .panel-default.panel-open > .panel-heading {
+        opacity: 1;
+    }
+    .panel-default.done.panel-open > .panel-heading {
+        background-color: darken($secondary-color, 10%);
+    }
+    .panel-default.ongoing > .panel-heading {
+        opacity: 1;
+        background-color: $fd-blue;
+        pointer-events: all;
+        &:hover,
+        &:focus {
+            background-color: darken($fd-blue, 10%);
+        }
+    }
+    .panel-default.done > .panel-heading {
+        background-color: $secondary-color;
+        opacity: 1;
+        pointer-events: all;
+        border-top: 1px solid darken($secondary-color, 5%);
+
+        &:hover,
+        &:focus {
+            background-color: darken($secondary-color, 10%);
         }
     }
     .panel-heading {

@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.routes').run(function($rootScope, $state, $stateParams, $auth, $timeout, $http, $urlRouter, $filter, $cookies, FdNotifications, FdScroller) {
+    angular.module('fundator.routes').run(function($rootScope, $state, $stateParams, $auth, $timeout, $http, $urlRouter, $filter, $cookies, FdNotifications, FdScroller, API) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
@@ -45,7 +45,7 @@
             if ($auth.isAuthenticated()) {
                 $rootScope.authenticated = true;
 
-                $http.get('/api/user?token=' + $auth.getToken()).then(function(result) {
+                $http.get(API.path('user?token=') + $auth.getToken()).then(function(result) {
                     if (typeof(result.error) === 'undefined') {
                         $rootScope.user = result.data;
 
@@ -95,9 +95,6 @@
         });
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-            console.log('Is Authenticated');
-            console.log($auth.isAuthenticated());
-            console.log($rootScope.initialRoleAssignment);
 
             if ($auth.isAuthenticated()) {
                 if (!$rootScope.initialRoleAssignment) {
@@ -124,32 +121,6 @@
                 }
 
                 return;
-
-                // if (fromState.name.indexOf('auth') === -1 && toState.name.indexOf('auth') !== -1) {
-                //     return;
-                // } else if (fromState.name.indexOf('auth') === -1) {
-                //     $timeout(function() {
-                //         $rootScope.activeState = toState;
-                //         $rootScope.activeStateParams = toParams;
-                //         event.preventDefault();
-                //         $state.go('app.auth.login', {}, {reload: true});
-                //     });
-                //     return;
-                // } else if (toState.name.indexOf('auth') === -1 && fromState.name.indexOf('auth') !== -1) {
-                //     FdScroller.toTop();
-                //     event.preventDefault();
-                //     return;
-                // } else if (toState.name.indexOf('auth') === -1) {
-                //     $timeout(function() {
-                //         $rootScope.activeState = toState;
-                //         $rootScope.activeStateParams = toParams;
-                //         event.preventDefault();
-                //         $state.go('app.auth.login', {}, {reload: true});
-                //         return;
-                //     });
-                // } else {
-                //     return;
-                // }
             }
         });
 
@@ -231,9 +202,9 @@
             var model = null;
 
             switch(role){
-                case 'creator': model = '/api/creators/' + roleId
+                case 'creator': model = API.path('creators/') + roleId
                 break;
-                case 'investor': model = '/api/investors/' + roleId
+                case 'investor': model = API.path('investors/') + roleId
                 break;
             }
 

@@ -44,7 +44,7 @@ class ProjectExpertise extends Model
      *
      * @var array
      */
-    protected $appends = ['project', 'expertise', 'expertise_category', 'expertise_subcategory', 'expertise', 'confirmation', 'bids'];
+    protected $appends = ['expertise_category', 'expertise_subcategory', 'confirmation', 'bids']; //'project', 'expertise',
 
     /**
      * Project Attachment
@@ -77,6 +77,16 @@ class ProjectExpertise extends Model
     }
 
     /**
+     * Attachment to the selected bid
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function selectedBid()
+    {
+        return $this->belongsTo('Fundator\ProjectExpertiseBid', 'selected_bid_id');
+    }
+
+    /**
      * Confirmation
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
@@ -86,7 +96,7 @@ class ProjectExpertise extends Model
         return $this->morphMany('Fundator\Confirm', 'confirmable');
     }
 
-    public function getProjectAttribute()
+    public function getProject()
     {
         $project = Project::find($this->project_id);
         $project_data = null;
@@ -104,7 +114,7 @@ class ProjectExpertise extends Model
         return $project_data;
     }
 
-    public function getExpertiseAttribute()
+    public function getExpertise()
     {
         $expertise = Expertise::find($this->expertise_id);
 
@@ -115,14 +125,23 @@ class ProjectExpertise extends Model
     {
         $expertise = Expertise::find($this->expertise_id);
 
-        return $expertise->expertiseCategory;
+        if (!is_null($expertise) && !is_null($expertise->expertiseCategory)) {
+            return $expertise->expertiseCategory;
+        }else{
+            return null;
+        }
+
     }
 
     public function getExpertiseCategoryAttribute()
     {
         $expertise = Expertise::find($this->expertise_id);
 
-        return $expertise->expertiseCategory->parent;
+        if (!is_null($expertise) && !is_null($expertise->expertiseCategory) && !is_null($expertise->expertiseCategory->parent)) {
+            return $expertise->expertiseCategory->parent;
+        }else{
+            return null;
+        }
     }
 
     public function getConfirmationAttribute()

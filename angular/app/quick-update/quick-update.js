@@ -1,14 +1,14 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.controllers').controller('QuickUpdateCtrl', function($rootScope, $scope, $state, $stateParams, $resource, FdNotifications) {
+    angular.module('fundator.controllers').controller('QuickUpdateCtrl', function($rootScope, $scope, $state, $stateParams, $resource, FdNotifications, API) {
         console.log('quickupdate');
 
         $scope.data = {
         	editMode: false
         };
 
-        var Investor = $resource('/api/investors/:investorId', {
+        var Investor = $resource(API.path('investors/:investorId'), {
             investorId: '@id'
         }, {
             update: {

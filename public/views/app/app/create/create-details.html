@@ -1,5 +1,5 @@
 <div class="well">
-    <form class="project-form" ng-if="project.state === 0 || project.state > 1" name="projectDetails">
+    <form class="project-form" ng-if="project.state === 0 || project.state > 0.9" name="projectDetails" ng-class="{'untouchable': projectDetails.state > 0.9}">
         <div class="project-form-row">
             <h4><strong>Your great idea name</strong></h4>
             <p>
@@ -46,7 +46,7 @@
             <p>
                 <dfn>Here you can make some assumptions about what would look like a good market price for your target audience.</dfn>
             </p>
-            <input type="text" placeholder="Price" name="price" ng-model="details.price" ng-blur="saveProgress()" required>
+            <input type="text" placeholder="Price" name="price" ng-model="details.price" ng-blur="saveProgress()" required numbers-only>
             <div class="VProgress-aligment" ng-class="{'completed': projectDetails.price.$valid }">
                 <div class="progress-vertical">
                     <div class="progress-bar-vertical progress-bar-info"></div>
@@ -135,12 +135,12 @@
                 </div>
             </div>
         </div>
-        <div class="project-form-row text-center" ng-if="projectDetails.state = 1">
+        <div class="project-form-row text-center" ng-if="projectDetails.state < 1">
             <button class="btn btn-info" type="submit" ng-disabled="projectDetails.$invalid" ng-click="submitDraft()">Submit</button>
         </div>
     </form>
 
-    <div class="project-inreview" ng-if="project.state === 1">
+    <div class="project-inreview" ng-if="project.state === 0.9">
         <span class="icon icon-clock"></span>
 
         <p>Your project has been submitted for review and our team will post the result in 2 working days.</p>

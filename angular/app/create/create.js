@@ -1,19 +1,95 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.controllers').controller('CreateCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $timeout, $filter, FdScroller) {
+    angular.module('fundator.controllers').controller('CreateCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $timeout, $filter, FdScroller, API) {
         console.log('Create Started');
-        // $rootScope.$broadcast('startLoading');
+        $rootScope.sectionLoading = true;
+        $rootScope.innerSectionLoading = false;
 
         // Available Views : List, Create
         $scope.view = 'list';
         $scope.data = {
             newProjectLoading: false
         };
-
         $scope.project = null;
 
-        var Project = $resource('/api/projects/:projectId', {
+        $scope.steps = [
+            {
+                title: 'Your Project',
+                progress: 0,
+                isOpen: false,
+                ongoing: false,
+                state: 'app.create.details',
+                body: '<h3>Great!</h3><p><dfn>You have been completed a very important step, we will now be able to communicate efficiently.</dfn></p><p><dfn>Your great idea will be under the TOYS & AMUSEMENTS” category.</dfn></p><p><dfn>In order to make your project come true we will go through 4 steps.</dfn></p><p><dfn>Beforehand, make sure to read all tutorials (with link) and make sure you understand the concept of Fundator.</dfn></p><p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>'
+            },
+            {
+                title: 'Meet your Super Expert',
+                progress: 0,
+                isOpen: false,
+                ongoing: false,
+                state: 'app.create.superexpert',
+                body: '<h3>Expertise you need</h3><p><dfn>You have been completed a very important step, we will now be able to communicate efficiently.</dfn></p><p><dfn>Your great idea will be under the TOYS & AMUSEMENTS” category.</dfn></p><p><dfn>In order to make your project come true we will go through 4 steps.</dfn></p><p><dfn>Beforehand, make sure to read all tutorials (with link) and make sure you understand the concept of Fundator.</dfn></p><p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>'
+            },
+            {
+                title: 'Expertise you need',
+                progress: 0,
+                isOpen: false,
+                ongoing: false,
+                state: 'app.create.expertise',
+                body: '<h3>Expertise you need</h3><p><dfn>You have been completed a very important step, we will now be able to communicate efficiently.</dfn></p><p><dfn>Your great idea will be under the TOYS & AMUSEMENTS” category.</dfn></p><p><dfn>In order to make your project come true we will go through 4 steps.</dfn></p><p><dfn>Beforehand, make sure to read all tutorials (with link) and make sure you understand the concept of Fundator.</dfn></p><p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>'
+            },
+            {
+                title: 'Experts on your team',
+                progress: 0,
+                isOpen: false,
+                ongoing: false,
+                state: 'app.create.experts',
+                body: '<h3>Experts on your team</h3><p><dfn>You have been completed a very important step, we will now be able to communicate efficiently.</dfn></p><p><dfn>Your great idea will be under the TOYS & AMUSEMENTS” category.</dfn></p><p><dfn>In order to make your project come true we will go through 4 steps.</dfn></p><p><dfn>Beforehand, make sure to read all tutorials (with link) and make sure you understand the concept of Fundator.</dfn></p><p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>'
+            },
+            {
+                title: 'Validate the budget',
+                progress: 0,
+                isOpen: false,
+                ongoing: false,
+                state: 'app.create.budget',
+                body: '<h3>Validate the budget</h3><p><dfn>You have been completed a very important step, we will now be able to communicate efficiently.</dfn></p><p><dfn>Your great idea will be under the TOYS & AMUSEMENTS” category.</dfn></p><p><dfn>In order to make your project come true we will go through 4 steps.</dfn></p><p><dfn>Beforehand, make sure to read all tutorials (with link) and make sure you understand the concept of Fundator.</dfn></p><p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>'
+            },
+            {
+                title: 'Your investors',
+                progress: 0,
+                isOpen: false,
+                ongoing: false,
+                state: 'app.create.investors',
+                body: '<h3>Your Investor</h3><p><dfn>You have been completed a very important step, we will now be able to communicate efficiently.</dfn></p><p><dfn>Your great idea will be under the TOYS & AMUSEMENTS” category.</dfn></p><p><dfn>In order to make your project come true we will go through 4 steps.</dfn></p><p><dfn>Beforehand, make sure to read all tutorials (with link) and make sure you understand the concept of Fundator.</dfn></p><p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>'
+            }
+        ];
+
+        $scope.$watch('steps', function(steps){
+            angular.forEach(steps, function(step){
+                if (step.isOpen) {
+                    $state.go(step.state);
+                    FdScroller.toSection('#projectSteps');
+                }
+            });
+        }, true);
+
+        $scope.$watch('project', function(project){
+            if (typeof(project) === 'undefined' || project === null) return;
+            console.log('project.state');
+            console.log(project.state);
+            var flooredState = Math.floor($scope.project.state);
+            var remainingState = $scope.project.state - flooredState;
+
+            for (var i = 0; i < flooredState; i++) {
+                $scope.steps[i].progress = 1;
+            }
+
+            $scope.steps[flooredState].ongoing = true;
+            $scope.steps[flooredState].isOpen = true;
+            $scope.steps[flooredState].progress = remainingState;
+        }, true);
+
+        var Project = $resource(API.path('projects/:projectId'), {
             projectId: '@id'
         }, {
             update: {
@@ -37,40 +113,21 @@
                 Project.query().$promise.then(function(result) {
                     $scope.allProjects = result;
                 }).finally(function() {
-                    $rootScope.$broadcast('stopLoading');
+                    $rootScope.sectionLoading = false;
                 });
             } else if (angular.isNumber(projectId) && isFinite(projectId)) {
                 Project.get({ projectId: projectId }).$promise.then(function(result) {
                     $scope.project = result;
-
-                    switch (result.state) {
-                        case 0:
-                            $state.go('app.create.details', { projectId: projectId });
-                            break;
-                        case 1:
-                            $state.go('app.create.details', { projectId: projectId });
-                            break;
-                        case 2:
-                            $state.go('app.create.superexpert', { projectId: projectId });
-                            break;
-                        case 3:
-                            $state.go('app.create.expertise', { projectId: projectId });
-                            break;
-                        case 4:
-                            $state.go('app.create.experts', { projectId: projectId });
-                            break;
-                        default:
-                            $state.go('app.create.details', { projectId: projectId });
-                    }
                 }).finally(function() {
-                    $rootScope.$broadcast('stopLoading');
+                    $rootScope.sectionLoading = false;
+                    $rootScope.innerSectionLoading = true;
                 });
             } else {
                 console.log('Make up your mind you peice of shit');
             }
         } else {
             $timeout(function() {
-                $rootScope.$broadcast('stopLoading');
+                $rootScope.sectionLoading = false;
                 $state.go('app.home');
             }, 2000);
         }
@@ -89,9 +146,7 @@
         }
 
         $scope.saveProgress = function() {
-            console.log('Saving progress now !');
             var project = angular.copy($scope.project);
-            console.log(project);
 
             if (typeof($scope.project) !== 'undefined') {
                 Project.update({
@@ -108,10 +163,11 @@
     });
 
     angular.module('fundator.controllers').controller('CreateDetailsCtrl', function($rootScope, $scope, $state, $stateParams, $resource, FdScroller) {
-        console.log('CreateDetailsCtrl Started');
-
         $scope.data = {
-            featuredImage: {}
+            featuredImage: {},
+            datepicker: {
+                isOpen: false
+            }
         };
 
         $scope.details = {
@@ -121,8 +177,8 @@
 
         $scope.$watch('project', function(project) {
             if (project !== null) {
-                $rootScope.$broadcast('stopLoading');
                 $scope.details = project;
+                $rootScope.innerSectionLoading = false;
             } else {
                 console.log('project still loading');
             }
@@ -130,14 +186,10 @@
 
         $scope.$on('flow::fileAdded', function(event, $flow, flowFile) {
             event.preventDefault();
-            console.log('file added');
         });
 
         $scope.featuredImageSuccess = function($file, $message) {
             var message = JSON.parse($message);
-            console.log($file);
-
-            console.log('Adding files : ' + message.file.id);
             $scope.project.thumbnail_id = message.file.id;
         }
 
@@ -151,7 +203,7 @@
         }
 
         $scope.submitDraft = function() {
-            $scope.project.state = 1;
+            $scope.project.state = 0.9;
             $scope.saveProgress();
 
             FdScroller.toSection('.steps-content');
@@ -160,15 +212,18 @@
         FdScroller.toSection('#projectSteps');
     });
 
-    angular.module('fundator.controllers').controller('CreateSECtrl', function($rootScope, $scope, $state, $http, $timeout, FdScroller) {
+    angular.module('fundator.controllers').controller('CreateSECtrl', function($rootScope, $scope, $state, $http, $timeout, FdScroller, API) {
         console.log('CreateSECtrl Started');
 
-        $http.get('/api/super-experts').then(function(result) {
+        $http.get(API.path('super-experts')).then(function(result) {
             $scope.superExperts = result.data;
+        }).finally(function(){
+            $rootScope.innerSectionLoading = false;
         });
 
         $scope.chooseSuperExpert = function(superExpert) {
             $scope.project.super_expert_id = superExpert.id;
+            $scope.project.state = 2;
             $scope.saveProgress();
 
             FdScroller.toSection('.steps-content');
@@ -179,22 +234,23 @@
         }
     });
 
-    angular.module('fundator.controllers').controller('CreateExpertiseCtrl', function($rootScope, $scope, $state, $resource, $http, $timeout, FdScroller) {
+    angular.module('fundator.controllers').controller('CreateExpertiseCtrl', function($rootScope, $scope, $state, $resource, $http, $timeout, FdScroller, API) {
         console.log('CreateExpertiseCtrl Started');
 
         $scope.inputtedExpertiseList = [];
         $scope.expertiseList = [];
+        $scope.inputtedEpxertise = null;
+        $scope.savingExpertise = false;
 
-        var ProjectExpertise = $resource('/api/projects/:projectId/expertise', {
+        var ProjectExpertise = $resource(API.path('/projects/:projectId/expertise'), {
             projectId: '@id'
         });
-
 
         $scope.fetchExpertise = function(){
             ProjectExpertise.query({projectId: $scope.project.id}).$promise.then(function(result) {
                 $scope.expertiseList = result;
             }).finally(function() {
-                $rootScope.$broadcast('stopLoading');
+                $rootScope.innerSectionLoading = false;
             });
         }
 
@@ -204,6 +260,8 @@
         });
 
         $scope.saveExpertise = function(expertise){
+            $scope.savingExpertise = true;
+
             var projectExpertiseData = {
                 'expertise_id': expertise.selectedExpertise.id,
                 'task': expertise.mainTask,
@@ -212,34 +270,26 @@
                 'start_date': expertise.startDate
             };
 
-            $http.post('/api/projects/' + $scope.project.id + '/expertise', projectExpertiseData)
-            .then(function(result) {
+            $http.post(API.path('/projects/') + $scope.project.id + '/expertise', projectExpertiseData).then(function(result) {
                 console.log(result.data);
                 $scope.expertiseList.push(result.data);
+            }).finally(function(){
+                $scope.savingExpertise = false;
             });
 
-            // $scope.expertiseList.push({
-            //     expertiseCategory: expertise.selectedExpertiseCategory.name,
-            //     expertiseSubCategory: expertise.selectedExpertiseSubCategory.name,
-            //     expertise: expertise.selectedExpertise.name,
-            //     mainTask: expertise.mainTask,
-            //     budget: expertise.budget,
-            //     leadTime: expertise.leadTime,
-            //     startDate: expertise.startDate,
-            // });
-
             $scope.inputtedExpertiseList = [];
+            $scope.inputtedEpxertise = null;
         }
 
         $scope.saveExpertiseSelection = function(){
-            $scope.project.state = 4;
             $scope.saveProgress();
 
             FdScroller.toSection('.steps-content');
 
             $timeout(function() {
-                $state.go('app.create.expertise');
-            }, 300);
+                // $state.go('app.create.expertise');
+                $scope.project.state = 3;
+            }, 500);
 
         }
 
@@ -267,7 +317,9 @@
                     startDate: '',
                     step: 1,
                     loading: false
-                })
+                });
+
+                $scope.inputtedEpxertise = $scope.inputtedExpertiseList[$scope.inputtedExpertiseList.length - 1];
             };
 
             $scope.fetchExpertiseCategory($scope.inputtedExpertiseList.length - 1);
@@ -359,7 +411,7 @@
             $scope.inputtedExpertiseList[index].expertiseCategoryList = [];
             $scope.inputtedExpertiseList[index].loading = true;
 
-            $http.get('/api/expertise-category/0').then(function(result) {
+            $http.get(API.path('/expertise-category/0')).then(function(result) {
                 $scope.inputtedExpertiseList[index].expertiseCategoryList = result.data;
                 $scope.inputtedExpertiseList[index].loading = false;
             });
@@ -369,7 +421,7 @@
             $scope.expertiseSubCategoryList = [];
             $scope.inputtedExpertiseList[index].loading = true;
 
-            $http.get('/api/expertise-category/' + $scope.inputtedExpertiseList[index].selectedExpertiseCategory.id).then(function(result) {
+            $http.get(API.path('/expertise-category/') + $scope.inputtedExpertiseList[index].selectedExpertiseCategory.id).then(function(result) {
                 $scope.inputtedExpertiseList[index].expertiseSubCategoryList = result.data;
                 $scope.inputtedExpertiseList[index].loading = false;
             });
@@ -379,19 +431,19 @@
             $scope.inputtedExpertiseList[index].expertiseList = [];
             $scope.inputtedExpertiseList[index].loading = true;
 
-            $http.get('/api/expertise/category/' + $scope.inputtedExpertiseList[index].selectedExpertiseSubCategory.id).then(function(result) {
+            $http.get(API.path('/expertise/category/') + $scope.inputtedExpertiseList[index].selectedExpertiseSubCategory.id).then(function(result) {
                 $scope.inputtedExpertiseList[index].expertiseList = result.data;
                 $scope.inputtedExpertiseList[index].loading = false;
             }, 2000);
         }
     });
 
-    angular.module('fundator.controllers').controller('CreateExpertCtrl', function($rootScope, $scope, $state, $resource) {
+    angular.module('fundator.controllers').controller('CreateExpertCtrl', function($rootScope, $scope, $state, $resource, $http, API, SweetAlert, FdScroller) {
         console.log('CreateExpertCtrl Started');
 
         $scope.data = {};
 
-        var ProjectExpertise = $resource('/api/projects/:projectId/expertise', {
+        var ProjectExpertise = $resource(API.path('/projects/:projectId/expertise'), {
             projectId: '@id'
         });
 
@@ -399,7 +451,7 @@
             ProjectExpertise.query({projectId: $scope.project.id}).$promise.then(function(result) {
                 $scope.expertiseList = result;
             }).finally(function() {
-                $rootScope.$broadcast('stopLoading');
+                $rootScope.innerSectionLoading = false;
             });
         }
 
@@ -416,17 +468,67 @@
             expertise.shortlist.push(bid);
         }
 
+        $scope.removeShortlistExpert = function(expertise, bid){
+            var index = expertise.shortlist.indexOf(bid);
+
+            if (index === -1) {
+                expertise.shortlist.splice(index, 1);
+            }
+        }
+
         $scope.discussExpert = function(expertise, bid){
             $scope.data.selectedBid = bid
         }
 
+        $scope.selectExpert = function(expertise, bid) {
+            SweetAlert.swal({
+             title: 'Are you sure?',
+             text: 'You are selecting ' + bid.expert.name + ' to complete your task.',
+             type: 'warning',
+             showCancelButton: true,
+             confirmButtonColor: '#F8C486',confirmButtonText: 'Yes, go ahead!',
+             cancelButtonText: 'Cancel',
+             closeOnConfirm: false,
+             closeOnCancel: false},
+             function(isConfirm){
+                if (isConfirm) {
+                    $http.put(API.path('/project-expertise/' + expertise.id + '/bid/' + bid.id), {}).then(function(result){
+                        if (typeof(result.data.error) === 'undefined') {
+                            expertise.selected_bid = bid;
+                            SweetAlert.swal('Selected!', 'You have selected the expert.', 'success');
+                        }
+                    });
+                }
+          });
+        }
+
+        $scope.confirmExperts = function(){
+            $scope.project.state = 5;
+            $scope.saveProgress();
+
+            FdScroller.toSection('.steps-content');
+
+            $timeout(function() {
+                $state.go('app.create.expertise');
+            }, 300);
+        }
     });
 
     angular.module('fundator.controllers').controller('CreateBudgetCtrl', function($rootScope, $scope, $state, $resource) {
         console.log('CreateBudgetCtrl Started');
+
+        $scope.$watch('project', function(project){
+            if (typeof(project) === 'undefined' || project === null) return;
+            $rootScope.innerSectionLoading = false;
+        });
     });
 
     angular.module('fundator.controllers').controller('CreateInvestorsCtrl', function($rootScope, $scope, $state, $resource) {
         console.log('CreateInvestorsCtrl Started');
+
+        $scope.$watch('project', function(project){
+            if (typeof(project) === 'undefined' || project === null) return;
+            $rootScope.innerSectionLoading = false;
+        });
     });
 })();
