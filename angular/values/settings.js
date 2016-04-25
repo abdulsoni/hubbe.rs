@@ -2,7 +2,8 @@
     "use strict";
 
     angular.module('fundator.services').factory('API', function() {
-        var base = 'http://' + window.location.hostname + '/api/';
+    	var domainUrl = window.location.hostname.indexOf('fundator.co') !== -1 ? 'fundator.co' : 'fundator.app';
+        var base = 'http://' + domainUrl + '/api/';
         var path = '';
 
         return {
@@ -15,7 +16,8 @@
     });
 
     angular.module('fundator.services').provider('APIProvider', function() {
-        var base = 'http://' + window.location.hostname + '/api/';
+    	var domainUrl = window.location.hostname.indexOf('fundator.co') !== -1 ? 'fundator.co' : 'fundator.app';
+        var base = 'http://' + domainUrl + '/api/';
         var path = '';
 
         this.$get = function() {
