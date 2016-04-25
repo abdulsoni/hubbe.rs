@@ -14,6 +14,7 @@ use Illuminate\Http\Response;
 use Fundator\Http\Controllers\Controller;
 use Fundator\User;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -438,8 +439,6 @@ class AuthenticateController extends Controller
         ]);
         $profile = json_decode($profileResponse->getBody(), true);
 
-        Log::info($profile);
-
         // Step 3a. If user is already signed in then link accounts.
         if ($request->header('Authorization'))
         {
@@ -492,7 +491,7 @@ class AuthenticateController extends Controller
         $client = new GuzzleHttp\Client();
         $params = [
             'code' => $request->input('code'),
-            'client_id' => $request->input('clientId'),
+            'client_id' => Config::get('app.linkedin_id'),
             'client_secret' => Config::get('app.linkedin_secret'),
             'redirect_uri' => $request->input('redirectUri'),
             'grant_type' => 'authorization_code',
@@ -521,7 +520,8 @@ class AuthenticateController extends Controller
             {
                 $linkedinProfile->linkedin_token = $accessToken['access_token'];
                 $linkedinProfile->save();
-                return response()->json(['message' => 'There is already a LinkedIn account that belongs to you'], 409);
+                $user = User::find($linkedinProfile->user_id);
+                return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
             }
 
             $token = explode(' ', $request->header('Authorization'))[1];

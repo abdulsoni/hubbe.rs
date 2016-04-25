@@ -16,6 +16,14 @@ Route::group(['domain' => 'desk.fundator.{tld}'], function() {
         'as' => 'fundator.desk',
         'uses' => 'AppController@serveApp',
     ]);
+
+    // Provider
+    Route::post('api/v1/authenticate/facebook', 'Fundator\Http\Controllers\AuthenticateController@facebook');
+    Route::post('api/v1/authenticate/unlinkFacebook', 'Fundator\Http\Controllers\AuthenticateController@unlinkFacebook');
+    Route::post('api/v1/authenticate/google', 'Fundator\Http\Controllers\AuthenticateController@google');
+    Route::post('api/v1/authenticate/linkedin', 'Fundator\Http\Controllers\AuthenticateController@linkedin');
+    Route::get('api/v1/authenticate/linkedin', 'Fundator\Http\Controllers\AuthenticateController@linkedin');
+    Route::post('api/v1/authenticate/unlinkLinkedin', 'Fundator\Http\Controllers\AuthenticateController@unlinkLinkedin');
 });
 
 Route::get('/', 'AppController@serveHomepage');

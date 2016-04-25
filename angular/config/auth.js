@@ -4,29 +4,30 @@
     angular.module('fundator.config').config(function ($authProvider, APIProvider){
         // Satellizer configuration that specifies which API
         // route the JWT should be retrieved from
-        $authProvider.loginUrl = APIProvider.$get().path('authenticate');
+        var redirectUriPath = window.location.protocol + '//' + window.location.hostname;
+        $authProvider.loginUrl = redirectUriPath + '/api/v1/authenticate';
         $authProvider.tokenPrefix = 'fundator';
 
-        var redirectUriPath = window.location.protocol + '//' + window.location.hostname;
 
         $authProvider.linkedin({
         	clientId: '77zjxfbh2928re',
-            url: APIProvider.$get().path('authenticate/linkedin'),
+            url: redirectUriPath + '/api/v1/authenticate/linkedin',
             authorizationEndpoint: 'https://www.linkedin.com/uas/oauth2/authorization',
-            redirectUri: APIProvider.$get().path('authenticate/linkedin'),
+            redirectUri: redirectUriPath + '/api/v1/authenticate/linkedin',
             requiredUrlParams: ['state'],
             scope: ['r_emailaddress'],
             scopeDelimiter: ' ',
             state: 'STATE',
             type: '2.0',
-            display: 'self'
+            display: 'popup',
+            popupOptions: { width: 452, height: 633 }
         });
 
         $authProvider.google({
             clientId: '1042247727091-dmqc55af7tl58h2rqv3pqnrmjjbb9733.apps.googleusercontent.com',
-            url: APIProvider.$get().path('authenticate/google'),
+            url: redirectUriPath + '/api/v1/authenticate/google',
             authorizationEndpoint: 'https://accounts.google.com/o/oauth2/auth',
-            redirectUri: APIProvider.$get().path('authenticate/google'),
+            redirectUri: redirectUriPath + '/api/v1/authenticate/google',
             requiredUrlParams: ['scope'],
             optionalUrlParams: ['display'],
             scope: ['profile', 'email'],
@@ -40,9 +41,9 @@
         $authProvider.facebook({
             clientId: '900533123395920',
             name: 'facebook',
-            url: APIProvider.$get().path('authenticate/facebook'),
+            url: redirectUriPath + '/api/v1/authenticate/facebook',
             authorizationEndpoint: 'https://www.facebook.com/v2.5/dialog/oauth',
-            redirectUri: APIProvider.$get().path('authenticate/facebook'),
+            redirectUri: redirectUriPath + '/api/v1/authenticate/facebook',
             requiredUrlParams: ['display', 'scope'],
             scope: ['email'],
             scopeDelimiter: ',',
