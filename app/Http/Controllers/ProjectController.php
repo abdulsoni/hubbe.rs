@@ -220,6 +220,8 @@ class ProjectController extends Controller
                         $projectExpertiseBid = ProjectExpertiseBid::find($project_expertise->selected_bid_id);
                         $project_expertise['selected_bid'] = $projectExpertiseBid;
                         $project_expertise['selected_bid']['expert'] = $projectExpertiseBid->expert;
+                    }else{
+                        $project_expertise['selected_bid'] = null;
                     }
                 }
             }else{
