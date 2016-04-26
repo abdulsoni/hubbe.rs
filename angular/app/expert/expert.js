@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.controllers').controller('ExpertCtrl', function($rootScope, $scope, $state, $resource, $filter, FdScroller, API) {
+    angular.module('fundator.controllers').controller('ExpertCtrl', function($rootScope, $scope, $state, $resource, $filter, $timeout, FdScroller, API) {
         console.log('Expert Started');
         $scope.expertiseSource = null;
         $scope.availableExpertise = [];
@@ -33,7 +33,7 @@
         } else {
             $timeout(function() {
                 $rootScope.$broadcast('stopLoading');
-                $state.go('app.home');
+                $state.go('app.contests');
             }, 2000);
         }
 

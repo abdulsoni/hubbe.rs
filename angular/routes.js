@@ -115,7 +115,7 @@
             .state('app.auth.register', {
                 url: '/register',
                 data: {
-                    needLogin: true
+                    needLogin: false
                 },
                 views: {
                     'main@': {

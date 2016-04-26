@@ -63,7 +63,7 @@
         </ul>
 
         <ul class="nav navbar-nav top-nav pull-right" ng-if="!authenticated">
-            <li><a class="pointer" ng-click="triggerLogin()" ng-class="{'activenav': $state.current.name.indexOf('login') !== -1}">Login</a></li>
+            <li><a class="pointer" ui-sref="app.auth.login"  ng-class="{'activenav': $state.current.name.indexOf('login') !== -1}">Login</a></li>
             <li><a class="pointer" ui-sref="app.auth.signup" ng-class="{'activenav': $state.current.name.indexOf('signup') !== -1}">Register</a></li>
         </ul>
     </div>

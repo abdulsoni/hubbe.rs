@@ -149,7 +149,10 @@ class EntryController extends Controller
 
             foreach ($revisions as $revision) {
                 $entry_data['revisions'][] = [
-                    'id' => $revision->id
+                    'id' => $revision->id,
+                    'created_at' => $revision->created_at,
+                    'updated_at' => $revision->updated_at,
+                    'marked_at' => $revision->updated_at
                 ];
             }
 

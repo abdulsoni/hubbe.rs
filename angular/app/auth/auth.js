@@ -11,7 +11,7 @@
         $rootScope.$broadcast('stopLoading');
 
         if ($auth.isAuthenticated()) {
-            $state.go('app.home', {});
+            $state.go('app.contests', {});
         }else{
             FdScroller.toTop();
         }
@@ -56,7 +56,6 @@
                 $auth.setToken(result.data.token);
 
                 var payload = $auth.getPayload();
-                console.log(payload);
 
                 var activeState = $rootScope.activeState.name;
                 var activeStateParams = $rootScope.activeStateParams;

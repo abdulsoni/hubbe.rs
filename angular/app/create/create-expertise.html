@@ -54,7 +54,7 @@
             There are currently no selected expertise! <br> Click 'Add Expertise' below to add a new expertise.
         </div>
     </div>
-    <form name="expertiseForm">
+    <form name="expertiseForm" ng-if="loadedOnce">
         <div class="expertise-add">
             <button class="btn btn-info btn-block" ng-click="addNewInputtedExpertise()" ng-if="inputtedExpertiseList.length === 0">Add a new expertise you want</button>
         </div>
@@ -165,5 +165,5 @@
 
     <br>
 
-    <button class="btn btn-info center-block marginT30" ng-click="saveExpertiseSelection()" ladda="savingExpertise">Save Selection</button>
+    <button class="btn btn-info center-block marginT30" ng-click="saveExpertiseSelection()" ladda="savingExpertise" ng-if="expertiseList.length > 0">Submit for review</button>
 </div>

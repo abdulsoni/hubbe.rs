@@ -191,6 +191,8 @@
         $scope.featuredImageSuccess = function($file, $message) {
             var message = JSON.parse($message);
             $scope.project.thumbnail_id = message.file.id;
+            $scope.project.thumbnail = message.file.file_url;
+            $scope.saveProgress();
         }
 
         $scope.attachedFilesSuccess = function($file, $message) {
@@ -236,11 +238,13 @@
 
     angular.module('fundator.controllers').controller('CreateExpertiseCtrl', function($rootScope, $scope, $state, $resource, $http, $timeout, FdScroller, API) {
         console.log('CreateExpertiseCtrl Started');
+        $rootScope.innerSectionLoading = true;
 
         $scope.inputtedExpertiseList = [];
         $scope.expertiseList = [];
         $scope.inputtedEpxertise = null;
         $scope.savingExpertise = false;
+        $scope.loadedOnce = false;
 
         var ProjectExpertise = $resource(API.path('/projects/:projectId/expertise'), {
             projectId: '@id'
@@ -251,6 +255,7 @@
                 $scope.expertiseList = result;
             }).finally(function() {
                 $rootScope.innerSectionLoading = false;
+                $scope.loadedOnce = true;
             });
         }
 
@@ -287,7 +292,6 @@
             FdScroller.toSection('.steps-content');
 
             $timeout(function() {
-                // $state.go('app.create.expertise');
                 $scope.project.state = 3;
             }, 500);
 

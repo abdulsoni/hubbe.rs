@@ -97,7 +97,7 @@
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
             if ($auth.isAuthenticated()) {
-                if (!$rootScope.initialRoleAssignment) {
+                if (!$rootScope.initialRoleAssignment && toState.name.indexOf('auth') === -1) {
                     $rootScope.activeState = toState;
                     $rootScope.activeStateParams = toParams;
                     event.preventDefault();

@@ -154,6 +154,7 @@ class ProjectController extends Controller
             $project = Project::find($id);
 
             // Update Logic Happens here
+            $project->thumbnail = $request->thumbnail;
             $project->name = $request->name;
             $project->description = $request->description;
             $project->market = $request->market;

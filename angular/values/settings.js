@@ -3,7 +3,7 @@
 
     angular.module('fundator.services').factory('API', function() {
     	var domainUrl = window.location.hostname.indexOf('fundator.co') !== -1 ? 'fundator.co' : 'fundator.app';
-        var base = 'http://' + domainUrl + '/api/';
+        var base = 'http://' + window.location.hostname + '/api/';
         var path = '';
 
         return {
@@ -17,7 +17,7 @@
 
     angular.module('fundator.services').provider('APIProvider', function() {
     	var domainUrl = window.location.hostname.indexOf('fundator.co') !== -1 ? 'fundator.co' : 'fundator.app';
-        var base = 'http://' + domainUrl + '/api/';
+        var base = 'http://' + window.location.hostname + '/api/';
         var path = '';
 
         this.$get = function() {
