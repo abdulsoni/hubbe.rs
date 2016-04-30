@@ -92,6 +92,7 @@ class UserController extends Controller
             }
 
             $response['amount'] = $user->currentAmount();
+            $response['shares'] = $user->currentPoints();
 
         } catch (TokenExpiredException $e) {
             $statusCode = $e->getStatusCode();

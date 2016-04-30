@@ -56,7 +56,6 @@
                 $scope.data.myBid.saving = false;
 
                 if (typeof(result.error) === 'undefined') {
-                    console.log(result.data);
                     $scope.data.showBidNow = false;
                     loadPrimaryListing();
                 }
