@@ -34,12 +34,10 @@ class ContestController extends Controller
             $contest_data = $contest->getAttributes();
             $contest_data['total_entries'] = $contest->entries->groupBy('creator_id')->count();
 
-            if (JWTAuth::parseToken()) {
-                if ($user = JWTAuth::parseToken()->authenticate()) {
-                    $unmarkedEntries = $this->unmarkedEntries($user->id);
-                    if (!is_null($unmarkedEntries)) {
-                        $contest_data['unmarked_entries'] = $unmarkedEntries;
-                    }
+            if ($user = JWTAuth::parseToken()->authenticate()) {
+                $unmarkedEntries = $contest->unmarkedEntries($user->id);
+                if (!is_null($unmarkedEntries)) {
+                    $contest_data['unmarked_entries'] = $unmarkedEntries;
                 }
             }
 
@@ -94,13 +92,11 @@ class ContestController extends Controller
             $contest_data = $contest->getAttributes();
             $contest_data['total_entries'] = $contest->entries->groupBy('creator_id')->count();
 
-            if (JWTAuth::parseToken()) {
-                if ($user = JWTAuth::parseToken()->authenticate()) {
-                    $unmarkedEntries = $contest->unmarkedEntries($user->id);
+            if ($user = JWTAuth::parseToken()->authenticate()) {
+                $unmarkedEntries = $contest->unmarkedEntries($user->id);
 
-                    if (!is_null($unmarkedEntries)) {
-                        $contest_data['unmarked_entries'] = $unmarkedEntries;
-                    }
+                if (!is_null($unmarkedEntries)) {
+                    $contest_data['unmarked_entries'] = $unmarkedEntries;
                 }
             }
 
