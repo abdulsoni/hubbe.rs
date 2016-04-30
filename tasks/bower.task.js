@@ -16,6 +16,7 @@ var Elixir = require('laravel-elixir');
 var Task = Elixir.Task;
 
 Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, cssOutputFile, cssOutputFolder) {
+    config.production = true;
 
     var cssFile = cssOutputFile || 'vendor.css';
     var jsFile = jsOutputFile || 'vendor.js';

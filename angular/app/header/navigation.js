@@ -23,7 +23,8 @@
 
     angular.module('fundator.controllers').controller('NavigationCtrl', function($rootScope, $scope, $state, $auth, $log, $timeout, $filter, $http, $resource, $uibModal, FileUploader, CountryCodes, API) {
 
-        $scope.allSkills = $resource(API.path('skills')).query();
+        $scope.allSkills = [];
+        $scope.allSkills =  $resource(API.path('skills')).query();;
 
         $scope.uploader = new FileUploader({
             url: API.path('files'),
@@ -69,12 +70,12 @@
             };
 
             $http.post(API.path('/verification/start'), verificationData).then(function(result){
-                console.log(result.data);
-
                 if (result.data.success) {
                     $scope.data.twoFA.loading = false;
                     $scope.data.twoFA.codeSent = true;
                 }
+            }, function(error){
+                alert(JSON.stringify(error));
             });
         }
 
@@ -104,6 +105,8 @@
                     $scope.data.twoFA.verify = false;
                     $rootScope.user.phone_verified = 1;
                 }
+            }, function(error){
+                alert(JSON.stringify(error));
             });
         }
 
@@ -118,6 +121,7 @@
             }).catch(function(response) {
                 console.log('Not Logged in ');
                 console.log(response);
+                alert(JSON.stringify(response));
                 $scope.data.socialConnect[provider].loading = false;
             });
         }
@@ -137,6 +141,8 @@
             $http.post(API.path('authenticate/') + method, {}).then(function(result){
                 console.log(result);
                 $rootScope.user[provider] = null;
+            }, function(error){
+                alert(JSON.stringify(error));
             }).finally(function(){
                 $scope.data.socialConnect[provider].loading = false;
             });
@@ -162,7 +168,7 @@
                 }
             }, function(result){
                 console.log('error');
-                console.log(result);
+                alert(result);
             }).finally(function(){
                 $timeout(function(){
                     $scope.data.userSettingsSave = -1;
@@ -227,7 +233,7 @@
         }
 
         $rootScope.$watch('user', function(user){
-            if (typeof(user) === 'undefined') return;
+            if (typeof(user) === 'undefined' || $rootScope.initialRoleAssignment === false) return;
 
             $scope.populateSideNavigation();
         });

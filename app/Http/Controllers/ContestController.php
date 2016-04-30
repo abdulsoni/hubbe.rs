@@ -10,6 +10,7 @@ use Illuminate\Http\Response;
 use Fundator\Http\Requests;
 use Fundator\Http\Controllers\Controller;
 use Fundator\Contest;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 use Exception;
 
@@ -32,6 +33,14 @@ class ContestController extends Controller
             $i++;
             $contest_data = $contest->getAttributes();
             $contest_data['total_entries'] = $contest->entries->groupBy('creator_id')->count();
+
+            if ($user = JWTAuth::parseToken()->authenticate()) {
+                $unmarkedEntries = $this->unmarkedEntries($user->id);
+                if (!is_null($unmarkedEntries)) {
+                    $contest_data['unmarked_entries'] = $unmarkedEntries;
+                }
+            }
+
             $contest_data['num_contestants'] = $contest->num_contestants;
             $contest_data['rank'] = 1;
 
@@ -82,7 +91,15 @@ class ContestController extends Controller
         if (!is_null($contest)) {
             $contest_data = $contest->getAttributes();
             $contest_data['total_entries'] = $contest->entries->groupBy('creator_id')->count();
-            // $contest_data['entries'] = $contest->entries;
+
+            if ($user = JWTAuth::parseToken()->authenticate()) {
+                $unmarkedEntries = $contest->unmarkedEntries($user->id);
+
+                if (!is_null($unmarkedEntries)) {
+                    $contest_data['unmarked_entries'] = $unmarkedEntries;
+                }
+            }
+
             $contest_data['rating'] = $contest->rating;
             $contest_data['contestants'] = [];
             $contest_data['num_contestants'] = $contest->num_contestants;
@@ -102,42 +119,11 @@ class ContestController extends Controller
             }
         }
 
-
-//        $entries = $contest->entries;
-//        $existingJudges = [];
-
-//        foreach($entries as $entry){
-//            $judges = $entry->ratings->groupBy('judge_id');
-//
-//            foreach($judges as $judge_id => $rating){
-//                if(!in_array($judge_id, $existingJudges)){
-//                    $judge = User::find($judge_id);
-//
-//                    if(!is_null($judge->thumbnail)){
-//                        $judge['thumbnail'] = $judge->thumbnail->getUrl();
-//                    }
-//
-//                    $contest_data['judges'][] = $judge;
-//                    $existingJudges[] = $judge_id;
-//                }
-//            }
-//        }
-
         $response = $contest_data;
 
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.

@@ -13,11 +13,14 @@ var ngAnnotate = require('gulp-ng-annotate');
 var notify = require('gulp-notify');
 var gulpif = require('gulp-if');
 
+var cleanCSS = require('gulp-clean-css');
+
 var elixir = require('laravel-elixir');
 
 var Task = elixir.Task;
 
 elixir.extend('app', function(src, output, outputFilename) {
+    config.production = true;
 
     var baseDir = src || elixir.config.assetsPath + '/angular/';
 
@@ -44,6 +47,7 @@ elixir.extend('app', function(src, output, outputFilename) {
     new Task('do app sass', function() {
         return gulp.src(elixir.config.appConfig.sass.main)
             .pipe(sass())
+            .pipe(cleanCSS())
             .pipe(rename({
                 basename: "app"
             }))
@@ -53,6 +57,7 @@ elixir.extend('app', function(src, output, outputFilename) {
     new Task('do home sass', function() {
         return gulp.src(elixir.config.appConfig.homesass.main)
             .pipe(sass())
+            .pipe(cleanCSS())
             .pipe(rename({
                 basename: "home"
             }))

@@ -4,6 +4,9 @@
  * Directors model config
  */
 
+use Fundator\Events\Signup;
+use Illuminate\Support\Facades\Event;
+
 return array(
 
     'title' => 'Users',
@@ -69,5 +72,93 @@ return array(
             'name_field' => 'display_name'
         )
     ),
+
+    'actions' => array(
+        'send_password' => array(
+            'title' => 'Send Password',
+            'messages' => array(
+                'active' => 'Sending ...',
+                'success' => 'Password Sent',
+                'error' => 'Cannot send password to the user',
+            ),
+            'permission' => function($model)
+            {
+                return $model->confirmed === 1;
+            },
+            'action' => function($model)
+            {
+                // Send the password
+
+                try{
+
+                    $model->password = bcrypt(str_random(8));
+                    $model->confirmation_code = str_random(30);
+                    $model->save();
+
+                    Event::fire(new Signup($model));
+
+                    return true;
+                }catch (Exception $e){
+                    Log::error($e);
+                }
+
+                return false;
+            }
+        ),
+        'suspend_user' => array(
+            'title' => 'Suspend User',
+            'messages' => array(
+                'active' => 'Suspending ...',
+                'success' => 'User Suspended',
+                'error' => 'Cannot suspend the user',
+            ),
+            'permission' => function($model)
+            {
+                return $model->suspended === 0;
+            },
+            'action' => function($model)
+            {
+                // Send the password
+                try{
+
+                    $model->suspended = 1;
+                    $model->save();
+
+                    return true;
+                }catch (Exception $e){
+                    Log::error($e);
+                }
+
+                return false;
+            }
+        ),
+        'unsuspend_user' => array(
+            'title' => 'Restore User',
+            'messages' => array(
+                'active' => 'Restoreing ...',
+                'success' => 'User Restore',
+                'error' => 'Cannot restore the user',
+            ),
+            'permission' => function($model)
+            {
+                return $model->suspended === 1;
+            },
+            'action' => function($model)
+            {
+                // Send the password
+                try{
+
+                    $model->suspended = 0;
+                    $model->save();
+
+                    return true;
+                }catch (Exception $e){
+                    Log::error($e);
+                }
+
+                return false;
+            }
+        )
+    )
 
 );

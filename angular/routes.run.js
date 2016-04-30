@@ -9,7 +9,7 @@
         $rootScope.initialRoleAssignment = false;
 
         $rootScope.activeRole = '';
-        $rootScope.activeState = {name: 'app.contest'};
+        $rootScope.activeState = {name: 'app.home'};
         $rootScope.activeStateParams = {};
 
         $rootScope.appLoading = true;

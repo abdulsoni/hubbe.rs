@@ -15,7 +15,7 @@
         };
 
 
-        $urlRouterProvider.otherwise('/contests');
+        $urlRouterProvider.otherwise('/');
 
         $stateProvider
             .state('app', {
@@ -128,7 +128,7 @@
                 url: '/',
                 data: {
                     bodyClass: 'homepage',
-                    needLogin: false
+                    needLogin: true
                 },
                 views: {
                     'main@': {
@@ -137,19 +137,6 @@
                     }
                 }
             })
-            // .state('app.home', {
-            //     url: '/',
-            //     data: {
-            //         bodyClass: 'homepage',
-            //         needLogin: false
-            //     },
-            //     views: {
-            //         'main@': {
-            //             templateUrl: getView('home'),
-            //             controller: 'HomeCtrl'
-            //         }
-            //     }
-            // })
             .state('app.contests', {
                 url: '/contests',
                 data: {

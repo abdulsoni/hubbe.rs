@@ -236,6 +236,8 @@ class EntryController extends Controller
                         'updated_at' => $revision->updated_at,
                         'marked_at' => $revision->updated_at
                     ];
+
+                    $entry_data['revisions']['rating'] = $entry->getAverageRating();
                 }
 
                 $response[] = $entry_data;

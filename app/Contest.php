@@ -78,4 +78,33 @@ class Contest extends Model
     {
         return $this->belongsToMany('Fundator\Skill', 'contest_skills');
     }
+
+    // public function unmarkedEntries()
+    // {
+
+    // }
+
+    /**
+     * Judge Entries
+     */
+    public function unmarkedEntries($judgeId)
+    {
+        $contestId = $this->id;
+        $judgeableContests = JuryApplication::where('user_id', $judgeId)->where('contest_id', $contestId)->where('status', 1)->first();
+
+        $unmarkedEntries = null;
+
+        if (!is_null($judgeableContests)) {
+            $entries = Entry::where('contest_id', $contestId)->get();
+            $unmarkedEntries = 0;
+
+            foreach ($entries as $entry) {
+                if (is_null($entry->ratings)) {
+                    $unmarkedEntries++;
+                }
+            }
+        }
+
+        return $unmarkedEntries;
+    }
 }
