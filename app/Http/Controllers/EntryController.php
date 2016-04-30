@@ -234,10 +234,9 @@ class EntryController extends Controller
                         'id' => $revision->id,
                         'created_at' => $revision->created_at,
                         'updated_at' => $revision->updated_at,
-                        'marked_at' => $revision->updated_at
+                        'marked_at' => $revision->updated_at,
+                        'rating' => $entry->getAverageRating()
                     ];
-
-                    $entry_data['revisions']['rating'] = $entry->getAverageRating();
                 }
 
                 $response[] = $entry_data;
