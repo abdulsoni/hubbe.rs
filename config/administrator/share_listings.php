@@ -63,6 +63,10 @@ return array(
             'decimals' => 2,
             'thousands_separator' => ',',
         ),
+        'start_date' => array(
+            'title' => 'Start Date',
+            'type' => 'date'
+        ),
         'duration' => array(
             'title' => 'Duration',
             'type' => 'number'
