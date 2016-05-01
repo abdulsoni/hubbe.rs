@@ -208,7 +208,7 @@ return [
         /*
          * Settings System
          */
-        // Efriandika\LaravelSettings\SettingsServiceProvider::class
+        Efriandika\LaravelSettings\SettingsServiceProvider::class
 
     ],
 
@@ -278,7 +278,7 @@ return [
         /*
          * Settings System
          */
-        // 'Settings'  => Efriandika\LaravelSettings\Facades\Settings::class,
+        'Settings'  => Efriandika\LaravelSettings\Facades\Settings::class,
 
     ],
 
