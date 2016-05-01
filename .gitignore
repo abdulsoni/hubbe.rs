@@ -12,3 +12,4 @@ Homestead.json
 .zip
 /public/uploads
 /public/resize
+composer.lock

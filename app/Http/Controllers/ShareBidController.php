@@ -41,14 +41,19 @@ class ShareBidController extends Controller
             }
 
             $shareListing = ShareListing::find($request->share_listing_id);
+            $shareBid = ShareBid::where('num_shares', $request->num_shares)->where('bid_amount', $request->bid_amount)->first();
 
-            $shareBid = ShareBid::create([
-                'num_shares' => $request->num_shares,
-                'bid_amount' => $request->bid_amount
-            ]);
+            if (!is_null($shareBid)) {
+                $shareBid->num_shares = $shareBid->num_shares + $request->num_shares;
+            }else{
+                $shareBid = ShareBid::create([
+                    'num_shares' => $request->num_shares,
+                    'bid_amount' => $request->bid_amount
+                ]);
 
-            $shareBid->user()->associate($user);
-            $shareBid->shareListing()->associate($shareListing);
+                $shareBid->user()->associate($user);
+                $shareBid->shareListing()->associate($shareListing);
+            }
 
             if ($shareBid->save()) {
                 $response = $shareBid;
