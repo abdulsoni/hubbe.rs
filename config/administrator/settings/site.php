@@ -1,5 +1,7 @@
 <?php
 
+use Efriandika\LaravelSettings\Facades\Settings;
+
 /**
  * The main site settings page
  */

@@ -8,6 +8,7 @@ use Fundator\Http\Requests;
 use Fundator\Http\Controllers\Controller;
 
 use Fundator\ShareListing;
+use Efriandika\LaravelSettings\Facades\Settings;
 
 class ShareListingController extends Controller
 {
