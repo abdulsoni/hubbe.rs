@@ -2500,6 +2500,17 @@ a.action-bell {
     padding-left: 30px;
 }
 
+.table.grabeTable tr td .buyable{
+    font-size: 12px;
+    font-weight: bold;
+    color: $fd-green;
+    border-bottom: 1px dashed $fd-green;
+
+    &:hover{
+        cursor: pointer;
+    }
+}
+
 // Bid now panel
 
 .bid-now-panel{

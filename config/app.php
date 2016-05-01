@@ -205,6 +205,11 @@ return [
          */
         Trexology\Pointable\PointableServiceProvider::class,
 
+        /*
+         * Settings System
+         */
+        // Efriandika\LaravelSettings\SettingsServiceProvider::class
+
     ],
 
     /*
@@ -268,7 +273,13 @@ return [
         /*
          * Notifynder
          */
-        'Notifynder'    => Fenos\Notifynder\Facades\Notifynder::class
+        'Notifynder'    => Fenos\Notifynder\Facades\Notifynder::class,
+
+        /*
+         * Settings System
+         */
+        // 'Settings'  => Efriandika\LaravelSettings\Facades\Settings::class,
+
     ],
 
 ];

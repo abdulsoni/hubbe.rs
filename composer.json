@@ -14,7 +14,8 @@
         "guzzlehttp/guzzle": "~6.1.1",
         "fenos/notifynder": "3.*",
         "cmgmyr/messenger": "~2.0",
-        "trexology/pointable": "^1.0"
+        "trexology/pointable": "^1.0",
+        "efriandika/laravel-settings": "^1.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

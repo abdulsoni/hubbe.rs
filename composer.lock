@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ae4484761688d6f4babd801888f1535a",
-    "content-hash": "06bb8c94d373289df2683ed444b63b3d",
+    "hash": "c054154cb2da8dd853ad1a4de8f5e0d3",
+    "content-hash": "409d67a37a43b2aa409d146442aa5a70",
     "packages": [
         {
             "name": "ckeditor/ckeditor",
@@ -222,7 +222,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dingo/api/zipball/b9ff594eedea42d5cd78f09b20cbb66dd46b1204",
+                "url": "https://api.github.com/repos/dingo/api/zipball/8cd1a6cd7d2ba9fc96841fd0745ef8fc1ce2a530",
                 "reference": "b36db17c7294e44e6ce7039952ca8f8d57caab37",
                 "shasum": ""
             },
@@ -564,6 +564,56 @@
                 "parser"
             ],
             "time": "2014-09-09 13:34:57"
+        },
+        {
+            "name": "efriandika/laravel-settings",
+            "version": "v1.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/efriandika/laravel-settings.git",
+                "reference": "fa46e5373d19bde0781fe4d2581159feba48f615"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/efriandika/laravel-settings/zipball/fa46e5373d19bde0781fe4d2581159feba48f615",
+                "reference": "fa46e5373d19bde0781fe4d2581159feba48f615",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.*",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "illuminate/database": "~5.1",
+                "illuminate/events": "5.1.*",
+                "phpunit/phpunit": "4.6.*"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Efriandika\\LaravelSettings\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Efriandika Pratama",
+                    "email": "efriandika@gmail.com"
+                }
+            ],
+            "description": "Laravel 5 Persistent Settings",
+            "keywords": [
+                "Settings",
+                "laravel",
+                "persistent"
+            ],
+            "time": "2016-01-04 11:23:47"
         },
         {
             "name": "fenos/notifynder",

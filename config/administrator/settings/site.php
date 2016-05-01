@@ -67,10 +67,8 @@ return array(
      */
     'before_save' => function(&$data)
     {
-        //$data['site_name'] = $data['site_name'] . ' - where creation begins';
-
-
         Config::set('app.site_name', $data['site_name']);
+        Settings::set('share_value', $data['share_value']);
     },
 
     /**

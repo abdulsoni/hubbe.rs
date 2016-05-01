@@ -161,8 +161,9 @@
                 <tr ng-repeat="bid in data.primaryShareListing.bids">
                     <td>{{bid.user.name}}</td>
                     <td am-time-ago="bid.updated_at"></td>
-                    <td>{{bid.num_shares}}</td>
+                    <td>{{bid.num_shares}} <span class="buyable" uib-popover="Description for purchaseable shares" popover-title="Purchaseable Shares" popover-placement="top" popover-trigger="mouseenter">({{bid.buyable}})</span></td>
                     <td>{{bid.bid_amount | currency:'USD '}}</td>
+
                     <td><strong>{{bid.bid_amount * bid.num_shares | currency:'USD '}}</strong></td>
                     <td>Follow</td>
                 </tr>

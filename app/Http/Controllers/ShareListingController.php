@@ -50,12 +50,31 @@ class ShareListingController extends Controller
 
         try{
             $listing_data = $primaryListing->getAttributes();
+            $listing_data['remaining_shares'] = $primaryListing->shareBids->num_shares - $primaryListing->shareBids->sum('num_shares');
             $listing_data['total_amount'] = $primaryListing->shareBids->sum('bid_amount');
             $listing_data['average_amount'] = $primaryListing->shareBids->avg('bid_amount');
+            $listing_data['share_value'] = Settings::get('share_value');
             $listing_data['user'] = $primaryListing->user;
-            $listing_data['bids'] = $primaryListing->shareBids()->orderBy('bid_amount', 'desc')->with(['user' => function($query){
+
+            $bids = $primaryListing->shareBids()->orderBy('bid_amount', 'desc')->with(['user' => function($query){
                 $query->addSelect(['id', 'name']);
             }])->get();
+
+            $total_shares = $primaryListing->num_shares;
+
+            foreach ($bids as $bid) {
+                if ($total_shares >= $bid->num_shares) {
+                    $total_shares = $total_shares - $bid->num_shares;
+                    $bid['buyable'] = $bid->num_shares;
+                } else {
+                    $bid['buyable'] = $total_shares;
+                    $total_shares = 0;
+                }
+
+            }
+
+            $listing_data['bids'] = $bids;
+
             $response = $listing_data;
         }catch(Exception $e){
             $statusCode = 400;

@@ -18,11 +18,6 @@ return array(
      */
     'columns' => array(
         'id',
-        // 'pointable' => array(
-        //     'title' => 'Name',
-        //     'relationship' => 'user',
-        //     'select' => 'name'
-        // ),
         'amount' => array(
             'title' => 'Amount',
         ),
@@ -49,6 +44,11 @@ return array(
      */
     'edit_fields' => array(
         'id',
+        'pointable' => array(
+            'type' => 'relationship',
+            'title' => 'User',
+            'name_field' => 'name'
+        ),
         'amount' => array(
             'title' => 'Amount',
         ),
