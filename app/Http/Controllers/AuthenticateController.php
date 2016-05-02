@@ -384,6 +384,7 @@ class AuthenticateController extends Controller
                 $user->email = $profile['email'];
                 $user->position = '';
                 $user->confirmed = 1;
+                $user->facebook = $profile['id'];
                 $user->save();
             }
 
@@ -550,6 +551,9 @@ class AuthenticateController extends Controller
             $linkedinProfile->user()->associate($user);
             $linkedinProfile->save();
 
+            $user->linkedin = $profile['id'];
+            $user->save();
+
             return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
         }
         // Step 3b. Create a new user account or return an existing one.
@@ -573,6 +577,7 @@ class AuthenticateController extends Controller
                 $user->email = $profile['emailAddress'];
                 $user->position = isset($profile['headline']) ? $profile['headline'] : '';
                 $user->confirmed = 1;
+                $user->linkedin = $profile['id'];
                 $user->save();
             }
 
