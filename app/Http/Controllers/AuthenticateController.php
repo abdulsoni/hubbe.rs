@@ -301,7 +301,7 @@ class AuthenticateController extends Controller
             'code' => $request->input('code'),
             'client_id' => Config::get('app.facebook_id'),
             // 'redirect_uri' => $request->input('redirectUri'),
-            'redirect_uri' => 'http://desk.fundator.co/api/v1/authenticate/linkedin',
+            'redirect_uri' => 'http://desk.fundator.co/api/v1/authenticate/facebook',
             'client_secret' => Config::get('app.facebook_secret')
         ];
 
