@@ -300,7 +300,8 @@ class AuthenticateController extends Controller
         $params = [
             'code' => $request->input('code'),
             'client_id' => $request->input('clientId'),
-            'redirect_uri' => $request->input('redirectUri'),
+            // 'redirect_uri' => $request->input('redirectUri'),
+            'redirect_uri' => 'http://desk.fundator.co/api/v1/authenticate/linkedin',
             'client_secret' => Config::get('app.facebook_secret')
         ];
 
@@ -493,7 +494,8 @@ class AuthenticateController extends Controller
             'code' => $request->input('code'),
             'client_id' => Config::get('app.linkedin_id'),
             'client_secret' => Config::get('app.linkedin_secret'),
-            'redirect_uri' => $request->input('redirectUri'),
+            // 'redirect_uri' => $request->input('redirectUri'),
+            'redirect_uri' => 'http://desk.fundator.co/api/v1/authenticate/linkedin',
             'grant_type' => 'authorization_code',
         ];
         // Step 1. Exchange authorization code for access token.

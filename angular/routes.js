@@ -89,7 +89,7 @@
                 }
             })
             .state('app.auth.recover', {
-                url: '/recover?token&email',
+                url: '/recover/?token&email',
                 data: {
                     needLogin: false
                 },

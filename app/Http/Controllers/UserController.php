@@ -381,7 +381,10 @@ class UserController extends Controller
                 return response()->json(['user_not_found'], 404);
             }
 
-            $contestantData = [];
+            $contestantData = [
+                'ongoing' => [],
+                'past' => []
+            ];
 
             if (!is_null($user->creator)) {
                 $contestantData['ongoing'] = $user->contestantApplications;
@@ -394,10 +397,27 @@ class UserController extends Controller
                 }
             }
 
-            $juryData = [];
+            $juryData = [
+                'ongoing' => [],
+                'past' => []
+            ];
 
             $juryData['ongoing'] = $user->juryApplications;
             $juryData['past'] = null;
+
+            foreach ($juryData['ongoing'] as $j) {
+                $contest = Contest::find($j->contest_id);
+                $j['name'] = $contest->name;
+                $j['thumbnail'] = $contest->thumbnail;
+            }
+
+            // $creatorData = [
+            //     'ongoing' => [],
+            //     'past' => []
+            // ]
+
+            // $juryData['ongoing'] = $user->juryApplications;
+            // $juryData['past'] = null;
 
             foreach ($juryData['ongoing'] as $j) {
                 $contest = Contest::find($j->contest_id);

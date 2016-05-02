@@ -3,9 +3,8 @@
 
     angular.module('fundator.controllers').controller('HomeCtrl', function($rootScope, $scope, $state, $stateParams, $http, $resource, FdScroller) {
         console.log('Home View Started');
+        $rootScope.$broadcast('stopLoading');
         FdScroller.toTop();
-
-        $state.go('app.contests');
 
    //      $scope.contests = [];
    //      $rootScope.$broadcast('startLoading');

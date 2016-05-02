@@ -18,6 +18,7 @@ Route::group(['domain' => 'desk.fundator.{tld}'], function() {
     ]);
 
     // Provider
+    Route::get('api/v1/authenticate/facebook', 'Fundator\Http\Controllers\AuthenticateController@facebook');
     Route::post('api/v1/authenticate/facebook', 'Fundator\Http\Controllers\AuthenticateController@facebook');
     Route::post('api/v1/authenticate/unlinkFacebook', 'Fundator\Http\Controllers\AuthenticateController@unlinkFacebook');
     Route::post('api/v1/authenticate/google', 'Fundator\Http\Controllers\AuthenticateController@google');

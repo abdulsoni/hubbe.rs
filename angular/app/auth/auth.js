@@ -11,7 +11,7 @@
         $rootScope.$broadcast('stopLoading');
 
         if ($auth.isAuthenticated()) {
-            $state.go('app.contests', {});
+            $state.go('app.home', {});
         }else{
             FdScroller.toTop();
         }
@@ -64,6 +64,8 @@
                     if (typeof(activeState) === 'undefined') {
                         $state.go('app.auth.signup');
                     }else{
+                        console.log('activeState');
+                        console.log(activeState);
                         $rootScope.switchUserRole(payload.role, payload.role_id, true, activeState, activeStateParams);
                     }
                 }, 100);
@@ -133,6 +135,7 @@
 
     angular.module('fundator.controllers').controller('AuthRecoverCtrl', function($rootScope, $scope, $state, $stateParams, $auth, $timeout, $http, API){
         $rootScope.$broadcast('stopLoading');
+        console.log('recovering ...');
 
         $scope.data = {
             recoveryEmail: '',
@@ -196,9 +199,8 @@
                     $http.post(API.path('authenticate/recover'), params).then(function(result) {
                         if (typeof(result.data.error) === 'undefined') {
                             $auth.removeToken();
-                            $auth.setToken(result.data);
+                            $auth.setToken(result.data.token);
                             $state.go('app.auth.login', {});
-                            console.log('sending from here ...');
                         }else{
                             $scope.errorMessage = 'Error in resetting password';
                             $scope.viewState = 'set';

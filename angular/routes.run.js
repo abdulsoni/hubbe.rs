@@ -95,7 +95,6 @@
         });
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-
             if ($auth.isAuthenticated()) {
                 if (!$rootScope.initialRoleAssignment && toState.name.indexOf('auth') === -1) {
                     $rootScope.activeState = toState;
@@ -135,8 +134,14 @@
         // Switch User Role
 
         $rootScope.switchUserRole = function(role, roleId, reload, state, stateParams) {
+            if ($rootScope.switchingUserRole) return;
+
             $rootScope.activeRole = role;
             $cookies.put('fd_active_role', role);
+
+            $rootScope.switchingUserRole = true;
+
+            console.log('callig switch ... ');
 
             if (typeof(state) === 'undefined') {
                 state = $state.current.name;
@@ -201,6 +206,9 @@
 
             var model = null;
 
+            console.log('preparing ... state updating');
+            console.log(state);
+
             switch(role){
                 case 'creator': model = API.path('creators/') + roleId
                 break;
@@ -216,18 +224,22 @@
                         state = $rootScope.activeState.name;
                         stateParams = $rootScope.activeStateParams;
                     }
+                    console.log('shit');
+                    console.log(state);
 
                     $state.go(state, stateParams, {reload: reload});
+                    $rootScope.switchingUserRole = false;
                 });
             }else{
                 if (state === '') {
                     state = $rootScope.activeState.name;
                     stateParams = $rootScope.activeStateParams;
                 }
-
+                console.log('state updating');
+                console.log(state);
                 $state.go(state, stateParams, {reload: reload});
+                $rootScope.switchingUserRole = false;
             }
-
         };
 
         // Has User Role

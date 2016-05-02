@@ -101,7 +101,7 @@ class PasswordController extends Controller
 
                     $token = JWTAuth::fromUser($user, $userData);
 
-                    $response = $token;
+                    $response = ['token' => $token];
                     break;
                 default:
                     $statusCode = 400;
@@ -150,7 +150,7 @@ class PasswordController extends Controller
 
                 $token = JWTAuth::fromUser($user, $userData);
 
-                $response = $token;
+                $response = ['token' => $token];
             }else{
                 $response['error'] = 'user_not_updated';
             }
