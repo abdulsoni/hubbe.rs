@@ -18,13 +18,13 @@ Route::group(['domain' => 'desk.fundator.{tld}'], function() {
     ]);
 
     // Provider
-    Route::get('api/v1/authenticate/facebook', 'Fundator\Http\Controllers\AuthenticateController@facebook');
-    Route::post('api/v1/authenticate/facebook', 'Fundator\Http\Controllers\AuthenticateController@facebook');
-    Route::post('api/v1/authenticate/unlinkFacebook', 'Fundator\Http\Controllers\AuthenticateController@unlinkFacebook');
-    Route::post('api/v1/authenticate/google', 'Fundator\Http\Controllers\AuthenticateController@google');
-    Route::post('api/v1/authenticate/linkedin', 'Fundator\Http\Controllers\AuthenticateController@linkedin');
-    Route::get('api/v1/authenticate/linkedin', 'Fundator\Http\Controllers\AuthenticateController@linkedin');
-    Route::post('api/v1/authenticate/unlinkLinkedin', 'Fundator\Http\Controllers\AuthenticateController@unlinkLinkedin');
+    Route::get('api/v1/authenticate/facebook', 'AuthenticateController@facebook');
+    Route::post('api/v1/authenticate/facebook', 'AuthenticateController@facebook');
+    Route::post('api/v1/authenticate/unlinkFacebook', 'AuthenticateController@unlinkFacebook');
+    Route::post('api/v1/authenticate/google', 'AuthenticateController@google');
+    Route::post('api/v1/authenticate/linkedin', 'AuthenticateController@linkedin');
+    Route::get('api/v1/authenticate/linkedin', 'AuthenticateController@linkedin');
+    Route::post('api/v1/authenticate/unlinkLinkedin', 'AuthenticateController@unlinkLinkedin');
 
 
     $api = app('Dingo\Api\Routing\Router');
