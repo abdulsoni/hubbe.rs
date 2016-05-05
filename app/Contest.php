@@ -87,11 +87,16 @@ class Contest extends Model
     /**
      * Judge Entries
      */
-    public function unmarkedEntries($judgeId)
+    public function unmarkedEntries()
     {
+        if (!isset($_REQUEST['token']) || is_null($_REQUEST['token'])) {
+            return null;
+        }
+
+        $user = JWTAuth::parseToken()->authenticate();
+
         $contestId = $this->id;
         $judgeableContests = JuryApplication::where('user_id', $judgeId)->where('contest_id', $contestId)->where('status', 1)->first();
-
         $unmarkedEntries = null;
 
         if (!is_null($judgeableContests)) {

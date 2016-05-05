@@ -34,11 +34,10 @@ class ContestController extends Controller
             $contest_data = $contest->getAttributes();
             $contest_data['total_entries'] = $contest->entries->groupBy('creator_id')->count();
 
-            if ($user = JWTAuth::parseToken()->authenticate()) {
-                $unmarkedEntries = $contest->unmarkedEntries($user->id);
-                if (!is_null($unmarkedEntries)) {
-                    $contest_data['unmarked_entries'] = $unmarkedEntries;
-                }
+            $unmarkedEntries = $contest->unmarkedEntries();
+
+            if (!is_null($unmarkedEntries)) {
+                $contest_data['unmarked_entries'] = $unmarkedEntries;
             }
 
             $contest_data['num_contestants'] = $contest->num_contestants;
@@ -92,12 +91,10 @@ class ContestController extends Controller
             $contest_data = $contest->getAttributes();
             $contest_data['total_entries'] = $contest->entries->groupBy('creator_id')->count();
 
-            if ($user = JWTAuth::parseToken()->authenticate()) {
-                $unmarkedEntries = $contest->unmarkedEntries($user->id);
+            $unmarkedEntries = $contest->unmarkedEntries();
 
-                if (!is_null($unmarkedEntries)) {
-                    $contest_data['unmarked_entries'] = $unmarkedEntries;
-                }
+            if (!is_null($unmarkedEntries)) {
+                $contest_data['unmarked_entries'] = $unmarkedEntries;
             }
 
             $contest_data['rating'] = $contest->rating;
