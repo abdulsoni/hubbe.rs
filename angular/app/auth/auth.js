@@ -11,7 +11,7 @@
         $rootScope.$broadcast('stopLoading');
 
         if ($auth.isAuthenticated()) {
-            $state.go('app.home', {});
+            $state.go('app.projects', {});
         }else{
             FdScroller.toTop();
         }

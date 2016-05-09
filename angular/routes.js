@@ -15,7 +15,7 @@
         };
 
 
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/projects');
 
         $stateProvider
             .state('app', {
@@ -124,16 +124,27 @@
                     }
                 }
             })
-            .state('app.home', {
-                url: '/',
+            .state('app.projects', {
+                url: '/projects',
                 data: {
-                    bodyClass: 'homepage',
                     needLogin: true
                 },
                 views: {
                     'main@': {
-                        templateUrl: getView('home'),
-                        controller: 'HomeCtrl'
+                        templateUrl: getView('project', 'projects'),
+                        controller: 'ProjectsCtrl'
+                    }
+                }
+            })
+            .state('app.project', {
+                url: '/project/:projectId',
+                data: {
+                    needLogin: true
+                },
+                views: {
+                    'main@': {
+                        templateUrl: getView('project', 'project'),
+                        controller: 'ProjectCtrl'
                     }
                 }
             })
@@ -317,18 +328,18 @@
                     }
                 }
             })
-            .state('app.page', {
-                url: '/:slug',
-                data: {
-                    needLogin: false
-                },
-                views: {
-                    'main@': {
-                        templateUrl: getView('page'),
-                        controller: 'PageCtrl'
-                    }
-                }
-            })
+            // .state('app.page', {
+            //     url: '/:slug',
+            //     data: {
+            //         needLogin: false
+            //     },
+            //     views: {
+            //         'main@': {
+            //             templateUrl: getView('page'),
+            //             controller: 'PageCtrl'
+            //         }
+            //     }
+            // })
 
     });
 

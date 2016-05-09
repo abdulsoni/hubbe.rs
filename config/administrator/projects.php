@@ -3,6 +3,10 @@
 use Fundator\Expert;
 use Fundator\Events\ProjectApproved;
 use Fundator\Events\ProjectBidSuperExpert;
+use Fundator\Events\ProjectExpertiseApproved;
+use Fundator\Events\ProjectExpertsApproved;
+use Fundator\Events\ProjectBudgetApproved;
+use Fundator\Events\ProjectFinanceApproved;
 
 /**
  * Directors model config
@@ -34,6 +38,9 @@ return array(
         ),
         'draft' => array(
             'title' => 'Is Draft ?',
+        ),
+        'display' => array(
+            'title' => 'Should Display ?',
         )
     ),
 
@@ -78,6 +85,14 @@ return array(
         'duration' => array(
             'title' => 'Duration',
             'type' => 'number'
+        ),
+        'draft' => array(
+            'type' => 'bool',
+            'title' => 'Is Draft ?',
+        ),
+        'display' => array(
+            'type' => 'bool',
+            'title' => 'Should Display ?',
         )
     ),
 
@@ -105,10 +120,130 @@ return array(
                 try{
                     $model->state = 1;
 
+                    $saveResult = $model->save();
+
                     $superExpert = Expert::where('super_expert', 1)->first();
 
                     Event::fire(new ProjectApproved($model));
                     Event::fire(new ProjectBidSuperExpert($model, $superExpert));
+
+                    return $saveResult;
+                }catch (Exception $e){
+                    Log::error($e);
+                }
+
+                return false;
+            }
+        ),
+        'approve_expertise' => array(
+            'title' => 'Approve Project Expertise',
+            'messages' => array(
+                'active' => 'Approving ...',
+                'success' => 'Approved',
+                'error' => 'There was an error while approving project expertise',
+            ),
+            'permission' => function($model)
+            {
+                return $model->state == 2.9;
+            },
+            'action' => function($model)
+            {
+                Log::info('Project Expertise Approved');
+
+                try{
+                    $model->state = 3;
+
+                    Event::fire(new ProjectExpertiseApproved($model));
+
+                    if ($model->save()) {
+                        return true;
+                    }
+                }catch (Exception $e){
+                    Log::error($e);
+                }
+
+                return false;
+            }
+        ),
+        'approve_experts' => array(
+            'title' => 'Approve Project Experts',
+            'messages' => array(
+                'active' => 'Approving ...',
+                'success' => 'Approved',
+                'error' => 'There was an error while approving project experts',
+            ),
+            'permission' => function($model)
+            {
+                return $model->state == 3.9;
+            },
+            'action' => function($model)
+            {
+                Log::info('Project Experts Approved');
+
+                try{
+                    $model->state = 4;
+
+                    Event::fire(new ProjectExpertsApproved($model));
+
+                    if ($model->save()) {
+                        return true;
+                    }
+                }catch (Exception $e){
+                    Log::error($e);
+                }
+
+                return false;
+            }
+        ),
+        'approve_budget' => array(
+            'title' => 'Approve Project Budget',
+            'messages' => array(
+                'active' => 'Approving ...',
+                'success' => 'Approved',
+                'error' => 'There was an error while approving project budget',
+            ),
+            'permission' => function($model)
+            {
+                return $model->state == 4;
+            },
+            'action' => function($model)
+            {
+                Log::info('Project Budget Approved');
+
+                try{
+                    $model->state = 4.1;
+
+                    Event::fire(new ProjectBudgetApproved($model));
+
+                    if ($model->save()) {
+                        return true;
+                    }
+                }catch (Exception $e){
+                    Log::error($e);
+                }
+
+                return false;
+            }
+        ),
+        'approve_finances' => array(
+            'title' => 'Approve Project Finance',
+            'messages' => array(
+                'active' => 'Approving ...',
+                'success' => 'Approved',
+                'error' => 'There was an error while approving project finance',
+            ),
+            'permission' => function($model)
+            {
+                return $model->state == 4.9;
+            },
+            'action' => function($model)
+            {
+                Log::info('Project Finance Approved');
+
+                try{
+                    $model->state = 4.1;
+
+                    Event::fire(new ProjectFinanceApproved($model));
 
                     if ($model->save()) {
                         return true;

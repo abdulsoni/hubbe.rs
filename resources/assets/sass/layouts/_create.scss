@@ -173,6 +173,10 @@
                 z-index: 10;
                 position: relative;
             }
+
+            .ladda-button{
+                position: static !important;
+            }
         }
         .expertise_col-list {
             // @include make-sm-column(3.5);
@@ -376,5 +380,14 @@
     .btn{
         width: 50%;
         float: left;
+    }
+}
+.adjustment-slider{
+    width: 340px;
+    padding: 15px 10px;
+
+    .slider-handle{
+        background-image: none;
+        background-color: #95c54d;
     }
 }

@@ -3,6 +3,7 @@
 
     angular.module('fundator.controllers').controller('CreateCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $timeout, $filter, FdScroller, API) {
         console.log('Create Started');
+        $rootScope.$broadcast('stopLoading');
         $rootScope.sectionLoading = true;
         $rootScope.innerSectionLoading = false;
 
@@ -75,8 +76,7 @@
 
         $scope.$watch('project', function(project){
             if (typeof(project) === 'undefined' || project === null) return;
-            console.log('project.state');
-            console.log(project.state);
+
             var flooredState = Math.floor($scope.project.state);
             var remainingState = $scope.project.state - flooredState;
 
@@ -108,9 +108,11 @@
             }
 
             var projectId = parseInt($stateParams.projectId);
+            console.log('getting stuff');
 
             if (typeof(projectId) === 'undefined' || isNaN(projectId)) {
-                Project.query().$promise.then(function(result) {
+                console.log('getting draft_only');
+                Project.query({'draft_only': 1}).$promise.then(function(result) {
                     $scope.allProjects = result;
                 }).finally(function() {
                     $rootScope.sectionLoading = false;
@@ -128,7 +130,7 @@
         } else {
             $timeout(function() {
                 $rootScope.sectionLoading = false;
-                $state.go('app.home');
+                $state.go('app.projects');
             }, 2000);
         }
 
@@ -225,7 +227,6 @@
 
         $scope.chooseSuperExpert = function(superExpert) {
             $scope.project.super_expert_id = superExpert.id;
-            $scope.project.state = 2;
             $scope.saveProgress();
 
             FdScroller.toSection('.steps-content');
@@ -268,12 +269,31 @@
             $scope.savingExpertise = true;
 
             var projectExpertiseData = {
-                'expertise_id': expertise.selectedExpertise.id,
                 'task': expertise.mainTask,
                 'budget': expertise.budget,
                 'lead_time': expertise.leadTime,
                 'start_date': expertise.startDate
             };
+
+
+            if (expertise.selectedExpertise !== null) {
+                projectExpertiseData['expertise_id'] = expertise.selectedExpertise.id;
+            }else{
+                projectExpertiseData['other_expertise'] = expertise.otherExpertise;
+            }
+
+            if (expertise.selectedExpertiseSubCategory !== null) {
+                projectExpertiseData['expertise_sub_category_id'] = expertise.selectedExpertiseSubCategory.id;
+            }else{
+                projectExpertiseData['other_expertise_sub_category'] = expertise.otherExpertiseSubCategory;
+            }
+
+            if (expertise.selectedExpertiseCategory !== null) {
+                projectExpertiseData['expertise_category_id'] = expertise.selectedExpertiseCategory.id;
+            }else{
+                projectExpertiseData['other_expertise_category'] = expertise.otherExpertiseCategory;
+            }
+
 
             $http.post(API.path('/projects/') + $scope.project.id + '/expertise', projectExpertiseData).then(function(result) {
                 console.log(result.data);
@@ -287,14 +307,10 @@
         }
 
         $scope.saveExpertiseSelection = function(){
+            $scope.project.state = 2.9;
+
             $scope.saveProgress();
-
             FdScroller.toSection('.steps-content');
-
-            $timeout(function() {
-                $scope.project.state = 3;
-            }, 500);
-
         }
 
         $scope.addNewInputtedExpertise = function() {
@@ -442,10 +458,12 @@
         }
     });
 
-    angular.module('fundator.controllers').controller('CreateExpertCtrl', function($rootScope, $scope, $state, $resource, $http, API, SweetAlert, FdScroller) {
+    angular.module('fundator.controllers').controller('CreateExpertCtrl', function($rootScope, $scope, $state, $resource, $http, $timeout, API, SweetAlert, FdScroller) {
         console.log('CreateExpertCtrl Started');
 
-        $scope.data = {};
+        $scope.data = {
+            selectedBid: null
+        };
 
         var ProjectExpertise = $resource(API.path('/projects/:projectId/expertise'), {
             projectId: '@id'
@@ -472,16 +490,28 @@
             expertise.shortlist.push(bid);
         }
 
+        $scope.isShortlistExpert = function(expertise, bid){
+            if (typeof(expertise.shortlist) !== 'undefined') {
+                return expertise.shortlist.indexOf(bid) !== -1;
+            }
+
+            return false;
+        }
+
         $scope.removeShortlistExpert = function(expertise, bid){
             var index = expertise.shortlist.indexOf(bid);
 
-            if (index === -1) {
+            if (index !== -1) {
                 expertise.shortlist.splice(index, 1);
             }
         }
 
         $scope.discussExpert = function(expertise, bid){
             $scope.data.selectedBid = bid
+        }
+
+        $scope.hideDiscussExpert = function(){
+            $scope.data.selectedBid = null;
         }
 
         $scope.selectExpert = function(expertise, bid) {
@@ -493,7 +523,7 @@
              confirmButtonColor: '#F8C486',confirmButtonText: 'Yes, go ahead!',
              cancelButtonText: 'Cancel',
              closeOnConfirm: false,
-             closeOnCancel: false},
+             closeOnCancel: true},
              function(isConfirm){
                 if (isConfirm) {
                     $http.put(API.path('/project-expertise/' + expertise.id + '/bid/' + bid.id), {}).then(function(result){
@@ -507,19 +537,28 @@
         }
 
         $scope.confirmExperts = function(){
-            $scope.project.state = 5;
+            $scope.project.state = 3.9;
             $scope.saveProgress();
 
             FdScroller.toSection('.steps-content');
-
-            $timeout(function() {
-                $state.go('app.create.expertise');
-            }, 300);
         }
     });
 
     angular.module('fundator.controllers').controller('CreateBudgetCtrl', function($rootScope, $scope, $state, $resource) {
         console.log('CreateBudgetCtrl Started');
+
+        $scope.data = {
+            budget: 600,
+            adjustmentMargin: 10,
+            selfFundingAmount: 0,
+            yearlyReturns: 15,
+            paybackDuration: 6,
+            paybackDurationExtension: 2
+        }
+
+        $scope.getTotalBudget = function(){
+            return $scope.data.budget + ($scope.data.budget * ($scope.data.adjustmentMargin / 100));
+        }
 
         $scope.$watch('project', function(project){
             if (typeof(project) === 'undefined' || project === null) return;

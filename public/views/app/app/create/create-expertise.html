@@ -1,4 +1,4 @@
-<div class="marginT25">
+<div class="marginT25" ng-if="project.state < 2.9 || project.state > 2.9">
     <ul class="sort-filter" ng-if="expertiseList.length > 0">
         <li class="">
             <a>Tasks under selection <span class="badge">{{expertiseList.length}}</span></a>
@@ -24,7 +24,7 @@
                     <small>{{expertise.task}}</small>
                 </h4>
                 <h4>Estimated budget: &nbsp;<small>{{expertise.budget | currency}}</small></h4>
-                <h4>Lead time: &nbsp; <small>{{expertise.lead_time}}</small></h4>
+                <h4>Lead time: &nbsp; <small>{{expertise.lead_time}} Days</small></h4>
                 <h4>Expected starting date: &nbsp; <small>{{expertise.start_date | amDateFormat:'MMM Do YYYY' }}</small></h4>
             </div>
             <div class="expertise_col expertise_col-stat">
@@ -166,4 +166,12 @@
     <br>
 
     <button class="btn btn-info center-block marginT30" ng-click="saveExpertiseSelection()" ladda="savingExpertise" ng-if="expertiseList.length > 0">Submit for review</button>
+</div>
+
+<div class="project-inreview well" ng-if="project.state === 2.9">
+    <span class="icon icon-clock"></span>
+
+    <p>Your selected expertise has been submitted for review. You will be notified when the Super Expert approves your selected expertise.</p>
+
+    <p>For any inquires, please write to <a href="mailto:contact@fundator.co">contact@fundator.co</a></p>
 </div>

@@ -18,12 +18,16 @@
             <!-- <span class="expertise-status">Waiting</span> -->
         </div>
         <div class="expertise_col expertise_col-info">
-            <h4>Main Task<br>
-                    <small>{{expertise.task}}</small>
-                </h4>
-            <h4>Estimated budget: &nbsp;<small>{{expertise.budget | currency}}</small></h4>
-            <h4>Lead time: &nbsp; <small>{{expertise.lead_time}}</small></h4>
-            <h4>Expected starting date: &nbsp; <small>{{expertise.start_date | amDateFormat:'MMM Do YYYY' }}</small></h4>
+            <h4>Main Task<br><small>{{expertise.task}}</small></h4>
+            <h4>Estimated budget<br><small>{{expertise.budget | currency}}</small></h4>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4>Expected starting date<br><small>{{expertise.start_date | amDateFormat:'MMM Do YYYY' }}</small></h4>
+                </div>
+                <div class="col-sm-12">
+                    <h4>Lead time<br><small>{{expertise.lead_time}} days</small></h4>
+                </div>
+            </div>
         </div>
         <div class="expertise_col expertise_col-stat margin0">
             <div class="relative" ng-if="expertise.bid === null">
@@ -43,14 +47,12 @@
                 </button>
             </div>
             <div class="relative" ng-if="expertise.bid !== null">
-                <h4 class="marginB20">Bid Amount <br>
-                    <small>{{expertise.bid.bid_amount}}</small>
-                </h4>
-                <h4 class="marginB20">Bid Description <br>
-                    <small>{{expertise.bid.description}}</small>
-                </h4>
-                <h4>Bid Placed on <br>
+                <h4 class="marginB20">Bid Amount <br><small>{{expertise.bid.bid_amount | currency}}</small></h4>
+                <h4 class="marginB20">Bid Placed on <br>
                     <small>{{expertise.bid.created_at | amDateFormat:'MMM Do, YYYY'}}</small>
+                </h4>
+                <h4>Bid Description <br>
+                    <small>{{expertise.bid.description}}</small>
                 </h4>
             </div>
         </div>

@@ -53,11 +53,11 @@ class ProjectBidSuperExpertNotification
 
             Log::info('Super Expert bid sent: ' . $superExpert->name);
 
-            Mail::send('emails.project-bid-superexpert', ['user' => $user, 'project_url' => $project_url, 'project' => $project, 'superExpert' => $superExpert], function ($m) use ($user, $project, $superExpert) {
-               $m->from('noreply@fundator.co', 'Fundator');
+            // Mail::send('emails.project-bid-superexpert', ['user' => $user, 'project_url' => $project_url, 'project' => $project, 'superExpert' => $superExpert], function ($m) use ($user, $project, $superExpert) {
+            //    $m->from('noreply@fundator.co', 'Fundator');
 
-               $m->to($user->email, $user->name)->subject('Super Expert ' . $superExpert->name . ' has placed a bid on your project ' . '"' . $project->name . '"');
-            });
+            //    $m->to($user->email, $user->name)->subject('Super Expert ' . $superExpert->name . ' has placed a bid on your project ' . '"' . $project->name . '"');
+            // });
 
             Log::info('Super Expert bid email sent: ' . $superExpert->name);
         }catch(Exception $e){

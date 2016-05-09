@@ -9,7 +9,7 @@
         $rootScope.initialRoleAssignment = false;
 
         $rootScope.activeRole = '';
-        $rootScope.activeState = {name: 'app.home'};
+        $rootScope.activeState = {name: 'app.projects'};
         $rootScope.activeStateParams = {};
 
         $rootScope.appLoading = true;
@@ -191,6 +191,15 @@
                     jury: getView('contest', 'contest-jury')
                 },
                 defaultTemplate: getView('contest')
+            }, {
+                route: 'app.projects',
+                view: 'main@',
+                roles: {
+                    creator: getView('project', 'projects-creator'),
+                    expert: getView('project', 'projects-expert'),
+                    investor: getView('project', 'projects-investor'),
+                    super_expert: getView('project', 'projects-se'),
+                }
             }];
 
             angular.forEach(userRoleViews, function(roleView) {
@@ -206,8 +215,15 @@
 
             var model = null;
 
-            console.log('preparing ... state updating');
-            console.log(state);
+            if (roleId === null) {
+                // Role ID is Empty
+                var roles = $filter('filter')($rootScope.user.user_roles, {role: role}, true);
+
+                if (typeof(roles) !== 'undefined' && roles.length > 0) {
+                    var role = roles[0];
+                    roleId = role.id;
+                }
+            }
 
             switch(role){
                 case 'creator': model = API.path('creators/') + roleId
@@ -224,8 +240,6 @@
                         state = $rootScope.activeState.name;
                         stateParams = $rootScope.activeStateParams;
                     }
-                    console.log('shit');
-                    console.log(state);
 
                     $state.go(state, stateParams, {reload: reload});
                     $rootScope.switchingUserRole = false;
@@ -235,8 +249,7 @@
                     state = $rootScope.activeState.name;
                     stateParams = $rootScope.activeStateParams;
                 }
-                console.log('state updating');
-                console.log(state);
+
                 $state.go(state, stateParams, {reload: reload});
                 $rootScope.switchingUserRole = false;
             }

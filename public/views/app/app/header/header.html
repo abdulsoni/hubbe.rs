@@ -1,5 +1,5 @@
 <div class="pull-left">
-    <a href="/#/contests" class="logo">
+    <a href="/#/projects" class="logo">
         <!-- <img src="images/header.png" alt=""> -->
         <img src="images/home/logo.svg" alt="">
     </a>
@@ -7,10 +7,10 @@
 <div class="center-block">
     <nav>
         <ul class="nav navbar-nav top-nav">
-            <li><a href="/">Home</a></li>
-            <li><a ui-sref="app.create" ng-class="{'activenav': $state.current.name.indexOf('create') !== -1}">Create</a></li>
-            <li><a ui-sref="app.expert" ng-class="{'activenav': $state.current.name.indexOf('expert') !== -1}">Expert</a></li>
-            <li><a ui-sref="app.invest" ng-class="{'activenav': $state.current.name.indexOf('invest') !== -1}">Invest</a></li>
+            <li><a href="http://fundator.co">Home</a></li>
+            <li><a class="pointer" ng-click="switchUserRole('creator', null, true, 'app.projects')" ng-class="{'activenav': $state.current.name.indexOf('projects') !== -1 && activeRole === 'creator'}">Create</a></li>
+            <li><a class="pointer" ng-click="switchUserRole('expert', null, true, 'app.projects')" ng-class="{'activenav': $state.current.name.indexOf('projects') !== -1 && activeRole === 'expert'}">Expert</a></li>
+            <li><a class="pointer" ng-click="switchUserRole('investor', null, true, 'app.projects')" ng-class="{'activenav': $state.current.name.indexOf('projects') !== -1 && activeRole === 'investor'}">Invest</a></li>
             <li><a ui-sref="app.contests" ng-class="{'activenav': $state.current.name.indexOf('contest') !== -1}">Contest</a></li>
         </ul>
     </nav>
@@ -51,7 +51,7 @@
                 <a ui-sref="app.grabshare">
                     <div class="profile-finance">
                         <span class="profile-finance_amount">
-                            0
+                            {{user.shares | number:0}}
                         </span>
                         <span class="profile-finance_caption">
                             Shares

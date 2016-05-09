@@ -57,11 +57,6 @@
         $scope.countries = Countries();
         $scope.countryCodes = CountryCodes();
 
-        console.log('$scope.countries');
-        console.log($scope.countries);
-        console.log('$scope.countryCodes');
-        console.log($scope.countryCodes);
-
         $scope.contactTimes = [
             {name: 'Working hours (9am to 6 pm)', value: '9-6'},
             {name: 'Evening time (6am to 9 pm)', value: '6-9'}

@@ -48,11 +48,11 @@ class ProjectSuperExpertSelectedtNotification
 
             Log::info('Super Expert selected notified: ' . $user->name);
 
-            Mail::send('emails.project-selected-superexpert', ['user' => $user, 'project' => $project], function ($m) use ($user, $project) {
-               $m->from('noreply@fundator.co', 'Fundator');
+            // Mail::send('emails.project-selected-superexpert', ['user' => $user, 'project' => $project], function ($m) use ($user, $project) {
+            //    $m->from('noreply@fundator.co', 'Fundator');
 
-               $m->to($user->email, $user->name)->subject('You have been selected as the Super Expert on the project ' . '"' . $project->name . '"');
-            });
+            //    $m->to($user->email, $user->name)->subject('You have been selected as the Super Expert on the project ' . '"' . $project->name . '"');
+            // });
 
             Log::info('Super Expert selected notified: ' . $user->name);
         }catch(Exception $e){

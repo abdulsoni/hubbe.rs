@@ -9,6 +9,7 @@ use Fundator\Http\Controllers\Controller;
 use Fundator\Project;
 use Fundator\Expert;
 use Fundator\Expertise;
+use Fundator\ExpertiseCategory;
 use Fundator\ProjectExpertise;
 use Fundator\ProjectExpertiseBid;
 use Fundator\Confirm;
@@ -37,20 +38,8 @@ class ProjectController extends Controller
                 return response()->json(['user_not_found'], 404);
             }
 
-            $creator = $user->creator;
-            $projects = [];
-
-            if (!is_null($creator)) {
-                $projects = Project::where('creator_id', $creator->id)->get();
-            }
-
-            $i = 0;
-            foreach($projects as $project)
-            {
-                $i++;
-                $project_data = $project->getAttributes();
-
-                $response[] = $project_data;
+            if (!is_null($user)) {
+                $response = ProjectController::projectsByRole($user, $_REQUEST['fd_active_role']);
             }
         } catch (Exception $e) {
             $statusCode = 400;
@@ -193,6 +182,97 @@ class ProjectController extends Controller
         //
     }
 
+    /*
+     * Projects by Role
+     *
+     */
+    public function projectsByRole($user, $role)
+    {
+        $projects_data = [];
+
+        switch ($role) {
+            case 'creator':
+                $creator = $user->creator;
+                $projects_data = [
+                    'draft' => [],
+                    'ongoing' => []
+                ];
+
+                if (!is_null($creator)) {
+                    $projects = Project::where('creator_id', $creator->id)->where('display', 1)->get();
+
+                    foreach($projects as $project)
+                    {
+                        $type = $project->draft ? 'draft' : 'ongoing';
+                        $projects_data[$type][] = $project->projectCreatorAttributes();
+                    }
+                }
+            break;
+            case 'expert':
+                $expert = $user->expert;
+
+                $projects_data = [
+                    'ongoing' => [],
+                    'bids' => [],
+                    'available' => [],
+                    'matching' => []
+                ];
+
+                if (!is_null($expert)) {
+                    $projectExpertise = ProjectExpertise::join('project_expertise_bids as peb', 'peb.project_expertise_id', '=', 'project_expertise.id')
+                        ->where('expert_id', $expert->id)->whereNotNull('selected_bid_id')->get(['project_expertise.id', 'bid_amount', 'task', 'budget', 'start_date', 'lead_time']);
+
+                    $projectBids = ProjectExpertise::join('project_expertise_bids as peb', 'peb.project_expertise_id', '=', 'project_expertise.id')
+                        ->where('expert_id', $expert->id)->whereNull('selected_bid_id')->get(['peb.id', 'bid_amount', 'task', 'budget', 'start_date', 'lead_time', 'peb.created_at']);
+
+                    $availableExpertise = ProjectExpertise::leftJoin('project_expertise_bids as peb', 'peb.project_expertise_id', '=', 'project_expertise.id')
+                        ->where('selected_bid_id', null)->whereNull('peb.id')->get(['project_expertise.id', 'project_expertise.project_id', 'project_expertise.expertise_id', 'project_expertise.task', 'project_expertise.budget', 'project_expertise.lead_time', 'project_expertise.start_date', 'project_expertise.created_at']);
+                }
+
+                $projects_data['ongoing'] = $projectExpertise;
+                $projects_data['bids'] = $projectBids;
+
+                foreach($availableExpertise as $expertise)
+                {
+                    $expertise_item_data = $expertise->getAttributes();
+                    $expertise_item_data['project'] = $expertise->project()->select('id', 'name', 'thumbnail')->first();
+                    $expertise_item_data['expertise'] = $expertise->expertise;
+
+                    $projects_data['available'][] = $expertise_item_data;
+                }
+
+                if (!is_null($expert->skills)) {
+                    $userSkills = $expert->skills->lists('id')->toArray();
+
+                    foreach($availableExpertise as $expertise_item) {
+                        $matchingSkills = [];
+
+                        if (!is_null($expertise->expertise)) {
+                            $matchingSkills = array_intersect($expertise->expertise->skills->lists('id')->toArray(), $userSkills);
+                        }
+
+                        if (sizeof($matchingSkills) > 0) {
+                            $expertise_item_data = $expertise->getAttributes();
+                            $expertise_item_data['project'] = $expertise->project()->select('id', 'name', 'thumbnail')->first();
+                            $expertise_item_data['expertise'] = $expertise->expertise;
+                            $expertise_item_data['matching_skills'] = $matchingSkills;
+
+                            $projects_data['matching'][] = $expertise_item_data;
+                            // $response['matching'] = array_unique(array_merge($response['matching'], $matchingSkills), SORT_REGULAR);
+                        }
+                    }
+                }
+            break;
+            case 'investor':
+                $projects_data = [
+                    'ongoing' => [],
+                    'available' => []
+                ];
+            break;
+        }
+
+        return $projects_data;
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -224,6 +304,8 @@ class ProjectController extends Controller
                     }else{
                         $project_expertise['selected_bid'] = null;
                     }
+
+                    $project_expertise['average_bid'] = $project_expertise->bids->avg('bid_amount');
                 }
             }else{
                 throw new Exception('Project not found', 1);
@@ -293,7 +375,54 @@ class ProjectController extends Controller
             }
 
             $project = Project::find($id);
-            $expertise = Expertise::find($request->expertise_id);
+            // $selectedExpertise = Expertise::find($request->expertise_id);
+
+            $expertiseCategory = null;
+            $expertiseSubCategory = null;
+            $expertise = null;
+            $allSkills = [];
+
+            if (!empty($request->other_expertise_category['name'])) {
+                $expertiseCategory = ExpertiseCategory::create([
+                    'name' => $request->other_expertise_category['name'],
+                    'visible' => false
+                ]);
+            }else{
+                $expertiseCategory = ExpertiseCategory::find($request->expertise_category['id']);
+            }
+
+            if(!empty($request->other_expertise_sub_category['name'])){
+                $expertiseSubCategory = ExpertiseCategory::create([
+                    'name' => $request->other_expertise_sub_category['name'],
+                    'visible' => false
+                ]);
+                $expertiseSubCategory->parent()->associate($expertiseCategory);
+                $expertiseSubCategory->save();
+            }else{
+                $expertiseSubCategory = ExpertiseCategory::find($request->expertise_sub_category['id']);
+            }
+
+            if (!empty($request->other_expertise['name'])) {
+                $expertise = Expertise::create([
+                    'name' => $request->other_expertise['name'],
+                    'description' => '',
+                    'visible' => false
+                ]);
+
+                $expertise->expertiseCategory()->associate($expertiseSubCategory);
+                $expertise->save();
+
+                $selectedExpertise = $expertise;
+            }else{
+                $expertise = Expertise::find($request->expertise['id']);
+
+                if (!is_null($expertiseSubCategory)) {
+                    $expertise->expertiseCategory()->associate($expertiseSubCategory);
+                }
+
+                $selectedExpertise = $expertise;
+            }
+
 
             if (!is_null($project) && !is_null($expertise)) {
                 $projectExpertise = ProjectExpertise::create([
@@ -304,7 +433,7 @@ class ProjectController extends Controller
                 ]);
 
                 $projectExpertise->project()->associate($project);
-                $projectExpertise->expertise()->associate($expertise);
+                $projectExpertise->expertise()->associate($selectedExpertise);
 
                 // Create double confirmation here ...
 

@@ -43,11 +43,11 @@ class SendRegistrationNotification
                 ->extra(['icon' => 'signup', 'action' => null])
                 ->send();
 
-            Mail::send('emails.register', ['user' => $user, 'login_url' => $this->login_url], function ($m) use ($user) {
-                $m->from('noreply@fundator.co', 'Fundator');
+            // Mail::send('emails.register', ['user' => $user, 'login_url' => $this->login_url], function ($m) use ($user) {
+            //     $m->from('noreply@fundator.co', 'Fundator');
 
-                $m->to($user->email, $user->name)->subject('You have successfully registered on Fundator!');
-            });
+            //     $m->to($user->email, $user->name)->subject('You have successfully registered on Fundator!');
+            // });
         }catch(Exception $e){
             Log::error($e);
         }

@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="col-xs-3 notification_actions text-right">
-                <a class="radiusBox pointer sky" ng-if="notification.extras.action !== null" ui-sref="{{notification.extras.action}}">
+                <a class="radiusBox pointer sky" ng-if="notification.extras.action !== null" ui-sref="{{notification.extras.action ? notification.extras.action : null}}">
                     <span class="icon_search"></span>
                 </a>
                 <a class="radiusBox pointer"><span class="icon_text"></span></a>

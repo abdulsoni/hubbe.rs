@@ -67,4 +67,16 @@ class Project extends Model
     public function thumbnailUrl(){
         return URL::to('/' . $this->thumbnail);
     }
+
+    public function projectCreatorAttributes(){
+        return $this->getAttributes();
+    }
+
+    public function projectExpertAttributes(){
+        return $this->getAttributes();
+    }
+
+    public function projectInvestorAttributes(){
+        return $this->getAttributes();
+    }
 }

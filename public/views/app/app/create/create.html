@@ -45,7 +45,7 @@
                 <uib-accordion close-others="true">
                     <uib-accordion-group is-open="step.isOpen" ng-repeat="step in steps" ng-class="{'done': step.progress >= 1, 'ongoing': (step.ongoing && step.progress !== 1)}">
                         <uib-accordion-heading>
-                            <span>{{step.title}}  {{step.progress * 100}}%</span>
+                            <span>{{step.title}}  {{step.progress * 100 | number:0}}%</span>
                         </uib-accordion-heading>
                         <div class="panel_body" ng-bind-html="step.body | trustedHtml"></div>
                     </uib-accordion-group>

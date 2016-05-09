@@ -33,7 +33,19 @@ class EventServiceProvider extends ServiceProvider
         ],
         'Fundator\Events\ProjectSuperExpertSelected' => [
             'Fundator\Listeners\ProjectSuperExpertSelectedtNotification'
-        ]
+        ],
+        'Fundator\Events\ProjectExpertiseApproved' => [
+            'Fundator\Listeners\ProjectExpertiseApprovedNotification'
+        ],
+        'Fundator\Events\ProjectExpertsApproved' => [
+            'Fundator\Listeners\ProjectExpertsApprovedNotification'
+        ],
+        'Fundator\Events\ProjectBudgetApproved' => [
+            'Fundator\Listeners\ProjectBudgetApprovedNotification'
+        ],
+        'Fundator\Events\ProjectFinanceApproved' => [
+            'Fundator\Listeners\ProjectFinanceApprovedNotification'
+        ],
     ];
 
     /**

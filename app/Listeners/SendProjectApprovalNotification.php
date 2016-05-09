@@ -50,11 +50,11 @@ class SendProjectApprovalNotification
 
             Log::info('Project Approved : ' . $project->name);
 
-            Mail::send('emails.project-approved', ['user' => $user, 'project_url' => $project_url, 'project' => $project], function ($m) use ($user, $project) {
-               $m->from('noreply@fundator.co', 'Fundator');
+            // Mail::send('emails.project-approved', ['user' => $user, 'project_url' => $project_url, 'project' => $project], function ($m) use ($user, $project) {
+            //    $m->from('noreply@fundator.co', 'Fundator');
 
-               $m->to($user->email, $user->name)->subject('Your project "' . $project->name . '" has been approved on Fundator!');
-            });
+            //    $m->to($user->email, $user->name)->subject('Your project "' . $project->name . '" has been approved on Fundator!');
+            // });
 
             Log::info('Project Approved Email sent: ' . $project->name);
         }catch(Exception $e){

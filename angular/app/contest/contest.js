@@ -2,7 +2,7 @@
     "use strict";
 
     angular.module('fundator.controllers').controller('ContestCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $http, $timeout, $filter, API) {
-
+        $rootScope.$broadcast('stopLoading');
         $scope.contests = [];
         $scope.sectionLoading = true;
 
@@ -46,6 +46,7 @@
     });
 
     angular.module('fundator.controllers').controller('ContestSingleCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $filter, $timeout, FdScroller, $http, Lightbox, API) {
+        $rootScope.$broadcast('stopLoading');
         $scope.contestId = $stateParams.contestId;
         $scope.data = {
             contestFullDescription: false,
