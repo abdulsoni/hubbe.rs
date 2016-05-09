@@ -227,41 +227,42 @@ class ProjectController extends Controller
 
                     $availableExpertise = ProjectExpertise::leftJoin('project_expertise_bids as peb', 'peb.project_expertise_id', '=', 'project_expertise.id')
                         ->where('selected_bid_id', null)->whereNull('peb.id')->get(['project_expertise.id', 'project_expertise.project_id', 'project_expertise.expertise_id', 'project_expertise.task', 'project_expertise.budget', 'project_expertise.lead_time', 'project_expertise.start_date', 'project_expertise.created_at']);
-                }
 
-                $projects_data['ongoing'] = $projectExpertise;
-                $projects_data['bids'] = $projectBids;
+                    $projects_data['ongoing'] = $projectExpertise;
+                    $projects_data['bids'] = $projectBids;
 
-                foreach($availableExpertise as $expertise)
-                {
-                    $expertise_item_data = $expertise->getAttributes();
-                    $expertise_item_data['project'] = $expertise->project()->select('id', 'name', 'thumbnail')->first();
-                    $expertise_item_data['expertise'] = $expertise->expertise;
+                    foreach($availableExpertise as $expertise)
+                    {
+                        $expertise_item_data = $expertise->getAttributes();
+                        $expertise_item_data['project'] = $expertise->project()->select('id', 'name', 'thumbnail')->first();
+                        $expertise_item_data['expertise'] = $expertise->expertise;
 
-                    $projects_data['available'][] = $expertise_item_data;
-                }
+                        $projects_data['available'][] = $expertise_item_data;
+                    }
 
-                if (!is_null($expert->skills)) {
-                    $userSkills = $expert->skills->lists('id')->toArray();
+                    if (!is_null($expert->skills)) {
+                        $userSkills = $expert->skills->lists('id')->toArray();
 
-                    foreach($availableExpertise as $expertise_item) {
-                        $matchingSkills = [];
+                        foreach($availableExpertise as $expertise_item) {
+                            $matchingSkills = [];
 
-                        if (!is_null($expertise->expertise)) {
-                            $matchingSkills = array_intersect($expertise->expertise->skills->lists('id')->toArray(), $userSkills);
-                        }
+                            if (!is_null($expertise->expertise)) {
+                                $matchingSkills = array_intersect($expertise->expertise->skills->lists('id')->toArray(), $userSkills);
+                            }
 
-                        if (sizeof($matchingSkills) > 0) {
-                            $expertise_item_data = $expertise->getAttributes();
-                            $expertise_item_data['project'] = $expertise->project()->select('id', 'name', 'thumbnail')->first();
-                            $expertise_item_data['expertise'] = $expertise->expertise;
-                            $expertise_item_data['matching_skills'] = $matchingSkills;
+                            if (sizeof($matchingSkills) > 0) {
+                                $expertise_item_data = $expertise->getAttributes();
+                                $expertise_item_data['project'] = $expertise->project()->select('id', 'name', 'thumbnail')->first();
+                                $expertise_item_data['expertise'] = $expertise->expertise;
+                                $expertise_item_data['matching_skills'] = $matchingSkills;
 
-                            $projects_data['matching'][] = $expertise_item_data;
-                            // $response['matching'] = array_unique(array_merge($response['matching'], $matchingSkills), SORT_REGULAR);
+                                $projects_data['matching'][] = $expertise_item_data;
+                                // $response['matching'] = array_unique(array_merge($response['matching'], $matchingSkills), SORT_REGULAR);
+                            }
                         }
                     }
                 }
+
             break;
             case 'investor':
                 $projects_data = [
