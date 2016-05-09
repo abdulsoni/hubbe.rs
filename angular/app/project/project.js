@@ -3,6 +3,7 @@
 
     angular.module('fundator.controllers').controller('ProjectsCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $http, $timeout, $filter, API) {
         $rootScope.$broadcast('stopLoading');
+        $scope.data = {};
 
         $scope.projects = [];
         $scope.sectionLoading = true;
