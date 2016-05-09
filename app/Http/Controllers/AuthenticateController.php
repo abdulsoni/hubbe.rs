@@ -498,10 +498,9 @@ class AuthenticateController extends Controller
             'redirect_uri' => 'http://desk.fundator.co/api/v1/authenticate/linkedin',
             'grant_type' => 'authorization_code',
         ];
-        var_dump($params);
         // Step 1. Exchange authorization code for access token.
         $accessTokenResponse = $client->request('POST', 'https://www.linkedin.com/uas/oauth2/accessToken', [
-            'form_params' => $params
+            'form_params' => json_encode($params)
         ]);
         $accessToken = json_decode($accessTokenResponse->getBody(), true);
         // Step 2. Retrieve profile information about the current user.
