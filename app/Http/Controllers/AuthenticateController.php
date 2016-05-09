@@ -498,109 +498,117 @@ class AuthenticateController extends Controller
             'redirect_uri' => 'http://desk.fundator.co/api/v1/authenticate/linkedin',
             'grant_type' => 'authorization_code',
         ];
-        // Step 1. Exchange authorization code for access token.
-        $accessTokenResponse = $client->request('POST', 'https://www.linkedin.com/uas/oauth2/accessToken', [
-            'form_params' => json_encode($params)
-        ]);
-        $accessToken = json_decode($accessTokenResponse->getBody(), true);
-        // Step 2. Retrieve profile information about the current user.
-        // $profileResponse = $client->request('GET', 'https://api.linkedin.com/v1/people/~:(id,first-name,last-name,email-address)', [
-        $profileResponse = $client->request('GET', 'https://api.linkedin.com/v1/people/~:(id,first-name,last-name,picture-url,industry,formatted-name,headline,location,summary,specialties,positions,public-profile-url,email-address)', [
-            'query' => [
-                'oauth2_access_token' => $accessToken['access_token'],
-                'format' => 'json'
-            ]
-        ]);
-        $profile = json_decode($profileResponse->getBody(), true);
 
-        // Step 3a. If user is already signed in then link accounts.
-        if ($request->header('Authorization'))
-        {
-            $linkedinProfile = LinkedinProfile::where('linkedin_id', $profile['id'])->first();
-
-            if (!is_null($linkedinProfile))
-            {
-                $linkedinProfile->linkedin_token = $accessToken['access_token'];
-                $linkedinProfile->save();
-                $user = User::find($linkedinProfile->user_id);
-                return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
-            }
-
-            $token = explode(' ', $request->header('Authorization'))[1];
-            $payload = JWTAuth::getPayload($token);
-            $user = User::find($payload['sub']);
-
-            // Save Linkedin Details
-            $linkedinProfile = LinkedinProfile::create([
-                'thumbnail_url' => isset($profile['pictureUrl']) ? $profile['pictureUrl'] : null,
-                'first_name' => $profile['firstName'],
-                'last_name' => $profile['lastName'],
-                'email' => $profile['emailAddress'],
-                'position' => isset($profile['headline']) ? $profile['headline'] : '',
-                'industry' => isset($profile['industry']) ? $profile['industry'] : '',
-                'country' => isset($profile['location']['country']['code']) ? $profile['location']['country']['code'] : '',
-                'city' => isset($profile['location']['name']) ? $profile['location']['name'] : '',
-                'summary' => isset($profile['summary']) ? $profile['summary'] : '',
-                'specialties' => isset($profile['specialties']) ? $profile['specialties'] : '',
-                'profile_url' => $profile['publicProfileUrl']
+        try {
+            // Step 1. Exchange authorization code for access token.
+            $accessTokenResponse = $client->request('POST', 'https://www.linkedin.com/uas/oauth2/accessToken', [
+                'form_params' => $params
             ]);
+            $accessToken = json_decode($accessTokenResponse->getBody(), true);
+            // Step 2. Retrieve profile information about the current user.
+            // $profileResponse = $client->request('GET', 'https://api.linkedin.com/v1/people/~:(id,first-name,last-name,email-address)', [
+            $profileResponse = $client->request('GET', 'https://api.linkedin.com/v1/people/~:(id,first-name,last-name,picture-url,industry,formatted-name,headline,location,summary,specialties,positions,public-profile-url,email-address)', [
+                'query' => [
+                    'oauth2_access_token' => $accessToken['access_token'],
+                    'format' => 'json'
+                ]
+            ]);
+            $profile = json_decode($profileResponse->getBody(), true);
 
-            $linkedinProfile->linkedin_id = $profile['id'];
-            $linkedinProfile->linkedin_token = $accessToken['access_token'];
-            $linkedinProfile->user()->associate($user);
-            $linkedinProfile->save();
-
-            $user->linkedin = $profile['id'];
-            $user->save();
-
-            return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
-        }
-        // Step 3b. Create a new user account or return an existing one.
-        else
-        {
-            $linkedinProfile = LinkedinProfile::where('linkedin_id', $profile['id'])->first();
-
-            if (!is_null($linkedinProfile))
+            // Step 3a. If user is already signed in then link accounts.
+            if ($request->header('Authorization'))
             {
-                $user = User::find($linkedinProfile->user_id);
+                $linkedinProfile = LinkedinProfile::where('linkedin_id', $profile['id'])->first();
+
+                if (!is_null($linkedinProfile))
+                {
+                    $linkedinProfile->linkedin_token = $accessToken['access_token'];
+                    $linkedinProfile->save();
+                    $user = User::find($linkedinProfile->user_id);
+                    return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
+                }
+
+                $token = explode(' ', $request->header('Authorization'))[1];
+                $payload = JWTAuth::getPayload($token);
+                $user = User::find($payload['sub']);
+
+                // Save Linkedin Details
+                $linkedinProfile = LinkedinProfile::create([
+                    'thumbnail_url' => isset($profile['pictureUrl']) ? $profile['pictureUrl'] : null,
+                    'first_name' => $profile['firstName'],
+                    'last_name' => $profile['lastName'],
+                    'email' => $profile['emailAddress'],
+                    'position' => isset($profile['headline']) ? $profile['headline'] : '',
+                    'industry' => isset($profile['industry']) ? $profile['industry'] : '',
+                    'country' => isset($profile['location']['country']['code']) ? $profile['location']['country']['code'] : '',
+                    'city' => isset($profile['location']['name']) ? $profile['location']['name'] : '',
+                    'summary' => isset($profile['summary']) ? $profile['summary'] : '',
+                    'specialties' => isset($profile['specialties']) ? $profile['specialties'] : '',
+                    'profile_url' => $profile['publicProfileUrl']
+                ]);
+
+                $linkedinProfile->linkedin_id = $profile['id'];
                 $linkedinProfile->linkedin_token = $accessToken['access_token'];
+                $linkedinProfile->user()->associate($user);
                 $linkedinProfile->save();
-                return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
-            }
 
-            $user = User::where('email', $profile['emailAddress'])->first();
-
-            if (is_null($user)) {
-                $user = new User;
-                $user->name =  $profile['firstName'] . ' ' . $profile['lastName'];
-                $user->email = $profile['emailAddress'];
-                $user->position = isset($profile['headline']) ? $profile['headline'] : '';
-                $user->confirmed = 1;
                 $user->linkedin = $profile['id'];
                 $user->save();
+
+                return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
             }
+            // Step 3b. Create a new user account or return an existing one.
+            else
+            {
+                $linkedinProfile = LinkedinProfile::where('linkedin_id', $profile['id'])->first();
 
-            // Save Linkedin Details
-            $linkedinProfile = LinkedinProfile::create([
-                'thumbnail_url' => isset($profile['pictureUrl']) ? $profile['pictureUrl'] : null,
-                'first_name' => $profile['firstName'],
-                'last_name' => $profile['lastName'],
-                'email' => $profile['emailAddress'],
-                'position' => isset($profile['headline']) ? $profile['headline'] : '',
-                'industry' => isset($profile['industry']) ? $profile['industry'] : '',
-                'country' => isset($profile['location']['country']['code']) ? $profile['location']['country']['code'] : '',
-                'city' => isset($profile['location']['name']) ? $profile['location']['name'] : '',
-                'summary' => isset($profile['summary']) ? $profile['summary'] : '',
-                'specialties' => isset($profile['specialties']) ? $profile['specialties'] : '',
-                'profile_url' => $profile['publicProfileUrl']
-            ]);
+                if (!is_null($linkedinProfile))
+                {
+                    $user = User::find($linkedinProfile->user_id);
+                    $linkedinProfile->linkedin_token = $accessToken['access_token'];
+                    $linkedinProfile->save();
+                    return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
+                }
 
-            $linkedinProfile->linkedin_id = $profile['id'];
-            $linkedinProfile->linkedin_token = $accessToken['access_token'];
-            $linkedinProfile->user()->associate($user);
-            $linkedinProfile->save();
+                $user = User::where('email', $profile['emailAddress'])->first();
 
-            return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
+                if (is_null($user)) {
+                    $user = new User;
+                    $user->name =  $profile['firstName'] . ' ' . $profile['lastName'];
+                    $user->email = $profile['emailAddress'];
+                    $user->position = isset($profile['headline']) ? $profile['headline'] : '';
+                    $user->confirmed = 1;
+                    $user->linkedin = $profile['id'];
+                    $user->save();
+                }
+
+                // Save Linkedin Details
+                $linkedinProfile = LinkedinProfile::create([
+                    'thumbnail_url' => isset($profile['pictureUrl']) ? $profile['pictureUrl'] : null,
+                    'first_name' => $profile['firstName'],
+                    'last_name' => $profile['lastName'],
+                    'email' => $profile['emailAddress'],
+                    'position' => isset($profile['headline']) ? $profile['headline'] : '',
+                    'industry' => isset($profile['industry']) ? $profile['industry'] : '',
+                    'country' => isset($profile['location']['country']['code']) ? $profile['location']['country']['code'] : '',
+                    'city' => isset($profile['location']['name']) ? $profile['location']['name'] : '',
+                    'summary' => isset($profile['summary']) ? $profile['summary'] : '',
+                    'specialties' => isset($profile['specialties']) ? $profile['specialties'] : '',
+                    'profile_url' => $profile['publicProfileUrl']
+                ]);
+
+                $linkedinProfile->linkedin_id = $profile['id'];
+                $linkedinProfile->linkedin_token = $accessToken['access_token'];
+                $linkedinProfile->user()->associate($user);
+                $linkedinProfile->save();
+
+                return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
+            }
+        }
+        catch (GuzzleHttp\Exception\ClientException $e) {
+            $response = $e->getResponse();
+            $responseBodyAsString = $response->getBody()->getContents();
+            return response()->json(['error' => $responseBodyAsString], 400, [], JSON_NUMERIC_CHECK);
         }
     }
 }
