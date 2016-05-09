@@ -34,6 +34,18 @@
             }, 1000);
         });
 
+        $scope.createNewProject = function() {
+            $scope.data.newProjectLoading = true;
+
+            var newProject = new Project().$save().then(function(result) {
+                $scope.goToProject(result);
+                $scope.data.newProjectLoading = false;
+            });
+        }
+
+        $scope.goToProject = function(project) {
+            $state.go('app.create.details', { projectId: project.id });
+        }
     });
 
 })();
