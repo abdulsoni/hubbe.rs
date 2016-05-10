@@ -397,7 +397,7 @@ class ProjectController extends Controller
                     'visible' => false
                 ]);
             }else{
-                $expertiseCategory = ExpertiseCategory::find($request->expertise_category['id']);
+                $expertiseCategory = ExpertiseCategory::find($request->expertise_category_id);
             }
 
             if(!empty($request->other_expertise_sub_category['name'])){
@@ -408,7 +408,7 @@ class ProjectController extends Controller
                 $expertiseSubCategory->parent()->associate($expertiseCategory);
                 $expertiseSubCategory->save();
             }else{
-                $expertiseSubCategory = ExpertiseCategory::find($request->expertise_sub_category['id']);
+                $expertiseSubCategory = ExpertiseCategory::find($request->expertise_sub_category_id);
             }
 
             if (!empty($request->other_expertise['name'])) {
@@ -423,7 +423,7 @@ class ProjectController extends Controller
 
                 $selectedExpertise = $expertise;
             }else{
-                $expertise = Expertise::find($request->expertise['id']);
+                $expertise = Expertise::find($request->expertise_id);
 
                 if (!is_null($expertiseSubCategory)) {
                     $expertise->expertiseCategory()->associate($expertiseSubCategory);
@@ -432,6 +432,9 @@ class ProjectController extends Controller
                 $selectedExpertise = $expertise;
             }
 
+            if (is_null($expertise) && isset($request->expertise_id)) {
+                $expertise = Expertise::find($request->expertise_id);
+            }
 
             if (!is_null($project) && !is_null($expertise)) {
                 $projectExpertise = ProjectExpertise::create([
