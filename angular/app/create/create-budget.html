@@ -192,7 +192,7 @@
                 <div class="stats">
                     <div class="row">
                         <div class="col-sm-4">
-                            <h4>Total amount (incl. Interest): <br><span>{{getTotalBudget(true)}}</span></h4>
+                            <h4>Total amount (incl. Interest): <br><span>{{getTotalBudget(true) | currency}}</span></h4>
                         </div>
                         <div class="col-sm-4">
                             <h4>Gross Unit Margin: <br><span>{{projectFinance.fob_selling_price - projectFinance.fob_manufacturing_cost | currency}}</span></h4>

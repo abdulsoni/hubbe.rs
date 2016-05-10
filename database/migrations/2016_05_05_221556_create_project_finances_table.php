@@ -37,8 +37,8 @@ class CreateProjectFinancesTable extends Migration
             $table->integer('investors_max');
             $table->integer('investors_type');
 
-            $table->integer('investors_message_creator');
-            $table->integer('investors_message_se');
+            $table->text('investors_message_creator');
+            $table->text('investors_message_se');
 
             $table->timestamps();
         });

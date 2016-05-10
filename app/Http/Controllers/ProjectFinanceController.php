@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 use Fundator\Http\Requests;
 use Fundator\Http\Controllers\Controller;
 
+use Fundator\ProjectFinance;
+
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Event;
+
+
 class ProjectFinanceController extends Controller
 {
     /**
@@ -59,22 +65,22 @@ class ProjectFinanceController extends Controller
 
             $project_finance = ProjectFinance::find($id);
 
-            // Update Logic Happens here
-            // $project->thumbnail = $request->thumbnail;
-            // $project->name = $request->name;
-            // $project->description = $request->description;
-            // $project->market = $request->market;
-            // $project->price = floatval($request->price);
-            // $project->geography = $request->geography;
-            // $project->language = $request->language;
-
-            // if (is_null($project->super_expert_id) && isset($request->super_expert_id)) {
-            //     $superExpert = Expert::find($request->super_expert_id);
-            //     Event::fire(new ProjectSuperExpertSelected($project, $superExpert));
-
-            //     $project->super_expert_id = $request->super_expert_id;
-            //     $project->state = 2;
-            // }
+            $project_finance->fill([
+                'fob_manufacturing_cost' => $request->fob_manufacturing_cost,
+                'fob_selling_price' => $request->fob_selling_price,
+                'gross_margin' => $request->gross_margin,
+                'adjustment_margin' => $request->adjustment_margin,
+                'self_funding_amount' => $request->self_funding_amount,
+                'funding_amount' => $request->funding_amount,
+                'payable_intrest' => $request->payable_intrest,
+                'payback_duration' => $request->payback_duration,
+                'payback_duration_extended' => $request->payback_duration_extended,
+                'investors_min' => $request->investors_min,
+                'investors_max' => $request->investors_max,
+                'investors_type' => $request->investors_type,
+                'investors_message_creator' => $request->investors_message_creator,
+                'investors_message_se' => $request->investors_message_se
+            ]);
 
             $response = $project_finance->save();
         } catch (Exception $e) {

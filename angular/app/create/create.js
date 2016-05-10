@@ -572,7 +572,7 @@
         $scope.$watch('project', function(project){
             if (typeof(project) === 'undefined' || project === null) return;
 
-            ProjectFinance.get({projectFinanceId: project.project_finance_id}).then(function(result){
+            ProjectFinance.get({projectFinanceId: project.project_finance_id}).$promise.then(function(result){
                 $scope.projectFinance = result;
             }).finally(function(){
                 $rootScope.innerSectionLoading = false;

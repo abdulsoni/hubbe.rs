@@ -109,6 +109,7 @@ class ProjectController extends Controller
 
             if (!is_null($project)) {
                 $project_data = $project->getAttributes();
+                $project_data['project_finance_id'] = $project->projectFinance->id;
             }else{
                 throw new Exception('Project not found', 1);
             }
