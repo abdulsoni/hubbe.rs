@@ -109,17 +109,35 @@ class Project extends Model
                         $expertise = $project->expertise;
 
                         foreach ($expertise as $expertise_item) {
-                            $amount_needed = $amount_needed + $expertise_item->selectedBid->bid_amount;
+                            if (!is_null($expertise_item->selectedBid)) {
+                                $amount_needed = $amount_needed + $expertise_item->selectedBid->bid_amount;
+                            }
                         }
                     }
 
                     $projectFinance = $project->projectFinance;
 
                     if (is_null($projectFinance)) {
-                        $projectFinance = ProjectFinance::create([]);
+                        $projectFinance = $project->projectFinance()->create([
+                            'fob_manufacturing_cost' => 0.0,
+                            'fob_factory_price' => 0.0,
+                            'fob_selling_price' => 0.0,
+                            'gross_margin' => 0.0,
+                            'base_budget' => floatval($amount_needed),
+                            'adjustment_margin' => 0.0,
+                            'self_funding_amount' => 0.0,
+                            'funding_amount' => 0.0,
+                            'payable_intrest' => 0,
+                            'payback_duration' => 0,
+                            'payback_duration_extended' => 0,
+                            'investors_min' => 0,
+                            'investors_max' => 0,
+                            'investors_type' => 0,
+                            'investors_message_creator' => '',
+                            'investors_message_se' => ''
+                        ]);
                     }
 
-                    $projectFinance->amount_needed = $amount_needed;
                     $projectFinance->save();
                     break;
             }
