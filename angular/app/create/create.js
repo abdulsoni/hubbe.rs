@@ -275,7 +275,6 @@
                 'start_date': expertise.startDate
             };
 
-
             if (expertise.selectedExpertise !== null) {
                 projectExpertiseData['expertise_id'] = expertise.selectedExpertise.id;
             }else{
@@ -544,26 +543,105 @@
         }
     });
 
-    angular.module('fundator.controllers').controller('CreateBudgetCtrl', function($rootScope, $scope, $state, $resource) {
+    angular.module('fundator.controllers').controller('CreateBudgetCtrl', function($rootScope, $scope, $state, $resource, API) {
         console.log('CreateBudgetCtrl Started');
+        $rootScope.innerSectionLoading = true;
 
-        $scope.data = {
-            budget: 600,
-            adjustmentMargin: 10,
-            selfFundingAmount: 0,
-            yearlyReturns: 15,
-            paybackDuration: 6,
-            paybackDurationExtension: 2
-        }
+        var ProjectFinance = $resource(API.path('project-finance/:projectFinanceId'), {
+            projectFinanceId: '@id'
+        }, {
+            update: {
+                method: 'PUT'
+            }
+        });
 
-        $scope.getTotalBudget = function(){
-            return $scope.data.budget + ($scope.data.budget * ($scope.data.adjustmentMargin / 100));
+        $scope.data = {};
+
+        $scope.projectFinance = {
+            base_budget: 600,
+            adjustment_margin: 10,
+            self_funding_amount: 0,
+            funding_amount: 0,
+            payable_intrest: 15,
+            payback_duration: 6,
+            payback_duration_extended: 2,
+            investors_message_creator: '',
+            investors_message_se: ''
         }
 
         $scope.$watch('project', function(project){
             if (typeof(project) === 'undefined' || project === null) return;
-            $rootScope.innerSectionLoading = false;
+
+            ProjectFinance.get({projectFinanceId: project.project_finance_id}).then(function(result){
+                $scope.projectFinance = result;
+            }).finally(function(){
+                $rootScope.innerSectionLoading = false;
+            });
         });
+
+        $scope.getTotalBudget = function(withInterest){
+            var totalBudget = $scope.projectFinance.base_budget + ($scope.projectFinance.base_budget * ($scope.projectFinance.adjustment_margin / 100));
+
+            if (withInterest) {
+                var duration = angular.copy($scope.projectFinance.payback_duration);
+                var monthlyInterest = $scope.projectFinance.payable_intrest / 12;
+                var overallInterest = monthlyInterest * duration;
+
+                totalBudget = totalBudget + (totalBudget * (overallInterest / 100));
+            }
+
+            return totalBudget;
+        }
+
+        $scope.getPaybackDuration = function() {
+            if ($scope.projectFinance.payback_duration === $scope.data.oldPaybackDuration) return $scope.data.paybackDurationArray;
+            var years = [];
+            var yearsCopy = [];
+
+            $scope.data.oldPaybackDuration = angular.copy($scope.projectFinance.payback_duration);
+            var duration = angular.copy($scope.projectFinance.payback_duration);
+            var whole = Math.floor(duration / 12);
+            var remainder = duration % 12;
+            console.log('whole');
+            console.log(whole);
+
+            for (var i = 0; i < whole; i++){
+                var wholeRemainderArray = [];
+
+                for (var wr = 0; wr < 12; wr++){
+                    wholeRemainderArray.push({sold: 0});
+                }
+
+                yearsCopy.push(wholeRemainderArray);
+            }
+
+            if (remainder > 0) {
+                var remainderArray = [];
+
+                for (var r = 0; r < remainder; r++){
+                    remainderArray.push({sold: 0});
+                }
+
+                yearsCopy.push(remainderArray);
+            }
+
+            $scope.data.paybackDurationArray = angular.copy(yearsCopy);
+            return angular.copy(yearsCopy);
+        }
+
+        $scope.saveProgress = function() {
+            console.log('saving progress');
+            var projectFinance = angular.copy($scope.projectFinance);
+
+            if (typeof(projectFinance) !== 'undefined') {
+                ProjectFinance.update({
+                    projectFinanceId: projectFinance.id
+                }, projectFinance).$promise.then(function(result) {
+                    console.log('result');
+                    console.log(result);
+                });
+            }
+        }
     });
 
     angular.module('fundator.controllers').controller('CreateInvestorsCtrl', function($rootScope, $scope, $state, $resource) {

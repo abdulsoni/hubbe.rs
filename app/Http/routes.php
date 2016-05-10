@@ -254,6 +254,9 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
     $api->get('projects/{id}/expertise', 'Fundator\Http\Controllers\ProjectController@indexExpertise');
     $api->post('projects/{id}/expertise', 'Fundator\Http\Controllers\ProjectController@storeExpertise');
 
+    $api->get('project-finance/{id}', 'Fundator\Http\Controllers\ProjectFinanceController@show');
+    $api->put('project-finance/{id}', 'Fundator\Http\Controllers\ProjectFinanceController@update');
+
     $api->get('project-expertise/{id}', 'Fundator\Http\Controllers\ProjectController@getExpertise');
     $api->post('project-expertise/{id}/bid', 'Fundator\Http\Controllers\ProjectController@storeExpertiseBid');
     $api->put('project-expertise/{projectExpertiseId}/bid/{bidId}', 'Fundator\Http\Controllers\ProjectController@selectProjectExpertiseBid');

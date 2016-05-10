@@ -1,55 +1,146 @@
-<div class="well marginT25 checkoutRow">
-	<div class="row">
-		<div class="col-md-8 col-sm-7">
-			<h4 class="marginB25 marginT0">Expert budget needed: <br><span class="center-block marginT10">{{data.budget | currency}}</span></h4>
-			<h4 class="marginT0">Adjustment margin: &nbsp; <small>{{data.adjustmentMargin}}% (min.: 10% ~ 40%)</small><br>
-                <div class="adjustment-slider">
-                    <slider ng-model="data.adjustmentMargin" min="'10'" step="'1'" max="'40'"></slider>
+<div ng-if="projectFinance">
+    <div class="well marginT25 checkoutRow">
+    	<div class="row">
+    		<div class="col-md-8 col-sm-7">
+    			<h4 class="marginB25 marginT0">Expert budget needed: <br><span class="center-block marginT10">{{projectFinance.base_budget | currency}}</span></h4>
+    			<h4 class="marginT0">Adjustment margin: &nbsp; <small>{{projectFinance.adjustment_margin}}% (min.: 10% ~ 40%)</small><br>
+                    <div class="adjustment-slider">
+                        <slider ng-model="projectFinance.adjustment_margin" min="'10'" step="'1'" max="'40'" on-stop-slide="saveProgress()"></slider>
+                    </div>
+                </h4>
+    			<div class="confirmations hide">
+                    <small style="color:#27aae1;">
+                        confirmed on 29/11/15
+                        <br>
+                        confirmed by SE on 29/11/15
+                    </small>
                 </div>
-            </h4>
-			<div class="confirmations hide">
-                <small style="color:#27aae1;">
-                    confirmed on 29/11/15
-                    <br>
-                    confirmed by SE on 29/11/15
-                </small>
-            </div>
-		</div>
-		<div class="col-md-4 col-sm-5">
-			<h1 class="box-green"><small>Total Budged Needed </small><br>{{getTotalBudget() | currency}}</h1>
-		</div>
-	</div>
+    		</div>
+    		<div class="col-md-4 col-sm-5">
+    			<h1 class="box-green"><small>Total Budged Needed </small><br>{{getTotalBudget() | currency}}</h1>
+    		</div>
+    	</div>
 
-	<div class="row">
-		<div class="col-md-12">
-			<hr>
-			<h3 class="marginT15">Check out how the project will be seen from investors in
-			<a href="#"><small class="radiusBox orrange investr-radiusBox marginT0" style="font-size:15px;">PDF</small></a> or <a href="#"><small class="radiusBox Lsky investr-radiusBox marginT0" style="font-size:13px">WWW</small></a> <small class="text-orrange">* amend * confirmed</small></h3>
-		</div>
-	</div>
-</div>
+    	<div class="row">
+    		<div class="col-md-12">
+    			<hr>
+    			<h3 class="marginT15">Check out how the project will be seen from investors in
+    			<a href="#"><small class="radiusBox orrange investr-radiusBox marginT0" style="font-size:15px;">PDF</small></a> or <a href="#"><small class="radiusBox Lsky investr-radiusBox marginT0" style="font-size:13px">WWW</small></a> <small class="text-orrange">* amend * confirmed</small></h3>
+    		</div>
+    	</div>
+    </div>
 
-<div class="row">
-    <div class="col-lg-6 col-md-12">
-        <div class="well">
-            <h3 class="marginT0">Creator Side</h3>
-            <strong class="paddingT10">Your contribution</strong>
-            <p class="paddingT5 paddingB15">How much you can contribute in your own project. <br> Your own commitment can drive more investors</p>
-            <div class="price-row">
-                <div class="price-group">
-                    <div fs-counter value="data.selfFundingAmount"
-                    data-min="0"
-                    data-step="10"
-                    data-width="200px"
-                    data-editable
-                    ></div>
+    <div class="row">
+        <div class="col-lg-6 col-md-12">
+            <div class="well">
+                <h3 class="marginT0">Creator Side</h3>
+                <h4 class="paddingT0 marginT0">Your contribution</h4>
+                <p class="paddingT5 paddingB15">How much you can contribute in your own project. <br> Your own commitment can drive more investors</p>
+                <div class="price-row">
+                    <div class="price-group">
+                        <div fs-counter value="projectFinance.self_funding_amount"
+                        data-min="0"
+                        data-step="10"
+                        data-width="200px"
+                        data-editable
+                        ng-blur="saveProgress()"
+                        ></div>
+                    </div>
+                    <h5 class="price-group-label marginT0">which is {{(projectFinance.self_funding_amount / getTotalBudget()) * 100 | number:1}}% of total budget</h5>
                 </div>
-                <h5 class="price-group-label marginT0">which is {{(data.selfFundingAmount / getTotalBudget()) * 100 | number:1}}% of total budget</h5>
+                <h5 ng-if="projectFinance.self_funding_amount > 0" class="text-sky clearfix paddingTB15"><i class="likeIcon"></i> Good, this investment will give you 30% more chance to get your project successful :-)</h5>
+                <hr>
+                <div class="clearfix">
+                    <div class="radiobox radioboxInvestor">
+                    <!-- <label for="pick-up">
+                        <input type="radio" name="investorRadios" id="pick-up" value="Pick up Country">
+                        <i></i> <span><h4><strong>Pick up Country</strong></h4></span> </label>
+                    <input type="text" placeholder="Kenia, United Kingdom, etc..."> -->
+                    <h3>Message to investors from you</h3>
+                    <textarea placeholder="description here..." ng-model="projectFinance.investors_message_creator" ng-blur="saveProgress()"></textarea>
+                    <!-- <div class="text-right"><a href="#">confirmed by SE on 29/11/15</a></div> -->
+                    <h3>Message from superexperts to investors</h3>
+                    <textarea placeholder="description here..." ng-model="projectFinance.investors_message_se" ng-blur="saveProgress()"></textarea>
+                    <!-- <div class="text-center">
+                        <input type="submit" value="Confirm" class="btn btn_default btn-info">
+                    </div> -->
+                    </div>
+                </div>
             </div>
-            <h5 ng-if="data.selfFundingAmount > 0" class="text-sky clearfix paddingTB15"><i class="likeIcon"></i> Good, this investment will give you 30% more chance to get your project successful :-)</h5>
-            <hr>
-            <h3>Type of Investor you want</h3>
-            <div class="clearfix">
+        </div>
+        <div class="col-lg-6 col-md-12">
+            <div class="well">
+                <h3 class="marginT0">Investor Side</h3>
+                <h4 class="paddingT0 marginT0">Investors Contribution</h4>
+                <p class="paddingB5 paddingT5">Amount that Investors need to cover</p>
+                <div class="price-row">
+                    <div class="price-group">
+                        <label for="name">$
+                            <input type="text" disabled name="amount-investors" maxlength="4" size="4" id="amount-investors" value="{{getTotalBudget() - projectFinance.self_funding_amount}}">
+                        </label>
+                    </div>
+                </div>
+                <br><br>
+                <!-- <h3 class="paddingB15">Yearly return you want to give  to Investors<br> <strong>{{projectFinance.payable_intrest}}%</strong><small class="text-orrange">(min 15% - max 40%)</small></h3> -->
+                <h4 class="paddingT0 marginT0">Yearly Returns</h4>
+                <p class="marginB0 paddingT5">Yearly return you want to give  to Investors<br> <small class="text-orrange">(min 15% - max 40%)</small></p>
+                <div class="price-row marginB15">
+                    <div class="price-group">
+                        <div class="adjustment-slider">
+                            <slider ng-model="projectFinance.payable_intrest" min="'15'" step="'1'" max="'40'" on-stop-slide="saveProgress()"></slider>
+                        </div>
+                    </div>
+                    <div class="price-group-label"><strong>{{projectFinance.payable_intrest}}%</strong></div>
+                    <!-- <h4 class="pull-left text-sky">confirmed on 29/11/15<br>confirmed by SE on 29/11/15</h4> -->
+                </div>
+                <h4 class="paddingT0 marginT0">Payback time to investors</h4>
+                <p class="margin0">That is the time you commit to payback all investors based on your future sales revenue
+                    <br> <span class="text-orrange">(min: 6 months - max- 24 months)</span></p>
+                <div class="price-row marginB15">
+                    <div class="price-group">
+                        <div class="adjustment-slider">
+                            <slider ng-model="projectFinance.payback_duration" min="'6'" step="'1'" max="'24'" on-stop-slide="saveProgress()"></slider>
+                        </div>
+                    </div>
+                    <div class="price-group-label"><strong>{{projectFinance.payback_duration}} months</strong></div>
+                    <!-- <h4 class="pull-left text-sky">confirmed on 29/11/15<br>confirmed by SE on 29/11/15</h4> -->
+                </div>
+                <h4 class="paddingT0 marginT0">Possible Period Extension</h4>
+                <p class="margin0">if project cannot take off as fast as expected, it is the time investors will agree to extend the project before receiving their investment back.</p>
+                <div class="price-row marginB15">
+                    <div class="price-group">
+                        <div class="adjustment-slider">
+                            <slider ng-model="projectFinance.payback_duration_extended" min="'0'" step="'1'" max="'12'" on-stop-slide="saveProgress()"></slider>
+                        </div>
+                    </div>
+                    <div class="price-group-label"><strong>{{projectFinance.payback_duration_extended}} months</strong></div>
+                    <!-- <h4 class="pull-left text-sky">confirmed on 29/11/15<br>confirmed by SE on 29/11/15</h4> -->
+                </div>
+                <!-- <h4 class="paddingT0 marginT0">Number of investors (optional)</h4>
+                <p class="paddingB15">choose the number of minimum investors that will be chosen</p>
+                <div class="clearfix">
+                    <div class="pull-left">
+                        <div class="price-row">
+                            <div class="price-group">
+                                <h3 class="pull-left marginT15">MIN&nbsp;</h3>
+                                <label for="name" style="min-width:47px;">
+                                    <input type="text" disabled name="min" maxlength="1" size="1" id="min" value="5" class="text-center">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pull-left">
+                        <div class="price-row">
+                            <div class="price-group">
+                                <h3 class="pull-left marginT15">- MAX&nbsp;</h3>
+                                <label for="name" style="min-width:35px;">
+                                    <input type="text" disabled name="min" maxlength="2" size="2" id="min" value="16" class="text-center">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <h4 class="paddingT0 marginT0">Type of Investor you want</h4>
                 <div class="radiobox radioboxInvestor">
                     <label for="radio-active">
                         <input type="radio" name="investorRadios" id="radio-active" value="Active" checked="">
@@ -62,97 +153,118 @@
                     <label for="radio-all">
                         <input type="radio" name="investorRadios" id="radio-all" value="All">
                         <i></i> <span><h4><strong>All</strong></h4></span> </label>
-                    <!-- <label for="pick-up">
-                        <input type="radio" name="investorRadios" id="pick-up" value="Pick up Country">
-                        <i></i> <span><h4><strong>Pick up Country</strong></h4></span> </label>
-                    <input type="text" placeholder="Kenia, United Kingdom, etc..."> -->
-                    <h3>Message to investors from you</h3>
-                    <textarea placeholder="description here..."></textarea>
-                    <div class="text-right"><a href="#">confirmed by SE on 29/11/15</a></div>
-                    <h3>Message from superexperts to investors</h3>
-                    <textarea placeholder="description here..."></textarea>
                 </div>
-                <div class="text-center">
-                    <input type="submit" value="Confirm" class="btn btn_default btn-info">
-                </div>
+                <!-- <h4 class="text-sky paddingT5">confirmed on 29/11/15<br>confirmed by SE on 29/11/15</h4> -->
+                <!-- <div class="text-center marginT25 paddingT5 marginB15">
+                    <input type="submit" value="Save" class="btn btn_default btn-info">
+                </div> -->
             </div>
         </div>
-    </div>
-    <div class="col-lg-6 col-md-12">
-        <div class="well">
-            <h3 class="marginT0">Investor Side</h3>
-            <strong class="paddingT10">Investors Contribution</strong>
-            <p class="paddingB5 paddingT5">Amount that Investors need to cover</p>
-            <div class="price-row">
-                <div class="price-group">
-                    <label for="name">$
-                        <input type="text" disabled name="amount-investors" maxlength="4" size="4" id="amount-investors" value="{{getTotalBudget() - data.selfFundingAmount}}">
-                    </label>
-                </div>
-            </div>
-            <br><br>
-            <!-- <h3 class="paddingB15">Yearly return you want to give  to Investors<br> <strong>{{data.yearlyReturns}}%</strong><small class="text-orrange">(min 15% - max 40%)</small></h3> -->
-            <strong class="paddingT10">Yearly Returns</strong>
-            <p class="marginB0 paddingT5">Yearly return you want to give  to Investors<br> <small class="text-orrange">(min 15% - max 40%)</small></p>
-            <div class="price-row">
-                <div class="price-group">
-                    <div class="adjustment-slider">
-                        <slider ng-model="data.yearlyReturns" min="'15'" step="'1'" max="'40'"></slider>
-                    </div>
-                </div>
-                <div class="price-group-label"><strong>{{data.yearlyReturns}}%</strong></div>
-                <!-- <h4 class="pull-left text-sky">confirmed on 29/11/15<br>confirmed by SE on 29/11/15</h4> -->
-            </div>
-            <h3>Payback time to investors</h3>
-            <p class="paddingB10">That is the time you commit to payback all investors based on your future sales revenue
-                <br> <span class="text-orrange">(min: 6 months - max- 24 months)</span></p>
-            <div class="price-row">
-                <div class="price-group">
-                    <div class="adjustment-slider">
-                        <slider ng-model="data.paybackDuration" min="'6'" step="'1'" max="'24'"></slider>
-                    </div>
-                </div>
-                <div class="price-group-label"><strong>{{data.paybackDuration}} months</strong></div>
-                <!-- <h4 class="pull-left text-sky">confirmed on 29/11/15<br>confirmed by SE on 29/11/15</h4> -->
-            </div>
-            <h3 class="paddingT10">Possible Period Extension</h3>
-            <p class="paddingB15">if project cannot take off as fast as expected, it is the time investors will agree to extend the project before receiving their investment back.</p>
-            <div class="price-row">
-                <div class="price-group">
-                    <div class="adjustment-slider">
-                        <slider ng-model="data.paybackDurationExtension" min="'0'" step="'1'" max="'12'"></slider>
-                    </div>
-                </div>
-                <div class="price-group-label"><strong>{{data.paybackDurationExtension}} months</strong></div>
-                <!-- <h4 class="pull-left text-sky">confirmed on 29/11/15<br>confirmed by SE on 29/11/15</h4> -->
-            </div>
-            <h3 class="paddingT10">Number of investors (optional)</h3>
-            <p class="paddingB15">choose the number of minimum investors that will be chosen</p>
-            <div class="clearfix">
-                <div class="pull-left">
-                    <div class="price-row">
-                        <div class="price-group">
-                            <h3 class="pull-left marginT15">MIN&nbsp;</h3>
-                            <label for="name" style="min-width:47px;">
-                                <input type="text" disabled name="min" maxlength="1" size="1" id="min" value="5" class="text-center">
-                            </label>
+        <div class="col-sm-12">
+            <div class="well mini-business-plan">
+                <h3 class="marginT0">Mini Business Plan</h3>
+                <div class="inputs">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h4>Repayment Start Month: <br>
+                                <select ng-mode="data.startMonthRepayment">
+                                    <option value="3">Month 3</option>
+                                    <option value="4">Month 4</option>
+                                    <option value="5">Month 5</option>
+                                    <option value="6">Month 6</option>
+                                    <option value="7">Month 7</option>
+                                    <option value="8">Month 8</option>
+                                    <option value="9">Month 9</option>
+                                    <option value="10">Month 10</option>
+                                    <option value="11">Month 11</option>
+                                    <option value="12">Month 12</option>
+                                </select>
+                            </h4>
+                        </div>
+                        <div class="col-sm-4">
+                            <h4>FOB Manufacturing Cost (USD): <br> <input type="text" ng-model="projectFinance.fob_manufacturing_cost" placeholder="1.15" ng-model="projectFinance.fob_manufacturing_cost"></h4>
+                        </div>
+                        <div class="col-sm-4">
+                            <h4>FOB Estimated Selling Price (USD): <br> <input type="text" ng-model="projectFinance.fob_selling_price" placeholder="2.5" ng-model="projectFinance.fob_selling_price"></h4>
                         </div>
                     </div>
                 </div>
-                <div class="pull-left">
-                    <div class="price-row">
-                        <div class="price-group">
-                            <h3 class="pull-left marginT15">- MAX&nbsp;</h3>
-                            <label for="name" style="min-width:35px;">
-                                <input type="text" disabled name="min" maxlength="2" size="2" id="min" value="16" class="text-center">
-                            </label>
+                <div class="stats">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h4>Total amount (incl. Interest): <br><span>{{getTotalBudget(true)}}</span></h4>
+                        </div>
+                        <div class="col-sm-4">
+                            <h4>Gross Unit Margin: <br><span>{{projectFinance.fob_selling_price - projectFinance.fob_manufacturing_cost | currency}}</span></h4>
+                        </div>
+                        <div class="col-sm-4">
+                            <h4>Royalties: <br><span>N / A</span></h4>
                         </div>
                     </div>
                 </div>
-            </div>
-            <h4 class="text-sky paddingT5">confirmed on 29/11/15<br>confirmed by SE on 29/11/15</h4>
-            <div class="text-center marginT25 paddingT5 marginB15">
-                <input type="submit" value="Save" class="btn btn_default btn-info">
+
+                <hr>
+                <br>
+
+                <div class="table-wrap" ng-repeat="paybackYears in getPaybackDuration()">
+                    <h4>Year {{$index + 1}}</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Months</th>
+                                <th ng-repeat="month in paybackYears track by $index">
+                                    Month {{$index + 1}}
+                               </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>No. Units Sold</th>
+                                <td ng-repeat="month in paybackYears track by $index" ng-disabled="$index < 3">
+                                    <input type="text" class="form-control" ng-disabled="$index < 3" ng-model="month.sold">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Monthly Gross</th>
+                                <td ng-repeat="month in paybackYears track by $index">
+                                    {{month.monthlyGross = ((projectFinance.fob_selling_price - projectFinance.fob_manufacturing_cost) * month.sold);''}}
+                                    {{month.monthlyGross | currency}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Cummulative Gross</th>
+                                <td ng-repeat="month in paybackYears track by $index">
+                                    {{month.cummulativeGross = ($index > 3) ? paybackYears[$index - 1].cummulativeGross + month.monthlyGross : month.monthlyGross;''}}
+
+                                    {{month.cummulativeGross | currency}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Royalty Margin</th>
+                                <td ng-repeat="month in paybackYears track by $index">
+                                    N / A
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Investor Returns (expected)</th>
+                                <td ng-repeat="month in paybackYears track by $index">
+                                    {{remainingMonths = projectFinance.payback_duration - $index;''}}
+                                    {{collected = (paybackYears[$index - 1].actualReturn === 0) ? (paybackYears[$index - 1].cummulativeGross + paybackYears[$index - 1].expectedReturns) : paybackYears[$index - 1].cummulativeGross;''}}
+                                    {{month.expectedReturns = ($index > 3) ? (getTotalBudget(true) - collected) / remainingMonths : getTotalBudget(true) / remainingMonths;''}}
+
+                                    {{($index >= 3) ? month.expectedReturns: 0 | currency}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Investor Returns</th>
+                                <td ng-repeat="month in paybackYears track by $index">
+                                    {{month.actualReturn = month.monthlyGross;''}}
+                                    {{month.actualReturn | currency}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

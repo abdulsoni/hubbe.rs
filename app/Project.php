@@ -64,6 +64,15 @@ class Project extends Model
         return $this->belongsTo('Fundator\Expert', 'super_expert_id');
     }
 
+    /**
+     * Project Finance
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function projectFinance(){
+        return $this->hasOne('Fundator\ProjectFinance');
+    }
+
     public function thumbnailUrl(){
         return URL::to('/' . $this->thumbnail);
     }
@@ -78,5 +87,38 @@ class Project extends Model
 
     public function projectInvestorAttributes(){
         return $this->getAttributes();
+    }
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::updated(function (Project $project)
+        {
+            switch($project->state){
+                case 4:
+                    $expertise = $project->expertise();
+                    $amount_needed = 0.0;
+
+                    foreach ($expertise as $expertise_item) {
+                        $amount_needed = $amount_needed + $expertise_item->selectedBid->bid_amount;
+                    }
+
+                    $projectFinance = $project->projectFinance();
+
+                    if (is_null($projectFinance)) {
+                        $projectFinance = ProjectFinance::create([]);
+                    }
+
+                    $projectFinance->amount_needed = $amount_needed;
+                    $projectFinance->save();
+                    break;
+            }
+        });
     }
 }

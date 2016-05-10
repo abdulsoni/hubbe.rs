@@ -23,6 +23,7 @@ class CreateProjectFinancesTable extends Migration
             $table->float('gross_margin');
 
             // Funding
+            $table->float('amount_needed');
             $table->float('self_funding_amount');
             $table->float('funding_amount');
             $table->integer('yearly_interest');

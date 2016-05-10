@@ -25,5 +25,5 @@ class ProjectFinance extends Model
      *
      * @var array
      */
-    protected $fillable = ['fob_manufacturing_cost', 'fob_factory_price', 'fob_svg_selling_price', 'gross_margin', 'self_funding_amount', 'funding_amount', 'payable_intrest', 'payback_duration', 'payback_duration_extended', 'investors_min', 'investors_max', 'investors_type', 'investors_message_creator', 'investors_message_se'];
+    protected $fillable = ['base_budget', 'fob_manufacturing_cost', 'fob_factory_price', 'fob_selling_price', 'gross_margin', 'adjustment_margin', 'self_funding_amount', 'funding_amount', 'payable_intrest', 'payback_duration', 'payback_duration_extended', 'investors_min', 'investors_max', 'investors_type', 'investors_message_creator', 'investors_message_se'];
 }
