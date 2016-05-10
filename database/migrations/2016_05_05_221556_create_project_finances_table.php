@@ -19,17 +19,18 @@ class CreateProjectFinancesTable extends Migration
             // Cost & Margin
             $table->float('fob_manufacturing_cost');
             $table->float('fob_factory_price');
-            $table->float('fob_svg_selling_price');
+            $table->float('fob_selling_price');
             $table->float('gross_margin');
 
             // Funding
-            $table->float('amount_needed');
+            $table->float('base_budget');
+            $table->float('adjustment_margin');
             $table->float('self_funding_amount');
             $table->float('funding_amount');
-            $table->integer('yearly_interest');
+            $table->integer('payable_intrest');
 
             $table->integer('payback_duration');
-            $table->integer('payback_duration_extension');
+            $table->integer('payback_duration_extended');
 
             // Misc
             $table->integer('investors_min');
