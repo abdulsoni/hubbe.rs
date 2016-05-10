@@ -39,6 +39,10 @@ class ProjectController extends Controller
             }
 
             if (!is_null($user)) {
+                if (!isset($_REQUEST['fd_active_role'])) {
+                    $_REQUEST['fd_active_role'] = 'creator';
+                }
+
                 $response = ProjectController::projectsByRole($user, $_REQUEST['fd_active_role']);
             }
         } catch (Exception $e) {
