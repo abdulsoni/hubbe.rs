@@ -112,7 +112,7 @@
 
             if (typeof(projectId) === 'undefined' || isNaN(projectId)) {
                 console.log('getting draft_only');
-                Project.query({'draft_only': 1}).$promise.then(function(result) {
+                Project.query({'draft_only': 1, 'fd_active_role': $rootScope.activeRole}).$promise.then(function(result) {
                     $scope.allProjects = result;
                 }).finally(function() {
                     $rootScope.sectionLoading = false;

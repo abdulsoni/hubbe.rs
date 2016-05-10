@@ -1,5 +1,6 @@
 {
   "appConfig": {
+    "production": true,
     "sass": {
       "src": ["./resources/assets/sass/**/*.scss", "./angular/**/*.scss", "!./resources/assets/sass/home/**/*.scss"],
       "main": "./resources/assets/sass/app.scss",
