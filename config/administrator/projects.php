@@ -185,9 +185,6 @@ return array(
 
                     Event::fire(new ProjectExpertsApproved($model));
 
-                    // Create a finance block
-
-
                     if ($model->save()) {
                         return true;
                     }

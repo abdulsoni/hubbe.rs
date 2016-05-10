@@ -4,6 +4,7 @@ namespace Fundator;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\URL;
+use Fundator\ProjectFinance;
 
 class Project extends Model
 {
@@ -102,14 +103,17 @@ class Project extends Model
         {
             switch($project->state){
                 case 4:
-                    $expertise = $project->expertise();
                     $amount_needed = 0.0;
 
-                    foreach ($expertise as $expertise_item) {
-                        $amount_needed = $amount_needed + $expertise_item->selectedBid->bid_amount;
+                    if (!is_null($project->expertise)) {
+                        $expertise = $project->expertise;
+
+                        foreach ($expertise as $expertise_item) {
+                            $amount_needed = $amount_needed + $expertise_item->selectedBid->bid_amount;
+                        }
                     }
 
-                    $projectFinance = $project->projectFinance();
+                    $projectFinance = $project->projectFinance;
 
                     if (is_null($projectFinance)) {
                         $projectFinance = ProjectFinance::create([]);
