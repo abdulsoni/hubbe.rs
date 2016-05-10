@@ -39,11 +39,10 @@ class ProjectController extends Controller
             }
 
             if (!is_null($user)) {
-                if (!isset($_REQUEST['fd_active_role'])) {
-                    $_REQUEST['fd_active_role'] = 'creator';
-                }
-
-                $response = ProjectController::projectsByRole($user, $_REQUEST['fd_active_role']);
+                // if (!isset($_REQUEST['fd_active_role'])) {
+                //     $_REQUEST['fd_active_role'] = 'creator';
+                // }
+                $response = ProjectController::projectsByRole($user, $_GET['fd_active_role']);
             }
         } catch (Exception $e) {
             $statusCode = 400;
@@ -207,7 +206,7 @@ class ProjectController extends Controller
                 ];
 
                 if (!is_null($creator)) {
-                    $projects = Project::where('creator_id', $creator->id)->where('display', 1)->get();
+                    $projects = Project::where('creator_id', $creator->id)->get();
 
                     foreach($projects as $project)
                     {
