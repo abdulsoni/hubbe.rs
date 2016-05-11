@@ -544,7 +544,7 @@ class AuthenticateController extends Controller
                     'city' => isset($profile['location']['name']) ? $profile['location']['name'] : '',
                     'summary' => isset($profile['summary']) ? $profile['summary'] : '',
                     'specialties' => isset($profile['specialties']) ? $profile['specialties'] : '',
-                    'profile_url' => $profile['publicProfileUrl']
+                    'profile_url' => isset($profile['publicProfileUrl']) ? $profile['publicProfileUrl'] : ''
                 ]);
 
                 $linkedinProfile->linkedin_id = $profile['id'];
@@ -594,7 +594,7 @@ class AuthenticateController extends Controller
                     'city' => isset($profile['location']['name']) ? $profile['location']['name'] : '',
                     'summary' => isset($profile['summary']) ? $profile['summary'] : '',
                     'specialties' => isset($profile['specialties']) ? $profile['specialties'] : '',
-                    'profile_url' => $profile['publicProfileUrl']
+                    'profile_url' => isset($profile['publicProfileUrl']) ? $profile['publicProfileUrl'] : ''
                 ]);
 
                 $linkedinProfile->linkedin_id = $profile['id'];
