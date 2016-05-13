@@ -1,0 +1,130 @@
+<div class="relative" ng-if="!project.finance">
+    <fd-loader class="center center-top fixed-center" ng-class="{'opacity_hide': project.finance}"></fd-loader>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>
+
+<div class="expertise-list marginB60" ng-class="{'opacity_hide': !project.finance}">
+    <div class="project-itemCol marginB30">
+        <div class="row project-itemRow project-investment">
+            <div class="col-lg-4">
+                <div class="project-thumbnail" style="background-image: url({{project.thumbnail ? project.thumbnail : '/images/placeholder.png';}});"></div>
+                <h3 class="projectHeading project-heading">{{project.name}}</h3>
+            </div>
+            <div class="col-lg-4">
+                <div class="well project-caption">
+                    <!-- <h3>Project Name<br> <small>{{project.name}}</small></h3> -->
+
+                    <!-- <h3 class="padding0 margin0">Description</h3> -->
+                    <!-- <div class="project-mini-description" ng-bind="project.description | stripTags" ellipsis
+                    ellipsis-append="<a class='read-more'>show more</a>" ellipsis-append-click="showFullText()"></div> -->
+
+                    <h3>Amount Needed<br> <small>{{project.finance.base_budget + (project.finance.base_budget * (project.finance.adjustment_margin/100)) | currency}}</small></h3>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h3>Return<br> <small>{{project.finance.base_budget + (project.finance.base_budget * ((project.finance.payable_intrest/100) + (project.finance.adjustment_margin/100))) | currency}}</small></h3>
+                        </div>
+                        <div class="col-sm-6">
+                            <h3>Interest<br> <small>{{project.finance.payable_intrest}}%</small></h3>
+                        </div>
+                    </div>
+                    <h3>Payback Duration<br> <small>{{project.finance.payback_duration}} months</small></h3>
+                    <h3 class="marginB0">Funding <small class="pull-right">{{200 | currency}} / {{1000 | currency}}</small></h3>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-success" role="progressbar" style="width:20%">20%</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 project-investment-bid well">
+                <div class="relative">
+                    <form name="expertiseBid">
+                        <h4 class="marginT0 marginB5">My Bid</h4>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="expertise-bid_amount">
+                                    <label for="bid_amount">Bid Amount Min (USD)</label>
+                                    <input id="bid_amount_min" class="form-control" type="text" ng-model="data.bid_amount_min" numbers-only required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="expertise-bid_amount">
+                                    <label for="bid_amount">Bid Amount Max (USD)</label>
+                                    <input id="bid_amount_max" class="form-control" type="text" ng-model="data.bid_amount_max" numbers-only required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="expertise-bid_description">
+                            <label for="bid_description">Bid Description</label>
+                            <textarea id="bid_description" rows="3" class="form-control" ng-model="data.bid_description" required></textarea>
+                        </div>
+                    </form>
+                    <button type="submit" class="btn btn-block btn-info-rg" ng-click="submitBid()" ng-disabled="expertiseBid.$invalid" ladda="data.bidLoading" data-style="expand-right">
+                        Submit
+                    </button>
+                </div>
+                <!-- <div class="relative" ng-if="investment.bid !== null">
+                    <h4 class="marginB20">Bid Amount <br><small>{{expertise.bid.bid_amount | currency}}</small></h4>
+                    <h4 class="marginB20">Bid Placed on <br>
+                        <small>{{expertise.bid.created_at | amDateFormat:'MMM Do, YYYY'}}</small>
+                    </h4>
+                    <h4>Bid Description <br>
+                        <small>{{expertise.bid.description}}</small>
+                    </h4>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+<!--     <div class="well padding0 margin0">
+        <div class="row ">
+            <div class="col-lg-7 isotopeSubDivid">
+                <div class="grid3">
+                    <div class="isotope-subItem">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="expertise-thumbnail" style="background-image:url({{project.creator.thumbnail_url}});"></div>
+                            </div>
+                            <div class="col-md-8 col-sm-8">
+                                <div class="row paddingTB18">
+                                    <div class="col-md-5 col-sm-5 border_right">
+                                        <h3 class="marginT0 marginB15">{{project.creator.name}} {{project.creator.last_name}}</h3>
+                                        <h4 class="marginB15">Creator</h4>
+                                    </div>
+                                    <div class="col-md-7 col-sm-7">
+                                        <h3 class="margin0">Review: <small>4.5</small> <br>Expertise: <small>4.6</small> <br>Professionalism: <small>3.5</small> </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="isotope-subItem">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="expertise-thumbnail" style="background-image:url({{project.super_expert.thumbnail_url}});"></div>
+                            </div>
+                            <div class="col-md-8 col-sm-8">
+                                <div class="row paddingTB18">
+                                    <div class="col-md-5 col-sm-5 border_right">
+                                        <h3 class="marginT0 marginB15">{{project.super_expert.name}} {{project.super_expert.last_name}}</h3>
+                                        <h4 class="marginB15">Super Expert</h4>
+                                    </div>
+                                    <div class="col-md-7 col-sm-7">
+                                        <h3 class="margin0">Review: <small>4.5</small> <br>Expertise: <small>4.6</small> <br>Professionalism: <small>3.5</small> </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="well marginT30">
+        <h3>Mini Business Plan <br> <small>Comming Soon</small></h3>
+    </div>
+</div>

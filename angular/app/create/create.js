@@ -14,59 +14,52 @@
         };
         $scope.project = null;
 
-        $scope.steps = [
-            {
-                title: 'Your Project',
-                progress: 0,
-                isOpen: false,
-                ongoing: false,
-                state: 'app.create.details',
-                body: '<h3>Great!</h3><p><dfn>You have been completed a very important step, we will now be able to communicate efficiently.</dfn></p><p><dfn>Your great idea will be under the TOYS & AMUSEMENTS” category.</dfn></p><p><dfn>In order to make your project come true we will go through 4 steps.</dfn></p><p><dfn>Beforehand, make sure to read all tutorials (with link) and make sure you understand the concept of Fundator.</dfn></p><p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>'
-            },
-            {
-                title: 'Meet your Super Expert',
-                progress: 0,
-                isOpen: false,
-                ongoing: false,
-                state: 'app.create.superexpert',
-                body: '<h3>Expertise you need</h3><p><dfn>You have been completed a very important step, we will now be able to communicate efficiently.</dfn></p><p><dfn>Your great idea will be under the TOYS & AMUSEMENTS” category.</dfn></p><p><dfn>In order to make your project come true we will go through 4 steps.</dfn></p><p><dfn>Beforehand, make sure to read all tutorials (with link) and make sure you understand the concept of Fundator.</dfn></p><p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>'
-            },
-            {
-                title: 'Expertise you need',
-                progress: 0,
-                isOpen: false,
-                ongoing: false,
-                state: 'app.create.expertise',
-                body: '<h3>Expertise you need</h3><p><dfn>You have been completed a very important step, we will now be able to communicate efficiently.</dfn></p><p><dfn>Your great idea will be under the TOYS & AMUSEMENTS” category.</dfn></p><p><dfn>In order to make your project come true we will go through 4 steps.</dfn></p><p><dfn>Beforehand, make sure to read all tutorials (with link) and make sure you understand the concept of Fundator.</dfn></p><p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>'
-            },
-            {
-                title: 'Experts on your team',
-                progress: 0,
-                isOpen: false,
-                ongoing: false,
-                state: 'app.create.experts',
-                body: '<h3>Experts on your team</h3><p><dfn>You have been completed a very important step, we will now be able to communicate efficiently.</dfn></p><p><dfn>Your great idea will be under the TOYS & AMUSEMENTS” category.</dfn></p><p><dfn>In order to make your project come true we will go through 4 steps.</dfn></p><p><dfn>Beforehand, make sure to read all tutorials (with link) and make sure you understand the concept of Fundator.</dfn></p><p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>'
-            },
-            {
-                title: 'Validate the budget',
-                progress: 0,
-                isOpen: false,
-                ongoing: false,
-                state: 'app.create.budget',
-                body: '<h3>Validate the budget</h3><p><dfn>You have been completed a very important step, we will now be able to communicate efficiently.</dfn></p><p><dfn>Your great idea will be under the TOYS & AMUSEMENTS” category.</dfn></p><p><dfn>In order to make your project come true we will go through 4 steps.</dfn></p><p><dfn>Beforehand, make sure to read all tutorials (with link) and make sure you understand the concept of Fundator.</dfn></p><p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>'
-            },
-            {
-                title: 'Your investors',
-                progress: 0,
-                isOpen: false,
-                ongoing: false,
-                state: 'app.create.investors',
-                body: '<h3>Your Investor</h3><p><dfn>You have been completed a very important step, we will now be able to communicate efficiently.</dfn></p><p><dfn>Your great idea will be under the TOYS & AMUSEMENTS” category.</dfn></p><p><dfn>In order to make your project come true we will go through 4 steps.</dfn></p><p><dfn>Beforehand, make sure to read all tutorials (with link) and make sure you understand the concept of Fundator.</dfn></p><p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>'
-            }
-        ];
+        $scope.steps = [{
+            title: 'Your Project',
+            progress: 0,
+            isOpen: false,
+            ongoing: false,
+            state: 'app.create.details',
+            body: '<h3>Great!</h3><p><dfn>You have been completed a very important step, we will now be able to communicate efficiently.</dfn></p><p><dfn>Your great idea will be under the TOYS & AMUSEMENTS” category.</dfn></p><p><dfn>In order to make your project come true we will go through 4 steps.</dfn></p><p><dfn>Beforehand, make sure to read all tutorials (with link) and make sure you understand the concept of Fundator.</dfn></p><p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>'
+        }, {
+            title: 'Meet your Super Expert',
+            progress: 0,
+            isOpen: false,
+            ongoing: false,
+            state: 'app.create.superexpert',
+            body: '<h3>Expertise you need</h3><p><dfn>You have been completed a very important step, we will now be able to communicate efficiently.</dfn></p><p><dfn>Your great idea will be under the TOYS & AMUSEMENTS” category.</dfn></p><p><dfn>In order to make your project come true we will go through 4 steps.</dfn></p><p><dfn>Beforehand, make sure to read all tutorials (with link) and make sure you understand the concept of Fundator.</dfn></p><p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>'
+        }, {
+            title: 'Expertise you need',
+            progress: 0,
+            isOpen: false,
+            ongoing: false,
+            state: 'app.create.expertise',
+            body: '<h3>Expertise you need</h3><p><dfn>You have been completed a very important step, we will now be able to communicate efficiently.</dfn></p><p><dfn>Your great idea will be under the TOYS & AMUSEMENTS” category.</dfn></p><p><dfn>In order to make your project come true we will go through 4 steps.</dfn></p><p><dfn>Beforehand, make sure to read all tutorials (with link) and make sure you understand the concept of Fundator.</dfn></p><p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>'
+        }, {
+            title: 'Experts on your team',
+            progress: 0,
+            isOpen: false,
+            ongoing: false,
+            state: 'app.create.experts',
+            body: '<h3>Experts on your team</h3><p><dfn>You have been completed a very important step, we will now be able to communicate efficiently.</dfn></p><p><dfn>Your great idea will be under the TOYS & AMUSEMENTS” category.</dfn></p><p><dfn>In order to make your project come true we will go through 4 steps.</dfn></p><p><dfn>Beforehand, make sure to read all tutorials (with link) and make sure you understand the concept of Fundator.</dfn></p><p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>'
+        }, {
+            title: 'Validate the budget',
+            progress: 0,
+            isOpen: false,
+            ongoing: false,
+            state: 'app.create.budget',
+            body: '<h3>Validate the budget</h3><p><dfn>You have been completed a very important step, we will now be able to communicate efficiently.</dfn></p><p><dfn>Your great idea will be under the TOYS & AMUSEMENTS” category.</dfn></p><p><dfn>In order to make your project come true we will go through 4 steps.</dfn></p><p><dfn>Beforehand, make sure to read all tutorials (with link) and make sure you understand the concept of Fundator.</dfn></p><p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>'
+        }, {
+            title: 'Your investors',
+            progress: 0,
+            isOpen: false,
+            ongoing: false,
+            state: 'app.create.investors',
+            body: '<h3>Your Investor</h3><p><dfn>You have been completed a very important step, we will now be able to communicate efficiently.</dfn></p><p><dfn>Your great idea will be under the TOYS & AMUSEMENTS” category.</dfn></p><p><dfn>In order to make your project come true we will go through 4 steps.</dfn></p><p><dfn>Beforehand, make sure to read all tutorials (with link) and make sure you understand the concept of Fundator.</dfn></p><p><a href="#" class="btn btn-info marginT10">I read the tutorial and guidelines. I want to start.</a></p>'
+        }];
 
-        $scope.$watch('steps', function(steps){
-            angular.forEach(steps, function(step){
+        $scope.$watch('steps', function(steps) {
+            angular.forEach(steps, function(step) {
                 if (step.isOpen) {
                     $state.go(step.state);
                     FdScroller.toSection('#projectSteps');
@@ -74,7 +67,7 @@
             });
         }, true);
 
-        $scope.$watch('project', function(project){
+        $scope.$watch('project', function(project) {
             if (typeof(project) === 'undefined' || project === null) return;
 
             var flooredState = Math.floor($scope.project.state);
@@ -112,7 +105,7 @@
 
             if (typeof(projectId) === 'undefined' || isNaN(projectId)) {
                 console.log('getting draft_only');
-                Project.query({'draft_only': 1, 'fd_active_role': $rootScope.activeRole}).$promise.then(function(result) {
+                Project.query({ 'draft_only': 1, 'fd_active_role': $rootScope.activeRole }).$promise.then(function(result) {
                     $scope.allProjects = result;
                 }).finally(function() {
                     $rootScope.sectionLoading = false;
@@ -221,7 +214,7 @@
 
         $http.get(API.path('super-experts')).then(function(result) {
             $scope.superExperts = result.data;
-        }).finally(function(){
+        }).finally(function() {
             $rootScope.innerSectionLoading = false;
         });
 
@@ -251,8 +244,8 @@
             projectId: '@id'
         });
 
-        $scope.fetchExpertise = function(){
-            ProjectExpertise.query({projectId: $scope.project.id}).$promise.then(function(result) {
+        $scope.fetchExpertise = function() {
+            ProjectExpertise.query({ projectId: $scope.project.id }).$promise.then(function(result) {
                 $scope.expertiseList = result;
             }).finally(function() {
                 $rootScope.innerSectionLoading = false;
@@ -260,12 +253,12 @@
             });
         }
 
-        $scope.$watch('project', function(project){
+        $scope.$watch('project', function(project) {
             if (typeof(project) === 'undefined' || project === null) return;
             $scope.fetchExpertise();
         });
 
-        $scope.saveExpertise = function(expertise){
+        $scope.saveExpertise = function(expertise) {
             $scope.savingExpertise = true;
 
             var projectExpertiseData = {
@@ -277,19 +270,19 @@
 
             if (expertise.selectedExpertise !== null) {
                 projectExpertiseData['expertise_id'] = expertise.selectedExpertise.id;
-            }else{
+            } else {
                 projectExpertiseData['other_expertise'] = expertise.otherExpertise;
             }
 
             if (expertise.selectedExpertiseSubCategory !== null) {
                 projectExpertiseData['expertise_sub_category_id'] = expertise.selectedExpertiseSubCategory.id;
-            }else{
+            } else {
                 projectExpertiseData['other_expertise_sub_category'] = expertise.otherExpertiseSubCategory;
             }
 
             if (expertise.selectedExpertiseCategory !== null) {
                 projectExpertiseData['expertise_category_id'] = expertise.selectedExpertiseCategory.id;
-            }else{
+            } else {
                 projectExpertiseData['other_expertise_category'] = expertise.otherExpertiseCategory;
             }
 
@@ -297,7 +290,7 @@
             $http.post(API.path('/projects/') + $scope.project.id + '/expertise', projectExpertiseData).then(function(result) {
                 console.log(result.data);
                 $scope.expertiseList.push(result.data);
-            }).finally(function(){
+            }).finally(function() {
                 $scope.savingExpertise = false;
             });
 
@@ -305,7 +298,7 @@
             $scope.inputtedEpxertise = null;
         }
 
-        $scope.saveExpertiseSelection = function(){
+        $scope.saveExpertiseSelection = function() {
             $scope.project.state = 2.9;
 
             $scope.saveProgress();
@@ -468,20 +461,20 @@
             projectId: '@id'
         });
 
-        $scope.fetchExpertise = function(){
-            ProjectExpertise.query({projectId: $scope.project.id}).$promise.then(function(result) {
+        $scope.fetchExpertise = function() {
+            ProjectExpertise.query({ projectId: $scope.project.id }).$promise.then(function(result) {
                 $scope.expertiseList = result;
             }).finally(function() {
                 $rootScope.innerSectionLoading = false;
             });
         }
 
-        $scope.$watch('project', function(project){
+        $scope.$watch('project', function(project) {
             if (typeof(project) === 'undefined' || project === null) return;
             $scope.fetchExpertise();
         });
 
-        $scope.shortlistExpert = function(expertise, bid){
+        $scope.shortlistExpert = function(expertise, bid) {
             if (typeof(expertise.shortlist) === 'undefined') {
                 expertise.shortlist = [];
             }
@@ -489,7 +482,7 @@
             expertise.shortlist.push(bid);
         }
 
-        $scope.isShortlistExpert = function(expertise, bid){
+        $scope.isShortlistExpert = function(expertise, bid) {
             if (typeof(expertise.shortlist) !== 'undefined') {
                 return expertise.shortlist.indexOf(bid) !== -1;
             }
@@ -497,7 +490,7 @@
             return false;
         }
 
-        $scope.removeShortlistExpert = function(expertise, bid){
+        $scope.removeShortlistExpert = function(expertise, bid) {
             var index = expertise.shortlist.indexOf(bid);
 
             if (index !== -1) {
@@ -505,37 +498,39 @@
             }
         }
 
-        $scope.discussExpert = function(expertise, bid){
+        $scope.discussExpert = function(expertise, bid) {
             $scope.data.selectedBid = bid
         }
 
-        $scope.hideDiscussExpert = function(){
+        $scope.hideDiscussExpert = function() {
             $scope.data.selectedBid = null;
         }
 
         $scope.selectExpert = function(expertise, bid) {
             SweetAlert.swal({
-             title: 'Are you sure?',
-             text: 'You are selecting ' + bid.expert.name + ' to complete your task.',
-             type: 'warning',
-             showCancelButton: true,
-             confirmButtonColor: '#F8C486',confirmButtonText: 'Yes, go ahead!',
-             cancelButtonText: 'Cancel',
-             closeOnConfirm: false,
-             closeOnCancel: true},
-             function(isConfirm){
-                if (isConfirm) {
-                    $http.put(API.path('/project-expertise/' + expertise.id + '/bid/' + bid.id), {}).then(function(result){
-                        if (typeof(result.data.error) === 'undefined') {
-                            expertise.selected_bid = bid;
-                            SweetAlert.swal('Selected!', 'You have selected the expert.', 'success');
-                        }
-                    });
-                }
-          });
+                    title: 'Are you sure?',
+                    text: 'You are selecting ' + bid.expert.name + ' to complete your task.',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#F8C486',
+                    confirmButtonText: 'Yes, go ahead!',
+                    cancelButtonText: 'Cancel',
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                function(isConfirm) {
+                    if (isConfirm) {
+                        $http.put(API.path('/project-expertise/' + expertise.id + '/bid/' + bid.id), {}).then(function(result) {
+                            if (typeof(result.data.error) === 'undefined') {
+                                expertise.selected_bid = bid;
+                                SweetAlert.swal('Selected!', 'You have selected the expert.', 'success');
+                            }
+                        });
+                    }
+                });
         }
 
-        $scope.confirmExperts = function(){
+        $scope.confirmExperts = function() {
             $scope.project.state = 3.9;
             $scope.saveProgress();
 
@@ -543,7 +538,7 @@
         }
     });
 
-    angular.module('fundator.controllers').controller('CreateBudgetCtrl', function($rootScope, $scope, $state, $resource, API) {
+    angular.module('fundator.controllers').controller('CreateBudgetCtrl', function($rootScope, $scope, $state, $resource, API, FdScroller) {
         console.log('CreateBudgetCtrl Started');
         $rootScope.innerSectionLoading = true;
 
@@ -555,7 +550,9 @@
             }
         });
 
-        $scope.data = {};
+        $scope.data = {
+            startMonthRepayment: 3
+        };
 
         $scope.projectFinance = {
             base_budget: 600,
@@ -569,17 +566,35 @@
             investors_message_se: ''
         }
 
-        $scope.$watch('project', function(project){
+        $scope.$watch('project', function(project) {
             if (typeof(project) === 'undefined' || project === null) return;
 
-            ProjectFinance.get({projectFinanceId: project.project_finance_id}).$promise.then(function(result){
+            ProjectFinance.get({ projectFinanceId: project.project_finance_id }).$promise.then(function(result) {
                 $scope.projectFinance = result;
-            }).finally(function(){
+            }).finally(function() {
                 $rootScope.innerSectionLoading = false;
             });
         });
 
-        $scope.getTotalBudget = function(withInterest){
+        $scope.getRepaymentMonths = function() {
+            var num = angular.copy($scope.projectFinance.payback_duration);
+            var repaymentMonths = [];
+            console.log('num : ' + num);
+
+            if (num >= 12) {
+                num = 11;
+            }
+
+            for (var rm = 0; rm < num; rm++) {
+                // if (rm >= 3) {
+                repaymentMonths.push(rm);
+                // }
+            }
+
+            return repaymentMonths;
+        }
+
+        $scope.getTotalBudget = function(withInterest) {
             var totalBudget = $scope.projectFinance.base_budget + ($scope.projectFinance.base_budget * ($scope.projectFinance.adjustment_margin / 100));
 
             if (withInterest) {
@@ -605,11 +620,11 @@
             console.log('whole');
             console.log(whole);
 
-            for (var i = 0; i < whole; i++){
+            for (var i = 0; i < whole; i++) {
                 var wholeRemainderArray = [];
 
-                for (var wr = 0; wr < 12; wr++){
-                    wholeRemainderArray.push({sold: 0});
+                for (var wr = 0; wr < 12; wr++) {
+                    wholeRemainderArray.push({ sold: 0 });
                 }
 
                 yearsCopy.push(wholeRemainderArray);
@@ -618,8 +633,8 @@
             if (remainder > 0) {
                 var remainderArray = [];
 
-                for (var r = 0; r < remainder; r++){
-                    remainderArray.push({sold: 0});
+                for (var r = 0; r < remainder; r++) {
+                    remainderArray.push({ sold: 0 });
                 }
 
                 yearsCopy.push(remainderArray);
@@ -629,9 +644,10 @@
             return angular.copy(yearsCopy);
         }
 
-        $scope.saveProgress = function() {
+        $scope.saveFinanceProgress = function() {
             console.log('saving progress');
             var projectFinance = angular.copy($scope.projectFinance);
+            projectFinance.funding_amount = $scope.getTotalBudget() - projectFinance.self_funding_amount;
 
             if (typeof(projectFinance) !== 'undefined') {
                 ProjectFinance.update({
@@ -642,14 +658,135 @@
                 });
             }
         }
+
+        $scope.confirmBudget = function() {
+            $scope.project.state = 4.9;
+            $scope.saveProgress();
+
+            FdScroller.toSection('.steps-content');
+        }
     });
 
-    angular.module('fundator.controllers').controller('CreateInvestorsCtrl', function($rootScope, $scope, $state, $resource) {
+    angular.module('fundator.controllers').controller('CreateInvestorsCtrl', function($rootScope, $scope, $state, $http, $filter, API, SweetAlert) {
         console.log('CreateInvestorsCtrl Started');
 
-        $scope.$watch('project', function(project){
+        $scope.investmentBids = [];
+
+        $scope.shortlistBid = function(bid) {
+            bid.type = 'shortlist';
+            $http.put(API.path('/projects/' + bid.project.id + '/investment-bids/' + bid.id), bid).then(function(result) {
+                if (result) {
+                    $scope.investmentData.shortlist_bids.push(bid);
+                }
+            });
+        }
+
+        $scope.unShortlistBid = function(bid) {
+            bid.type = '';
+            $http.put(API.path('/projects/' + bid.project.id + '/investment-bids/' + bid.id), bid).then(function(result) {
+                if (result) {
+                    var index = $scope.investmentData.shortlist_bids.indexOf(bid);
+                    $scope.investmentData.shortlist_bids.splice(index, 1);
+                }
+            });
+        }
+
+        $scope.unSelectBid = function(bid) {
+            SweetAlert.swal({
+                title: 'Are you sure?',
+                text: 'You are removing an investment bid from : ' + bid.investor.name + ' ' + bid.investor.last_name,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#F8C486',
+                confirmButtonText: 'Yes, go ahead!',
+                cancelButtonText: 'Cancel',
+                closeOnConfirm: false,
+                closeOnCancel: true
+            },
+            function(isConfirm) {
+                if (isConfirm) {
+                    bid.type = '';
+
+                    $http.put(API.path('/projects/' + bid.project.id + '/investment-bids/' + bid.id), bid).then(function(result) {
+                        if (result) {
+                            var index = $scope.investmentData.shortlist_bids.indexOf(bid);
+                            $scope.investmentData.shortlist_bids.splice(index, 1);
+                        }
+
+                        SweetAlert.swal('Removed!', 'You have removed an Investor!', 'success');
+                    });
+                }
+            });
+        }
+
+        $scope.selectBid = function(bid) {
+            SweetAlert.swal({
+                title: 'Are you sure?',
+                text: 'You are selecting an investment bid from :  ' + bid.investor.name + ' ' + bid.investor.last_name,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#F8C486',
+                confirmButtonText: 'Yes, go ahead!',
+                cancelButtonText: 'Cancel',
+                closeOnConfirm: false,
+                closeOnCancel: true
+            },
+            function(isConfirm) {
+                if (isConfirm) {
+                    bid.type = 'select';
+
+                    $http.put(API.path('/projects/' + bid.project.id + '/investment-bids/' + bid.id), bid).then(function(result) {
+                        if (result) {
+                            $scope.investmentData.selected_bids.push(bid);
+                        }
+
+                        SweetAlert.swal('Selected!', 'You have selected an Investor!', 'success');
+                    }, function(){
+                        SweetAlert.swal('Error!', 'Investor could not be selected', 'error');
+                    });
+                }
+            });
+        }
+
+        $scope.switchSource = function(source){
+            switch(source){
+                case 'shortlist': $scope.bidSource = $scope.investmentData.shortlist_bids; $scope.bidSourceType = 'shortlist';
+                break;
+                case 'selected': $scope.bidSource = $scope.investmentData.selected_bids; $scope.bidSourceType = 'selected';
+                break;
+                default: $scope.bidSource = $scope.investmentData.all_bids; $scope.bidSourceType = 'all';
+            }
+        }
+
+        $scope.$watch('project', function(project) {
             if (typeof(project) === 'undefined' || project === null) return;
-            $rootScope.innerSectionLoading = false;
+
+            $http.get(API.path('/projects/' + project.id + '/investment-bids')).then(function(result) {
+                $scope.investmentData = result.data;
+
+                // Convert selected and shortlisted bid ids to bids
+                var shortlistBidIds = angular.copy($scope.investmentData.shortlist_bids);
+                var shortlistBids = [];
+                var selectedBidIds = angular.copy($scope.investmentData.selected_bids);
+                var selectedBids = [];
+
+                angular.forEach(shortlistBidIds, function(bidId){
+                    var bid = $filter('filter')($scope.investmentData.all_bids, {id: bidId}, true)[0];
+                    shortlistBids.push(bid);
+                });
+                $scope.investmentData.shortlist_bids = shortlistBids;
+
+                angular.forEach(selectedBidIds, function(bidId){
+                    var bid = $filter('filter')($scope.investmentData.all_bids, {id: bidId}, true)[0];
+                    selectedBids.push(bid);
+                });
+                $scope.investmentData.selected_bids = selectedBids;
+
+                $scope.bidSource = $scope.investmentData.all_bids;
+                $scope.bidSourceType = 'all';
+            }).finally(function() {
+                $rootScope.innerSectionLoading = false;
+            });
         });
     });
 })();

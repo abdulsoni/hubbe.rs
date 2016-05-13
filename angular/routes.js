@@ -208,6 +208,18 @@
                     }
                 }
             })
+            .state('app.investment', {
+                url: '/investment/:projectId',
+                data: {
+                    needLogin: true
+                },
+                views: {
+                    'main@': {
+                        templateUrl: getView('invest', 'investment'),
+                        controller: 'InvestmentCtrl'
+                    }
+                }
+            })
             .state('app.create', {
                 url: '/create?projectId',
                 data: {

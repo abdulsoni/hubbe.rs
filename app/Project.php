@@ -90,6 +90,19 @@ class Project extends Model
         return $this->getAttributes();
     }
 
+    public function projectInvestmentAvailableAttributes(){
+        $project_data = [];
+
+        $project_data['id'] = $this->id;
+        $project_data['name'] = $this->name;
+        $project_data['thumbnail'] = $this->thumbnail;
+        $project_data['description'] = $this->description;
+        $project_data['super_expert'] = $this->superExpert;
+        $project_data['finance'] = $this->projectFinance;
+
+        return $project_data;
+    }
+
     /**
      * Bootstrap any application services.
      *

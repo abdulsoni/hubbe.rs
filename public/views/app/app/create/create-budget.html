@@ -1,11 +1,11 @@
-<div ng-if="projectFinance">
+<div ng-if="projectFinance && project.state < 4.9 || project.state > 4.9">
     <div class="well marginT25 checkoutRow">
     	<div class="row">
     		<div class="col-md-8 col-sm-7">
     			<h4 class="marginB25 marginT0">Expert budget needed: <br><span class="center-block marginT10">{{projectFinance.base_budget | currency}}</span></h4>
     			<h4 class="marginT0">Adjustment margin: &nbsp; <small>{{projectFinance.adjustment_margin}}% (min.: 10% ~ 40%)</small><br>
                     <div class="adjustment-slider">
-                        <slider ng-model="projectFinance.adjustment_margin" min="'10'" step="'1'" max="'40'" on-stop-slide="saveProgress()"></slider>
+                        <slider ng-model="projectFinance.adjustment_margin" min="'10'" step="'1'" max="'40'" on-stop-slide="saveFinanceProgress()"></slider>
                     </div>
                 </h4>
     			<div class="confirmations hide">
@@ -43,7 +43,7 @@
                         data-step="10"
                         data-width="200px"
                         data-editable
-                        ng-blur="saveProgress()"
+                        ng-blur="saveFinanceProgress()"
                         ></div>
                     </div>
                     <h5 class="price-group-label marginT0">which is {{(projectFinance.self_funding_amount / getTotalBudget()) * 100 | number:1}}% of total budget</h5>
@@ -57,10 +57,10 @@
                         <i></i> <span><h4><strong>Pick up Country</strong></h4></span> </label>
                     <input type="text" placeholder="Kenia, United Kingdom, etc..."> -->
                     <h3>Message to investors from you</h3>
-                    <textarea placeholder="description here..." ng-model="projectFinance.investors_message_creator" ng-blur="saveProgress()"></textarea>
+                    <textarea placeholder="description here..." ng-model="projectFinance.investors_message_creator" ng-blur="saveFinanceProgress()"></textarea>
                     <!-- <div class="text-right"><a href="#">confirmed by SE on 29/11/15</a></div> -->
                     <h3>Message from superexperts to investors</h3>
-                    <textarea placeholder="description here..." ng-model="projectFinance.investors_message_se" ng-blur="saveProgress()"></textarea>
+                    <textarea placeholder="description here..." ng-model="projectFinance.investors_message_se" ng-blur="saveFinanceProgress()"></textarea>
                     <!-- <div class="text-center">
                         <input type="submit" value="Confirm" class="btn btn_default btn-info">
                     </div> -->
@@ -87,7 +87,7 @@
                 <div class="price-row marginB15">
                     <div class="price-group">
                         <div class="adjustment-slider">
-                            <slider ng-model="projectFinance.payable_intrest" min="'15'" step="'1'" max="'40'" on-stop-slide="saveProgress()"></slider>
+                            <slider ng-model="projectFinance.payable_intrest" min="'15'" step="'1'" max="'40'" on-stop-slide="saveFinanceProgress()"></slider>
                         </div>
                     </div>
                     <div class="price-group-label"><strong>{{projectFinance.payable_intrest}}%</strong></div>
@@ -99,7 +99,7 @@
                 <div class="price-row marginB15">
                     <div class="price-group">
                         <div class="adjustment-slider">
-                            <slider ng-model="projectFinance.payback_duration" min="'6'" step="'1'" max="'24'" on-stop-slide="saveProgress()"></slider>
+                            <slider ng-model="projectFinance.payback_duration" min="'6'" step="'1'" max="'24'" on-stop-slide="saveFinanceProgress()"></slider>
                         </div>
                     </div>
                     <div class="price-group-label"><strong>{{projectFinance.payback_duration}} months</strong></div>
@@ -110,7 +110,7 @@
                 <div class="price-row marginB15">
                     <div class="price-group">
                         <div class="adjustment-slider">
-                            <slider ng-model="projectFinance.payback_duration_extended" min="'0'" step="'1'" max="'12'" on-stop-slide="saveProgress()"></slider>
+                            <slider ng-model="projectFinance.payback_duration_extended" min="'0'" step="'1'" max="'12'" on-stop-slide="saveFinanceProgress()"></slider>
                         </div>
                     </div>
                     <div class="price-group-label"><strong>{{projectFinance.payback_duration_extended}} months</strong></div>
@@ -140,19 +140,24 @@
                         </div>
                     </div>
                 </div> -->
-                <h4 class="paddingT0 marginT0">Type of Investor you want</h4>
+
                 <div class="radiobox radioboxInvestor">
-                    <label for="radio-active">
-                        <input type="radio" name="investorRadios" id="radio-active" value="Active" checked="">
-                        <i></i> <span><h4><strong>Active</strong></h4></span> </label>
+                    <label for="investor-type-active">
+                        <input type="radio" name="investorRadios" id="investor-type-active" value="1" ng-model="projectFinance.investors_type" ng-change="saveFinanceProgress()">
+                        <i></i> <span><h4><strong>Active</strong></h4></span>
+                    </label>
                     <p>Active investors provie more than money, they usually know well about their market and can provide good pieces of advices for your market, potential customer or give good sales contacts</p>
-                    <label for="non-active">
-                        <input type="radio" name="investorRadios" id="non-active" value="Non Active">
-                        <i></i> <span><h4><strong>Non Active</strong></h4></span> </label>
+
+                    <label for="investor-type-non-active">
+                        <input type="radio" name="investorRadios" id="investor-type-non-active" value="2" ng-model="projectFinance.investors_type" ng-change="saveFinanceProgress()">
+                        <i></i> <span><h4><strong>Non Active</strong></h4></span>
+                    </label>
                     <p>Investment from investors is enough. No extra activities are favored.</p>
-                    <label for="radio-all">
-                        <input type="radio" name="investorRadios" id="radio-all" value="All">
-                        <i></i> <span><h4><strong>All</strong></h4></span> </label>
+
+                    <label for="investor-type-all">
+                        <input type="radio" name="investorRadios" id="investor-type-all" value="0" ng-model="projectFinance.investors_type" ng-change="saveFinanceProgress()">
+                        <i></i> <span><h4><strong>All</strong></h4></span>
+                    </label>
                 </div>
                 <!-- <h4 class="text-sky paddingT5">confirmed on 29/11/15<br>confirmed by SE on 29/11/15</h4> -->
                 <!-- <div class="text-center marginT25 paddingT5 marginB15">
@@ -167,17 +172,8 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <h4>Repayment Start Month: <br>
-                                <select ng-mode="data.startMonthRepayment">
-                                    <option value="3">Month 3</option>
-                                    <option value="4">Month 4</option>
-                                    <option value="5">Month 5</option>
-                                    <option value="6">Month 6</option>
-                                    <option value="7">Month 7</option>
-                                    <option value="8">Month 8</option>
-                                    <option value="9">Month 9</option>
-                                    <option value="10">Month 10</option>
-                                    <option value="11">Month 11</option>
-                                    <option value="12">Month 12</option>
+                                <select ng-model="data.startMonthRepayment">
+                                    <option value="{{month}}" ng-repeat="month in getRepaymentMonths()">Month {{month + 1}}</option>
                                 </select>
                             </h4>
                         </div>
@@ -206,7 +202,9 @@
                 <hr>
                 <br>
 
+
                 <div class="table-wrap" ng-repeat="paybackYears in getPaybackDuration()">
+                    {{year = $index;''}}
                     <h4>Year {{$index + 1}}</h4>
                     <table class="table">
                         <thead>
@@ -220,8 +218,8 @@
                         <tbody>
                             <tr>
                                 <th>No. Units Sold</th>
-                                <td ng-repeat="month in paybackYears track by $index" ng-disabled="$index < 3">
-                                    <input type="text" class="form-control" ng-disabled="$index < 3" ng-model="month.sold">
+                                <td ng-repeat="month in paybackYears track by $index" ng-disabled="year === 0 && $index < data.startMonthRepayment">
+                                    <input type="text" class="form-control" ng-disabled="$index < data.startMonthRepayment" ng-model="month.sold">
                                 </td>
                             </tr>
                             <tr>
@@ -234,7 +232,7 @@
                             <tr>
                                 <th>Cummulative Gross</th>
                                 <td ng-repeat="month in paybackYears track by $index">
-                                    {{month.cummulativeGross = ($index > 3) ? paybackYears[$index - 1].cummulativeGross + month.monthlyGross : month.monthlyGross;''}}
+                                    {{month.cummulativeGross = ($index > data.startMonthRepayment) ? paybackYears[$index - 1].cummulativeGross + month.monthlyGross : month.monthlyGross;''}}
 
                                     {{month.cummulativeGross | currency}}
                                 </td>
@@ -249,17 +247,30 @@
                                 <th>Investor Returns (expected)</th>
                                 <td ng-repeat="month in paybackYears track by $index">
                                     {{remainingMonths = projectFinance.payback_duration - $index;''}}
-                                    {{collected = (paybackYears[$index - 1].actualReturn === 0) ? (paybackYears[$index - 1].cummulativeGross + paybackYears[$index - 1].expectedReturns) : paybackYears[$index - 1].cummulativeGross;''}}
-                                    {{month.expectedReturns = ($index > 3) ? (getTotalBudget(true) - collected) / remainingMonths : getTotalBudget(true) / remainingMonths;''}}
+                                    <!-- {{collected = (paybackYears[$index - 1].actualReturn === 0) ? (paybackYears[$index - 1].cummulativeGross + paybackYears[$index - 1].expectedReturns) : paybackYears[$index - 1].cummulativeGross;''}} -->
+                                    <!-- {{monthlyReturn = getTotalBudget(true)  / (projectFinance.payback_duration - data.startMonthRepayment);''}} -->
 
-                                    {{($index >= 3) ? month.expectedReturns: 0 | currency}}
+                                    {{remainingAmount = getTotalBudget(true) - paybackYears[$index - 1].cummulativeReturn}}
+                                    {{month.expectedReturns = ($index >= data.startMonthRepayment) ? (remainingAmount / remainingMonths) : 0;''}}
+
+                                    <!-- {{($index >= data.startMonthRepayment) ? month.expectedReturns: 0 | currency}} -->
                                 </td>
                             </tr>
                             <tr>
                                 <th>Investor Returns</th>
                                 <td ng-repeat="month in paybackYears track by $index">
-                                    {{month.actualReturn = month.monthlyGross;''}}
-                                    {{month.actualReturn | currency}}
+                                    <!-- {{remainingMonths = projectFinance.payback_duration - $index;''}} -->
+                                    <!-- {{month.cummulativeReturn = month.cummulativeReturn + month.actualReturn}} -->
+                                    {{month.cummulativeReturn = ($index > data.startMonthRepayment) ? paybackYears[$index - 1].cummulativeReturn + month.actualReturn : month.actualReturn}}
+                                    {{monthlyReturn = getTotalBudget(true)  / (projectFinance.payback_duration - data.startMonthRepayment);''}}
+                                    {{month.actualReturn = (month.monthlyGross > monthlyReturn) ? monthlyReturn : month.monthlyGross;''}}
+                                    <!-- {{month.actualReturn | currency;''}} -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Profit</th>
+                                <td ng-repeat="month in paybackYears track by $index">
+                                    {{month.monthlyGross - month.actualReturn | currency}}
                                 </td>
                             </tr>
                         </tbody>
@@ -267,5 +278,21 @@
                 </div>
             </div>
         </div>
+
+        <br><br>
+
+        <div>
+            <button class="btn btn-info center-block marginT30" ng-click="confirmBudget()" ladda="confirmingBudget">
+                Submit for Review
+            </button>
+        </div>
     </div>
+</div>
+
+<div class="project-inreview well" ng-if="project.state === 4.9">
+    <span class="icon icon-clock"></span>
+
+    <p>Your project's budget has been submitted for review. You will be notified when the Super Expert approves your project's budget.</p>
+
+    <p>For any inquires, please write to <a href="mailto:contact@fundator.co">contact@fundator.co</a></p>
 </div>

@@ -12,6 +12,7 @@ use Fundator\Expertise;
 use Fundator\ExpertiseCategory;
 use Fundator\ProjectExpertise;
 use Fundator\ProjectExpertiseBid;
+use Fundator\ProjectInvestmentBid;
 use Fundator\Confirm;
 
 use Fundator\Events\ProjectSuperExpertSelected;
@@ -42,7 +43,7 @@ class ProjectController extends Controller
                 // if (!isset($_REQUEST['fd_active_role'])) {
                 //     $_REQUEST['fd_active_role'] = 'creator';
                 // }
-                $response = ProjectController::projectsByRole($user, $_GET['fd_active_role']);
+                $response = ProjectController::projectsByRole($user, $_REQUEST['fd_active_role']);
             }
         } catch (Exception $e) {
             $statusCode = 400;
@@ -272,10 +273,21 @@ class ProjectController extends Controller
 
             break;
             case 'investor':
+                $investor = $user->investor;
                 $projects_data = [
                     'ongoing' => [],
-                    'available' => []
+                    'investable' => []
                 ];
+
+                if (!is_null($investor)) {
+                    // Investable
+                    $projects = Project::where('state', 5)->get();
+
+                    foreach($projects as $project)
+                    {
+                        $projects_data['investable'][] = $project->projectInvestmentAvailableAttributes();
+                    }
+                }
             break;
         }
 
@@ -553,6 +565,161 @@ class ProjectController extends Controller
                 throw new Exception('Project or Expert not found', 1);
             }
 
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function indexInvestmentBids($id)
+    {
+        $statusCode = 200;
+        $response = [];
+
+        try{
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                throw new Exception('User not found', 1);
+            }
+
+            $project = Project::find($id);
+            $creator = $user->creator;
+            $investmentData = [];
+
+            $finance = $project->projectFinance;
+            $amountShortlist = 0;
+            $activeInvestors = 0;
+
+            if (!is_null($finance)) {
+                $investmentData['investors_min'] = $finance->investors_min;
+                $investmentData['funding_amount'] = $finance->funding_amount;
+                $investmentData['self_funding_amount'] = $finance->self_funding_amount;
+            }
+
+            if (!is_null($creator) && ($creator->id === $project->creator->id)) {
+                $investmentBids = ProjectInvestmentBid::where('project_id', $project->id)->get();
+                $shortlistBids = [];
+                $selectedBids = [];
+
+                foreach ($investmentBids as $bid) {
+                    if ($bid->type === 'shortlist') {
+                        $shortlistBids[] = $bid->id;
+                        $amountShortlist+= $bid->bid_amount_max;
+                    }else if($bid->type === 'select'){
+                        $selectedBids[] = $bid->id;
+                    }
+
+                    if ($bid->investor->active) {
+                        $activeInvestors++;
+                    }
+                }
+
+                $investmentData['active_investors'] = $activeInvestors;
+                $investmentData['amount_shortlist'] = $amountShortlist;
+                $investmentData['all_bids'] = $investmentBids;
+                $investmentData['shortlist_bids'] = $shortlistBids;
+                $investmentData['selected_bids'] = $selectedBids;
+            }else{
+                throw new Exception('Project Investment Bids not found', 1);
+            }
+
+            $response = $investmentData;
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function storeInvestmentBids(Request $request, $id)
+    {
+        $statusCode = 200;
+        $response = [];
+
+        try{
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                throw new Exception('User not found', 1);
+            }
+
+            $project = Project::find($id);
+
+            if (!is_null($project) && !is_null($user->investor)) {
+                $projectInvestmentBid = ProjectInvestmentBid::where('project_id', $project->id)->where('investor_id', $user->investor->id)->first();
+
+                if (is_null($projectInvestmentBid)) {
+                    $projectInvestmentBid = ProjectInvestmentBid::create([
+                        'bid_amount_min' => $request->bid_amount_min,
+                        'bid_amount_max' => $request->bid_amount_max,
+                        'description' => $request->description
+                    ]);
+
+                    $projectInvestmentBid->project()->associate($project);
+                    $projectInvestmentBid->investor()->associate($user->investor);
+                }else{
+                    $projectInvestmentBid->$request->bid_amount_min;
+                    $projectInvestmentBid->$request->bid_amount_max;
+                    $projectInvestmentBid->$request->description;
+                }
+
+                $projectInvestmentBid->save();
+                $response = $projectInvestmentBid;
+            }else{
+                throw new Exception('Project or Investor not found', 1);
+            }
+
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateInvestmentBids(Request $request, $id, $bidId)
+    {
+        $statusCode = 200;
+        $response = [];
+
+        try{
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                throw new Exception('User not found', 1);
+            }
+
+            $project = Project::find($id);
+            $bid = ProjectInvestmentBid::find($bidId);
+
+            if (!is_null($project) && !is_null($bid)) {
+
+                if (isset($request->type)) {
+                    $bid->type = $request->type;
+                }
+
+                $response = $bid->save();
+            }else{
+                throw new Exception('Project or Bid not found', 1);
+            }
         } catch (Exception $e) {
             $statusCode = 400;
             $response = ['error' => $e->getMessage()];

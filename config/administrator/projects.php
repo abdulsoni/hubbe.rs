@@ -241,7 +241,7 @@ return array(
                 Log::info('Project Finance Approved');
 
                 try{
-                    $model->state = 4.1;
+                    $model->state = 5;
 
                     Event::fire(new ProjectFinanceApproved($model));
 

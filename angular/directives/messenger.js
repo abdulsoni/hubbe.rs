@@ -33,7 +33,7 @@
 
                 $scope.user = $rootScope.user;
 
-                var Message = $resource('/api/messages/:threadId', {
+                var Message = $resource(API.path('messages/:threadId'), {
                     threadId: '@id'
                 }, {
                     get: {

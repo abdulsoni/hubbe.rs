@@ -1118,6 +1118,13 @@ ul.itemWithHover {
     }
 }
 
+.project-heading{
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    right: 15px;
+}
+
 .project-itemMng {
     margin: 5px 0 17px 0;
     .project-thumbnail {
@@ -1144,6 +1151,25 @@ ul.itemWithHover {
     }
     .progress {
         margin-bottom: 0;
+    }
+}
+
+.project-mini-description{
+    max-height: 60px;
+    overflow: hidden;
+    padding-top: 8px;
+    min-height: 60px;
+    margin-bottom: 10px;
+}
+
+.project-investment-bid{
+    @extends .well;
+    background: #f2f2f2;
+}
+
+.project-investment{
+    .project-thumbnail, .project-caption{
+        height: 310px;
     }
 }
 
@@ -2963,7 +2989,7 @@ a.homeLink {
 
 .isotope-subItem {
     width: 100%;
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
     background-color: #f3f3f3;
     .btn-info {
         min-width: 135px;

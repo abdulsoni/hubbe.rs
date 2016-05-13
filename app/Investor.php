@@ -28,6 +28,13 @@ class Investor extends Model
     protected $fillable = ['investment_budget', 'investment_goal', 'investment_reason'];
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $appends = ['name', 'last_name', 'thumbnail_url'];
+
+    /**
      * Attachemnt to the parent user
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -47,9 +54,20 @@ class Investor extends Model
         return $this->hasMany('Fundator\Investment');
     }
 
+
     public function getNameAttribute()
     {
         return $this->user->name;
+    }
+
+    public function getLastNameAttribute()
+    {
+        return $this->user->last_name;
+    }
+
+    public function getThumbnailUrlAttribute()
+    {
+        return $this->user->thumbnail_url;
     }
 
 }

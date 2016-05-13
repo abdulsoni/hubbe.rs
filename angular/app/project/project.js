@@ -22,12 +22,16 @@
                 $scope.projects = result.ongoing;
                 $scope.draftProjects = result.draft;
 
-            }else if ($rootScope.activeRole === 'expert') {}{
+            }else if ($rootScope.activeRole === 'expert') {
                 $scope.ongoingTasks = result.ongoing;
                 $scope.ongoingBids = result.bids;
                 $scope.availableExpertise = result.available;
                 $scope.matchingExpertise = result.matching;
                 $scope.expertiseSource = $scope.availableExpertise;
+            }else if ($rootScope.activeRole === 'investor') {
+                console.log('investable projects');
+                console.log(result);
+                $scope.investableProjects = result.investable;
             }
         }).finally(function(){
             $timeout(function() {

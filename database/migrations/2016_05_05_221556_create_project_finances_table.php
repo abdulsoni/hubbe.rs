@@ -29,6 +29,7 @@ class CreateProjectFinancesTable extends Migration
             $table->float('funding_amount');
             $table->integer('payable_intrest');
 
+            $table->integer('payback_month');
             $table->integer('payback_duration');
             $table->integer('payback_duration_extended');
 

@@ -16,9 +16,12 @@ class CreateInvestorsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
 
-            $table->string('investment_budget');
+            $table->float('investment_budget');
             $table->string('investment_goal');
             $table->string('investment_reason');
+
+            $table->float('reserved_investment');
+            $table->boolean('active');
         });
     }
 
