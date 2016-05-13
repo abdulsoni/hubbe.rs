@@ -166,7 +166,7 @@ class AuthenticateController extends Controller
 
         try{
             $validator = Validator::make($request->all(), [
-                'name' => 'required',
+                // 'name' => 'required',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required'
             ]);
@@ -175,11 +175,10 @@ class AuthenticateController extends Controller
                 return response()->json(['message' => $validator->messages()], 400);
             }
 
-            Log::info($request->name);
-
             $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email
+                'name' => isset($request->name) ? $request->name : '',
+                'email' => $request->email,
+                'contact_number' => isset($request->phone) ? $request->phone : ''
             ]);
 
             $user->password = bcrypt($request->password);
