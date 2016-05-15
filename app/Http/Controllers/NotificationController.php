@@ -27,7 +27,7 @@ class NotificationController extends Controller
             $user = User::find($id);
 
             if($user !== null){
-                $notifications = $user->getNotificationsNotRead(); //Notification::where('to_id', $id)->where('read', 0)->get();
+                $notifications = $user->getNotificationsNotRead();
 
                 foreach($notifications as $notification){
                     unset($notification['from']);
@@ -36,7 +36,7 @@ class NotificationController extends Controller
                         $notification['extras'] = $extra;
                     }
                 }
-
+                var_dump($notifications);
                 $response['notifications'] = $notifications ? $notifications : [];
             }
         }catch (Exception $e){
