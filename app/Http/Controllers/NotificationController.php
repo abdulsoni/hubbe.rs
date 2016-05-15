@@ -36,8 +36,7 @@ class NotificationController extends Controller
                         $notification['extras'] = $extra;
                     }
                 }
-                var_dump($notifications);
-                $response['notifications'] = $notifications ? $notifications : [];
+                $response['notifications'] = $notifications;
             }
         }catch (Exception $e){
             $statusCode = 400;
