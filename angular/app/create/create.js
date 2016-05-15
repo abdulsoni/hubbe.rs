@@ -111,7 +111,7 @@
                     $rootScope.sectionLoading = false;
                 });
             } else if (angular.isNumber(projectId) && isFinite(projectId)) {
-                Project.get({ projectId: projectId }).$promise.then(function(result) {
+                Project.get({ projectId: projectId, fd_active_role: $rootScope.activeRole }).$promise.then(function(result) {
                     $scope.project = result;
                 }).finally(function() {
                     $rootScope.sectionLoading = false;
