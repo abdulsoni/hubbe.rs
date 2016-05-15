@@ -31,8 +31,10 @@ class NotificationController extends Controller
 
                 foreach($notifications as $notification){
                     unset($notification['from']);
-                    $extra = $notification->extra->toArray();
-                    $notification['extras'] = $extra;
+                    if ($notification->extra) {
+$extra = $notification->extra->toArray();
+    $notification['extras'] = $extra;
+                    }
                 }
 
                 $response['notifications'] = $notifications;
