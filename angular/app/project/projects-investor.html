@@ -6,23 +6,23 @@
 <div ng-class="{'opacity_hide': sectionLoading}">
     <div class="row">
         <div class="col-sm-12">
-            <uib-tabset class="tabsection" ng-if="ongoingTasks.length > 0">
+            <uib-tabset class="tabsection" ng-if="ongoingProjects.length > 0">
                 <uib-tab heading="Investments">
                     <div class="row">
-                        <div class="col-xs-6 project-itemCol" ng-repeat="expertise in ongoingTasks" ui-sref="app.project({projectId: project.id})">
+                        <div class="col-xs-6 project-itemCol" ng-repeat="project in ongoingProjects" ui-sref="app.project({projectId: project.id})">
                             <div class="row project-itemRow">
                                 <div class="col-lg-6">
                                     <div class="project-thumbnail" style="background-image: url({{project.thumbnail}});">
                                     </div>
-                                    <h3 class="projectHeading">Name of the Project</h3>
+                                    <h3 class="projectHeading project-heading">{{project.name}}</h3>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="well project-caption">
-                                        <h3>Invested Amount<br> <small>400$ Usd</small></h3>
-                                        <h3>Investment Return<br> <small>20%</small></h3>
-                                        <h3>Remaining Time<br> <small>50 days</small></h3>
-                                        <h3 class="marginB0">Completion</h3>
-                                        <div class="progress redbg">
+                                        <h3>Invested Amount<br> <small>{{project.bid | currency}}</small></h3>
+                                        <h3>Investment Return<br> <small>{{project.finance.payable_intrest}}%</small></h3>
+                                        <h3>Total Returns<br> <small>{{project.bid + (project.bid * (project.finance.payable_intrest / 100)) | currency}}</small></h3>
+                                        <h3 class="marginB0">Completion <br> <small am-time-ago="{{project.start_time | amAdd : project.finance.payback_duration : 'months'}}"></small></h3>
+                                        <div class="progress">
                                             <div class="progress-bar progress-bar-success" role="progressbar" style="width:60%">60%</div>
                                         </div>
                                     </div>
@@ -32,6 +32,7 @@
                     </div>
                 </uib-tab>
             </uib-tabset>
+            <div class="no-have paddingT60" ng-if="ongoingProjects.length === 0">You have no ongoing investments!</div>
         </div>
     </div>
 </div>
@@ -40,11 +41,11 @@
 <br>
 <br>
 <!-- Secondary Section -->
-<div class="secondary-section">
+<div class="secondary-section" ng-if="investableProjects.length > 0">
     <div ng-class="{'opacity_hide': sectionLoading}">
         <div class="row">
             <div class="col-sm-12">
-                <h2><strong>Invest in what you know and what you believe in</strong></h2>
+                <h3><strong>Invest in what you know and what you believe in</strong></h3>
                 <hr>
             </div>
             <!-- <div class="col-xs-12">
@@ -75,7 +76,11 @@
                                     </div>
                                 </div>
                                 <h3>Payback Duration<br> <small>{{project.finance.payback_duration}} months</small></h3>
-                                <h3>Days Remaining<br> <small>5 days</small></h3>
+                                <h3 class="marginB0">Funding <small class="pull-right">{{project.investment.amount_selected | currency}} / {{project.finance.funding_amount | currency}}</small></h3>
+                                <div class="progress">
+                                    {{funded = (project.investment.amount_selected / project.finance.funding_amount);''}}
+                                    <div class="progress-bar progress-bar-success" role="progressbar" style="width:{{funded * 100}}%">{{funded * 100 | number:0}}%</div>
+                                </div>
                             </div>
                         </div>
                     </div>

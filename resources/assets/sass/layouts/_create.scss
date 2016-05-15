@@ -385,9 +385,14 @@
 .adjustment-slider{
     width: 340px;
     padding: 15px 10px;
+}
 
-    .slider-handle{
-        background-image: none;
-        background-color: #95c54d;
-    }
+.slider-handle{
+    background-image: none !important;
+    background-color: #95c54d !important;
+}
+
+.slider-selection{
+    background-color: #95c54d !important;
+    background-image: none !important;
 }

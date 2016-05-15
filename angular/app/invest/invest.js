@@ -14,7 +14,9 @@
 
         FdScroller.toTop();
 
-        $scope.data = {};
+        $scope.data = {
+            paybackDuration: []
+        };
         $scope.investment = {};
 
         var Project = $resource(API.path('/projects/:projectId'), {
@@ -30,13 +32,13 @@
 
         	ProjectFinance.get({projectFinanceId: result.project_finance_id}).$promise.then(function(result){
         		$scope.project.finance = result;
+                $scope.data.paybackDuration = JSON.parse(result.mini_plan);
+                console.log(JSON.parse(result.mini_plan));
         		$rootScope.$broadcast('stopLoading');
         	});
         });
 
         $scope.submitBid = function(){
-        	console.log('submitting ... investment bid');
-
             $scope.data.bidLoading = true;
 
             var bidData = {

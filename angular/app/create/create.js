@@ -551,7 +551,9 @@
         });
 
         $scope.data = {
-            startMonthRepayment: 3
+            startMonthRepayment: '3',
+            investorSliderRange: [5, 15],
+            paybackDuration: null
         };
 
         $scope.projectFinance = {
@@ -571,24 +573,34 @@
 
             ProjectFinance.get({ projectFinanceId: project.project_finance_id }).$promise.then(function(result) {
                 $scope.projectFinance = result;
+                $scope.data.investorSliderRange[0] = result.investors_min;
+                $scope.data.investorSliderRange[1] = result.investors_max;
+
+                $scope.data.paybackDuration = result.mini_plan !== '' ? JSON.parse(result.mini_plan) : $scope.getPaybackDuration();
+                $scope.data.oldPaybackDuration = angular.copy($scope.data.paybackDuration);
             }).finally(function() {
                 $rootScope.innerSectionLoading = false;
             });
         });
 
+        $scope.$watch('projectFinance', function(projectFinance){
+            if (typeof(projectFinance) === 'undefined') return;
+
+            if ($scope.data.oldPaybackDuration !== $scope.data.paybackDuration) {
+                $scope.data.paybackDuration = $scope.getPaybackDuration();
+            }
+        }, true);
+
         $scope.getRepaymentMonths = function() {
             var num = angular.copy($scope.projectFinance.payback_duration);
             var repaymentMonths = [];
-            console.log('num : ' + num);
 
             if (num >= 12) {
                 num = 11;
             }
 
             for (var rm = 0; rm < num; rm++) {
-                // if (rm >= 3) {
                 repaymentMonths.push(rm);
-                // }
             }
 
             return repaymentMonths;
@@ -608,6 +620,21 @@
             return totalBudget;
         }
 
+        $scope.getRemainingBudget = function(withInterest) {
+            var investorAmount = $scope.projectFinance.base_budget - $scope.projectFinance.self_funding_amount;
+            var remainingBudget = investorAmount + (investorAmount * ($scope.projectFinance.adjustment_margin / 100));
+
+            if (withInterest) {
+                var duration = angular.copy($scope.projectFinance.payback_duration);
+                var monthlyInterest = $scope.projectFinance.payable_intrest / 12;
+                var overallInterest = monthlyInterest * duration;
+
+                remainingBudget = remainingBudget + (remainingBudget * (overallInterest / 100));
+            }
+
+            return remainingBudget;
+        }
+
         $scope.getPaybackDuration = function() {
             if ($scope.projectFinance.payback_duration === $scope.data.oldPaybackDuration) return $scope.data.paybackDurationArray;
             var years = [];
@@ -617,8 +644,6 @@
             var duration = angular.copy($scope.projectFinance.payback_duration);
             var whole = Math.floor(duration / 12);
             var remainder = duration % 12;
-            console.log('whole');
-            console.log(whole);
 
             for (var i = 0; i < whole; i++) {
                 var wholeRemainderArray = [];
@@ -644,8 +669,14 @@
             return angular.copy(yearsCopy);
         }
 
+        $scope.saveInvestorLimit = function() {
+            $scope.projectFinance.investors_min = $scope.data.investorSliderRange[0];
+            $scope.projectFinance.investors_max = $scope.data.investorSliderRange[1];
+
+            $scope.saveFinanceProgress();
+        }
+
         $scope.saveFinanceProgress = function() {
-            console.log('saving progress');
             var projectFinance = angular.copy($scope.projectFinance);
             projectFinance.funding_amount = $scope.getTotalBudget() - projectFinance.self_funding_amount;
 
@@ -660,6 +691,9 @@
         }
 
         $scope.confirmBudget = function() {
+            $scope.projectFinance.mini_plan = JSON.stringify($scope.data.paybackDuration);
+            $scope.saveFinanceProgress();
+
             $scope.project.state = 4.9;
             $scope.saveProgress();
 
@@ -677,6 +711,7 @@
             $http.put(API.path('/projects/' + bid.project.id + '/investment-bids/' + bid.id), bid).then(function(result) {
                 if (result) {
                     $scope.investmentData.shortlist_bids.push(bid);
+                    $scope.investmentData.amount_shortlist = $scope.investmentData.amount_shortlist + bid.bid_amount_max;
                 }
             });
         }
@@ -687,6 +722,7 @@
                 if (result) {
                     var index = $scope.investmentData.shortlist_bids.indexOf(bid);
                     $scope.investmentData.shortlist_bids.splice(index, 1);
+                    $scope.investmentData.amount_shortlist = $scope.investmentData.amount_shortlist - bid.bid_amount_max;
                 }
             });
         }
@@ -711,6 +747,8 @@
                         if (result) {
                             var index = $scope.investmentData.shortlist_bids.indexOf(bid);
                             $scope.investmentData.shortlist_bids.splice(index, 1);
+
+                            $scope.investmentData.amount_selected = $scope.investmentData.amount_selected - bid.bid_amount_max;
                         }
 
                         SweetAlert.swal('Removed!', 'You have removed an Investor!', 'success');
@@ -738,6 +776,7 @@
                     $http.put(API.path('/projects/' + bid.project.id + '/investment-bids/' + bid.id), bid).then(function(result) {
                         if (result) {
                             $scope.investmentData.selected_bids.push(bid);
+                            $scope.investmentData.amount_selected = $scope.investmentData.amount_selected + bid.bid_amount_max;
                         }
 
                         SweetAlert.swal('Selected!', 'You have selected an Investor!', 'success');

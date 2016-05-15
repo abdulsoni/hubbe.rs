@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\URL;
 use Fundator\ProjectFinance;
 
+use Cmgmyr\Messenger\Models\Thread;
+
 class Project extends Model
 {
     /**
@@ -30,6 +32,13 @@ class Project extends Model
     protected $fillable = ['name', 'description', 'state', 'thumbnail', 'start_time', 'duration', 'market', 'geography', 'price', 'language'];
 
     /**
+     * The custom attribuets
+     *
+     * @var array
+     */
+    protected $appends = ['thread_id'];
+
+    /**
      * User
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -44,7 +53,7 @@ class Project extends Model
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function investments(){
-        return $this->hasMany('Fundator\Investment');
+        return $this->hasMany('Fundator\ProjectInvestmentBid');
     }
 
     /**
@@ -99,8 +108,45 @@ class Project extends Model
         $project_data['description'] = $this->description;
         $project_data['super_expert'] = $this->superExpert;
         $project_data['finance'] = $this->projectFinance;
+        $project_data['investment'] = $this->getInvestmentData();
 
         return $project_data;
+    }
+
+    public function getInvestmentData() {
+        $finance = $this->projectFinance;
+        $amountSelected = 0;
+
+        $investmentBids = ProjectInvestmentBid::where('project_id', $this->id)->get();
+
+        foreach ($investmentBids as $bid) {
+            if($bid->type === 'select'){
+                $amountSelected+= $bid->bid_amount_max;
+            }
+        }
+
+        $investmentData['amount_selected'] = $amountSelected;
+        $investmentData['all_bids'] = sizeof($investmentBids);
+
+        return $investmentData;
+    }
+
+    /*
+     * Messages
+     */
+    public function getThreadIdAttribute()
+    {
+        $threadSubject = 'Public board for project : ' . $this->id;
+        $thread = Thread::where('subject', $threadSubject)->first();
+
+        if(!is_null($thread)){
+            return $thread->id;
+        }else{
+            $thread = Thread::create(['subject' => $threadSubject]);
+            return $thread->id;
+        }
+
+        return null;
     }
 
     /**

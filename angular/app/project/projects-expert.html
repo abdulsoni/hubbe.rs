@@ -9,11 +9,12 @@
             <uib-tabset class="tabsection" ng-if="ongoingTasks.length > 0">
                 <uib-tab heading="Ongoing Tasks">
                     <div class="row">
-                        <div class="col-xs-6 project-itemCol" ng-repeat="expertise in ongoingTasks" ui-sref="app.project({projectId: project.id})">
+                        <div class="col-xs-6 project-itemCol" ng-repeat="expertise in ongoingTasks" ui-sref="app.project.mytask({projectId: expertise.project.id})">
                             <div class="row project-itemRow">
                                 <div class="col-lg-6">
-                                    <div class="project-thumbnail" style="background-image: url({{project.thumbnail ? project.thumbnail : '/images/placeholder.png';}});">
+                                    <div class="project-thumbnail" style="background-image: url({{expertise.project.thumbnail ? expertise.project.thumbnail : '/images/placeholder.png';}});">
                                     </div>
+                                    <h3 class="projectHeading project-heading">{{expertise.project.name}}</h3>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="well project-caption">

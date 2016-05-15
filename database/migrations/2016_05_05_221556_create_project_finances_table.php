@@ -41,6 +41,8 @@ class CreateProjectFinancesTable extends Migration
             $table->text('investors_message_creator');
             $table->text('investors_message_se');
 
+            $table->json('mini_plan');
+
             $table->timestamps();
         });
     }

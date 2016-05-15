@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Fundator\Http\Requests;
 use Fundator\Http\Controllers\Controller;
 use Fundator\Project;
+use Fundator\Investor;
 use Fundator\Expert;
 use Fundator\Expertise;
 use Fundator\ExpertiseCategory;
@@ -108,11 +109,14 @@ class ProjectController extends Controller
 
         try{
             $project = Project::find($id);
-
             $project_data = [];
 
-            if (!is_null($project)) {
-                $project_data = $project->getAttributes();
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+
+            if (!is_null($user) && !is_null($project)) {
+                $project_data = ProjectController::projectByRole($project->id, $user, $_REQUEST['fd_active_role']);
 
                 if (!is_null($project->projectFinance)) {
                     $project_data['project_finance_id'] = $project->projectFinance->id;
@@ -228,7 +232,7 @@ class ProjectController extends Controller
 
                 if (!is_null($expert)) {
                     $projectExpertise = ProjectExpertise::join('project_expertise_bids as peb', 'peb.project_expertise_id', '=', 'project_expertise.id')
-                        ->where('expert_id', $expert->id)->whereNotNull('selected_bid_id')->get(['project_expertise.id', 'bid_amount', 'task', 'budget', 'start_date', 'lead_time']);
+                        ->where('expert_id', $expert->id)->whereNotNull('selected_bid_id')->get(['project_expertise.id', 'project_expertise.project_id', 'bid_amount', 'task', 'budget', 'start_date', 'lead_time']);
 
                     $projectBids = ProjectExpertise::join('project_expertise_bids as peb', 'peb.project_expertise_id', '=', 'project_expertise.id')
                         ->where('expert_id', $expert->id)->whereNull('selected_bid_id')->get(['peb.id', 'bid_amount', 'task', 'budget', 'start_date', 'lead_time', 'peb.created_at']);
@@ -238,6 +242,11 @@ class ProjectController extends Controller
 
                     $projects_data['ongoing'] = $projectExpertise;
                     $projects_data['bids'] = $projectBids;
+
+                    foreach($projects_data['ongoing'] as $expertise)
+                    {
+                        $expertise['project'] = $expertise->project()->select('id', 'name', 'thumbnail')->first();
+                    }
 
                     foreach($availableExpertise as $expertise)
                     {
@@ -281,9 +290,24 @@ class ProjectController extends Controller
 
                 if (!is_null($investor)) {
                     // Investable
-                    $projects = Project::where('state', 5)->get();
+                    $selectedBids = ProjectInvestmentBid::select(['bid_amount_max', 'bid_amount_min', 'project_id'])
+                        ->where('investor_id', $investor->id)->where('type', 'select')->get();
+                    $excludeBidArray = [];
 
-                    foreach($projects as $project)
+                    foreach ($selectedBids as $bid) {
+                        $excludeBidArray[] = $bid->project_id;
+                        $project = Project::find($bid->project_id);
+
+                        $ongoingProjectData = $project;
+                        $ongoingProjectData['bid'] = $bid->bid_amount_max;
+                        $ongoingProjectData['finance'] = $project->projectFinance()->select(['payable_intrest', 'payback_duration'])->first();
+
+                        $projects_data['ongoing'][] = $ongoingProjectData;
+                    }
+
+                    $investableProjects = Project::where('state', 5)->whereNotIn('id', $excludeBidArray)->get();
+
+                    foreach($investableProjects as $project)
                     {
                         $projects_data['investable'][] = $project->projectInvestmentAvailableAttributes();
                     }
@@ -292,6 +316,78 @@ class ProjectController extends Controller
         }
 
         return $projects_data;
+    }
+
+    /*
+     * Project by Role
+     */
+    public function projectByRole($id, $user, $role)
+    {
+        $project_data = [];
+        $project = Project::find($id);
+
+        switch ($role) {
+            case 'creator':
+                if (!is_null($project)) {
+                    $project_data = $project->projectCreatorAttributes();
+                    $project_data['expertise'] = $project->projectExpertise;
+                }
+            break;
+            case 'expert':
+                $expert = $user->expert;
+
+                if (!is_null($project) && !is_null($expert)) {
+                    $project_data = $project->projectExpertAttributes();
+                    $projectExpertise = $project->expertise;
+                    $expertTasks = [];
+
+                    foreach ($projectExpertise as $expertise) {
+                        if (!is_null($expertise->selectedBid) && $expertise->selectedBid->expert->id) {
+                            $expertise_data = $expertise;
+                            $expertise_data['expertise'] = $expertise->expertise;
+                            $expertTasks[] = $expertise_data;
+                        }
+                    }
+
+                    $project_data['tasks'] = $expertTasks;
+                }
+            break;
+            case 'investor':
+                $investor = $user->investor;
+                if (!is_null($project) && !is_null($investor)) {
+                    $project_data = $project->projectInvestorAttributes();
+                    $project_data['investment'] = $project->investments()->where('investor_id', $investor->id)->first();
+                }
+
+            break;
+        }
+
+        if (!is_null($project)) {
+            $project_data['thread_id'] = $project->getThreadIdAttribute();
+            $project_data['creator'] = $project->creator;
+            $project_data['super_expert'] = $project->superExpert;
+            $expertiseForTeam = $project->expertise()->whereNotNull('selected_bid_id')->get();
+            $expertsTeam = [];
+
+            foreach ($expertiseForTeam as $expertise) {
+                $expert = Expert::find($expertise->selectedBid->expert_id);
+                $expertsTeam[] = $expert;
+            }
+
+            $project_data['experts'] = $expertsTeam;
+
+            $investorsForTeam = $project->investments()->whereNotNull('investor_id')->get();
+            $investorsTeam = [];
+
+            foreach ($investorsForTeam as $investment) {
+                $investor = Investor::find($investment->investor_id);
+                $investorsTeam[] = $investor;
+            }
+
+            $project_data['investors'] = $investorsTeam;
+        }
+
+        return $project_data;
     }
 
     /**
@@ -596,6 +692,7 @@ class ProjectController extends Controller
 
             $finance = $project->projectFinance;
             $amountShortlist = 0;
+            $amountSelected = 0;
             $activeInvestors = 0;
 
             if (!is_null($finance)) {
@@ -615,6 +712,7 @@ class ProjectController extends Controller
                         $amountShortlist+= $bid->bid_amount_max;
                     }else if($bid->type === 'select'){
                         $selectedBids[] = $bid->id;
+                        $amountSelected+= $bid->bid_amount_max;
                     }
 
                     if ($bid->investor->active) {
@@ -624,6 +722,7 @@ class ProjectController extends Controller
 
                 $investmentData['active_investors'] = $activeInvestors;
                 $investmentData['amount_shortlist'] = $amountShortlist;
+                $investmentData['amount_selected'] = $amountSelected;
                 $investmentData['all_bids'] = $investmentBids;
                 $investmentData['shortlist_bids'] = $shortlistBids;
                 $investmentData['selected_bids'] = $selectedBids;

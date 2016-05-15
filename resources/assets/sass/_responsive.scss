@@ -130,6 +130,11 @@
     .contest-list .col-xs-3.parent-psd-to-html{width:100%}
     .psd-to-html{display: block; padding:25px 0;}
     .project-itemCol[class^=col-xs-]{width: 100%; float: none;}
+    .project-itemCol{
+        &:hover{
+            cursor: pointer;
+        }
+    }
     .connectingPic{display: none;}
 
     .project-new .row .col-xs-3:last-child{width:35%;}

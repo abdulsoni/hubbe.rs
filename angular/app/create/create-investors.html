@@ -1,25 +1,26 @@
 <div class="well marginT25">
     <div class="row">
         <div class="col-md-5 bordRight-md">
-            <h3 class="marginT0">Interested investors: <small>{{investmentData.all_bids.length}}</small></h3>
-            <!-- <h3 class="marginT0">IPromised amount: <small>usd 57000</small></h3> -->
-            <h3 class="marginT0">Active investors: <small>{{investmentData.active_investors}}</small></h3>
-            <h3 class="marginT0">Minimum investors: <small>{{investmentData.investors_min}}</small></h3>
-            <h3 class="marginT0">Shortlisted investors: <small>{{investmentData.shortlist_bids.length}}</small></h3>
-            <h3 class="marginT0">Amount from Shortlisted: <small>{{investmentData.amount_shortlist | currency}}</small></h3>
-            <h3 class="marginT0">Amount from you: <small>{{investmentData.self_funding_amount | currency}}</small></h3>
+            <h4 class="marginT0">Interested investors: <small class="pull-right">{{investmentData.all_bids.length}}</small></h4>
+            <h4 class="marginT0">Active investors: <small class="pull-right">{{investmentData.active_investors}}</small></h4>
+            <h4 class="marginT0">Minimum investors: <small class="pull-right">{{investmentData.investors_min}}</small></h4>
+            <h4 class="marginT0">Shortlisted investors: <small class="pull-right">{{investmentData.shortlist_bids.length}}</small></h4>
+            <h4 class="marginT0">Amount from you: <small class="pull-right">{{investmentData.self_funding_amount | currency}}</small></h4>
+            <h4 class="marginT0">Amount from Shortlisted: <small class="pull-right">{{investmentData.amount_shortlist | currency}}</small></h4>
+            <h4 class="marginT0">Amount from Selected: <small class="pull-right">{{investmentData.amount_selected | currency}}</small></h4>
         </div>
         <div class="col-md-5 col-md-offset-1">
+            <h4 class="marginT25 investorsUser"><i class="userIcon"></i>{{investmentData.all_bids.length}} Investors ({{investmentData.active_investors}} active)
+               <span class="text-orrange paddingL15">/ Require {{investmentData.investors_min - investmentData.selected_bids.length}} more</span>
+            </h4>
+
             <h2 class="amount-heading">Total Amount: {{investmentData.funding_amount | currency}}</h2>
-            <div class="amount-group">
+            <div class="amount-group" ng-if="investmentData.amount_selected > 0">
                 <div class="amount-bar">
-                    <div class="amount-lefBar" style="width:55%">amount selected: usd 7000</div>
-                    <div class="amount-rightBar" style="width:45%">remaining: usd 6200</div>
+                    {{percent = (investmentData.amount_selected / investmentData.funding_amount) * 100;''}}
+                    <div class="amount-lefBar" style="width:{{percent}}%">{{percent | number:0}}%</div>
                 </div>
             </div>
-            <h4 class="marginT25 investorsUser"><i class="userIcon"></i>{{investmentData.all_bids.length}} Investors (2 actives)
-					<span class="text-orrange paddingL25">/ Miss {{investmentData.all_bids.length - investmentData.selected_bids.length}} Investors</span>
-				</h4>
         </div>
     </div>
 </div>

@@ -79,7 +79,8 @@ class ProjectFinanceController extends Controller
                 'investors_max' => $request->investors_max,
                 'investors_type' => $request->investors_type,
                 'investors_message_creator' => $request->investors_message_creator,
-                'investors_message_se' => $request->investors_message_se
+                'investors_message_se' => $request->investors_message_se,
+                'mini_plan' => $request->mini_plan
             ]);
 
             $response = $project_finance->save();

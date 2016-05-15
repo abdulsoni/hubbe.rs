@@ -148,6 +148,80 @@
                     }
                 }
             })
+            .state('app.project.details', {
+                url: '/details',
+                data: {
+                    needLogin: true
+                },
+                views: {
+                    'project-states': {
+                        templateUrl: getView('project', 'project-details'),
+                        controller: 'ProjectDetailsCtrl'
+                    }
+                }
+            })
+            .state('app.project.progress', {
+                url: '/progress',
+                data: {
+                    needLogin: true
+                },
+                views: {
+                    'project-states': {
+                        templateUrl: getView('project', 'project-progress'),
+                        controller: 'ProjectProgressCtrl'
+                    }
+                }
+            })
+            .state('app.project.board', {
+                url: '/board',
+                data: {
+                    needLogin: true
+                },
+                views: {
+                    'project-states': {
+                        templateUrl: getView('project', 'project-board'),
+                        controller: 'ProjectBoardCtrl'
+                    }
+                }
+            })
+            .state('app.project.team', {
+                url: '/team',
+                data: {
+                    needLogin: true
+                },
+                views: {
+                    'project-states': {
+                        templateUrl: getView('project', 'project-team'),
+                        controller: 'ProjectTeamCtrl'
+                    }
+                }
+            })
+            .state('app.project.investors', {
+                url: '/investors',
+                data: {
+                    needLogin: true
+                },
+                views: {
+                    'project-states': {
+                        templateUrl: getView('project', 'project-investors'),
+                        controller: 'ProjectInvestorsCtrl'
+                    }
+                }
+            })
+            .state('app.project.mytask', {
+                url: '/mytask',
+                data: {
+                    needLogin: true
+                },
+                views: {
+                    'project-states': {
+                        templateUrl: getView('project', 'project-mytask'),
+                        controller: 'ProjectTaskCtrl'
+                    }
+                }
+            })
+
+
             .state('app.contests', {
                 url: '/contests',
                 data: {

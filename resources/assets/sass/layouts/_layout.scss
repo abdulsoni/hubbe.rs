@@ -125,7 +125,7 @@
 .priceGroup {
     .price-bar {
         height: 20px;
-        background: #f00;
+        // background: #f00;
         width: 100%;
         overflow: hidden;
         .success-price {
@@ -1169,7 +1169,7 @@ ul.itemWithHover {
 
 .project-investment{
     .project-thumbnail, .project-caption{
-        height: 310px;
+        height: 300px;
     }
 }
 
@@ -1206,6 +1206,9 @@ ul.itemWithHover {
     }
     a {
         color: $secondary-color;
+    }
+    .leadershipDetailInset {
+        margin: 0 -15px;
     }
 }
 
@@ -2034,7 +2037,7 @@ ul.list-inline-group {
             width: 18px;
             height: 18px;
             border-width: 3px;
-            background-color: #6d6f71;
+
         }
         label {
             display: block;
@@ -2042,7 +2045,8 @@ ul.list-inline-group {
                 top: 3px;
             }
             input[type="radio"]:checked + i:before {
-                background-color: transparent;
+                // background-color: transparent;
+                background-color: #6d6f71;
             }
         }
     }
@@ -3055,7 +3059,8 @@ a.homeLink {
     color: $white-color;
     text-align: center;
     padding: 10px;
-    margin-bottom: 22px;
+    // margin-bottom: 22px;
+    margin-bottom: 0;
     margin-top: 30px;
 }
 
@@ -3067,11 +3072,12 @@ a.homeLink {
         height: 0;
     }
     .amount-bar {
-        height: 36px;
-        background: $secondary-color;
+        height: 26px;
+        // background: $secondary-color;
+        background: #f5f5f5;
         width: 100%;
         overflow: hidden;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 300;
         color: #fff;
         .amount-lefBar {
@@ -3082,7 +3088,7 @@ a.homeLink {
             height: 100%;
             text-align: center;
             @include transition(width 0.6s ease);
-            padding: 6px 0;
+            padding: 4px 0;
         }
         .amount-rightBar {
             background-color: #76b990;
@@ -3292,4 +3298,11 @@ a.homeLink {
     padding-left: 80px !important;
     padding-right: 80px !important;
     overflow: hidden;
+}
+
+.project-well-inset{
+    margin-left: -15px;
+    background-color: #eee;
+    height: 300px;
+    margin-bottom: 0;
 }

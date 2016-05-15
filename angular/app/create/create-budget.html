@@ -52,18 +52,11 @@
                 <hr>
                 <div class="clearfix">
                     <div class="radiobox radioboxInvestor">
-                    <!-- <label for="pick-up">
-                        <input type="radio" name="investorRadios" id="pick-up" value="Pick up Country">
-                        <i></i> <span><h4><strong>Pick up Country</strong></h4></span> </label>
-                    <input type="text" placeholder="Kenia, United Kingdom, etc..."> -->
-                    <h3>Message to investors from you</h3>
-                    <textarea placeholder="description here..." ng-model="projectFinance.investors_message_creator" ng-blur="saveFinanceProgress()"></textarea>
-                    <!-- <div class="text-right"><a href="#">confirmed by SE on 29/11/15</a></div> -->
-                    <h3>Message from superexperts to investors</h3>
-                    <textarea placeholder="description here..." ng-model="projectFinance.investors_message_se" ng-blur="saveFinanceProgress()"></textarea>
-                    <!-- <div class="text-center">
-                        <input type="submit" value="Confirm" class="btn btn_default btn-info">
-                    </div> -->
+                        <h3>Message to investors from you</h3>
+                        <textarea placeholder="description here..." ng-model="projectFinance.investors_message_creator" ng-blur="saveFinanceProgress()"></textarea>
+                        <!-- <div class="text-right"><a href="#">confirmed by SE on 29/11/15</a></div> -->
+                        <h3>Message from superexperts to investors</h3>
+                        <textarea placeholder="description here..." ng-model="projectFinance.investors_message_se" ng-blur="saveFinanceProgress()"></textarea>
                     </div>
                 </div>
             </div>
@@ -116,31 +109,20 @@
                     <div class="price-group-label"><strong>{{projectFinance.payback_duration_extended}} months</strong></div>
                     <!-- <h4 class="pull-left text-sky">confirmed on 29/11/15<br>confirmed by SE on 29/11/15</h4> -->
                 </div>
-                <!-- <h4 class="paddingT0 marginT0">Number of investors (optional)</h4>
+                <h4 class="paddingT0 marginT0">Number of investors (optional)</h4>
                 <p class="paddingB15">choose the number of minimum investors that will be chosen</p>
-                <div class="clearfix">
-                    <div class="pull-left">
-                        <div class="price-row">
-                            <div class="price-group">
-                                <h3 class="pull-left marginT15">MIN&nbsp;</h3>
-                                <label for="name" style="min-width:47px;">
-                                    <input type="text" disabled name="min" maxlength="1" size="1" id="min" value="5" class="text-center">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pull-left">
-                        <div class="price-row">
-                            <div class="price-group">
-                                <h3 class="pull-left marginT15">- MAX&nbsp;</h3>
-                                <label for="name" style="min-width:35px;">
-                                    <input type="text" disabled name="min" maxlength="2" size="2" id="min" value="16" class="text-center">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                <slider ng-model="data.investorSliderRange" min="1" max="30" range="true" on-stop-slide="saveInvestorLimit()"></slider>
 
+                <div class="clearfix marginB30">
+                    <span class="pull-left">
+                        Min: {{data.investorSliderRange[0]}}
+                    </span>
+                    <span class="pull-right">
+                        Max: {{data.investorSliderRange[1]}}
+                    </span>
+                </div>
+
+                <h4 class="paddingT0 marginT0 margin0">Type of investor (optional)</h4>
                 <div class="radiobox radioboxInvestor">
                     <label for="investor-type-active">
                         <input type="radio" name="investorRadios" id="investor-type-active" value="1" ng-model="projectFinance.investors_type" ng-change="saveFinanceProgress()">
@@ -178,17 +160,19 @@
                             </h4>
                         </div>
                         <div class="col-sm-4">
-                            <h4>FOB Manufacturing Cost (USD): <br> <input type="text" ng-model="projectFinance.fob_manufacturing_cost" placeholder="1.15" ng-model="projectFinance.fob_manufacturing_cost"></h4>
+                            <h4>FOB Manufacturing Cost (USD): <br> <input type="text" ng-model="projectFinance.fob_manufacturing_cost" placeholder="1.15" ng-model="projectFinance.fob_manufacturing_cost" ng-blur="saveFinanceProgress()"></h4>
                         </div>
                         <div class="col-sm-4">
-                            <h4>FOB Estimated Selling Price (USD): <br> <input type="text" ng-model="projectFinance.fob_selling_price" placeholder="2.5" ng-model="projectFinance.fob_selling_price"></h4>
+                            <h4>FOB Estimated Selling Price (USD): <br> <input type="text" ng-model="projectFinance.fob_selling_price" placeholder="2.5" ng-model="projectFinance.fob_selling_price" ng-blur="saveFinanceProgress()"></h4>
                         </div>
                     </div>
                 </div>
                 <div class="stats">
                     <div class="row">
                         <div class="col-sm-4">
-                            <h4>Total amount (incl. Interest): <br><span>{{getTotalBudget(true) | currency}}</span></h4>
+                            {{remainingBudget = getRemainingBudget(true);''}}
+
+                            <h4>Total amount (incl. Interest): <br><span>{{remainingBudget | currency}}</span></h4>
                         </div>
                         <div class="col-sm-4">
                             <h4>Gross Unit Margin: <br><span>{{projectFinance.fob_selling_price - projectFinance.fob_manufacturing_cost | currency}}</span></h4>
@@ -203,7 +187,7 @@
                 <br>
 
 
-                <div class="table-wrap" ng-repeat="paybackYears in getPaybackDuration()">
+                <div class="table-wrap" ng-repeat="paybackYears in data.paybackDuration">
                     {{year = $index;''}}
                     <h4>Year {{$index + 1}}</h4>
                     <table class="table">
@@ -233,7 +217,6 @@
                                 <th>Cummulative Gross</th>
                                 <td ng-repeat="month in paybackYears track by $index">
                                     {{month.cummulativeGross = ($index > data.startMonthRepayment) ? paybackYears[$index - 1].cummulativeGross + month.monthlyGross : month.monthlyGross;''}}
-
                                     {{month.cummulativeGross | currency}}
                                 </td>
                             </tr>
@@ -243,28 +226,21 @@
                                     N / A
                                 </td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <th>Investor Returns (expected)</th>
                                 <td ng-repeat="month in paybackYears track by $index">
-                                    {{remainingMonths = projectFinance.payback_duration - $index;''}}
-                                    <!-- {{collected = (paybackYears[$index - 1].actualReturn === 0) ? (paybackYears[$index - 1].cummulativeGross + paybackYears[$index - 1].expectedReturns) : paybackYears[$index - 1].cummulativeGross;''}} -->
-                                    <!-- {{monthlyReturn = getTotalBudget(true)  / (projectFinance.payback_duration - data.startMonthRepayment);''}} -->
-
-                                    {{remainingAmount = getTotalBudget(true) - paybackYears[$index - 1].cummulativeReturn}}
-                                    {{month.expectedReturns = ($index >= data.startMonthRepayment) ? (remainingAmount / remainingMonths) : 0;''}}
-
-                                    <!-- {{($index >= data.startMonthRepayment) ? month.expectedReturns: 0 | currency}} -->
+                                    {{remainingMonths = projectFinance.payback_duration - data.startMonthRepayment;''}}
+                                    {{month.expectedReturns = ($index >= data.startMonthRepayment) ? (remainingBudget / remainingMonths) : 0;''}}
+                                    {{($index >= data.startMonthRepayment) ? month.expectedReturns: 0 | currency}}
                                 </td>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <th>Investor Returns</th>
                                 <td ng-repeat="month in paybackYears track by $index">
-                                    <!-- {{remainingMonths = projectFinance.payback_duration - $index;''}} -->
-                                    <!-- {{month.cummulativeReturn = month.cummulativeReturn + month.actualReturn}} -->
-                                    {{month.cummulativeReturn = ($index > data.startMonthRepayment) ? paybackYears[$index - 1].cummulativeReturn + month.actualReturn : month.actualReturn}}
-                                    {{monthlyReturn = getTotalBudget(true)  / (projectFinance.payback_duration - data.startMonthRepayment);''}}
+                                    {{month.cummulativeReturn = ($index > data.startMonthRepayment) ? paybackYears[$index - 1].cummulativeReturn + month.actualReturn : month.actualReturn;''}}
+                                    {{monthlyReturn = remainingBudget  / (projectFinance.payback_duration - data.startMonthRepayment);''}}
                                     {{month.actualReturn = (month.monthlyGross > monthlyReturn) ? monthlyReturn : month.monthlyGross;''}}
-                                    <!-- {{month.actualReturn | currency;''}} -->
+                                    {{month.actualReturn | currency}}
                                 </td>
                             </tr>
                             <tr>

@@ -6,7 +6,6 @@
     <br>
     <br>
 </div>
-
 <div class="expertise-list marginB60" ng-class="{'opacity_hide': !project.finance}">
     <div class="project-itemCol marginB30">
         <div class="row project-itemRow project-investment">
@@ -17,13 +16,10 @@
             <div class="col-lg-4">
                 <div class="well project-caption">
                     <!-- <h3>Project Name<br> <small>{{project.name}}</small></h3> -->
-
                     <!-- <h3 class="padding0 margin0">Description</h3> -->
                     <!-- <div class="project-mini-description" ng-bind="project.description | stripTags" ellipsis
                     ellipsis-append="<a class='read-more'>show more</a>" ellipsis-append-click="showFullText()"></div> -->
-
                     <h3>Amount Needed<br> <small>{{project.finance.base_budget + (project.finance.base_budget * (project.finance.adjustment_margin/100)) | currency}}</small></h3>
-
                     <div class="row">
                         <div class="col-sm-6">
                             <h3>Return<br> <small>{{project.finance.base_budget + (project.finance.base_budget * ((project.finance.payable_intrest/100) + (project.finance.adjustment_margin/100))) | currency}}</small></h3>
@@ -78,8 +74,7 @@
             </div>
         </div>
     </div>
-
-<!--     <div class="well padding0 margin0">
+    <div class="well padding0 margin0">
         <div class="row ">
             <div class="col-lg-7 isotopeSubDivid">
                 <div class="grid3">
@@ -119,12 +114,57 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
     <div class="well marginT30">
-        <h3>Mini Business Plan <br> <small>Comming Soon</small></h3>
+        <h3 class="marginB30">Mini Business Plan</h3>
+        <div class="table-wrap" ng-repeat="paybackYears in data.paybackDuration">
+            {{year = $index;''}}
+            <h4>Year {{$index + 1}}</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Months</th>
+                        <th ng-repeat="month in paybackYears track by $index">
+                            Month {{$index + 1}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>No. Units Sold</th>
+                        <td ng-repeat="month in paybackYears track by $index">
+                            {{month.sold}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Monthly Gross</th>
+                        <td ng-repeat="month in paybackYears track by $index">
+                            {{month.monthlyGross | currency}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Cummulative Gross</th>
+                        <td ng-repeat="month in paybackYears track by $index">
+                            {{month.cummulativeGross | currency}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Royalty Margin</th>
+                        <td ng-repeat="month in paybackYears track by $index">
+                            N / A
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Investor Returns</th>
+                        <td ng-repeat="month in paybackYears track by $index">
+                            {{month.actualReturn | currency}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
