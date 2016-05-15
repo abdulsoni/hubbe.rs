@@ -89,7 +89,7 @@
             }
         });
 
-        Project.get({projectId: $stateParams.projectId}).$promise.then(function(result) {
+        Project.get({projectId: $stateParams.projectId, fd_active_role: $rootScope.activeRole}).$promise.then(function(result) {
             $scope.project = result;
         }).finally(function(){
             $timeout(function() {
