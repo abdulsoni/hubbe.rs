@@ -32,12 +32,12 @@ class NotificationController extends Controller
                 foreach($notifications as $notification){
                     unset($notification['from']);
                     if ($notification->extra) {
-$extra = $notification->extra->toArray();
-    $notification['extras'] = $extra;
+                        $extra = $notification->extra->toArray();
+                        $notification['extras'] = $extra;
                     }
                 }
 
-                $response['notifications'] = $notifications;
+                $response['notifications'] = $notifications ? $notifications : [];
             }
         }catch (Exception $e){
             $statusCode = 400;
