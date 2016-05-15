@@ -27,7 +27,7 @@
             projectFinanceId: '@id'
         });
 
-        Project.get({projectId: $stateParams.projectId}).$promise.then(function(result){
+        Project.get({projectId: $stateParams.projectId, fd_active_role: $rootScope.activeRole}).$promise.then(function(result){
         	$scope.project = result;
 
         	ProjectFinance.get({projectFinanceId: result.project_finance_id}).$promise.then(function(result){
