@@ -1,4 +1,4 @@
-<div ng-if="projectFinance">
+<div ng-if="project.state < 5.9 || project.state > 5.9">
     <div class="well marginT25">
         <div class="row">
             <div class="col-md-5 bordRight-md">
@@ -101,11 +101,10 @@
     </div>
 </div>
 
-<!-- <div class="project-inreview well" ng-if="project.state === 5.9">
+<div class="project-inreview well" ng-if="project.state === 5.9">
     <span class="icon icon-clock"></span>
 
     <p>Your project has been submitted for review. You will be notified when the Super Expert approves your project.</p>
 
     <p>For any inquires, please write to <a href="mailto:contact@fundator.co">contact@fundator.co</a></p>
 </div>
- -->
