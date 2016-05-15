@@ -827,5 +827,12 @@
                 $rootScope.innerSectionLoading = false;
             });
         });
+
+        $scope.confirmInvestors = function() {
+            $scope.project.state = 5.9;
+            $scope.saveProgress();
+
+            FdScroller.toSection('.steps-content');
+        }
     });
 })();

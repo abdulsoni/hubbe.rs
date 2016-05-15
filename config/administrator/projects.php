@@ -254,6 +254,38 @@ return array(
 
                 return false;
             }
+        ),
+        'approve_investors' => array(
+            'title' => 'Approve Investors',
+            'messages' => array(
+                'active' => 'Approving ...',
+                'success' => 'Approved',
+                'error' => 'There was an error while approving project investors',
+            ),
+            'permission' => function($model)
+            {
+                return $model->state == 5.9;
+            },
+            'action' => function($model)
+            {
+                Log::info('Project Invetors Approved');
+
+                try{
+                    $model->state = 6;
+                    $model->draft = 0;
+                    $model->display = 1;
+
+                    Event::fire(new ProjectInvetorsApproved($model));
+
+                    if ($model->save()) {
+                        return true;
+                    }
+                }catch (Exception $e){
+                    Log::error($e);
+                }
+
+                return false;
+            }
         )
     ),
 );

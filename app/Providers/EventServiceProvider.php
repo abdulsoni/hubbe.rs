@@ -46,6 +46,9 @@ class EventServiceProvider extends ServiceProvider
         'Fundator\Events\ProjectFinanceApproved' => [
             'Fundator\Listeners\ProjectFinanceApprovedNotification'
         ],
+        'Fundator\Events\ProjectInvestorsApproved' => [
+            'Fundator\Listeners\ProjectInvestorsApprovedNotification'
+        ],
     ];
 
     /**

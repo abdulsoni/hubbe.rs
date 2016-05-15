@@ -1,13 +1,14 @@
 <div class="well marginB0 ongoing-contest">
     <div class="paddingLR10">
-        <h1 class="clearfix heading-bottom-border marginT0"><span class="pull-left">Ongoing Project</span> <small class="pull-right radius-box rbM">2</small></h1>
-        <h3 class="clearfix marginT20 marginB5"><span class="pull-left">Ongoing Payments</span> <small class="pull-right marginT5">650$</small></h3>
-        <h3 class="clearfix marginT10 marginB5"><span class="pull-left">Total earnings (2015)</span> <small class="pull-right marginT5">230$ of 650$</small></h3>
-        <div class="priceGroup marginT15">
+        <h1 class="clearfix heading-bottom-border marginT0"><span class="pull-left">Ongoing Project</span> <small class="pull-right radius-box rbM">{{user.expert.num_projects}}</small></h1>
+        <h3 class="clearfix marginT20 marginB5"><span class="pull-left">Ongoing Payments</span> <small class="pull-right marginT5">{{user.expert.ongoing_payments | currency}}</small></h3>
+        <h3 class="clearfix marginT20 marginB5"><span class="pull-left">Pending Approval</span> <small class="pull-right marginT5">{{user.expert.pending_payments | currency}}</small></h3>
+        <h3 class="clearfix marginT10 marginB5"><span class="pull-left">Total earnings (2015)</span> <small class="pull-right marginT5">$650</small></h3>
+        <!-- <div class="priceGroup marginT15">
             <div class="price-bar">
                 <div class="success-price" style="width:30%">230$</div>
             </div>
             <div class="pending_price">430$ pending</div>
-        </div>
+        </div> -->
     </div>
 </div>

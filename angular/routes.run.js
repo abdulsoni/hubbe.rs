@@ -228,6 +228,8 @@
             switch(role){
                 case 'creator': model = API.path('creators/') + roleId
                 break;
+                case 'expert': model = API.path('experts/') + roleId
+                break;
                 case 'investor': model = API.path('investors/') + roleId
                 break;
             }

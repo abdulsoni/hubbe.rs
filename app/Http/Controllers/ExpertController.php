@@ -2,6 +2,7 @@
 
 namespace Fundator\Http\Controllers;
 
+use Fundator\ProjectExpertise;
 use Fundator\Expert;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -86,7 +87,32 @@ class ExpertController extends Controller
         try{
             $expert = Expert::find($id);
 
-            $response = $expert->getAttributes();
+            $expert_data = [];
+            $expert_data = $expert->getAttributes();
+            $ongoing_payments = 0;
+            $pending_payments = 0;
+
+            $projectBids = ProjectExpertise::join('project_expertise_bids as peb', 'peb.project_expertise_id', '=', 'project_expertise.id')
+                ->where('expert_id', $expert->id)->whereNotNull('selected_bid_id')->get(['peb.id', 'bid_amount']);
+
+            $pendingProjectBids = ProjectExpertise::join('project_expertise_bids as peb', 'peb.project_expertise_id', '=', 'project_expertise.id')
+                ->where('expert_id', $expert->id)->whereNull('selected_bid_id')->get(['peb.id', 'bid_amount']);
+
+            $expert_data['num_projects'] = sizeof($projectBids);
+
+            foreach ($projectBids as $bid) {
+                $ongoing_payments+= $bid->bid_amount;
+            }
+
+            foreach ($pendingProjectBids as $bid) {
+                $pending_payments+= $bid->bid_amount;
+            }
+
+            $expert_data['ongoing_payments'] = $ongoing_payments;
+            $expert_data['pending_payments'] = $pending_payments;
+
+            $response = $expert_data;
+
         }catch (Exception $e){
             $statusCode = 400;
             $response = ['error' => $e->getMessage()];

@@ -59,6 +59,6 @@ class Expert extends Model
     }
 
     public function skills(){
-    	return $this->belongsToMany('Fundator\Skill', 'expert_skills');
+        return $this->belongsToMany('Fundator\Skill', 'expert_skills');
     }
 }
