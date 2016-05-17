@@ -131,6 +131,15 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasOne('Fundator\FacebookProfile');
     }
+    /**
+     * Relationship between users and push associations
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function pushAssociation()
+    {
+        return $this->hasOne('Fundator\PushAssociation');
+    }
 
     /**
      * User Role Attributes
@@ -327,6 +336,28 @@ class User extends Model implements AuthenticatableContract,
     public function addAmount($amount, $message, $data = null)
     {
         return (new Transaction())->addTransaction($this, $amount, $message, $data = null);
+    }
+
+
+    /*
+     * Storing Push Associations
+     */
+    public function storeDeviceToken($type, $token) {
+        $pushAssociation = PushAssociation::where('user_id', $this->id)->where('type', $type)->first();
+
+        if (is_null($pushAssociation)) {
+            $pushAssociation = PushAssociation::create([
+                'type' => $type,
+                'token' => $token
+            ]);
+
+            $pushAssociation->user()->associate($this);
+        }else{
+            $pushAssociation->token = $token;
+            $pushAssociation->save();
+        }
+
+        return $pushAssociation->save();
     }
 
     /**

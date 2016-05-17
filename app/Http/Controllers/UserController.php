@@ -441,4 +441,24 @@ class UserController extends Controller
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
+    /**
+     * Store device token
+     */
+    public function storeDeviceToken()
+    {
+        $statusCode = 200;
+
+        try{
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+
+            $response = $user->storeDeviceToken($request->type, $request->token);
+        }catch (Exception $e){
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+        }
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    }
 }
