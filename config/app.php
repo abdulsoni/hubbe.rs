@@ -209,7 +209,13 @@ return [
         /*
          * Settings System
          */
-        Efriandika\LaravelSettings\SettingsServiceProvider::class
+        Efriandika\LaravelSettings\SettingsServiceProvider::class,
+
+        /*
+         * Push Notifications
+         */
+        Davibennun\LaravelPushNotification\LaravelPushNotificationServiceProvider::class
+
 
     ],
 
@@ -280,6 +286,11 @@ return [
          * Settings System
          */
         'Settings'  => Efriandika\LaravelSettings\Facades\Settings::class,
+
+        /*
+         * Push Notifications
+         */
+        'PushNotification'  => Davibennun\LaravelPushNotification\Facades\PushNotification::class
 
     ],
 
