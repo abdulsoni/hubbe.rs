@@ -444,7 +444,7 @@ class UserController extends Controller
     /**
      * Store device token
      */
-    public function storeDeviceToken()
+    public function storeDeviceToken(Request $request)
     {
         $statusCode = 200;
 
