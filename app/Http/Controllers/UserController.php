@@ -453,7 +453,7 @@ class UserController extends Controller
                 return response()->json(['user_not_found'], 404);
             }
 
-            $response = $user->storeDeviceToken($request->type, $request->token);
+            $response = $user->storeDeviceToken($request->type, $request->app_token);
         }catch (Exception $e){
             $statusCode = 400;
             $response = ['error' => $e->getMessage()];

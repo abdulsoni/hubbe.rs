@@ -215,7 +215,7 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
 
     $api->get('users/sideNavigationData', 'Fundator\Http\Controllers\UserController@sideNavigationData');
 
-    $api->post('users/storeDeviceToken', 'Fundator\Http\Controllers\UserController@storeDeviceToken');
+    $api->post('users/store-device-token', 'Fundator\Http\Controllers\UserController@storeDeviceToken');
 
     $api->post('authenticate', 'Fundator\Http\Controllers\AuthenticateController@authenticate');
     $api->post('authenticate/signup', 'Fundator\Http\Controllers\AuthenticateController@signup');
