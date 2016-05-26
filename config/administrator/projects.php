@@ -68,7 +68,7 @@ return array(
             'location' => public_path() . '/',
             'size_limit' => 2,
             'sizes' => array(
-                array(350, 370, 'crop', public_path() . '/resize/', 100),
+                array(350, 370, 'crop', public_path() . '/projects/cropped/', 100),
             )
         ),
         'name' => array(

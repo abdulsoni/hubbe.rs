@@ -18,6 +18,8 @@ class CreateExpertiseCategoriesTable extends Migration
 
             $table->string('name');
             $table->string('description');
+            $table->string('background_color');
+            $table->string('icon');
             $table->boolean('visible')->default(false);
         });
     }

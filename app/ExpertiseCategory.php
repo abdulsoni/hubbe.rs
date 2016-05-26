@@ -25,7 +25,7 @@ class ExpertiseCategory extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'description', 'visible'];
+    protected $fillable = ['name', 'description', 'visible', 'icon', 'background_color'];
 
     /**
      * Parent Link

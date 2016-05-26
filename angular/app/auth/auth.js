@@ -114,6 +114,8 @@
                 email: $stateParams.email
             };
 
+            console.log('authenticating ...');
+
             $scope.loading = true;
 
             $http.post(API.path('authenticate/confirm'), params).then(function(result) {

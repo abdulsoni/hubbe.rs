@@ -101,7 +101,7 @@
                 }
             })
             .state('app.auth.confirm', {
-                url: '/confirm?code&email',
+                url: '/confirm/?code&email',
                 data: {
                     needLogin: false
                 },

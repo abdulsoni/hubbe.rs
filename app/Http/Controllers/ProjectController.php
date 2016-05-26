@@ -254,6 +254,10 @@ class ProjectController extends Controller
                         $expertise_item_data['project'] = $expertise->project()->select('id', 'name', 'thumbnail')->first();
                         $expertise_item_data['expertise'] = $expertise->expertise;
 
+                        if (!is_null($expertise->expertise) && !is_null($expertise->expertise->expertiseCategory)) {
+                            $expertise_item_data['expertise_category'] = $expertise->expertise->expertiseCategory->parent;
+                        }
+
                         $projects_data['available'][] = $expertise_item_data;
                     }
 
@@ -268,7 +272,7 @@ class ProjectController extends Controller
                             }
 
                             if (sizeof($matchingSkills) > 0) {
-                                $expertise_item_data = $expertise->getAttributes();
+                                $expertise_item_data = $etAttributes();
                                 $expertise_item_data['project'] = $expertise->project()->select('id', 'name', 'thumbnail')->first();
                                 $expertise_item_data['expertise'] = $expertise->expertise;
                                 $expertise_item_data['matching_skills'] = $matchingSkills;

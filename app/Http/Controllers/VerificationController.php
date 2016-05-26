@@ -42,6 +42,9 @@ class VerificationController extends Controller
             ]);
 
             $response = json_decode($authy_response->getBody(), true);
+        }catch (ClientErrorResponseException $exception) {
+            $statusCode = 400;
+            $response = ['error' => $exception->getResponse()->getBody(true)];
         }catch(Exception $e){
             $statusCode = 400;
             $response = ['error' => $e->getMessage()];
@@ -86,6 +89,9 @@ class VerificationController extends Controller
             $user->save();
 
             $response = json_decode($authy_response->getBody(), true);
+        }catch (ClientErrorResponseException $exception) {
+            $statusCode = 400;
+            $response = ['error' => $exception->getResponse()->getBody(true)];
         }catch(Exception $e){
             $statusCode = 400;
             $response = ['error' => $e->getMessage()];

@@ -56,7 +56,21 @@ return array(
         'visible' => array(
             'type' => 'bool',
             'title' => 'Published ?',
+        ),
+        'background_color' => array(
+            'type' => 'color',
+            'title' => 'Background Color'
+        ),
+        'icon' => array(
+            'title' => 'Icon',
+            'type' => 'image',
+            'location' => public_path() . '/uploads/expertise_categories/',
+            'naming' => 'random',
+            'length' => 20,
+            'size_limit' => 2,
+            'sizes' => array(
+                array(100, 100, 'crop', public_path() . '/uploads/expertise_categories/cropped/', 100),
+            )
         )
     ),
-
 );

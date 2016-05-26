@@ -146,7 +146,14 @@
                 <ul class="tabProjectList threeCol">
                     <li ng-repeat="expertise in expertiseSource" ui-sref="app.expertise({expertiseId: expertise.id})">
                         <div class="homepage-expertise expertise sliding-tiles">
-                            <div class="sliding-tiles_front product-thumbnail" style="background-image:url({{expertise.project.thumbnail}});">
+                            <div class="sliding-tiles_front product-thumbnail">
+                                <div class="product-thumbnail-bg" style="background-image:url({{expertise.project.thumbnail}});"></div>
+                                <div class="product-thumbnail-bg" style="background-color:url({{expertise.expertise_category.background_color}});">
+                                    <div class="ico product-thumbnail-icon">
+                                        <img ng-src="/uploads/expertise_category/{{expertise.expertise_category.icon}}">
+                                    </div>
+                                </div>
+
                                 <div class="product-header">
                                     <h3>{{expertise.expertise.name}}</h3>
                                 </div>
