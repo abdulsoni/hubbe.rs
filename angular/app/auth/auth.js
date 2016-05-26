@@ -119,8 +119,9 @@
             $scope.loading = true;
 
             $http.post(API.path('authenticate/confirm'), params).then(function(result) {
-                console.log('result');
+                console.log('confirm result');
                 console.log(result);
+                $auth.setToken(result.data.token);
                 $state.go('app.auth.login');
             }, function(error) {
                 console.log('error');

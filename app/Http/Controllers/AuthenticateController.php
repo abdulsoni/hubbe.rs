@@ -223,7 +223,8 @@ class AuthenticateController extends Controller
             $user->confirmation_code = null;
             $user->save();
 
-            $response = ['success' => true, 'token' => $user->getToken()];
+            // $response = ['success' => true, 'token' => $user->getToken()];
+            $response  = ['token' => JWTAuth::fromUser($user, $userData)];
         } catch (Exception $e) {
             $statusCode = 400;
             $response = ['error' => $e->getMessage()];
