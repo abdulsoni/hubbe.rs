@@ -26,6 +26,16 @@ class VerificationController extends Controller
         $response = [];
 
         try{
+            if (isset($request->country_code) && isset($request->phone_number)) {
+                $user = User::where('contact_number_country_code', $request->country_code)->where('contact_number', $request->phone_number)->first();
+
+                if (is_null($user)) {
+                    throw new Exception('This number is already registered', 1);
+                }
+            }else{
+                throw new Exception('No phone number provided', 1);
+            }
+
             $client = new GuzzleHttp\Client();
 
             $params = [
@@ -79,17 +89,20 @@ class VerificationController extends Controller
             $api_endpoint = 'https://api.authy.com/protected/json/phones/verification/check?api_key=' . Config::get('app.authy_api_key') . '&country_code=' . $request->country_code . '&phone_number=' . $request->phone_number . '&verification_code=' . $request->verification_code;
 
             $authy_response = $client->get($api_endpoint);
-
-            if (! $user = JWTAuth::parseToken()->authenticate()) {
-                throw new Exception('User not found', 1);
-            }
-
-            $user->phone_verified = true;
-            $user->contact_number = $request->phone_number;
-            $user->contact_number_country_code = $request->country_code;
-            $user->save();
-
             $response = json_decode($authy_response->getBody(), true);
+
+            $user = User::where('contact_number_country_code', $request->country_code)->where('contact_number', $request->phone_number)->first();
+
+            if (!is_null($user)) {
+                $user->phone_verified = true;
+                $user->contact_number = $request->phone_number;
+                $user->contact_number_country_code = $request->country_code;
+                $user->save();
+
+                $response['token'] = $user->getToken();
+            }else{
+                throw new Exception('This number is already registered', 1);
+            }
         }catch (ClientErrorResponseException $exception) {
             $statusCode = 400;
             $response = ['error' => $exception->getResponse()->getBody(true)];
