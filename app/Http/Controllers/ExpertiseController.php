@@ -72,6 +72,8 @@ class ExpertiseController extends Controller
 
                 if (!is_null($expertise_item->expertise) && !is_null($expertise_item->expertise->expertiseCategory)) {
                     $expertise_item_data['expertise_category'] = $expertise_item->expertise->expertiseCategory->parent;
+                    $expertise_item_data['background_color'] = $expertise_item_data['expertise_category']['background_color'];
+                    $expertise_item_data['icon'] = $expertise_item_data['expertise_category']['icon'];
                 }
 
                 $response[] = $expertise_item_data;
