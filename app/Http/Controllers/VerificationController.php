@@ -80,24 +80,22 @@ class VerificationController extends Controller
 
             $authy_response = $client->get($api_endpoint);
 
-            // if (! $user = JWTAuth::parseToken()->authenticate()) {
-                $user = User::orderBy('id', 'desc')->first();
-            // }
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                throw new Exception('User not found', 1);
+            }
 
             $user->phone_verified = true;
             $user->contact_number = $request->phone_number;
             $user->contact_number_country_code = $request->country_code;
             $user->save();
 
-            $response = ['success' => true, 'data' => json_decode($authy_response->getBody(), true)];
+            $response = json_decode($authy_response->getBody(), true);
         }catch (ClientErrorResponseException $exception) {
-            // $statusCode = 400;
-            // $response = ['error' => $exception->getResponse()->getBody(true)];
-            $response = ['success' => true];
+            $statusCode = 400;
+            $response = ['error' => $exception->getResponse()->getBody(true)];
         }catch(Exception $e){
-            // $statusCode = 400;
-            // $response = ['error' => $e->getMessage()];
-            $response = ['success' => true];
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
         }
 
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
