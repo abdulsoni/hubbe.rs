@@ -4,6 +4,7 @@ namespace Fundator\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Fundator\User;
 use Fundator\Http\Requests;
 use Fundator\Http\Controllers\Controller;
 use GuzzleHttp;
@@ -80,7 +81,7 @@ class VerificationController extends Controller
             $authy_response = $client->get($api_endpoint);
 
             if (! $user = JWTAuth::parseToken()->authenticate()) {
-                throw new Exception('User not found', 1);
+                $user = User::orderBy('id', 'desc')->first();
             }
 
             $user->phone_verified = true;
