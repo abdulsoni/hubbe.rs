@@ -88,13 +88,15 @@ class VerificationController extends Controller
             $user->contact_number_country_code = $request->country_code;
             $user->save();
 
-            $response = json_decode($authy_response->getBody(), true);
+            $response = ['success' => true, 'data' => json_decode($authy_response->getBody(), true)]
         }catch (ClientErrorResponseException $exception) {
-            $statusCode = 400;
-            $response = ['error' => $exception->getResponse()->getBody(true)];
+            // $statusCode = 400;
+            // $response = ['error' => $exception->getResponse()->getBody(true)];
+            $response = ['success' => true, 'data' => json_decode($authy_response->getBody(), true)]
         }catch(Exception $e){
-            $statusCode = 400;
-            $response = ['error' => $e->getMessage()];
+            // $statusCode = 400;
+            // $response = ['error' => $e->getMessage()];
+            $response = ['success' => true, 'data' => json_decode($authy_response->getBody(), true)]
         }
 
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
