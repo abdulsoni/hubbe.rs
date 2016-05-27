@@ -70,6 +70,10 @@ class ExpertiseController extends Controller
                 $expertise_item_data['project'] = $expertise_item->project()->select('id', 'name', 'thumbnail')->first();
                 $expertise_item_data['expertise'] = $expertise_item->expertise;
 
+                if (!is_null($expertise_item->expertise) && !is_null($expertise_item->expertise->expertiseCategory)) {
+                    $expertise_item_data['expertise_category'] = $expertise_item->expertise->expertiseCategory->parent;
+                }
+
                 $response[] = $expertise_item_data;
             }
         }catch(Exception $e){
