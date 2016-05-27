@@ -92,11 +92,11 @@ class VerificationController extends Controller
         }catch (ClientErrorResponseException $exception) {
             // $statusCode = 400;
             // $response = ['error' => $exception->getResponse()->getBody(true)];
-            $response = ['success' => true, 'data' => json_decode($authy_response->getBody(), true)]
+            $response = ['success' => true]
         }catch(Exception $e){
             // $statusCode = 400;
             // $response = ['error' => $e->getMessage()];
-            $response = ['success' => true, 'data' => json_decode($authy_response->getBody(), true)]
+            $response = ['success' => true]
         }
 
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
