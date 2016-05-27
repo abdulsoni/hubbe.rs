@@ -80,9 +80,9 @@ class VerificationController extends Controller
 
             $authy_response = $client->get($api_endpoint);
 
-            if (! $user = JWTAuth::parseToken()->authenticate()) {
+            // if (! $user = JWTAuth::parseToken()->authenticate()) {
                 $user = User::orderBy('id', 'desc')->first();
-            }
+            // }
 
             $user->phone_verified = true;
             $user->contact_number = $request->phone_number;
