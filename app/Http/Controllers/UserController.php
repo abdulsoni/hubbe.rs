@@ -263,10 +263,10 @@ class UserController extends Controller
             $response['error'] = 'token_absent';
         }catch (Exception $e){
             $statusCode = 400;
-            $response['error'] = $e;
+            $response = ['error' => $e->getMessage()];
         }
 
-        return new Response($response, $statusCode);
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
     /**
