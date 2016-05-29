@@ -319,15 +319,19 @@ class UserController extends Controller
                 return response()->json(['user_not_found'], 404);
             }
 
-            $contest = Contest::find($request->contest_id);
+            $application = JuryApplication::where('user_id', $user->id)->first();
 
-            $application = JuryApplication::create([
-                'status' => 0
-            ]);
+            if (is_null($application)) {
+                $contest = Contest::find($request->contest_id);
 
-            $application->user()->associate($user);
-            $application->contest()->associate($contest);
-            $application->save();
+                $application = JuryApplication::create([
+                    'status' => 0
+                ]);
+
+                $application->user()->associate($user);
+                $application->contest()->associate($contest);
+                $application->save();
+            }
 
             $response = $application;
         }catch (Exception $e){
@@ -350,15 +354,19 @@ class UserController extends Controller
                 return response()->json(['user_not_found'], 404);
             }
 
-            $contest = Contest::find($request->contest_id);
+            $application = ContestantApplication::where('user_id', $user->id)->first();
 
-            $application = ContestantApplication::create([
-                'status' => 0
-            ]);
+            if (is_null($application)) {
+                $contest = Contest::find($request->contest_id);
 
-            $application->user()->associate($user);
-            $application->contest()->associate($contest);
-            $application->save();
+                $application = ContestantApplication::create([
+                    'status' => 0
+                ]);
+
+                $application->user()->associate($user);
+                $application->contest()->associate($contest);
+                $application->save();
+            }
 
             $response = $application;
         }catch (Exception $e){
