@@ -51,7 +51,8 @@ class ShareListingController extends Controller
 
         try{
             $listing_data = $primaryListing->getAttributes();
-            $listing_data['remaining_shares'] = $primaryListing->num_shares - $primaryListing->shareBids->sum('num_shares');
+            // $listing_data['remaining_shares'] = $primaryListing->num_shares - $primaryListing->shareBids->sum('num_shares');
+            $listing_data['remaining_shares'] = $primaryListing->num_shares;
             $listing_data['total_amount'] = $primaryListing->shareBids->sum('bid_amount') * $primaryListing->shareBids->sum('num_shares');
             $listing_data['average_amount'] = $primaryListing->shareBids->avg('bid_amount');
             $listing_data['share_value'] = Settings::get('share_value');
