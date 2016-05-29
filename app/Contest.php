@@ -59,7 +59,7 @@ class Contest extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function contestantApplication(){
-        return $this->belongsTo('Fundator\ContestantApplication');
+        return $this->hasMany('Fundator\ContestantApplication');
     }
 
     /**
