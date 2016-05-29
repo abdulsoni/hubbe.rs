@@ -101,18 +101,12 @@ class ContestController extends Controller
             $contest_data['contestants'] = [];
             $contest_data['num_contestants'] = $contest->num_contestants;
             $contest_data['judges'] = $contest->jury;
-            $contest_data['rank'] = 1;
 
-            $contestants = $contest->entries->groupBy('creator_id');
+            $contestants = $contest->contestants;
 
-            foreach($contestants as $creator_id => $entry){
-                $creator_obj = Creator::find($creator_id);
-
-                if (!is_null($creator_obj)) {
-                    $creator = $creator_obj->user;
-
-                    $contest_data['contestants'][] = $creator;
-                }
+            foreach($contestants as $contestant){
+                $creator = $contestant->user;
+                $contest_data['contestants'][] = $creator;
             }
         }
 

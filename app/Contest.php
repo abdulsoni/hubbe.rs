@@ -58,8 +58,8 @@ class Contest extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function contestantApplication(){
-        return $this->hasMany('Fundator\ContestantApplication');
+    public function contestants(){
+        return $this->hasMany('Fundator\ContestantApplication')->where('status', 1);
     }
 
     /**
@@ -94,7 +94,7 @@ class Contest extends Model
      * Number of contestants
      */
     public function getNumContestantsAttribute() {
-        return $this->contestantApplication()->count();
+        return $this->contestants()->count();
     }
 
     /**
