@@ -38,11 +38,10 @@ class Contest extends Model
     /**
      * Get the number of contestants
      */
-
-    public function getNumContestantsAttribute()
-    {
-        return $contestants = $this->entries->groupBy('creator_id')->count();
-    }
+    // public function getNumContestantsAttribute()
+    // {
+    //     return $contestants = $this->entries->groupBy('creator_id')->count();
+    // }
 
     /**
      * Relationship between Entries and Contests
@@ -54,6 +53,18 @@ class Contest extends Model
         return $this->hasMany('Fundator\Entry');
     }
 
+    /**
+     * Attachment to the contest
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function contestantApplication(){
+        return $this->belongsTo('Fundator\ContestantApplication');
+    }
+
+    /**
+     * Active Jury
+     */
     public function jury()
     {
         return $this->belongsToMany('Fundator\User', 'contest_jury', null, 'judge_id');
@@ -79,10 +90,12 @@ class Contest extends Model
         return $this->belongsToMany('Fundator\Skill', 'contest_skills');
     }
 
-    // public function unmarkedEntries()
-    // {
-
-    // }
+    /**
+     * Number of contestants
+     */
+    public function getNumContestantsAttribute() {
+        return $this->contestantApplication()->count();
+    }
 
     /**
      * Judge Entries
