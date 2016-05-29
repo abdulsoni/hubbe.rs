@@ -319,7 +319,7 @@ class UserController extends Controller
                 return response()->json(['user_not_found'], 404);
             }
 
-            $application = JuryApplication::where('user_id', $user->id)->first();
+            $application = JuryApplication::where('user_id', $user->id)->where('contest_id', $request->contest_id)->first();
 
             if (is_null($application)) {
                 $contest = Contest::find($request->contest_id);
@@ -354,7 +354,7 @@ class UserController extends Controller
                 return response()->json(['user_not_found'], 404);
             }
 
-            $application = ContestantApplication::where('user_id', $user->id)->first();
+            $application = ContestantApplication::where('user_id', $user->id)->where('contest_id', $request->contest_id)->first();
 
             if (is_null($application)) {
                 $contest = Contest::find($request->contest_id);
