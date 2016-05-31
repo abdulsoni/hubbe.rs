@@ -223,6 +223,7 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
 
     $api->post('authenticate/reset', 'Fundator\Http\Controllers\Auth\PasswordController@appReset');
     $api->post('authenticate/forgot', 'Fundator\Http\Controllers\Auth\PasswordController@appRecoverPasswordSend');
+    $api->post('authenticate/forgot-verify', 'Fundator\Http\Controllers\Auth\PasswordController@appRecoverPasswordVerify');
     $api->post('authenticate/recover', 'Fundator\Http\Controllers\Auth\PasswordController@appRecoverPasswordProcess');
 
     // Providers

@@ -9,7 +9,9 @@ use Fundator\User;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Config;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use GuzzleHttp;
 use Exception;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
@@ -41,25 +43,94 @@ class PasswordController extends Controller
         $response = [];
 
         try{
-            $findUser = User::where('email', $request->only('email'))->count();
+            $via = 'email';
 
-            if($findUser > 0){
-                $response = Password::sendResetLink($request->only('email'), function (Message $message) {
-                    $message->subject($this->getEmailSubject());
-                });
+            if (isset($request->via)) {
+                $via = $request->via;
+            }
 
-                switch ($response) {
-                    case Password::RESET_LINK_SENT:
-                        $response = ['success' => true];
-                        break;
-                    case Password::INVALID_USER:
-                        $statusCode = 400;
-                        $response['error'] = 'Invalid User';
-                        break;
-                }
+            switch ($via) {
+                case 'sms':
+                    $findUser = User::where('contact_number', $request->phone_number)->where('contact_number_country_code', $request->country_code)->count();
+
+                    if($findUser > 0){
+                        $client = new GuzzleHttp\Client();
+
+                        $params = [
+                            'api_key' => Config::get('app.authy_api_key'),
+                            'via' => $request->via,
+                            'country_code' => $request->country_code,
+                            'phone_number' => $request->phone_number,
+                            'locale' => $request->locale
+                        ];
+
+                        $api_endpoint = 'https://api.authy.com/protected/json/phones/verification/start';
+
+                        $authy_response = $client->request('POST', $api_endpoint, [
+                            'form_params' => $params
+                        ]);
+
+                        $response = json_decode($authy_response->getBody(), true);
+                    }else{
+                        throw new Exception('Invalid User', 1);
+                    }
+                    break;
+
+                default:
+                    $findUser = User::where('email', $request->only('email'))->count();
+
+                    if($findUser > 0){
+                        $response = Password::sendResetLink($request->only('email'), function (Message $message) {
+                            $message->subject($this->getEmailSubject());
+                        });
+
+                        switch ($response) {
+                            case Password::RESET_LINK_SENT:
+                            $response = ['success' => true];
+                            break;
+                            case Password::INVALID_USER:
+                            $statusCode = 400;
+                            $response['error'] = 'Invalid User';
+                            break;
+                        }
+                    }else{
+                        throw new Exception('Invalid User', 1);
+                    }
+            }
+        }catch (Exception $e){
+            $statusCode = 400;
+            $response['error'] = ['success' => false, 'message' => $e->getMessage()];
+        }
+
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    }
+
+    public function appRecoverPasswordVerify(Request $request)
+    {
+        $statusCode = 200;
+        $response = [];
+
+        try {
+            $client = new GuzzleHttp\Client();
+
+            $params = [
+                'api_key' => Config::get('app.authy_api_key'),
+                'country_code' => $request->country_code,
+                'phone_number' => $request->phone_number,
+                'verification_code' => $request->verification_code
+            ];
+
+            $api_endpoint = 'https://api.authy.com/protected/json/phones/verification/check?api_key=' . Config::get('app.authy_api_key') . '&country_code=' . $request->country_code . '&phone_number=' . $request->phone_number . '&verification_code=' . $request->verification_code;
+
+            $authy_response = $client->get($api_endpoint);
+            $response = json_decode($authy_response->getBody(), true);
+
+            $user = User::where('contact_number_country_code', $request->country_code)->where('contact_number', $request->phone_number)->first();
+
+            if (!is_null($user)) {
+                $response['token'] = $user->getToken();
             }else{
-                $statusCode = 400;
-                $response['error'] = 'Invalid User';
+                throw new Exception('Invalid User', 1);
             }
         }catch (Exception $e){
             $statusCode = 400;
@@ -107,7 +178,6 @@ class PasswordController extends Controller
                     $statusCode = 400;
                     $response['error'] = 'user_not_updated';
             }
-
         } catch (TokenExpiredException $e) {
             $statusCode = $e->getStatusCode();
             $response['error'] = 'token_expired';
