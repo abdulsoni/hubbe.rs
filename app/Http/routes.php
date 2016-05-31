@@ -230,7 +230,7 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
     $api->post('authenticate/unlinkFacebook', 'Fundator\Http\Controllers\AuthenticateController@unlinkFacebook');
     $api->post('authenticate/google', 'Fundator\Http\Controllers\AuthenticateController@google');
     $api->post('authenticate/linkedin', 'Fundator\Http\Controllers\AuthenticateController@linkedin');
-    // $api->get('authenticate/linkedin', 'Fundator\Http\Controllers\AuthenticateController@linkedin');
+    $api->get('authenticate/linkedin', 'Fundator\Http\Controllers\AuthenticateController@linkedin');
     $api->post('authenticate/unlinkLinkedin', 'Fundator\Http\Controllers\AuthenticateController@unlinkLinkedin');
 
     /*
