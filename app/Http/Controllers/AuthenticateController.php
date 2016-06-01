@@ -524,13 +524,15 @@ class AuthenticateController extends Controller
             if ($request->header('Authorization'))
             {
                 $linkedinProfile = LinkedinProfile::where('linkedin_id', $profile['id'])->first();
+                $linkedinProfileUser = User::find($linkedinProfile->user_id);
 
-                if (!is_null($linkedinProfile))
+                if (!is_null($linkedinProfile) && !is_null($linkedinProfileUser))
                 {
                     $linkedinProfile->linkedin_token = $accessToken['access_token'];
                     $linkedinProfile->save();
-                    $user = User::find($linkedinProfile->user_id);
-                    return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
+                    return response()->json(['token' => $linkedinProfileUser->getToken()], 200, [], JSON_NUMERIC_CHECK);
+                }elseif (!is_null($linkedinProfile) && is_null($linkedinProfileUser)) {
+                    $linkedinProfile->delete();
                 }
 
                 $token = explode(' ', $request->header('Authorization'))[1];
