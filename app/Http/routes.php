@@ -228,6 +228,7 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
 
     // Providers
     $api->post('authenticate/facebook', 'Fundator\Http\Controllers\AuthenticateController@facebook');
+    $api->get('authenticate/facebook', 'Fundator\Http\Controllers\AuthenticateController@facebook');
     $api->post('authenticate/unlinkFacebook', 'Fundator\Http\Controllers\AuthenticateController@unlinkFacebook');
     $api->post('authenticate/google', 'Fundator\Http\Controllers\AuthenticateController@google');
     $api->post('authenticate/linkedin', 'Fundator\Http\Controllers\AuthenticateController@linkedin');
