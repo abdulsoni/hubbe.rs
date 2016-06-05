@@ -3,24 +3,23 @@
 namespace Fundator\Events;
 
 use Fundator\Events\Event;
-use Fundator\Project;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ProjectApproved extends Event
+class ContestEntryReviewed extends Event
 {
     use SerializesModels;
 
-    public $project;
+    $
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Project $project)
+    public function __construct()
     {
-        $this->project = $project;
+        //
     }
 
     /**

@@ -2,25 +2,26 @@
 
 namespace Fundator\Events;
 
+use Fundator\ContestantApplication;
+
 use Fundator\Events\Event;
-use Fundator\Project;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ProjectApproved extends Event
+class ContestantApplicationApproval extends Event
 {
     use SerializesModels;
 
-    public $project;
+    public $contestantApplication;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Project $project)
+    public function __construct(ContestantApplication $contestantApplication)
     {
-        $this->project = $project;
+        $this->contestantApplication = $contestantApplication;
     }
 
     /**

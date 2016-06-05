@@ -67,7 +67,8 @@ class Contest extends Model
      */
     public function jury()
     {
-        return $this->belongsToMany('Fundator\User', 'contest_jury', null, 'judge_id');
+        // return $this->belongsToMany('Fundator\User', 'contest_jury', null, 'judge_id');
+        return $this->hasMany('Fundator\JuryApplication')->where('status', 1);
     }
 
     /**

@@ -325,18 +325,20 @@ class AuthenticateController extends Controller
             ]
         ]);
         $profile = json_decode($profileResponse->getBody(), true);
-        // var_dump($profile);
-        // die();
-        // Step 3a. If user is already signed in then link accounts.
+
+
         if ($request->header('Authorization'))
         {
             $facebookProfile = FacebookProfile::where('facebook_id', $profile['id'])->first();
+            $facebookProfileUser = User::find($facebookProfile->user_id);
 
-            if (!is_null($facebookProfile))
+            if (!is_null($facebookProfile) && !is_null($facebookProfileUser))
             {
                 $facebookProfile->facebook_token = $accessToken['access_token'];
                 $facebookProfile->save();
-                return response()->json(['message' => 'There is already a Facebook account that belongs to you'], 409);
+                return response()->json(['token' => $facebookProfileUser->getToken()], 200, [], JSON_NUMERIC_CHECK);
+            }elseif (!is_null($facebookProfile) && is_null($facebookProfileUser)) {
+                $facebookProfile->delete();
             }
 
             $token = explode(' ', $request->header('Authorization'))[1];
@@ -372,13 +374,15 @@ class AuthenticateController extends Controller
         else
         {
             $facebookProfile = FacebookProfile::where('facebook_id', $profile['id'])->first();
+            $facebookProfileUser = User::find($facebookProfile->user_id);
 
-            if (!is_null($facebookProfile))
+            if (!is_null($facebookProfile) && !is_null($facebookProfileUser))
             {
-                $user = User::find($facebookProfile->user_id);
                 $facebookProfile->facebook_token = $accessToken['access_token'];
                 $facebookProfile->save();
-                return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
+                return response()->json(['token' => $facebookProfileUser->getToken()], 200, [], JSON_NUMERIC_CHECK);
+            }elseif (!is_null($facebookProfile) && is_null($facebookProfileUser)) {
+                $facebookProfile->delete();
             }
 
             $user = User::where('email', $profile['email'])->first();
@@ -389,6 +393,7 @@ class AuthenticateController extends Controller
                 $user->email = $profile['email'];
                 $user->position = '';
                 $user->confirmed = 1;
+
                 $user->facebook = $profile['id'];
                 $user->save();
             }
@@ -411,9 +416,6 @@ class AuthenticateController extends Controller
             $facebookProfile->facebook_token = $accessToken['access_token'];
             $facebookProfile->user()->associate($user);
             $facebookProfile->save();
-
-            $user->facebook = $profile['id'];
-            $user->save();
 
             return response()->json(['token' => $user->getToken()], 200, [], JSON_NUMERIC_CHECK);
         }

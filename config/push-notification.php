@@ -8,6 +8,7 @@ return array(
         'passPhrase'  =>'04021993',
         'service'     =>'apns'
     ),
+
     'appNameAndroid' => array(
         'environment' =>'production',
         'apiKey'      =>'AIzaSyDmZFQpESOLKhFsgA80zf11j_SE2orGEhM',

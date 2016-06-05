@@ -25,6 +25,7 @@ class EventServiceProvider extends ServiceProvider
         'Fundator\Events\Signup' => [
             'Fundator\Listeners\SendEmailVerification'
         ],
+
         'Fundator\Events\ProjectApproved' => [
             'Fundator\Listeners\SendProjectApprovalNotification'
         ],
@@ -48,6 +49,20 @@ class EventServiceProvider extends ServiceProvider
         ],
         'Fundator\Events\ProjectInvestorsApproved' => [
             'Fundator\Listeners\ProjectInvestorsApprovedNotification'
+        ],
+
+        'Fundator\Events\ContestantApplicationApproval' => [
+            'Fundator\Listeners\ContestantApplicationApprovalNotification'
+        ],
+        'Fundator\Events\JuryApplicationApproval' => [
+            'Fundator\Listeners\JuryApplicationApprovalNotification'
+        ],
+
+        'Fundator\Events\ContestNewEntry' => [
+            'Fundator\Listeners\ContestNewEntryNotification'
+        ],
+        'Fundator\Events\ContestEntryReviewed' => [
+            'Fundator\Listeners\ContestEntryReviewedNotification'
         ],
     ];
 
