@@ -305,9 +305,8 @@ class AuthenticateController extends Controller
         $params = [
             'code' => $request->input('code'),
             'client_id' => Config::get('app.facebook_id'),
-            // 'redirect_uri' => $request->input('redirectUri'),
-            'redirect_uri' => 'http://desk.fundator.co/api/v1/authenticate/facebook',
-            'client_secret' => Config::get('app.facebook_secret')
+            'client_secret' => Config::get('app.facebook_secret'),
+            'redirect_uri' => $request->input('redirectUri')
         ];
 
         // Step 1. Exchange authorization code for access token.
@@ -499,10 +498,10 @@ class AuthenticateController extends Controller
     {
         $client = new GuzzleHttp\Client();
         $params = [
-            'code' => $request->input('code'),
             'client_id' => Config::get('app.linkedin_id'),
             'client_secret' => Config::get('app.linkedin_secret'),
-            'redirect_uri' => 'http://desk.fundator.co/api/v1/authenticate/linkedin',
+            'redirect_uri' => $request->input('redirectUri'),
+            'code' => $request->input('code'),
             'grant_type' => 'authorization_code',
         ];
 
@@ -512,8 +511,8 @@ class AuthenticateController extends Controller
                 'form_params' => $params
             ]);
             $accessToken = json_decode($accessTokenResponse->getBody(), true);
+
             // Step 2. Retrieve profile information about the current user.
-            // $profileResponse = $client->request('GET', 'https://api.linkedin.com/v1/people/~:(id,first-name,last-name,email-address)', [
             $profileResponse = $client->request('GET', 'https://api.linkedin.com/v1/people/~:(id,first-name,last-name,picture-url,industry,formatted-name,headline,location,summary,specialties,positions,public-profile-url,email-address)', [
                 'query' => [
                     'oauth2_access_token' => $accessToken['access_token'],
