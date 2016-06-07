@@ -497,7 +497,7 @@ class AuthenticateController extends Controller
     public function linkedin(Request $request)
     {
         if (!isset($_GET['redirect_uri'])) {
-            $redirect_uri = 'http://desk.fundator.co/api/v1/authenticate/linkedin'
+            $redirect_uri = 'http://desk.fundator.co/api/v1/authenticate/linkedin';
         }else{
             $redirect_uri = $request->input('redirectUri');
         }
