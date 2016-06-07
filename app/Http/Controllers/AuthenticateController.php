@@ -496,11 +496,17 @@ class AuthenticateController extends Controller
      */
     public function linkedin(Request $request)
     {
+        if (!isset($_GET['redirect_uri'])) {
+            $redirect_uri = 'http://desk.fundator.co/api/v1/authenticate/linkedin'
+        }else{
+            $redirect_uri = $request->input('redirectUri');
+        }
+
         $client = new GuzzleHttp\Client();
         $params = [
             'client_id' => Config::get('app.linkedin_id'),
             'client_secret' => Config::get('app.linkedin_secret'),
-            'redirect_uri' => $request->input('redirectUri'),
+            'redirect_uri' => $redirect_uri,
             'code' => $request->input('code'),
             'grant_type' => 'authorization_code',
         ];
