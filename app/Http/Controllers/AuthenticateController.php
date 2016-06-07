@@ -300,13 +300,19 @@ class AuthenticateController extends Controller
      */
     public function facebook(Request $request)
     {
+        if (!isset($_GET['redirect_uri'])) {
+            $redirect_uri = 'http://desk.fundator.co/api/v1/authenticate/facebook';
+        }else{
+            $redirect_uri = $request->input('redirectUri');
+        }
+
         $client = new GuzzleHttp\Client();
 
         $params = [
             'code' => $request->input('code'),
             'client_id' => Config::get('app.facebook_id'),
             'client_secret' => Config::get('app.facebook_secret'),
-            'redirect_uri' => $request->input('redirectUri')
+            'redirect_uri' => $redirect_uri
         ];
 
         // Step 1. Exchange authorization code for access token.
