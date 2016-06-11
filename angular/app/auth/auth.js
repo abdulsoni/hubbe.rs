@@ -11,7 +11,7 @@
         $rootScope.$broadcast('stopLoading');
 
         if ($auth.isAuthenticated()) {
-            $state.go('app.projects', {});
+            $state.go('app.projects');
         }else{
             FdScroller.toTop();
         }
@@ -64,8 +64,7 @@
                     if (typeof(activeState) === 'undefined') {
                         $state.go('app.auth.signup');
                     }else{
-                        console.log('activeState');
-                        console.log(activeState);
+                        $state.go('app.projects');
                         $rootScope.switchUserRole(payload.role, payload.role_id, true, activeState, activeStateParams);
                     }
                 }, 100);
@@ -84,8 +83,21 @@
             $rootScope.$broadcast('startLoading');
 
             $auth.authenticate(provider).then(function(response) {
-                console.log('Logged in ');
-                console.log(response);
+                $auth.setToken(result.data.token)
+
+                var payload = $auth.getPayload();
+
+                var activeState = $rootScope.activeState.name;
+                var activeStateParams = $rootScope.activeStateParams;
+
+                $timeout(function(){
+                    if (typeof(activeState) === 'undefined') {
+                        $state.go('app.auth.signup');
+                    }else{
+                        $state.go('app.projects');
+                        $rootScope.switchUserRole(payload.role, payload.role_id, true, activeState, activeStateParams);
+                    }
+                }, 100);
             }).catch(function(response) {
                 console.log('Not Logged in ');
                 console.log(response);

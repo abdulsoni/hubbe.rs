@@ -4,10 +4,9 @@
     angular.module('fundator.config').config(function ($authProvider, APIProvider){
         // Satellizer configuration that specifies which API
         // route the JWT should be retrieved from
-        var redirectUriPath = window.location.protocol + '//' + window.location.hostname;
+        var redirectUriPath = window.location.protocol + '//' + window.location.hostname + '/';
         $authProvider.loginUrl = redirectUriPath + '/api/v1/authenticate';
         $authProvider.tokenPrefix = 'fundator';
-
 
         $authProvider.linkedin({
         	clientId: '77zjxfbh2928re',

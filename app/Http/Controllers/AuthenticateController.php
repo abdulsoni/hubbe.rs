@@ -300,7 +300,7 @@ class AuthenticateController extends Controller
      */
     public function facebook(Request $request)
     {
-        if (!isset($_GET['redirect_uri'])) {
+        if (empty($request->input('redirectUri'))) {
             $redirect_uri = 'http://desk.fundator.co/api/v1/authenticate/facebook';
         }else{
             $redirect_uri = $request->input('redirectUri');
@@ -331,20 +331,22 @@ class AuthenticateController extends Controller
         ]);
         $profile = json_decode($profileResponse->getBody(), true);
 
+        $facebookProfile = FacebookProfile::where('facebook_id', $profile['id'])->first();
 
-        if ($request->header('Authorization'))
-        {
-            $facebookProfile = FacebookProfile::where('facebook_id', $profile['id'])->first();
+        if (!is_null($facebookProfile)) {
             $facebookProfileUser = User::find($facebookProfile->user_id);
 
-            if (!is_null($facebookProfile) && !is_null($facebookProfileUser))
-            {
+            if (!is_null($facebookProfileUser)) {
                 $facebookProfile->facebook_token = $accessToken['access_token'];
                 $facebookProfile->save();
                 return response()->json(['token' => $facebookProfileUser->getToken()], 200, [], JSON_NUMERIC_CHECK);
-            }elseif (!is_null($facebookProfile) && is_null($facebookProfileUser)) {
+            }else {
                 $facebookProfile->delete();
             }
+        }
+
+        if ($request->header('Authorization'))
+        {
 
             $token = explode(' ', $request->header('Authorization'))[1];
             $payload = JWTAuth::getPayload($token);
@@ -378,18 +380,6 @@ class AuthenticateController extends Controller
         // Step 3b. Create a new user account or return an existing one.
         else
         {
-            $facebookProfile = FacebookProfile::where('facebook_id', $profile['id'])->first();
-            $facebookProfileUser = User::find($facebookProfile->user_id);
-
-            if (!is_null($facebookProfile) && !is_null($facebookProfileUser))
-            {
-                $facebookProfile->facebook_token = $accessToken['access_token'];
-                $facebookProfile->save();
-                return response()->json(['token' => $facebookProfileUser->getToken()], 200, [], JSON_NUMERIC_CHECK);
-            }elseif (!is_null($facebookProfile) && is_null($facebookProfileUser)) {
-                $facebookProfile->delete();
-            }
-
             $user = User::where('email', $profile['email'])->first();
 
             if (is_null($user)) {
@@ -502,7 +492,7 @@ class AuthenticateController extends Controller
      */
     public function linkedin(Request $request)
     {
-        if (!isset($_GET['redirect_uri'])) {
+        if (empty($request->input('redirectUri'))) {
             $redirect_uri = 'http://desk.fundator.co/api/v1/authenticate/linkedin';
         }else{
             $redirect_uri = $request->input('redirectUri');
@@ -522,6 +512,7 @@ class AuthenticateController extends Controller
             $accessTokenResponse = $client->request('POST', 'https://www.linkedin.com/uas/oauth2/accessToken', [
                 'form_params' => $params
             ]);
+
             $accessToken = json_decode($accessTokenResponse->getBody(), true);
 
             // Step 2. Retrieve profile information about the current user.
@@ -533,21 +524,34 @@ class AuthenticateController extends Controller
             ]);
             $profile = json_decode($profileResponse->getBody(), true);
 
-            // Step 3a. If user is already signed in then link accounts.
-            if ($request->header('Authorization'))
-            {
-                $linkedinProfile = LinkedinProfile::where('linkedin_id', $profile['id'])->first();
+            // $linkedinProfileUser = User::find($linkedinProfile->user_id);
+
+            // if (!is_null($linkedinProfile) && !is_null($linkedinProfileUser))
+            // {
+            //     $linkedinProfile->linkedin_token = $accessToken['access_token'];
+            //     $linkedinProfile->save();
+            //     return response()->json(['token' => $linkedinProfileUser->getToken()], 200, [], JSON_NUMERIC_CHECK);
+            // }elseif (!is_null($linkedinProfile) && is_null($linkedinProfileUser)) {
+            //     $linkedinProfile->delete();
+            // }
+
+            $linkedinProfile = LinkedinProfile::where('linkedin_id', $profile['id'])->first();
+
+            if (!is_null($linkedinProfile)) {
                 $linkedinProfileUser = User::find($linkedinProfile->user_id);
 
-                if (!is_null($linkedinProfile) && !is_null($linkedinProfileUser))
-                {
+                if (!is_null($linkedinProfileUser)) {
                     $linkedinProfile->linkedin_token = $accessToken['access_token'];
                     $linkedinProfile->save();
                     return response()->json(['token' => $linkedinProfileUser->getToken()], 200, [], JSON_NUMERIC_CHECK);
-                }elseif (!is_null($linkedinProfile) && is_null($linkedinProfileUser)) {
+                }else {
                     $linkedinProfile->delete();
                 }
+            }
 
+            // Step 3a. If user is already signed in then link accounts.
+            if ($request->header('Authorization'))
+            {
                 $token = explode(' ', $request->header('Authorization'))[1];
                 $payload = JWTAuth::getPayload($token);
                 $user = User::find($payload['sub']);
@@ -580,18 +584,6 @@ class AuthenticateController extends Controller
             // Step 3b. Create a new user account or return an existing one.
             else
             {
-                $linkedinProfile = LinkedinProfile::where('linkedin_id', $profile['id'])->first();
-                $linkedinProfileUser = User::find($linkedinProfile->user_id);
-
-                if (!is_null($linkedinProfile) && !is_null($linkedinProfileUser))
-                {
-                    $linkedinProfile->linkedin_token = $accessToken['access_token'];
-                    $linkedinProfile->save();
-                    return response()->json(['token' => $linkedinProfileUser->getToken()], 200, [], JSON_NUMERIC_CHECK);
-                }elseif (!is_null($linkedinProfile) && is_null($linkedinProfileUser)) {
-                    $linkedinProfile->delete();
-                }
-
                 $user = User::where('email', $profile['emailAddress'])->first();
 
                 if (is_null($user)) {
