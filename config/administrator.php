@@ -63,7 +63,7 @@ return array(
 	'menu' => array(
 		'Contest' => array('contests', 'jury_applications', 'contestant_applications', 'entries', 'entry_rating', 'prizes'),
 		'Expertise' => array('expertise_category', 'expertise', 'skills'),
-		'Projects' => array('projects', 'project_expertise'),
+		'Projects' => array('projects', 'project_expertise', 'product_category', 'innovation_category'),
 		'Investments' => array('investments'),
 		'Pages' => array('pages'),
 		'Transactions' => array('transactions', 'share_transactions'),

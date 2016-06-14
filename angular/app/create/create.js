@@ -2,17 +2,42 @@
     "use strict";
 
     angular.module('fundator.controllers').controller('CreateCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $timeout, $filter, FdScroller, API) {
-        console.log('Create Started');
         $rootScope.$broadcast('stopLoading');
         $rootScope.sectionLoading = true;
         $rootScope.innerSectionLoading = false;
 
         // Available Views : List, Create
+        $scope.project = null;
         $scope.view = 'list';
         $scope.data = {
             newProjectLoading: false
         };
-        $scope.project = null;
+
+        // Fetch basic product categories
+        $scope.productCategories = [];
+        $scope.innovationCategories = [];
+
+        var Category = $resource(API.path('categories/:type/:categoryId'), {
+            categoryId: '@id'
+        });
+
+        $scope.fetchCategories = function() {
+            Category.query({type: 'product'}).$promise.then(function(result){
+                $scope.productCategories = result;
+                console.log('product categories : ' + result);
+            }, function(){
+                console.log('failed to retrive the product cateories');
+            });
+
+            Category.query({type: 'innovation'}).$promise.then(function(result){
+                $scope.innovationCategories = result;
+                console.log('innovation categories : ' + result);
+            }, function(){
+                console.log('failed to retrive the innovation cateories');
+            });
+        }
+
+        $scope.fetchCategories();
 
         $scope.steps = [{
             title: 'Your Project',
@@ -117,8 +142,6 @@
                     $rootScope.sectionLoading = false;
                     $rootScope.innerSectionLoading = true;
                 });
-            } else {
-                console.log('Make up your mind you peice of shit');
             }
         } else {
             $timeout(function() {
@@ -142,6 +165,8 @@
 
         $scope.saveProgress = function() {
             var project = angular.copy($scope.project);
+
+            console.log(project);
 
             if (typeof($scope.project) !== 'undefined') {
                 Project.update({
@@ -168,6 +193,29 @@
         $scope.details = {
             name: '',
             geography: 'wherever'
+        };
+
+        $scope.languages = [
+            'English',
+            'Chinese',
+            'French',
+            'Korean'
+        ];
+
+
+        $scope.countries = [
+            {code: 'us', name: 'United States'},
+            {code: 'cn', name: 'China'},
+            {code: 'fr', name: 'France'},
+            {code: 'kr', name: 'South Korea'},
+        ];
+
+        $scope.tagTransform = function (newTag) {
+            var item = {
+                name: newTag
+            };
+
+           return item;
         };
 
         $scope.$watch('project', function(project) {

@@ -48,6 +48,24 @@ class Project extends Model
     }
 
     /**
+     * Project Category
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function productCategory(){
+        return $this->belongsTo('Fundator\ProductCategory');
+    }
+
+    /**
+     * Innovation Category
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function innovationCategory(){
+        return $this->belongsTo('Fundator\InnovationCategory');
+    }
+
+    /**
      * Project Investment
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -98,6 +116,14 @@ class Project extends Model
     public function projectInvestorAttributes(){
         return $this->getAttributes();
     }
+
+    // public function getProductCategoryAttribute(){
+    //     return $this->productCategory;
+    // }
+
+    // public function getInnovationCategoryAttribute(){
+    //     return $this->innovationCategory;
+    // }
 
     public function projectInvestmentAvailableAttributes(){
         $project_data = [];

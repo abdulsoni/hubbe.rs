@@ -28,16 +28,55 @@
             </div>
         </div>
         <div class="project-form-row">
+            <h4><strong>Product Category</strong></h4>
+            <p>
+                <dfn>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est maxime sit odit, dicta aliquid enim consequatur ex pariatur.</dfn>
+            </p>
+
+            <ui-select name="productCategory" ng-model="details.product_category" theme="bootstrap" title="Choose a product category" on-select="saveProgress()">
+                <ui-select-match placeholder="Choose a product category ...">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="category in productCategories ">
+                    <div ng-bind-html="(category.name | highlight: $select.search)"></div>
+                </ui-select-choices>
+            </ui-select>
+            <div class="VProgress-aligment" ng-class="{'completed': details.product_category }">
+                <div class="progress-vertical">
+                    <div class="progress-bar-vertical progress-bar-info"></div>
+                    <div class="index-value">C</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-form-row">
+            <h4><strong>Innovation Category</strong></h4>
+            <p>
+                <dfn>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est maxime sit odit, dicta aliquid enim consequatur ex pariatur.</dfn>
+            </p>
+
+            <ui-select name="innovationCategory" ng-model="details.innovation_category" title="Choose an innovation category" on-select="saveProgress()">
+                <ui-select-match placeholder="Choose an innovation category ...">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="category in innovationCategories">
+                    <div ng-bind-html="(category.name | highlight: $select.search)"></div>
+                    <small style="opacity: 0.5" ng-bind-html="category.description"></small>
+                </ui-select-choices>
+            </ui-select>
+            <div class="VProgress-aligment" ng-class="{'completed': details.innovation_category }">
+                <div class="progress-vertical">
+                    <div class="progress-bar-vertical progress-bar-info"></div>
+                    <div class="index-value">D</div>
+                </div>
+            </div>
+        </div>
+        <div class="project-form-row">
             <h4><strong>Market (Optional)</strong></h4>
             <p>
                 <dfn>Here you describe the people who according to you will say "whoaou" to your project. How you see them: Age, gender, occupations. Reasons they will like it.</dfn>
             </p>
-            <!-- <textarea placeholder="Market description..." name="marketDescription" ng-model="details.market" required></textarea> -->
             <text-angular placeholder="Market description..." name="marketDescription" ng-model="details.market" ng-blur="saveProgress()" required></text-angular>
             <div class="VProgress-aligment" ng-class="{'completed': projectDetails.marketDescription.$valid }">
                 <div class="progress-vertical">
                     <div class="progress-bar-vertical progress-bar-info"></div>
-                    <div class="index-value">C</div>
+                    <div class="index-value">E</div>
                 </div>
             </div>
         </div>
@@ -50,7 +89,7 @@
             <div class="VProgress-aligment" ng-class="{'completed': projectDetails.price.$valid }">
                 <div class="progress-vertical">
                     <div class="progress-bar-vertical progress-bar-info"></div>
-                    <div class="index-value">D</div>
+                    <div class="index-value">F</div>
                 </div>
             </div>
         </div>
@@ -70,25 +109,39 @@
                 </label>
             </div>
             <div class="location-project">
-                <input type="text" placeholder="Kenia, United Kingdom, etc..." name="location" ng-model="details.countries" ng-class="{'visually-hidden': details.geography !== 'countries'}" ng-blur="saveProgress()">
+                <!-- <input type="text" placeholder="Kenia, United Kingdom, etc..." name="location" ng-model="details.countries" ng-class="{'visually-hidden': details.geography !== 'countries'}" ng-blur="saveProgress()"> -->
+
+                <ui-select multiple tagging name="countries" ng-model="details.countries" theme="bootstrap" title="Choose your locations" ng-class="{'visually-hidden': details.geography !== 'countries'}" on-select="saveProgress()">
+                    <ui-select-match placeholder="Select a country ...">{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="country in countries">
+                        <div ng-bind-html="(country.name | highlight: $select.search)"></div>
+                    </ui-select-choices>
+                </ui-select>
             </div>
             <div class="VProgress-aligment" ng-class="{'completed': details.geography }">
                 <div class="progress-vertical">
                     <div class="progress-bar-vertical progress-bar-info"></div>
-                    <div class="index-value">E</div>
+                    <div class="index-value">G</div>
                 </div>
             </div>
         </div>
+
         <div class="project-form-row">
             <h4><strong>Language</strong></h4>
             <p>
                 <dfn>Which language you would prefer to deal with?</dfn>
             </p>
-            <input type="text" name="languages" placeholder="For the moment, only english is available. Later stage will allow you to get translated version in main languages" ng-model="details.language" ng-blur="saveProgress()" required>
-            <div class="VProgress-aligment" ng-class="{'completed': projectDetails.languages.$valid }">
+            <!-- <input type="text" name="languages" placeholder="For the moment, only english is available. Later stage will allow you to get translated version in main languages" ng-model="details.language" ng-blur="saveProgress()" required> -->
+            <ui-select name="language" ng-model="details.language" title="Select a language" on-select="saveProgress()">
+                <ui-select-match placeholder="Select a language ...">{{$select.selected}}</ui-select-match>
+                <ui-select-choices repeat="language in languages">
+                    <div ng-bind-html="(language | highlight: $select.search)"></div>
+                </ui-select-choices>
+            </ui-select>
+            <div class="VProgress-aligment" ng-class="{'completed': details.language }">
                 <div class="progress-vertical">
                     <div class="progress-bar-vertical progress-bar-info"></div>
-                    <div class="index-value">F</div>
+                    <div class="index-value">H</div>
                 </div>
             </div>
         </div>

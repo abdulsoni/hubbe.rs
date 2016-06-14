@@ -102,7 +102,7 @@
                 console.log('Not Logged in ');
                 console.log(response);
                 $rootScope.$broadcast('stopLoading');
-            })
+            });
         };
 
         $scope.logout = function(){

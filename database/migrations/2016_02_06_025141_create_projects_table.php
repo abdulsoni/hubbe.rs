@@ -27,6 +27,11 @@ class CreateProjectsTable extends Migration
             $table->mediumText('market')->nullable();
             $table->json('geography')->nullable();
 
+            $table->double('price')->nullable();
+
+            $table->integer('product_category_id')->nullable();
+            $table->integer('innovation_category_id')->nullable();
+
             // Step 2
 
             // Extra Attributes

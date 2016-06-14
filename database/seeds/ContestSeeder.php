@@ -52,14 +52,5 @@ class ContestSeeder extends Seeder
             'visible' => 1
         ]);
 
-        /*
-         * Create Entries
-         */
-
-
-
-        /*
-         * Create Prizes
-         */
     }
 }

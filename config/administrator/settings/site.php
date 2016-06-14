@@ -83,27 +83,5 @@ return array(
     {
         return true;
         //return Auth::user()->hasRole('developer');
-    },
-
-    /**
-     * This is where you can define the settings page's custom actions
-     */
-//    'actions' => array(
-//        //Ordering an item up
-//        'clear_page_cache' => array(
-//            'title' => 'Clear Page Cache',
-//            'messages' => array(
-//                'active' => 'Clearing cache...',
-//                'success' => 'Page Cache Cleared',
-//                'error' => 'There was an error while clearing the page cache',
-//            ),
-//            //the settings data is passed to the closure and saved if a truthy response is returned
-//            'action' => function(&$data)
-//            {
-//                Cache::forget('pages');
-//
-//                return true;
-//            }
-//        ),
-//    ),
+    }
 );

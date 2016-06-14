@@ -16,6 +16,9 @@ use Fundator\ProjectExpertiseBid;
 use Fundator\ProjectInvestmentBid;
 use Fundator\Confirm;
 
+use Fundator\ProductCategory;
+use Fundator\InnovationCategory;
+
 use Fundator\Events\ProjectSuperExpertSelected;
 
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -162,6 +165,22 @@ class ProjectController extends Controller
             $project->price = floatval($request->price);
             $project->geography = $request->geography;
             $project->language = $request->language;
+
+            if (isset($request->productCategory['id'])) {
+                $productCategory = ProductCategory::find($request->productCategory['id']);
+
+                if (!is_null($productCategory)) {
+                    $project->productCategory()->associate($productCategory);
+                }
+            }
+
+            if (isset($request->innovationCategory['id'])) {
+                $innovationCategory = InnovationCategory::find($request->innovationCategory['id']);
+
+                if (!is_null($innovationCategory)) {
+                    $project->innovationCategory()->associate($innovationCategory);
+                }
+            }
 
             $project->state = $request->state;
 
@@ -368,6 +387,8 @@ class ProjectController extends Controller
 
         if (!is_null($project)) {
             $project_data['thread_id'] = $project->getThreadIdAttribute();
+            $project_data['product_category'] = $project->productCategory;
+            $project_data['innovation_category'] = $project->innovationCategory;
             $project_data['creator'] = $project->creator;
             $project_data['super_expert'] = $project->superExpert;
             $expertiseForTeam = $project->expertise()->whereNotNull('selected_bid_id')->get();

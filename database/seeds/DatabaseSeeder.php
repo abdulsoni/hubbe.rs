@@ -14,22 +14,25 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->call(UserTableSeeder::class);
+        // $this->call(UserTableSeeder::class);
 
-        $this->call(ContestSeeder::class);
-        $this->command->info('Contests Seeded');
+        // $this->call(ContestSeeder::class);
+        // $this->command->info('Contests Seeded');
 
-        $this->call(ProjectSeeder::class);
-        $this->command->info('Project Seeded');
+        // $this->call(ProjectSeeder::class);
+        // $this->command->info('Project Seeded');
 
-        $this->call(EntrySeeder::class);
-        $this->command->info('Entries Seeded');
+        // $this->call(EntrySeeder::class);
+        // $this->command->info('Entries Seeded');
 
-        $this->call(SkillsSeeder::class);
-        $this->command->info('Skills Seeded');
+        // $this->call(SkillsSeeder::class);
+        // $this->command->info('Skills Seeded');
 
-        $this->call(NotificationCategoriesSeeder::class);
-        $this->command->info('Notifications Category Seeded');
+        // $this->call(NotificationCategoriesSeeder::class);
+        // $this->command->info('Notifications Category Seeded');
+
+        $this->call(ProductCategorySeeder::class);
+        $this->command->info('Product Category Seeded');
 
         Model::reguard();
     }
