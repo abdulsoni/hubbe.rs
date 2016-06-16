@@ -2772,21 +2772,21 @@ function() {
                 o.inputtedExpertiseList[e].skillsList=t.data, o.inputtedExpertiseList[e].selectedSkills=t.data, o.inputtedExpertiseList[e].loading=!1
             }
             , 2e3)
-        }
-        , f(), o.submitDetails=function() {
+        }, f(), 
+
+        o.submitDetails=function() {
             var e= {
                 name: o.data.fname, last_name: o.data.lname, role: o.data.selectedRole, age_gate: o.data.ageGate, country_origin: o.data.countryOrigin, country_residence: o.data.countryResidence, contact_number: o.data.contactNumber, contact_number_country_code: o.data.contactNumberCountryCode.code, contact_time: o.data.contactTime.value
-            }
-            ;
+            };
             switch(o.data.selectedRole) {
-                case"investor": var a=o.data.selectedInvestmentBudget;
+                case "investor": var a=o.data.selectedInvestmentBudget;
                 "other"===a&&(a=o.data.selectedInvestmentBudgetOther), e.investor= {}
                 , e.investor.investment_budget=a, e.investor.investment_goal=o.data.selectedInvestmentGoal, e.investor.investment_reason=o.data.selectedInvestmentReason;
                 break;
-                case"creator":e.creator= {}
+                case "creator":e.creator= {}
                 ;
                 break;
-                case"expert":e.expert= {
+                case "expert":e.expert= {
                     list: []
                 }
                 , angular.forEach(o.inputtedExpertiseList, function(t) {
@@ -2798,27 +2798,21 @@ function() {
                 )
             }
             t.$broadcast("startLoading"), c.toTop(), i.put(g.path("users/")+t.user.id, e).then(function(e) {
+            	
                 "Updated"===e.data&&(t.user.name=o.data.fname, t.user.last_name=o.data.lname, t.user.role=o.data.selectedRole, t.user.registered=1, t.initialRoleAssignment=!0, t.activeRole=o.data.selectedRole, n.go("app.contests"), t.switchUserRole(o.data.selectedRole, null, !0))
-               // console.log(t.user.name=o.data.fname, t.user.last_name=o.data.lname, t.user.role=o.data.selectedRole, t.user.registered=1, t.initialRoleAssignment=!0, t.activeRole=o.data.selectedRole, n.go("app.contests"), t.switchUserRole(o.data.selectedRole, null, !0));
-            }
-            , function(e) {
+            },function(e) {
                 console.log("error"), console.log(e)
             }
             )["finally"](function() {
-                t.$broadcast("stopLoading");
-                window.location.href = "/#/projects";
-                
-                o.go("app.create.details", {
-                        projectId: e.id
-                })
-                
-            })
+                t.$broadcast("stopLoading")
+            }
+            )
         }
     }
     ])
-}
+}(),
 
-(),
+
 function() {
     "use strict";
     angular.module("fundator.controllers").controller("ContestCtrl", ["$rootScope", "$scope", "$state", "$stateParams", "$resource", "$http", "$timeout", "$filter", "API", function(e, t, o, n, a, r, i, s, c) {

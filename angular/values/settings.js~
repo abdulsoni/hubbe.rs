@@ -3,7 +3,7 @@
 
     angular.module('fundator.services').factory('API', function() {
     	var domainUrl = window.location.hostname.indexOf('fundator.co') !== -1 ? 'fundator.co' : 'fundator.app';
-        var base = 'http://' + window.location.hostname + '/api/';
+        var base = 'http://' + window.location.hostname + '/12api/';
         var path = '';
 
         return {

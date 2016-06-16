@@ -1,6 +1,6 @@
 (function() {
     "use strict";
-
+ 
     angular.module('fundator.routes').config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 
         // Remove the # for the non html5 browsers

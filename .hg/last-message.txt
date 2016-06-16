@@ -1,0 +1,1 @@
+There are issues with the UserController::update() method, currently the users are unable to finish registration : Fixed
