@@ -66,6 +66,36 @@
     <script src="{!! asset('js/app/chosen.jquery.min.js') !!}"></script>
     <script src="{!! asset('js/app/vendor.js') !!}"></script>
     <script src="{!! asset('js/app/app.js') !!}"></script>
+    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css">
+    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2-bootstrap.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.min.js"></script>
+
+    <script type="text/javascript">
+    //Select2
+    $(function(){  
+      var select = $('.selectui').select2({
+        placeholder:'Innovation'
+      });
+    });        
+    </script>
+   
+<style type="text/css">
+.ui-select-container{
+  position: relative;
+  border-radius: 0px;
+  background: #F2F2F2!important;
+  border-color: #F2F2F2!important;
+  box-shadow: none!important;
+  min-height: 40px!important;
+}
+
+.ui-select-multiple.ui-select-bootstrap input.ui-select-search {
+  margin: 5px 0px!important;
+}
+
+
+
+</style>
 
     {{--livereload--}}
     @if ( Config::get('app.debug') )

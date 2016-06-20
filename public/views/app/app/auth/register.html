@@ -195,22 +195,36 @@
             </div>
             <div class="step-registration" ng-if="form.currentStep === 4 && data.selectedRole === 'investor'">
                 <form name="step3Form">
-                    <div>
+                     <div>
+                        <input type="hidden" name="innovation_id" value="{{data.innovation}}">
+
                         <h3 class="font-light paddingTB5">Innovation Category</h3>
                         <label class="select-style">
-                            <select required ng-options="innovation.id as innovation.name for innovation in innovations" ng-model="data.innovation" multiple>
-                                 
-                            </select>
+                           <!--<select required ng-options="innovation.id as innovation.name for innovation in innovations" ng-model="data.innovation" multiple>  
+                            </select> -->
+                            <ui-select multiple ng-model="data.innovation" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
+                                <ui-select-match placeholder="Select Innovation">{{$item.name}}</ui-select-match>
+                                <!-- <ui-select-choices repeat="innovation.id as innovation.name for innovation in innovations"> -->
+                                <ui-select-choices repeat="innovation in innovations">
+                                  {{innovation.name}}
+                                </ui-select-choices>
+                            </ui-select>
                         </label>
                     </div>
                     <div>
+                        <input type="hidden" name="creation_id" value="{{data.creation}}">
                         <h3 class="font-light paddingTB5">Creation Category</h3>
                         <label class="select-style">
-                            <select required ng-options="creation.id as creation.name for creation in creations" ng-model="data.creation"  multiple>
-                                 
-                            </select>
+                            <!-- <select required ng-options="creation.id as creation.name for creation in creations" ng-model="data.creation"  multi?ple></select> -->
+                            <ui-select multiple ng-model="data.creation" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
+                                <ui-select-match placeholder="Select Creation">{{$item.name}}</ui-select-match>
+                                <ui-select-choices repeat="creation in creations">
+                                  {{creation.name}}
+                                </ui-select-choices>
+                            </ui-select>
                         </label>
                     </div>
+                    
                     <h3 class="font-light paddingB10">Which type of projects are you more likely to invest in?</h3>
                     <div class="projects-invest">
                         <label class="select-style">
@@ -299,19 +313,32 @@
             <div class="step-registration" ng-if="form.currentStep === 4 && data.selectedRole === 'expert'">
                 <form name="step3Form">
                     <div>
+                        <input type="hidden" name="innovation_id" value="{{data.innovation}}">
+
                         <h3 class="font-light paddingTB5">Innovation Category</h3>
                         <label class="select-style">
-                            <select required ng-options="innovation.id as innovation.name for innovation in innovations" ng-model="data.innovation" multiple>
-                                 
-                            </select>
+                           <!--<select required ng-options="innovation.id as innovation.name for innovation in innovations" ng-model="data.innovation" multiple>  
+                            </select> -->
+                            <ui-select multiple ng-model="data.innovation" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
+                                <ui-select-match placeholder="Select Innovation">{{$item.name}}</ui-select-match>
+                                <!-- <ui-select-choices repeat="innovation.id as innovation.name for innovation in innovations"> -->
+                                <ui-select-choices repeat="innovation in innovations">
+                                  {{innovation.name}}
+                                </ui-select-choices>
+                            </ui-select>
                         </label>
                     </div>
                     <div>
+                        <input type="hidden" name="creation_id" value="{{data.creation}}">
                         <h3 class="font-light paddingTB5">Creation Category</h3>
                         <label class="select-style">
-                            <select required ng-options="creation.id as creation.name for creation in creations" ng-model="data.creation"  multiple>
-                                 
-                            </select>
+                            <!-- <select required ng-options="creation.id as creation.name for creation in creations" ng-model="data.creation"  multi?ple></select> -->
+                            <ui-select multiple ng-model="data.creation" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
+                                <ui-select-match placeholder="Select Creation">{{$item.name}}</ui-select-match>
+                                <ui-select-choices repeat="creation in creations">
+                                  {{creation.name}}
+                                </ui-select-choices>
+                            </ui-select>
                         </label>
                     </div>
                     <h3 class="font-light paddingB10">Select your expertise.</h3>
@@ -473,20 +500,33 @@
             </div>
               <div class="step-registration" ng-if="form.currentStep === 4 && data.selectedRole === 'creator'">
                 <form name="step3Form">
-                    <div>
+                     <div>
+                        <input type="hidden" name="innovation_id" value="{{data.innovation}}">
+
                         <h3 class="font-light paddingTB5">Innovation Category</h3>
                         <label class="select-style">
-                            <select required ng-options="innovation.id as innovation.name for innovation in innovations" ng-model="data.innovation" multiple>
-                                 
-                            </select>
+                           <!--<select required ng-options="innovation.id as innovation.name for innovation in innovations" ng-model="data.innovation" multiple>  
+                            </select> -->
+                            <ui-select multiple ng-model="data.innovation" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
+                                <ui-select-match placeholder="Select Innovation">{{$item.name}}</ui-select-match>
+                                <!-- <ui-select-choices repeat="innovation.id as innovation.name for innovation in innovations"> -->
+                                <ui-select-choices repeat="innovation in innovations">
+                                  {{innovation.name}}
+                                </ui-select-choices>
+                            </ui-select>
                         </label>
                     </div>
                     <div>
+                        <input type="hidden" name="creation_id" value="{{data.creation}}">
                         <h3 class="font-light paddingTB5">Creation Category</h3>
                         <label class="select-style">
-                            <select required ng-options="creation.id as creation.name for creation in creations" ng-model="data.creation"  multiple>
-                                 
-                            </select>
+                            <!-- <select required ng-options="creation.id as creation.name for creation in creations" ng-model="data.creation"  multi?ple></select> -->
+                            <ui-select multiple ng-model="data.creation" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
+                                <ui-select-match placeholder="Select Creation">{{$item.name}}</ui-select-match>
+                                <ui-select-choices repeat="creation in creations">
+                                  {{creation.name}}
+                                </ui-select-choices>
+                            </ui-select>
                         </label>
                     </div>
                 </form>
