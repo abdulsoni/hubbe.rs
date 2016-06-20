@@ -2584,6 +2584,12 @@
                         creator: 4, expert: 4, investor: 4
                     }
                     , o.changeFormStep = function (e) {
+                        $("select").on("click", "option", function (event) {
+                            if (3 <= $(this).siblings(":selected").length) {
+                                $(this).removeAttr("selected");
+                            }
+                        });
+
                         c.toTop(), o.form.currentStep = e
                     }
                     , o.countries = u(), o.countryCodes = p(),
@@ -2795,9 +2801,10 @@
                     }
                     , f(), o.submitDetails = function () {
                         var e = {
-                            name: o.data.fname, last_name: o.data.lname, role: o.data.selectedRole, age_gate: o.data.ageGate, country_origin: o.data.countryOrigin, country_residence: o.data.countryResidence, contact_number: o.data.contactNumber, contact_number_country_code: o.data.contactNumberCountryCode.code, contact_time: o.data.contactTime.value
+                            name: o.data.fname, last_name: o.data.lname, role: o.data.selectedRole, age_gate: o.data.ageGate, country_origin: o.data.countryOrigin, country_residence: o.data.countryResidence, contact_number: o.data.contactNumber, contact_number_country_code: o.data.contactNumberCountryCode.code, contact_time: o.data.contactTime.value, innovation_id: o.data.innovation, creation_id: o.data.creation
                         }
                         ;
+
                         switch (o.data.selectedRole) {
                             case"investor":
                                 var a = o.data.selectedInvestmentBudget;
@@ -2822,7 +2829,7 @@
                         }
                         t.$broadcast("startLoading"), c.toTop(), i.put(g.path("users/") + t.user.id, e).then(function (e) {
                             "Updated" === e.data && (t.user.name = o.data.fname, t.user.last_name = o.data.lname, t.user.role = o.data.selectedRole, t.user.registered = 1, t.initialRoleAssignment = !0, t.activeRole = o.data.selectedRole, n.go("app.contests"), t.switchUserRole(o.data.selectedRole, null, !0))
-                            // console.log(t.user.name=o.data.fname, t.user.last_name=o.data.lname, t.user.role=o.data.selectedRole, t.user.registered=1, t.initialRoleAssignment=!0, t.activeRole=o.data.selectedRole, n.go("app.contests"), t.switchUserRole(o.data.selectedRole, null, !0));
+
                         }
                         , function (e) {
                             console.log("error"), console.log(e)

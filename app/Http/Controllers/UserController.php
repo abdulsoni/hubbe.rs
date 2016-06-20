@@ -10,6 +10,10 @@ use Fundator\Investor;
 use Fundator\Expert;
 use Fundator\ExpertiseCategory;
 use Fundator\Expertise;
+use Fundator\CreationCategory;
+use Fundator\InnovationCategory;
+use Fundator\UserInnovation;
+use Fundator\UserCreation;
 use Fundator\Role;
 use Fundator\Skill;
 use Fundator\JuryApplication;
@@ -136,6 +140,19 @@ class UserController extends Controller {
 
             if (isset($request->bio)) {
                 $user->bio = $request->bio;
+            }
+            if (isset($request->creation_id)) {
+                UserCreation::where('user_id', $id)->delete();
+                foreach ($request->creation_id as $creation_id) {
+                    DB::table('user_creation')->insert(['creation_id' => $creation_id, 'user_id' => $id]);
+                }
+            }
+            if (isset($request->innovation_id)) {
+                UserInnovation::where('user_id', $id)->delete();
+                foreach ($request->innovation_id as $innovation_id) {
+                    DB::table('user_innovation')->insert(['innovation_id' => $innovation_id, 'user_id' => $id]);
+                    
+                }
             }
 
             if (isset($request->investor) && is_null($user->investor)) {
@@ -450,34 +467,36 @@ class UserController extends Controller {
 
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
-/*
+
+    /*
      * Innovation Category List
      * @author Xipetech
      */
+
     Public function innovationList() {
         $statusCode = 200;
         try {
             $response = DB::table('innovation_categories')
                     ->select('id', 'name')
                     ->get();
-            
         } catch (Exception $e) {
             $statusCode = 400;
             $response = ['error' => $e->getMessage()];
         }
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
+
     /*
      * Creation Category
      * @author Xipetech
      */
+
     Public function creationList() {
         $statusCode = 200;
         try {
             $response = DB::table('creation_categories')
                     ->select('id', 'name')
                     ->get();
-            
         } catch (Exception $e) {
             $statusCode = 400;
             $response = ['error' => $e->getMessage()];
