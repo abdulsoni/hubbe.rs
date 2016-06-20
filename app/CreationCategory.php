@@ -4,7 +4,7 @@ namespace Fundator;
 
 use Illuminate\Database\Eloquent\Model;
 
-class InnovationCategory extends Model
+class CreationCategory extends Model
 {
     /**
      * Indicates if the model should be timestamped.
@@ -18,7 +18,7 @@ class InnovationCategory extends Model
      *
      * @var string
      */
-    protected $table = 'innovation_categories';
+    protected $table = 'creation_categories';
 
     /**
      * The attributes that are mass assignable.
@@ -32,6 +32,6 @@ class InnovationCategory extends Model
      */
     public function parent()
     {
-        return $this->belongsTo('Fundator\InnovationCategory', 'parent_id');
+        return $this->belongsTo('Fundator\CreationCategory', 'parent_id');
     }
 }

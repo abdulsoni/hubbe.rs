@@ -301,7 +301,7 @@ class AuthenticateController extends Controller
     public function facebook(Request $request)
     {
         if (empty($request->input('redirectUri'))) {
-            $redirect_uri = 'http://desk.fundator.co/api/v1/authenticate/facebook';
+            $redirect_uri = 'http://'.$_SERVER['HTTP_HOST'].'/api/v1/authenticate/facebook';
         }else{
             $redirect_uri = $request->input('redirectUri');
         }

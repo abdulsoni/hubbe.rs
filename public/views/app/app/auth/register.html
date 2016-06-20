@@ -52,6 +52,12 @@
                         <h4 class="font-light">You have access to insight information about the project and it should not be disclosed (CONFIDENTIALITY)</h4>
                     </div>
                 </div>
+<!--                <ui-select multiple ng-model="multipleCountry.country" theme="bootstrap" ng-disabled="disabled">
+                    <ui-select-match placeholder="Select Country">{{$item}}</ui-select-match>
+                    <ui-select-choices repeat="country in availableCountries | filter:omitSelectedCountry | filter:$select.search">
+                      {{country}}
+                    </ui-select-choices>
+                  </ui-select>-->
 
                 <div class="clearfix"></div>
                 <div class="marginT20" ng-if="data.selectedRole.length > 0">
@@ -183,12 +189,28 @@
                 <div class="clearfix"></div>
                 <div class="marginT30">
                     <button type="button" class="action back btn btn-black rgbBtn" ng-click="changeFormStep(2)">Previous</button>
-                    <button type="button" class="action submit btn btn-success rgbBtn" ng-disabled="step2Form.$invalid"  ng-if="totalSteps[data.selectedRole] === 3" ng-click="submitDetails()">Submit</button>
+                    <button type="button" class="action submit btn btn-info rgbBtn" ng-disabled="step2Form.$invalid"  ng-if="totalSteps[data.selectedRole] === 3" ng-click="changeFormStep(4)">Save &amp; Next</button>
                     <button type="button" class="action next btn btn-info rgbBtn" ng-disabled="step2Form.$invalid"  ng-if="totalSteps[data.selectedRole] > 3" ng-click="changeFormStep(4)">Save &amp; Next</button>
                 </div>
             </div>
             <div class="step-registration" ng-if="form.currentStep === 4 && data.selectedRole === 'investor'">
                 <form name="step3Form">
+                    <div>
+                        <h3 class="font-light paddingTB5">Innovation Category</h3>
+                        <label class="select-style">
+                            <select required ng-options="innovation.name for innovation in innovations" ng-model="data.innovation">
+                                 <option value="" selected="selected">Please Select Innovation </option>
+                            </select>
+                        </label>
+                    </div>
+                    <div>
+                        <h3 class="font-light paddingTB5">Creation Category</h3>
+                        <label class="select-style">
+                            <select required ng-options="creation.name for creation in creations" ng-model="data.creations">
+                                 <option value="" selected="selected">Please Select Creation Category </option>
+                            </select>
+                        </label>
+                    </div>
                     <h3 class="font-light paddingB10">Which type of projects are you more likely to invest in?</h3>
                     <div class="projects-invest">
                         <label class="select-style">
@@ -265,6 +287,7 @@
                     </div>
                     <h3 class="font-light paddingB10 paddingT10">What is your feeling about investing in creative projects?</h3>
                     <textarea class="grayTextareaFiled" placeholder="explain yourself..." ng-model="data.selectedInvestmentReason" required></textarea>
+                    
                 </form>
 
                 <div class="clearfix"></div>
@@ -275,6 +298,22 @@
             </div>
             <div class="step-registration" ng-if="form.currentStep === 4 && data.selectedRole === 'expert'">
                 <form name="step3Form">
+                    <div>
+                        <h3 class="font-light paddingTB5">Innovation Category</h3>
+                        <label class="select-style">
+                            <select required ng-options="innovation.name for innovation in innovations" ng-model="data.innovation">
+                                 <option value="" selected="selected">Please Select Innovation </option>
+                            </select>
+                        </label>
+                    </div>
+                    <div>
+                        <h3 class="font-light paddingTB5">Creation Category</h3>
+                        <label class="select-style">
+                            <select required ng-options="creation.name for creation in creations" ng-model="data.creations">
+                                 <option value="" selected="selected">Please Select Creation Category </option>
+                            </select>
+                        </label>
+                    </div>
                     <h3 class="font-light paddingB10">Select your expertise.</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto exercitationem consequatur
                     <br>laboriosam doloribus nobis quia nam dolore maxime perspiciatis nesciunt harum magni aliquid aspernatur omnis.</p>
@@ -422,6 +461,7 @@
                             </div>
                         </div>
                     </div>
+                    
 
                 </form>
 
@@ -429,6 +469,33 @@
                 <div class="marginT30">
                     <button type="button" class="action back btn btn-black rgbBtn" ng-click="changeFormStep(3)">Previous</button>
                     <button type="button" class="action submit btn btn-success rgbBtn" ng-disabled="step3Form.$invalid" ng-click="submitDetails()">Submit</button>
+                </div>
+            </div>
+              <div class="step-registration" ng-if="form.currentStep === 4 && data.selectedRole === 'creator'">
+                <form name="step3Form">
+                    <div>
+                        <h3 class="font-light paddingTB5">Innovation Category</h3>
+                        <label class="select-style">
+                            <select required ng-options="innovation.name for innovation in innovations" ng-model="data.innovation">
+                                 <option value="" selected="selected">Please Select Innovation </option>
+                            </select>
+                        </label>
+                    </div>
+                    <div>
+                        <h3 class="font-light paddingTB5">Creation Category</h3>
+                        <label class="select-style">
+                            <select required ng-options="creation.name for creation in creations" ng-model="data.creations">
+                                 <option value="" selected="selected">Please Select Creation Category </option>
+                            </select>
+                        </label>
+                    </div>
+                </form>
+
+                <div class="clearfix"></div>
+                
+                <div class="marginT30">
+                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="changeFormStep(3)">Previous</button>
+                    <button type="button" class="action submit btn btn-success rgbBtn" ng-disabled="step3Form.$invalid"  ng-if="data.selectedRole === 'creator'" ng-click="submitDetails()">Submit</button>
                 </div>
             </div>
         </div>
