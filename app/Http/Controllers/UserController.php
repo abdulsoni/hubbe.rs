@@ -131,8 +131,8 @@ class UserController extends Controller {
             $user->last_name = $request->last_name;
             $user->role = $request->role;
             $user->age_gate = ($request->age_gate === 'yes');
-            $user->country_origin = $request->country_origin['code'];
-            $user->country_residence = $request->country_residence['code'];
+            $user->country_origin = (isset($request->country_origin['code'])?$request->country_origin['code']:$request->country_origin);
+            $user->country_residence = (isset($request->country_residence['code'])?$request->country_residence['code']:$request->country_residence);
 
             $user->contact_number = $request->contact_number;
             $user->contact_number_country_code = $request->contact_number_country_code;
