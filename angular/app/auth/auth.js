@@ -24,7 +24,7 @@
                 email: $scope.data.email,
                 password: $scope.data.password
             }
-
+            console.log(userInfo);
             $http.post(API.path('authenticate/signup'), userInfo).then(function(result){
                 if (typeof(result.data.error) === 'undefined') {
 
