@@ -10,6 +10,8 @@ use Illuminate\Http\Response;
 use Fundator\Http\Requests;
 use Fundator\Http\Controllers\Controller;
 use Fundator\Contest;
+use Fundator\Entry;
+use Fundator\EntryRating;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 use Exception;
@@ -79,7 +81,7 @@ class ContestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+     public function show($id)
     {
         $statusCode = 200;
         $response = [];
@@ -102,11 +104,28 @@ class ContestController extends Controller
             $contest_data['num_contestants'] = $contest->num_contestants;
             $contest_data['judges'] = $contest->jury;
 
+            $entries = Entry::WHERE('contest_id',$id)->groupBy('creator_id')->orderBy('created_at', 'desc')->get();   
+            foreach($entries as $entry){
+                $enryrating = EntryRating::WHERE('entry_id',$entry->id)->orderBy('created_at', 'desc')->first();
+                $average = ($enryrating->design+$enryrating->creativity+$enryrating->industrial+$enryrating->market)/4;
+                $rank[$entry->creator_id] = $average;
+            }
+            $r = 1;
+            foreach ($rank as $key => $value) {
+                $newrank[$key] = $r;
+                $r++;
+            }
+            
             $contestants = $contest->contestants;
-
             foreach($contestants as $contestant){
-                $creator = $contestant->user;
                 
+                $creator = $contestant->user;
+              
+                if(isset($newrank[$contestant->user->id])){
+                    $creator['rank'] = $newrank[$contestant->user->id];
+                    
+                }else{ $creator['rank'] = 0; }
+               
                 $contest_data['contestants'][] = $creator;
             }
         }
@@ -115,6 +134,7 @@ class ContestController extends Controller
 
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
+
 
 
     /**
