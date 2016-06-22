@@ -23,7 +23,7 @@
     "chosen": "~1.4.2",
     "angular-chosen-localytics": "~1.0.7",
     "textAngular": "~1.5.0",
-    "ng-flow": "git@github.com:flowjs/ng-flow.git",
+    "ng-flow": "git://github.com/flowjs/ng-flow.git",
     "angular-cookies": "~1.5.0",
     "angular-bootstrap-lightbox": "~0.10.0",
     "salvattore": "~1.0.9",

@@ -2,10 +2,12 @@
 
 namespace Fundator\Http\Controllers;
 
-use Illuminate\Http\Request;
 
+use Exception;
+use Illuminate\Http\Request;
 use Fundator\User;
 use Fundator\Http\Requests;
+use Fundator\Http\Controllers;
 use Fundator\Http\Controllers\Controller;
 use GuzzleHttp;
 use Illuminate\Support\Facades\Config;
@@ -20,6 +22,7 @@ class VerificationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function requestVerificationCode(Request $request)
     {
         $statusCode = 200;
@@ -27,8 +30,8 @@ class VerificationController extends Controller
 
         try{
             if (isset($request->country_code) && isset($request->phone_number)) {
-                $user = User::where('contact_number_country_code', $request->country_code)->where('contact_number', $request->phone_number)->first();
 
+                $user = User::where('contact_number_country_code', $request->country_code)->where('contact_number', $request->phone_number)->first();
                 if (is_null($user)) {
                     throw new Exception('This number is already registered', 1);
                 }
@@ -56,17 +59,16 @@ class VerificationController extends Controller
         }catch (ClientErrorResponseException $exception) {
             $statusCode = 400;
             $response = ['error' => $exception->getResponse()->getBody(true)];
-        }catch(Exception $e){
+        }
+        catch(Exception $e){
             $statusCode = 400;
             $response = ['error' => $e->getMessage()];
         }
-
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
     /**
      * Request Verification Code
-
      * Requires to be Logged In
      *
      * @return \Illuminate\Http\Response
