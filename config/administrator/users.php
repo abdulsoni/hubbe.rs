@@ -44,6 +44,7 @@ return array(
      */
     'form_width' => 500,
 
+
     /**
      * The editable fields
      */

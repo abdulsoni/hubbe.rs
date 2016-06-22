@@ -221,8 +221,7 @@ return [
          */
 
 
-        willvincent\Rateable\RateableServiceProvider::class
-
+       
 
 
     ],
