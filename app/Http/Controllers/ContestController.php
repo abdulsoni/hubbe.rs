@@ -106,6 +106,7 @@ class ContestController extends Controller
 
             foreach($contestants as $contestant){
                 $creator = $contestant->user;
+                
                 $contest_data['contestants'][] = $creator;
             }
         }

@@ -360,6 +360,7 @@ class User extends Model implements AuthenticatableContract,
         return $pushAssociation->save();
     }
 
+
     /**
      * Bootstrap any application services.
      *

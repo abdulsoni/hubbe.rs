@@ -31,7 +31,10 @@ return array(
         ),
         'created_at' => array(
             'title' => 'Registration Date',
-        )
+        ),
+       'rating'=> array(
+            'title' => 'Rating'
+        ),
     ),
 
     /**
@@ -70,7 +73,10 @@ return array(
             'type' => 'relationship',
             'title' => 'All Roles',
             'name_field' => 'display_name'
-        )
+        ),
+        'rating'=> array(
+            'title' => 'Rating'
+        ),
     ),
 
     'actions' => array(

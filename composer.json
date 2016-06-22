@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
+        "willvincent/laravel-rateable": "~1.0",
         "laravel/framework": "5.1.*",
         "dingo/api": "1.0.*@dev",
         "tymon/jwt-auth": "0.5.*",

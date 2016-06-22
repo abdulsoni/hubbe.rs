@@ -214,7 +214,15 @@ return [
         /*
          * Push Notifications
          */
-        Davibennun\LaravelPushNotification\LaravelPushNotificationServiceProvider::class
+        Davibennun\LaravelPushNotification\LaravelPushNotificationServiceProvider::class,
+
+        /*
+         * Laravel Rateable
+         */
+
+
+        willvincent\Rateable\RateableServiceProvider::class
+
 
 
     ],
