@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <title>{!! config('app.site_name') !!}</title> -->
     <title>Fundator | Community of creators</title>
-
+    <link rel="stylesheet" href="{!! asset('css/app/bootstrap.min.css') !!}">
     <link rel="stylesheet" href="{!! asset('css/app/chosen.min.css') !!}">
     <link rel="stylesheet" href="{!! asset('css/app/app.css') !!}">
     <link rel="stylesheet" href="{!! asset('css/app/vendor.css') !!}">
+    <link rel="stylesheet" href="{!! asset('css/app/style.css') !!}">
+    <link rel="stylesheet" href="{!! asset('css/app/font-awesome.min.css') !!}">
+    
     <!-- <link rel="stylesheet" type="text/css" href="http://cloud.github.com/downloads/lafeber/world-flags-sprite/flags16.css" /> -->
 
     <meta name="renderer" content="webkit">

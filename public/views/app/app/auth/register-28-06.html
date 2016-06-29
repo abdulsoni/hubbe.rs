@@ -1,291 +1,192 @@
 <main class="main main-style1 register-main-style1">
-     
-        <section class="registration-box">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12 text-center">
-                        <h2>Hi {{user.name}}! Complete your Registration</h2>
-                        <p>Welcome to Fundathom Creative & innovative world!<br>just few more questions and two more minutes before you are given acces of Fundathom's Desk</p>
-                    </div>
+    <div class="row">
+        <!-- <fd-loader ng-if="!user" class="center"></fd-loader> -->
+
+        <div class="col-md-10 col-md-offset-1" ng-if="user">
+            <h2 class="clearfix">Complete your Registration</h2>
+            <div class="progress registn-progress">
+                {{percent=getProgress();''}}
+                <div class="progress-bar progress-bar-success done-formStep" role="progressbar" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': percent + '%'}">
+                    <div ng-if="percent < 96">{{percent | number:0}}% done</div>
+                    <div ng-if="percent >= 96">99% almost done</div>
+                </div>
+                {{remaingPercent=getProgressInverted();''}}
+                <div class="progress-bar progress-bar-remain" role="progressbar" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': remaingPercent + '%'}">
+                    <span ng-if="remaingPercent > 5">{{remaingPercent | number:0}}% left</span>
                 </div>
             </div>
-        </section>
-        
-        <div class="container">
-        <div class="row">
-        <div class="col-md-12" ng-if="user">
-            <div class="progress progress-common">
-                  {{percent=getProgress();''}}
-                  <div class="progress-bar" ole="progressbar" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': percent + '%'}">
-                    <span class="progress-circle">{{percent | number:0}}%</span>
-                  </div>
-            </div>
-            </div>
-            </div>
-</div>
-
             <div class="step-registration" ng-if="form.currentStep === 1">
-               
+                <h3 class="font-light paddingB5">Hi {{user.name}}!</h3>
+                <p>Welcome to Fundathom Creative & Innovative world!
+                    <br>Just few more questions and two more minutes before you are given acces to Fundathom’s Desk</p>
+                <h3 class="font-light">Please, First Select your Primary Interest in using Fundathom</h3>
+                <div class="primaryinterestList radiobox radioboxGrayBase">
+                    <label for="as-a-creator">
+                        <input type="radio" name="interest-using-fundathom" id="as-a-creator" value="creator" ng-model="data.selectedRole" ng-change="changeRole()">
+                        <i></i> <span>As a Contestant OR Creator</span> </label>
+                    <label for="As-an-Expert">
+                        <input type="radio" name="interest-using-fundathom" id="As-an-Expert" value="expert" ng-model="data.selectedRole" ng-change="changeRole()">
+                        <i></i> <span>As an Expert</span> </label>
+                    <label for="as-an-investor">
+                        <input type="radio" name="interest-using-fundathom" id="as-an-investor" value="investor" ng-model="data.selectedRole" ng-change="changeRole()">
+                        <i></i> <span>As an Investor</span> </label>
+                </div>
+                <div class="radiTrueContent">
+                    <div class="as-a-creator" ng-if="data.selectedRole === 'creator'">
+                        <h3 class="font-light paddingB10">By putting your ideas in Fundathom you understand that:</h3>
+                        <h4 class="font-light paddingB10">if your project got funded, your full commitment is required to answer to experts on time (COLLABORATION)</h4>
+                        <h4 class="font-light paddingB10">Your idea may be not selected by  experts & investors (HUMILITY)</h4>
+                        <h4 class="font-light">A lot of people (experts and investors) may get involved and take a risk for your idea to get through, be nice with them (RESPECT)</h4>
+                        <h3 class="font-light">Enjoy and be sure that all Fundathom team member are here for you</h3>
+                    </div>
+                    <div class="as-an-expert" ng-if="data.selectedRole === 'expert'">
+                        <h3 class="font-light paddingB10">By putting your expertise in Fundathom you understand that:</h3>
+                        <h4 class="font-light paddingB10">You may not be chosen for the project you want (HUMILITY). Be patient, many projects are coming.</h4>
+                        <h4 class="font-light paddingB10">You take a risk that the project fails, you may be paid only for 20-40% of what you have done. (RISK SHARING)</h4>
+                        <h4 class="font-light">You have access to insight information about the project and it should not be disclosed (CONFIDENTIALITY)</h4>
+                    </div>
+                    <div class="as-an-investor" ng-if="data.selectedRole === 'investor'">
+                        <h3 class="font-light paddingB10">By investing your money on project, you understand that:</h3>
+                        <h4 class="font-light paddingB10">You can earn up to 40% return but lose all (HIGH RISK, HIGH RETURN)</h4>
+                        <h4 class="font-light paddingB10">You may be the one to fund the project and have access but project creators and experts are the one working everyday (HUMILITY)</h4>
+                        <h4 class="font-light">You have access to insight information about the project and it should not be disclosed (CONFIDENTIALITY)</h4>
+                    </div>
+                </div>
 
-                
-                <section >
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12">
-                        <div class="three-box">
-                        <p class="three-boxhead">Please, First Select your primary Interst in using Fundathom</p>
-                        <div class="col-sm-4 text-center">
-                            <i class="fa fa-eye active-icon" aria-hidden="true"></i>
-                            <p class="radiobutton-content">
-                                <label for="as-a-creator" class="radio-design">
-                                <input type="radio" name="interest-using-fundathom" id="as-a-creator" value="creator" ng-model="data.selectedRole" ng-change="changeRole()">
-                                <span></span>As a Contestant OR Creator
-                              </label>
-                            </p>
-                        </div>
-                        <div class="col-sm-4 text-center">
-                            <i class="fa fa-eye" aria-hidden="true"></i>
-                            <p class="radiobutton-content">
-                            <label for="As-an-Expert" class="radio-design">
-                             <input type="radio" name="interest-using-fundathom" id="As-an-Expert" value="expert" ng-model="data.selectedRole" ng-change="changeRole()">
-                            <span></span>As an Expert 
-                          </label>
-                    </p>
-                        </div>
-                        <div class="col-sm-4 text-center">
-                            <i class="fa fa-eye" aria-hidden="true"></i>
-                            <p class="radiobutton-content">
-                            <label for="as-an-investor" class="radio-design">
-                             <input type="radio" name="interest-using-fundathom" id="as-an-investor" value="investor" ng-model="data.selectedRole" ng-change="changeRole()">
-                            <span></span>As An Invester
-                          </label>
-                    </p>
-                        </div>
-                        <div class="clearfix"></div>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </section>
-                <section>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-12 middle-section">
-                                <p>By putting your ideas in Fundathom you understand that:</p>
-                                <ul>
-                                    <li><img src="images/check.jpg"> If your project got funded, your full commitment is required to answer to experts on time (COLLABORATION)</li>
-                                    <li><img src="images/check.jpg">Your idea may be not selected by expert & Invester (HUMILITY)</li>
-                                    <li><img src="images/check.jpg">A lot of people (expert and investors) may get involved and take a risk for your idae to get through, be nice with them (RESPECT)</li>
-                                    <li><img src="images/check.jpg">Enjoy and eb sure that all Fundathom team member are here for you</li>
-                                </ul>
-                            </div>
-                            <div class="col-sm-5 text-right">
-                                <p class="onetothree">1 step of 3 completed </p>
-                            </div>
-                            <div class="col-sm-5" ng-if="data.selectedRole.length > 0">
-                                <button ng-click="changeFormStep(2)" class="btn btn-save">SAVE AND NEXT<span class="fa fa-angle-right fa-angle-rightcenter"></span></button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <div class="clearfix"></div>
+                <div class="marginT20" ng-if="data.selectedRole.length > 0">
+                    <button type="button" class="action next btn btn-info rgbBtn" ng-click="changeFormStep(2)">Save &amp; Next</button>
+                </div>
             </div>
-           <div class="step-registration" ng-if="form.currentStep === 2">
-   
-                   
-        <section class="formseection">
-            <div class="container">
-                    <div class="row">
-                    <p class="content-creator2">Let's make sure we have all the information to communicate smoothly & understand each other better</p>
-                        <form name="step1Form">
-                        <div class="col-sm-9 border-right1">
-                            <div class="row">
-                                <div class="col-sm-7">
-                                <form role="form">
-                                  <div class="form-group">
-                                    <label for="fname">First Name:</label>
-                                    <input type="text" placeholder="First Name" class="inputFieldGray form-control" style="width:100%" name="fname" required ng-model="data.fname">
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="lname">Last Name:</label>
-                                    <input type="text" placeholder="Last Name" class="inputFieldGray form-control" style="width:100%"  name="lname" required ng-model="data.lname">
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="last">My position is:</label>
-                                   <input type="text" placeholder="" class="inputFieldGray form-control" style="width:100%" name="fname" required ng-model="data.position">
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="last">I'm over 18 years old:</label>
-                                      <p class="radiobutton-content">
-                                                <label class="radio-design">
-                                            <input type="radio" name="iam-overEighteen" id="yes-overEighteen" value="yes" ng-model="data.ageGate">
-                                            <span></span>Yes
-                                          </label>
-
-                                          <label class="radio-design">
-                                           <input type="radio" name="iam-overEighteen" id="no-overEighteen" value="no" ng-model="data.ageGate">
-                                            <span></span>No
-                                          </label>
-                                      </p>
-                                  </div>
-                                   <script type="text/ng-template" id="countryTemplate.html">
-                                    <a>
-                                        <flag country="{{match.model.code}}" size="16"></flag>
-                                        <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
-                                    </a>
-                                </script>
-                                  <div class="form-group">
-                                    <label for="last">I am from:</label>
-                                    <div class="select-style">
-                                     <input type="text" ng-model="data.countryOrigin" uib-typeahead="country as country.name for country in countries | filter:$viewValue | limitTo:8" typeahead-template-url="countryTemplate.html" class="form-control inputFieldGray">
-                                     </div>
-                                  </div>
-
-                                  <div class="form-group">
-                                    <label for="last">I live in:</label>
-                                    <div class="select-style">
-                                     <input type="text" ng-model="data.countryResidence" uib-typeahead="country as country.name for country in countries | filter:$viewValue | limitTo:8" typeahead-template-url="countryTemplate.html" class="form-control inputFieldGray">
-                                    </div>
-                                  </div>
-                        </form>
-                                </div>
-                                <div class="col-sm-5">
-                                    <label>Upload your profile pic</label>
-                                       <div class="img-upload-style1">
-                                       
-                                        <div class="img-upload-show"  ng-class="{'dropable': dropable}">
-                                            <div class="img-upload-drag">
-                                                <p class="iud-dec">
-                                                    <span ng-if="!dropable">Drag</span>
-                                                    <span ng-if="dropable">Drop</span>
-                                                    Photo Here To Upload
-                                                </p>
-                                            </div>
-                                            <div class="img-upload-crop imgcrop-area">
-                                                <img-crop image="thumbnail" result-image="data.croppedThumbnail" area-type="circle"></img-crop>
-                                            </div>
-                                        </div>
-                                        <div class="img-upload-file">
-                                            <input id="fileInput" filestyle="" type="file" data-class-button="btn btn-primary" data-class-input="form-control" accept="image/*"
-                                            data-button-text="" data-icon-name="fa fa-upload" class="form-control iud-file-img">
-                                            <div class="iud-file-mod">
-                                                <input type="text"  ng-value="fileName" class="form-control iud-file-input" disabled>
-                                                <label class="iud-file-label" for="fileInput" tabindex="0">
-                                                    <span class="fa fa-cloud-upload" style="color:#acc354; font-size:24px;"></span>
-                                                        CHOOSE FILE
-                                                </label>
-                                            </div>
-                                            
-
-                                        </div>
-                                        <div class="img-upload-buttons">
-                                            <button class="btn btn-selectfile" ng-click="confirmImage()" ng-if="thumbnail !== null"><i class="fa fa-cloud-upload">Set Thumbnail</i></button>
-                                        </div>
-                                        <div class="image-error">{{data.imageError}}</div>
-                                        <div class="image-success" ng-if="imageSuccess !== 'null'">{{data.imageSuccess}}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <p class="onetothree">1 step of 3 completed </p>
-                                </div>
-                                <div class="col-sm-4 text-center">
-                                    <button class="btn btn-save btn-previous" ng-click="changeFormStep(1)"><span class="fa fa-angle-left fa-angle-leftcenter"></span> Previous</button>
-                                </div>
-                                <div class="col-sm-3 text-right">
-                                    <button class="btn btn-save" ng-disabled="step1Form.$invalid" ng-click="changeFormStep(3)" >SAVE AND NEXT<span class="fa fa-angle-right fa-angle-rightcenter"></span></button>
-                                </div>
-                            </div>
+            <div class="step-registration" ng-if="form.currentStep === 2">
+                <form name="step1Form">
+                    <h3 class="font-light">First step of all!</h3>
+                    <h4 class="font-light">Let’s make sure we have all the information to communicate smoothly & understand each other better</h4>
+                    <div class="step-2-left pull-left">
+                        <h3 class="font-light">My name is ...</h3>
+                        <div class="myName-wrap">
+                            <input type="text" placeholder="First Name" class="inputFieldGray" name="fname" required ng-model="data.fname">
+                            <input type="text" placeholder="Last Name" class="inputFieldGray second" name="lname" required ng-model="data.lname">
                         </div>
-                        </form>
-                        <div class="col-sm-3 regiitration-design">
-                                  <label>Or Register as:</label>
-                                    <p class="mt20"><i class="fa fa-angle-right" aria-hidden="true"></i>an Expert </p>
-                                    <p><i class="fa fa-angle-right" aria-hidden="true"></i>As an Investor </p>
+
+                        <h3 class="font-light">My position is ...</h3>
+                        <div class="myName-wrap">
+                            <input type="text" placeholder="" class="inputFieldGray full-width" name="fname" required ng-model="data.position">
+                        </div>
+
+                        <h3 class="font-light">I'm over 18 years old*</h3>
+                        <div class="primaryinterestList radiobox radioboxGrayBase">
+                            <label for="yes-overEighteen">
+                                <input type="radio" name="iam-overEighteen" id="yes-overEighteen" value="yes" ng-model="data.ageGate">
+                                <i></i> <span>Yes</span> </label>
+                            <label for="no-overEighteen">
+                                <input type="radio" name="iam-overEighteen" id="no-overEighteen" value="no" ng-model="data.ageGate">
+                                <i></i> <span>No</span> </label>
+                        </div>
+                        <script type="text/ng-template" id="countryTemplate.html">
+                            <a>
+                                <flag country="{{match.model.code}}" size="16"></flag>
+                                <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+                            </a>
+                        </script>
+                        <div>
+                            <h3 class="font-light">I am from</h3>
+                            <label class="select-style full-width">
+                                <!-- <select required ng-options="country as country for country in countries" ng-model="data.countryOrigin"></select> -->
+                                <input type="text" ng-model="data.countryOrigin" uib-typeahead="country as country.name for country in countries | filter:$viewValue | limitTo:8" typeahead-template-url="countryTemplate.html" class="form-control inputFieldGray">
+                            </label>
+                        </div>
+                        <div>
+                            <h3 class="font-light">I Live in</h3>
+                            <label class="select-style full-width">
+                                <input type="text" ng-model="data.countryResidence" uib-typeahead="country as country.name for country in countries | filter:$viewValue | limitTo:8" typeahead-template-url="countryTemplate.html" class="form-control inputFieldGray">
+                                <!-- <select required ng-options="country as country for country in countries" ng-model="data.countryResidence"></select> -->
+                            </label>
+                        </div>
+                        <div ng-if="data.countryResidence">
+                            <h3 class="font-light">City</h3>
+                            <div class="myName-wrap">
+                                <input type="text" placeholder="" class="inputFieldGray" name="city" required ng-model="data.city">
+                            </div>
                         </div>
                     </div>
+                    <div class="step-2-right pull-right">
+                        <div class="img-upload-style1">
+                            <h3 class="img-upload-title">Upload Your Profile Picture</h3>
+                            <div class="img-upload-show"  ng-class="{'dropable': dropable}">
+                                <div class="img-upload-drag">
+                                    <p class="iud-dec">
+                                        <span ng-if="!dropable">Drag</span>
+                                        <span ng-if="dropable">Drop</span>
+                                        Photo Here To Upload
+                                    </p>
+                                </div>
+                                <div class="img-upload-crop imgcrop-area">
+                                    <img-crop image="thumbnail" result-image="data.croppedThumbnail" area-type="circle"></img-crop>
+                                </div>
+                            </div>
+                            <div class="img-upload-file">
+                                <input id="fileInput" filestyle="" type="file" data-class-button="btn btn-primary" data-class-input="form-control" accept="image/*"
+                                data-button-text="" data-icon-name="fa fa-upload" class="form-control iud-file-img">
+                                <div class="iud-file-mod">
+                                    <input type="text"  ng-value="fileName" class="form-control iud-file-input" disabled>
+                                    <label class="iud-file-label" for="fileInput" tabindex="0">
+                                        <span class="icon icon-cloud-upload"></span>
+                                        Choose File
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="img-upload-buttons">
+                                <button class="btn btn-info" ng-click="confirmImage()" ng-if="thumbnail !== null">Set Thumbnail</button>
+                            </div>
+                            <div class="image-error">{{data.imageError}}</div>
+                            <div class="image-success" ng-if="imageSuccess !== 'null'">{{data.imageSuccess}}</div>
+                        </div>
+                    </div>
+                </form>
+                <div class="clearfix"></div>
+                <div class="marginT30" ng-if="data.selectedRole.length > 0">
+                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="changeFormStep(1)">Previous</button>
+                    <button type="button" class="action next btn btn-info rgbBtn" ng-disabled="step1Form.$invalid" ng-click="changeFormStep(3)">Save &amp; Next</button>
+                </div>
             </div>
-        </section>
-    
-</div>
-
             <div class="step-registration" ng-if="form.currentStep === 3">
-    <section class="formseection">
-    <div class="container">
-        <div class="row">
-            <p class="content-creator2">Let's make sure we can communicate well</p>
-            <div class="col-sm-9 border-right1">
-                <div class="row">
-                    <div class="col-sm-7">
-                       <form name="step2Form">
-                          <div class="form-group">
-                          
-                            <label for="name">My email address is:</label>
-                            <input type="text" placeholder="{{user.email}}" class="form-control " ng-model="data.email" required>
-                          </div>
-                          <div class="form-group">
-                          <div class="row">
-                          <div class="col-xs-12">
-                             <label for="last">My phone number is:</label>
-                          </div>
-                            <script type="text/ng-template" id="countryCodeTemplate.html">
-                                <a>
-                                    <flag country="{{match.model.country}}" size="16"></flag>
-                                    <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
-                                </a>
-                            </script>
-                          <div class="col-xs-3">
-                           <input type="text" ng-model="data.contactNumberCountryCode" uib-typeahead="code as code.code for code in countryCodes | filter:$viewValue | limitTo:8" typeahead-template-url="countryCodeTemplate.html" class="form-control">
-                            <small>Country code</small>
-                          </div>
-                           <div class="col-xs-9">
-                             <input type="text" placeholder="" class="form-control" ng-model="data.contactNumber" required>
-                             <small>Phone Number</small>
-                          </div>
-                          </div>
-                          </div>
-                        
-                          <div class="form-group">
-                            <label for="last">The best time to contact me as:</label>
-                            <div class="select-style">
-                             <select required ng-options="contactTime.name for contactTime in contactTimes" class="form-control" ng-model="data.contactTime"></select>
-                            </div>
-                          </div>
-                        </form>
-                    </div>
-                    <div class="col-sm-5">
-                        <div class="uload-photo">
-                            <img src="images/icon-user-default.png" alt="" ng-if="!user.thumbnail">
-                            <img ng-src="{{user.thumbnail}}" alt="" ng-if="user.thumbnail">
+                <form name="step2Form">
+                    <h3 class="font-light paddingB10">Let's make sure we can communicate well.</h3>
+                    <h3 class="font-light paddingB5">My email adress is</h3>
+                    <input type="text" placeholder="{{user.email}}" class="inputFieldGray" ng-model="data.email" required>
+                    <h3 class="font-light paddingTB5">My phone number is</h3>
+                    <script type="text/ng-template" id="countryCodeTemplate.html">
+                        <a>
+                            <flag country="{{match.model.country}}" size="16"></flag>
+                            <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+                        </a>
+                    </script>
+                    <div class="phone-number phone-number_verification">
+                        <div class="code">
+                            <input type="text" ng-model="data.contactNumberCountryCode" uib-typeahead="code as code.code for code in countryCodes | filter:$viewValue | limitTo:8" typeahead-template-url="countryCodeTemplate.html" class="form-control inputFieldGray">
+                            <span class="phone-number_label">Country Code</span>
+                        </div>
+                        <div class="number">
+                            <input type="text" placeholder="" class="inputFieldGray" ng-model="data.contactNumber" required>
+                            <span class="phone-number_label">Phone Number</span>
                         </div>
                     </div>
-                </div>
-                <div class="row mt20">
-                    <div class="col-sm-4">
-                        <p class="onetothree">3 step of 3 completed </p>
+                    <div>
+                        <h3 class="font-light paddingTB5">The best time to contact me is</h3>
+                        <label class="select-style">
+                            <select required ng-options="contactTime.name for contactTime in contactTimes" ng-model="data.contactTime"></select>
+                        </label>
                     </div>
-                    <div class="col-sm-4 text-center">
-                        <button class="btn btn-save btn-previous" ng-click="changeFormStep(2)"><span class="fa fa-angle-left fa-angle-leftcenter" ></span> Previous</button>
-                    </div>
-                    <div class="col-sm-4 text-center">
-                        
+                </form>
 
-                        <button type="button" class="action submit rgbBtn btn btn-save btn-submit" ng-disabled="step2Form.$invalid"  ng-if="totalSteps[data.selectedRole] === 3" ng-click="submitDetails()">Submit<span class="fa fa-check fa-angle-rightcenter fa-check11"></span></button>
-        <button type="button" class="action next btn btn-save rgbBtn" ng-disabled="step2Form.$invalid"  ng-if="totalSteps[data.selectedRole] > 3" ng-click="changeFormStep(4)">Save &amp; Next</button>
-                    </div>
+                <div class="clearfix"></div>
+                <div class="marginT30">
+                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="changeFormStep(2)">Previous</button>
+                    <button type="button" class="action submit btn btn-success rgbBtn" ng-disabled="step2Form.$invalid"  ng-if="totalSteps[data.selectedRole] === 3" ng-click="submitDetails()">Submit</button>
+                    <button type="button" class="action next btn btn-info rgbBtn" ng-disabled="step2Form.$invalid"  ng-if="totalSteps[data.selectedRole] > 3" ng-click="changeFormStep(4)">Save &amp; Next</button>
                 </div>
             </div>
-            
-            <div class="col-sm-3 regiitration-design">
-                <label>Or Register as:</label>
-                <p class="mt20"><i class="fa fa-angle-right" aria-hidden="true"></i>an Expert </p>
-                <p><i class="fa fa-angle-right" aria-hidden="true"></i>As an Investor </p>
-            </div>
-        </div>
-    </div>
-</section>
-
-</div>
             <div class="step-registration" ng-if="form.currentStep === 4 && data.selectedRole === 'investor'">
                 <form name="step3Form">
                     <h3 class="font-light paddingB10">Which type of projects are you more likely to invest in?</h3>
@@ -297,7 +198,27 @@
                                 <option>iOT Connect 3</option>
                             </select>
                         </label>
-                        
+                        <!-- <label class="select-style">
+                            <select>
+                                <option selected>Design...</option>
+                                <option>Design 2</option>
+                                <option>Design 3</option>
+                            </select>
+                        </label>
+                        <label class="select-style">
+                            <select>
+                                <option selected>Furniture...</option>
+                                <option>Furniture 2</option>
+                                <option>Furniture 3</option>
+                            </select>
+                        </label>
+                        <label class="select-style">
+                            <select>
+                                <option selected>Appliances...</option>
+                                <option>Appliances 2</option>
+                                <option>Appliances 3</option>
+                            </select>
+                        </label> -->
                     </div>
                     <h3 class="font-light">Yearly ammount to Invest</h3>
                     <h4 class="font-light">Select the yearly ammount  in USD that you would like to dedicate for investing in innovative ideas and projects?</h4>
