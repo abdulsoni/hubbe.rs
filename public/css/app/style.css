@@ -155,7 +155,7 @@
   color: #acc354!important;
 }
 .content-creator2{
-  font-size: 18px;
+  font-size: 22px;
   color: #333;
   text-align: center;
   padding: 25px;
@@ -387,6 +387,79 @@ width: 100%;
 }
 
 
+.boxz-img{
+  width: 140px;
+  height: 115px;
+  background-position: center;
+  text-align: center;
+  margin: 0px auto;
+}
+
+.one-iconcss{background: url(../../images/mind.png);}
+.one-iconcss.active{background: url(../../images/mind-active.png);}
+
+.two-iconcss{background: url(../../images/edu.png);}
+.two-iconcss.active{background: url(../../images/edu-active.png);}
+
+.three-iconcss{ background: url(../../images/money.png);}
+.three-iconcss.active{ background: url(../../images/money-active.png);}
 
 
+.regiitration-design p a{
+   color: #acc354;
+}
 
+.expertise-form {
+    background: none!important;
+}
+.expertise-list .expertise {
+     background: none!important;
+}
+.inptool-select{
+
+ 	right:-30px!important;
+
+ }
+/* .exclaiminate p{
+  position: absolute;
+  border: 1px solid #000;
+  z-index: 100;
+  white-space: nowrap;
+  background: #000;
+  font-size: 14px;
+  color: #fff;
+  padding: 3px 10px 4px 10px;
+  top: -40px;
+  display: none;
+ }
+ .exclaiminate p:before{
+  content: ' ';
+   width: 0; 
+     height: 0; 
+     border-left: 8px solid transparent;
+     border-right: 8px solid transparent;
+      border-top: 8px solid #000;
+      position: absolute;
+      top:30px;
+      left: 0px;
+ }
+ .exclaiminate span:hover p, .exclaiminate span.active p{
+  display: block!important;
+ }
+ .inp-tool{
+  width: 22px;
+  height: 22px;
+  font-size: 20px;
+  line-height: 22px;
+  text-align: center;
+  position: absolute;
+  right: 0px;
+  top: 12px;
+  cursor: pointer;
+  color: #888;
+ }
+ 
+ .exclaiminate{
+  position: relative;
+  padding-right: 28px;
+ } */
