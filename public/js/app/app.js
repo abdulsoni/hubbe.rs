@@ -2586,7 +2586,11 @@ function() {
         ;
         a.getPayload();
         t.$broadcast("stopLoading"), o.changeRole=function() {
-            o.form.totalSteps=o.totalSteps[o.data.selectedRole]
+            o.form.totalSteps=o.totalSteps[o.data.selectedRole];
+            if (o.data.selectedRole) {
+                $('[data-stepactive]').removeClass('active');
+                $('[data-stepactive="'+o.data.selectedRole+'"]').addClass('active');
+            }
         }
         , o.getProgress=function() {
             return Math.min(o.form.currentStep/o.form.totalSteps*100, 96)

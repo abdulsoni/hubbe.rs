@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <title>{!! config('app.site_name') !!}</title> -->
     <title>Fundator | Community of creators</title>
-
+    <link rel="stylesheet" href="{!! asset('css/app/bootstrap.min.css') !!}">
     <link rel="stylesheet" href="{!! asset('css/app/chosen.min.css') !!}">
     <link rel="stylesheet" href="{!! asset('css/app/app.css') !!}">
     <link rel="stylesheet" href="{!! asset('css/app/vendor.css') !!}">
+    <link rel="stylesheet" href="{!! asset('css/app/style.css') !!}">
+    <link rel="stylesheet" href="{!! asset('css/app/font-awesome.min.css') !!}">
+    
     <!-- <link rel="stylesheet" type="text/css" href="http://cloud.github.com/downloads/lafeber/world-flags-sprite/flags16.css" /> -->
 
     <meta name="renderer" content="webkit">
@@ -65,19 +68,56 @@
     <script src="{!! asset('js/app/jquery.min.js') !!}"></script>
     <script src="{!! asset('js/app/chosen.jquery.min.js') !!}"></script>
     <script src="{!! asset('js/app/vendor.js') !!}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular-messages.min.js"></script> 
     <script src="{!! asset('js/app/app.js') !!}"></script>
     <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css">
     <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2-bootstrap.css">
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.min.js"></script>
 
+    <!-- Latest compiled and minified JavaScript -->
     <script type="text/javascript">
     //Select2
     $(function(){  
       var select = $('.selectui').select2({
-        placeholder:'Innovation'
-      });
-    });        
+            placeholder:'Innovation'
+        });
+    });      
     </script>
+    <script type="text/javascript">
+    $(function(){  
+        $(document).on('keyup blur change','[data-validate]', function(){
+            var getval = $(this).val();
+           var getminl = $(this).data('minlength');
+            var getmaxl = $(this).data('maxlength');
+            var getInValue = $(this).data('validate');
+            if (getval.length<=getminl-1) {
+                $('[data-alertshow="'+getInValue+'"]').addClass('show2');
+                if (getval.length<=0) {
+                    $('[data-alertshow="'+getInValue+'"]').removeClass('show2');
+                }   
+            }
+            else{
+                $('[data-alertshow="'+getInValue+'"]').removeClass('show2');
+
+                if (getval.length>=getmaxl) {
+                    $('[data-alertshow="'+getInValue+'"]').addClass('show3');
+                }
+                else{   $('[data-alertshow="'+getInValue+'"]').removeClass('show3');}
+            } 
+        });
+
+
+        $(document).on('mouseenter','.btn-save', function(){
+            $('.onnext-msg2').show();
+        });
+
+        $(document).on('mouseout','.btn-save', function(){
+            $('.onnext-msg2').hide();
+        });
+
+    });
+    </script>
+
    
 <style type="text/css">
 .ui-select-container{
@@ -93,6 +133,72 @@
   margin: 5px 0px!important;
 }
 
+.exclaiminate{
+        position: relative;
+        padding-right: 28px;
+    }
+    .inp-tool{
+        width: 22px;
+        height: 22px;
+        font-size: 20px;
+        line-height: 22px;
+        text-align: center;
+        position: absolute;
+        right: 0px;
+        top: 12px;
+        cursor: pointer;
+        color: #888;
+    }
+    .tooltip-inner{
+        max-width: 300px;
+    }
+    .exclaiminate .msg-alert{
+        width: 300px;
+        position: absolute;
+        border: 1px solid #000;
+        z-index: 100;
+        white-space: normal;
+        background: #000;
+        font-size: 14px;
+        color: #fff;
+        padding: 3px 10px 4px 10px;
+        bottom: 20px;
+        display: none;
+}
+
+/*display: too short*/
+.show2 .msg-alert.msg2{ display: block;}
+/*too long*/
+.show3 .msg-alert.msg3{ display: block;}
+
+
+.exclaiminate p:before{
+    content: ' ';
+    width: 0; 
+  height: 0; 
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #000;
+  position: absolute;
+  bottom:-9px;
+  left: 0px;
+}
+.exclaiminate span:hover .msg-alert.msg1{
+    display: block;
+}
+
+.exclaiminate span.show2:hover .msg-alert.msg1,
+.exclaiminate span.show3:hover .msg-alert.msg1{
+    display: none;
+}
+.inptool{
+    right:-22px!important;
+    top:-5px!important;
+}
+.inptool1{
+    right: -25px!important;
+    top: -20px!important;
+}
 
 
 </style>
