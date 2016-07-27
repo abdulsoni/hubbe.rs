@@ -209,5 +209,10 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
      * @author Xipetech
      */
     $api->get('creationList/', 'Fundator\Http\Controllers\UserController@creationList');
+
+    /*
+     * Create Review
+     */
+    $api->post('review/create/', 'Fundator\Http\Controllers\ReviewController@store');
     
 });

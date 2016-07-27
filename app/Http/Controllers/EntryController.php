@@ -30,10 +30,8 @@ class EntryController extends Controller
     {
         $statusCode = 200;
         $response = [];
-
         try{
             $entries = Entry::all();
-
             $i = 0;
             foreach($entries as $entry)
             {
