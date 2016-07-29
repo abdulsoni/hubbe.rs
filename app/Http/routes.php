@@ -214,5 +214,10 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
      * Create Review
      */
     $api->post('review/create/', 'Fundator\Http\Controllers\ReviewController@store');
+
+    /*
+     * Feed
+     */
+    $api->get('feed/show/', 'Fundator\Http\Controllers\FeedCtrl@index');
     
 });

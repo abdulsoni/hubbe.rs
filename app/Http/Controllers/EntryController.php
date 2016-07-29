@@ -38,7 +38,6 @@ class EntryController extends Controller
                 $i++;
                 $entry_data = $entry->getAttributes();
                 $entry_data['rating'] = $entry->getAverageRating();
-
                 $response[] = $entry_data;
             }
         } catch (Exception $e) {

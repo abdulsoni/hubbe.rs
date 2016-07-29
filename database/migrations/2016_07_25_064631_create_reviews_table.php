@@ -24,17 +24,7 @@ class CreateReviewsTable extends Migration
             $table->integer('rate4');
             $table->text('comment');
 
-            //ALTER TABLE reviews ADD rec_user_id INT AFTER id;
-            //ALTER TABLE reviews ADD rec_role_id INT AFTER rec_user_id;
-            //ALTER TABLE reviews ADD sender_user_id INT AFTER rec_role_id;
-            //ALTER TABLE reviews ADD rate1 INT AFTER sender_user_id;
-            //ALTER TABLE reviews ADD rate2 INT AFTER rate1;
-            //ALTER TABLE reviews ADD rate3 INT AFTER rate2;
-            //ALTER TABLE reviews ADD rate4 INT AFTER rate3;
-            //ALTER TABLE reviews ADD comment TEXT AFTER rate4;
-
             $table->boolean('visible')->default(true);
-
 
             $table->timestamps();
         });

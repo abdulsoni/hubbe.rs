@@ -17,7 +17,8 @@
         "trexology/pointable": "^1.0",
         "efriandika/laravel-settings": "^1.2",
         "doctrine/dbal": "^2.5.4",
-        "davibennun/laravel-push-notification": "dev-laravel5"
+        "davibennun/laravel-push-notification": "dev-laravel5",
+        "get-stream/stream-laravel": "~2.2.6"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
