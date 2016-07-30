@@ -30,17 +30,14 @@ class EntryController extends Controller
     {
         $statusCode = 200;
         $response = [];
-
         try{
             $entries = Entry::all();
-
             $i = 0;
             foreach($entries as $entry)
             {
                 $i++;
                 $entry_data = $entry->getAttributes();
                 $entry_data['rating'] = $entry->getAverageRating();
-
                 $response[] = $entry_data;
             }
         } catch (Exception $e) {
