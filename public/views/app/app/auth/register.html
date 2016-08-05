@@ -52,6 +52,122 @@
                         <h4 class="font-light">You have access to insight information about the project and it should not be disclosed (CONFIDENTIALITY)</h4>
                     </div>
                 </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="step-registration" ng-if="form.currentStep === 2">
+        <section class="formseection">
+            <div class="container">
+                <div class="row">
+                    <p class="content-creator2">Let's make sure we have all the information to communicate smoothly & understand each other better</p>
+                    <form name="step1Form1">
+                        <div class="col-sm-9 border-right1">
+                            <div class="row">
+                                <div class="col-sm-7">
+                                    <form role="form">
+                                        <div class="form-group">
+                                            <label>First Name:</label>
+                                            <div class="exclaiminate">
+                                                <input type="text" placeholder="First Name" class="inputFieldGray form-control" style="width:100%" name="fname" ng-model="firstName"  data-validate="first" data-minlength="3" data-maxlength="20" required id="testing">
+
+                                                <span class="inp-tool" data-alertshow="first">
+                                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                                    <p class="msg-alert msg1">Here you put your real first & middle name (if you have one). As it is a business-related website, remember that it should be accurate and use your real identity</p>
+                                                    <p class="msg-alert msg2">Look like your name is too short. Pls check again</p>
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="lname">Last Name:</label>
+                                            <div class="exclaiminate">
+
+                                                <input type="text" placeholder="Last Name" class="inputFieldGray form-control" style="width:100%"  name="lname" required ng-model="data.lname" data-validate="two" data-minlength="3" data-maxlength="20" required >
+
+                                                <span class="inp-tool" data-alertshow="two">
+                                                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                                    <p class="msg-alert msg1">Same just write your real family name</p>
+                                                    <p class="msg-alert msg2">Look like your name is too short. Pls check again</p>
+                                              </span>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="last">My position is:</label>
+                                            <div class="exclaiminate">
+                                                <input type="text" placeholder="" class="inputFieldGray form-control" style="width:100%" name="fname" required ng-model="data.position" data-validate="three" data-minlength="3" data-maxlength="20" required >
+
+                                                <span class="inp-tool" data-alertshow="three">
+                                                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                                    <p class="msg-alert msg1">Position gives an indication of what you do. If you register through linked, your last position will be used. Choose the position that fits best your profile</p>
+                                                    <p class="msg-alert msg2">Look like your position is too short. Pls check again</p>
+                                              </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="last">I'm over 18 years old:</label>
+
+                                            <p class="radiobutton-content">
+                                            <div class="exclaiminate">
+                                                <label class="radio-design">
+                                                    <input type="radio" name="iam-overEighteen" id="yes-overEighteen" value="yes" ng-model="data.ageGate">
+                                                    <span></span>Yes
+                                                </label>
+
+                                                <label class="radio-design">
+                                                    <input type="radio" name="iam-overEighteen" id="no-overEighteen" value="no" ng-model="data.ageGate">
+                                                    <span></span>No
+                                                </label>
+
+
+                                                <span class="inp-tool">
+                                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                                    <p class="msg-alert msg1">"I have the legal majority in my country” (:
+If you choose no, no worry. You can still participate but you will need to have your parents or someone having the right to take decisions on your behalf. Write us an email legal@fundator.co to get more information</p>
+                                                </span>
+                                            </div>
+                                            </p>
+                                        </div>
+                                        <script type="text/ng-template" id="countryTemplate.html">
+                                            <a>
+                                            <flag country="{{match.model.code}}" size="16"></flag>
+                                            <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+                                            </a>
+                                        </script>
+                                        <div class="form-group">
+                                            <label for="last">I am from:</label>
+                                            <div class="exclaiminate">
+                                                <div class="select-style">
+                                                    <input type="text" ng-model="data.countryOrigin" uib-typeahead="country as country.name for country in countries | filter:$viewValue | limitTo:8" typeahead-template-url="countryTemplate.html" class="form-control inputFieldGray" data-validate="four" data-minlength="4" data-maxlength="40">
+                                                    <span class="inp-tool inptool-select" data-alertshow="four">
+                                                        <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                                        <p class="msg-alert msg1">That is your country of nationality. Either born there or not. If you have more than 1, feel free to choose the one our prefer</p>
+                                                        <p class="msg-alert msg2">Please pick up one as supposedly everyone should have one. If your country is not mentioned, send us email legal@fundator.co</p>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="last">I live in:</label>
+                                            <div class="exclaiminate">
+                                                <div class="select-style">
+                                                    <input type="text" ng-model="data.countryResidence" uib-typeahead="country as country.name for country in countries | filter:$viewValue | limitTo:8" typeahead-template-url="countryTemplate.html" class="form-control inputFieldGray">
+                                                    <span class="inp-tool  inptool-select" data-alertshow="five">
+                                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                                        <p class="msg-alert msg1">Great things of today’s world. Being from one country and living in another. Same as me, from France but living in between China,  South Korea and Hong Kong for few years. Letting people know can be great for future meetings</p>
+
+                                                  </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+
+                                <div class="col-sm-5">
 
                 <div class="clearfix"></div>
                 <div class="marginT20" ng-if="data.selectedRole.length > 0">
