@@ -1,790 +1,436 @@
 <main class="main main-style1 register-main-style1">
+    <div class="row">
+        <!-- <fd-loader ng-if="!user" class="center"></fd-loader> -->
 
-    <section class="registration-box">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 text-center">
-                    <h2>Hi {{user.name}}! Complete your Registration</h2>
-                    <div ng-if="form.currentStep > 1">
-                        <p style="color:#333; font-size:18px;">
-                            <strong>Register as an {{data.selectedRole}}</strong>
-                        </p>
-                    </div>
-                    <div ng-if="form.currentStep === 1">
-                        <p>Welcome to Fundathom Creative & innovative world!<br>just few more questions and two more minutes before you are given acces of Fundathom's Desk</p>
-                    </div>
+        <div class="col-md-10 col-md-offset-1" ng-if="user">
+            <h2 class="clearfix">Complete your Registration</h2>
+            <div class="progress registn-progress">
+                {{percent=getProgress();''}}
+                <div class="progress-bar progress-bar-success done-formStep" role="progressbar" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': percent + '%'}">
+                    <div ng-if="percent < 96">{{percent | number:0}}% done</div>
+                    <div ng-if="percent >= 96">99% almost done</div>
+                </div>
+                {{remaingPercent=getProgressInverted();''}}
+                <div class="progress-bar progress-bar-remain" role="progressbar" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': remaingPercent + '%'}">
+                    <span ng-if="remaingPercent > 5">{{remaingPercent | number:0}}% left</span>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12" ng-if="user">
-                <div class="progress progress-common">
-                    {{percent = getProgress();''}}
-                    <div class="progress-bar" ole="progressbar" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': percent + '%'}">
-                        <span class="progress-circle">{{percent| number:0}}%</span>
+            <div class="step-registration" ng-if="form.currentStep === 1">
+                <h3 class="font-light paddingB5">Hi {{user.name}}!</h3>
+                <p>Welcome to Fundathom Creative & Innovative world!
+                    <br>Just few more questions and two more minutes before you are given acces to Fundathom’s Desk</p>
+                <h3 class="font-light">Please, First Select your Primary Interest in using Fundathom</h3>
+                <div class="primaryinterestList radiobox radioboxGrayBase">
+                    <label for="as-a-creator">
+                        <input type="radio" name="interest-using-fundathom" id="as-a-creator" value="creator" ng-model="data.selectedRole" ng-change="changeRole()">
+                        <i></i> <span>As a Contestant OR Creator</span> </label>
+                    <label for="As-an-Expert">
+                        <input type="radio" name="interest-using-fundathom" id="As-an-Expert" value="expert" ng-model="data.selectedRole" ng-change="changeRole()">
+                        <i></i> <span>As an Expert</span> </label>
+                    <label for="as-an-investor">
+                        <input type="radio" name="interest-using-fundathom" id="as-an-investor" value="investor" ng-model="data.selectedRole" ng-change="changeRole()">
+                        <i></i> <span>As an Investor</span> </label>
+                </div>
+                <div class="radiTrueContent">
+                    <div class="as-a-creator" ng-if="data.selectedRole === 'creator'">
+                        <h3 class="font-light paddingB10">By putting your ideas in Fundathom you understand that:</h3>
+                        <h4 class="font-light paddingB10">if your project got funded, your full commitment is required to answer to experts on time (COLLABORATION)</h4>
+                        <h4 class="font-light paddingB10">Your idea may be not selected by  experts & investors (HUMILITY)</h4>
+                        <h4 class="font-light">A lot of people (experts and investors) may get involved and take a risk for your idea to get through, be nice with them (RESPECT)</h4>
+                        <h3 class="font-light">Enjoy and be sure that all Fundathom team member are here for you</h3>
+                    </div>
+                    <div class="as-an-expert" ng-if="data.selectedRole === 'expert'">
+                        <h3 class="font-light paddingB10">By putting your expertise in Fundathom you understand that:</h3>
+                        <h4 class="font-light paddingB10">You may not be chosen for the project you want (HUMILITY). Be patient, many projects are coming.</h4>
+                        <h4 class="font-light paddingB10">You take a risk that the project fails, you may be paid only for 20-40% of what you have done. (RISK SHARING)</h4>
+                        <h4 class="font-light">You have access to insight information about the project and it should not be disclosed (CONFIDENTIALITY)</h4>
+                    </div>
+                    <div class="as-an-investor" ng-if="data.selectedRole === 'investor'">
+                        <h3 class="font-light paddingB10">By investing your money on project, you understand that:</h3>
+                        <h4 class="font-light paddingB10">You can earn up to 40% return but lose all (HIGH RISK, HIGH RETURN)</h4>
+                        <h4 class="font-light paddingB10">You may be the one to fund the project and have access but project creators and experts are the one working everyday (HUMILITY)</h4>
+                        <h4 class="font-light">You have access to insight information about the project and it should not be disclosed (CONFIDENTIALITY)</h4>
                     </div>
                 </div>
+
+                <div class="clearfix"></div>
+                <div class="marginT20" ng-if="data.selectedRole.length > 0">
+                    <button type="button" class="action next btn btn-info rgbBtn" ng-click="changeFormStep(2)">Save &amp; Next</button>
+                </div>
             </div>
-        </div>
-    </div>
+            <div class="step-registration" ng-if="form.currentStep === 2">
+                <form name="step1Form">
+                    <h3 class="font-light">First step of all!</h3>
+                    <h4 class="font-light">Let’s make sure we have all the information to communicate smoothly & understand each other better</h4>
+                    <div class="step-2-left pull-left">
+                        <h3 class="font-light">My name is ...</h3>
+                        <div class="myName-wrap">
+                            <input type="text" placeholder="First Name" class="inputFieldGray" name="fname" required ng-model="data.fname">
+                            <input type="text" placeholder="Last Name" class="inputFieldGray second" name="lname" required ng-model="data.lname">
+                        </div>
 
-    <div class="step-registration" ng-if="form.currentStep === 1">
+                        <h3 class="font-light">My position is ...</h3>
+                        <div class="myName-wrap">
+                            <input type="text" placeholder="" class="inputFieldGray full-width" name="fname" required ng-model="data.position">
+                        </div>
 
-
-
-        <section >
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="three-box">
-                            <p class="three-boxhead">Please, First Select your primary Interst in using Fundathom</p>
-                            <div class="col-sm-4 text-center">
-                                <label for="as-a-creator" class="boxz-img one-iconcss active" data-stepactive="creator"></label>
-                                <p class="radiobutton-content">
-                                    <label for="as-a-creator" class="radio-design">
-                                        <input type="radio" name="interest-using-fundathom" id="as-a-creator" value="creator" ng-model="data.selectedRole" ng-change="changeRole()">
-                                        <span></span>As a Contestant OR Creator
+                        <h3 class="font-light">I'm over 18 years old*</h3>
+                        <div class="primaryinterestList radiobox radioboxGrayBase">
+                            <label for="yes-overEighteen">
+                                <input type="radio" name="iam-overEighteen" id="yes-overEighteen" value="yes" ng-model="data.ageGate">
+                                <i></i> <span>Yes</span> </label>
+                            <label for="no-overEighteen">
+                                <input type="radio" name="iam-overEighteen" id="no-overEighteen" value="no" ng-model="data.ageGate">
+                                <i></i> <span>No</span> </label>
+                        </div>
+                        <script type="text/ng-template" id="countryTemplate.html">
+                            <a>
+                                <flag country="{{match.model.code}}" size="16"></flag>
+                                <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+                            </a>
+                        </script>
+                        <div>
+                            <h3 class="font-light">I am from</h3>
+                            <label class="select-style full-width">
+                                <!-- <select required ng-options="country as country for country in countries" ng-model="data.countryOrigin"></select> -->
+                                <input type="text" ng-model="data.countryOrigin" uib-typeahead="country as country.name for country in countries | filter:$viewValue | limitTo:8" typeahead-template-url="countryTemplate.html" class="form-control inputFieldGray">
+                            </label>
+                        </div>
+                        <div>
+                            <h3 class="font-light">I Live in</h3>
+                            <label class="select-style full-width">
+                                <input type="text" ng-model="data.countryResidence" uib-typeahead="country as country.name for country in countries | filter:$viewValue | limitTo:8" typeahead-template-url="countryTemplate.html" class="form-control inputFieldGray">
+                                <!-- <select required ng-options="country as country for country in countries" ng-model="data.countryResidence"></select> -->
+                            </label>
+                        </div>
+                        <div ng-if="data.countryResidence">
+                            <h3 class="font-light">City</h3>
+                            <div class="myName-wrap">
+                                <input type="text" placeholder="" class="inputFieldGray" name="city" required ng-model="data.city">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-2-right pull-right">
+                        <div class="img-upload-style1">
+                            <h3 class="img-upload-title">Upload Your Profile Picture</h3>
+                            <div class="img-upload-show"  ng-class="{'dropable': dropable}">
+                                <div class="img-upload-drag">
+                                    <p class="iud-dec">
+                                        <span ng-if="!dropable">Drag</span>
+                                        <span ng-if="dropable">Drop</span>
+                                        Photo Here To Upload
+                                    </p>
+                                </div>
+                                <div class="img-upload-crop imgcrop-area">
+                                    <img-crop image="thumbnail" result-image="data.croppedThumbnail" area-type="circle"></img-crop>
+                                </div>
+                            </div>
+                            <div class="img-upload-file">
+                                <input id="fileInput" filestyle="" type="file" data-class-button="btn btn-primary" data-class-input="form-control" accept="image/*"
+                                data-button-text="" data-icon-name="fa fa-upload" class="form-control iud-file-img">
+                                <div class="iud-file-mod">
+                                    <input type="text"  ng-value="fileName" class="form-control iud-file-input" disabled>
+                                    <label class="iud-file-label" for="fileInput" tabindex="0">
+                                        <span class="icon icon-cloud-upload"></span>
+                                        Choose File
                                     </label>
-                                </p>
-                            </div>
-                            <div class="col-sm-4 text-center">
-                                <label for="As-an-Expert" class="boxz-img two-iconcss" data-stepactive="expert"></label>
-                                <p class="radiobutton-content">
-                                    <label for="As-an-Expert" class="radio-design">
-                                        <input type="radio" name="interest-using-fundathom" id="As-an-Expert" value="expert" ng-model="data.selectedRole" ng-change="changeRole()">
-                                        <span></span>As an Expert 
-                                    </label>
-                                </p>
-                            </div>
-                            <div class="col-sm-4 text-center">
-                                <label for="as-an-investor" class="boxz-img three-iconcss" data-stepactive="investor"></label>
-                                <p class="radiobutton-content">
-                                    <label for="as-an-investor" class="radio-design">
-                                        <input type="radio" name="interest-using-fundathom" id="as-an-investor" value="investor" ng-model="data.selectedRole" ng-change="changeRole()">
-                                        <span></span>As An Invester
-                                    </label>
-                                </p>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12 middle-section">
-                        <p>By putting your ideas in Fundathom you understand that:</p>
-                        <ul>
-                            <li><img src="images/check.jpg"> If your project got funded, your full commitment is required to answer to experts on time (COLLABORATION)</li>
-                            <li><img src="images/check.jpg">Your idea may be not selected by expert & Invester (HUMILITY)</li>
-                            <li><img src="images/check.jpg">A lot of people (expert and investors) may get involved and take a risk for your idae to get through, be nice with them (RESPECT)</li>
-                            <li><img src="images/check.jpg">Enjoy and eb sure that all Fundathom team member are here for you</li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-5 text-right">
-                        <p class="onetothree">1 step of 4 completed </p>
-                    </div>
-                    <div class="col-sm-5" ng-if="data.selectedRole.length > 0">
-                        <button ng-click="changeFormStep(2)" class="btn btn-save">SAVE AND NEXT<span class="fa fa-angle-right fa-angle-rightcenter"></span></button>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-    
-    <div class="step-registration" ng-if="form.currentStep === 2">     
-        <section class="formseection">
-            <div class="container">
-                <div class="row">
-                    <p class="content-creator2">Let's make sure we have all the information to communicate smoothly & understand each other better</p>
-                    <form name="step1Form1">
-                        <div class="col-sm-9 border-right1">
-                            <div class="row">
-                                <div class="col-sm-7">
-                                    <form role="form">
-                                        <div class="form-group">
-                                            <label>First Name:</label>
-                                            <div class="exclaiminate">
-                                                <input type="text" placeholder="First Name" class="inputFieldGray form-control" style="width:100%" name="fname" ng-model="firstName"  data-validate="first" data-minlength="3" data-maxlength="20" required id="testing">
-                                                
-                                                <span class="inp-tool" data-alertshow="first">
-                                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                                                    <p class="msg-alert msg1">Here you put your real first & middle name (if you have one). As it is a business-related website, remember that it should be accurate and use your real identity</p>
-                                                    <p class="msg-alert msg2">Look like your name is too short. Pls check again</p>
-                                                </span>
-
-                                            </div>
-
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="lname">Last Name:</label>
-                                            <div class="exclaiminate">
-                                                <input type="text" placeholder="Last Name" class="inputFieldGray form-control" style="width:100%"  name="lname" required ng-model="data.lname" data-validate="two" data-minlength="3" data-maxlength="20" required >
-                                                
-                                                <span class="inp-tool" data-alertshow="two">
-                                                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                                                    <p class="msg-alert msg1">Same just write your real family name</p>
-                                                    <p class="msg-alert msg2">Look like your name is too short. Pls check again</p>
-                                              </span>
-
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="last">My position is:</label>
-                                            <div class="exclaiminate">
-                                                <input type="text" placeholder="" class="inputFieldGray form-control" style="width:100%" name="fname" required ng-model="data.position" data-validate="three" data-minlength="3" data-maxlength="20" required >
-                                                
-                                                <span class="inp-tool" data-alertshow="three">
-                                                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                                                    <p class="msg-alert msg1">Position gives an indication of what you do. If you register through linked, your last position will be used. Choose the position that fits best your profile</p>
-                                                    <p class="msg-alert msg2">Look like your position is too short. Pls check again</p>
-                                              </span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="last">I'm over 18 years old:</label>
-
-                                            <p class="radiobutton-content">
-                                            <div class="exclaiminate">
-                                                <label class="radio-design">
-                                                    <input type="radio" name="iam-overEighteen" id="yes-overEighteen" value="yes" ng-model="data.ageGate">
-                                                    <span></span>Yes
-                                                </label>
-
-                                                <label class="radio-design">
-                                                    <input type="radio" name="iam-overEighteen" id="no-overEighteen" value="no" ng-model="data.ageGate">
-                                                    <span></span>No
-                                                </label>
-
-
-                                                <span class="inp-tool">
-                                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                                                    <p class="msg-alert msg1">"I have the legal majority in my country” (:
-If you choose no, no worry. You can still participate but you will need to have your parents or someone having the right to take decisions on your behalf. Write us an email legal@fundator.co to get more information</p>
-                                                </span>
-                                            </div>
-                                            </p>
-                                        </div>
-                                        <script type="text/ng-template" id="countryTemplate.html">
-                                            <a>
-                                            <flag country="{{match.model.code}}" size="16"></flag>
-                                            <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
-                                            </a>
-                                        </script>
-                                        <div class="form-group">
-                                            <label for="last">I am from:</label>
-                                            <div class="exclaiminate">
-                                                <div class="select-style">
-                                                    <input type="text" ng-model="data.countryOrigin" uib-typeahead="country as country.name for country in countries | filter:$viewValue | limitTo:8" typeahead-template-url="countryTemplate.html" class="form-control inputFieldGray" data-validate="four" data-minlength="4" data-maxlength="40">
-                                                    <span class="inp-tool inptool-select" data-alertshow="four">
-                                                        <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                                                        <p class="msg-alert msg1">That is your country of nationality. Either born there or not. If you have more than 1, feel free to choose the one our prefer</p>
-                                                        <p class="msg-alert msg2">Please pick up one as supposedly everyone should have one. If your country is not mentioned, send us email legal@fundator.co</p>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="last">I live in:</label>
-                                            <div class="exclaiminate">
-                                                <div class="select-style">
-                                                    <input type="text" ng-model="data.countryResidence" uib-typeahead="country as country.name for country in countries | filter:$viewValue | limitTo:8" typeahead-template-url="countryTemplate.html" class="form-control inputFieldGray">
-                                                    <span class="inp-tool  inptool-select" data-alertshow="five">
-                                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                                                        <p class="msg-alert msg1">Great things of today’s world. Being from one country and living in another. Same as me, from France but living in between China,  South Korea and Hong Kong for few years. Letting people know can be great for future meetings</p>
-                                                        
-                                                  </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-
-
-                                <div class="col-sm-5">
-
-                                        <label>Upload your profile pic
-                                        </label>
-                                   
-                                    <div class="img-upload-style1">
-
-                                        <div class="img-upload-show"  ng-class="{'dropable': dropable}">
-                                            <div class="img-upload-drag">
-                                                <p class="iud-dec">
-                                                    <span ng-if="!dropable">Drag</span>
-                                                    <span ng-if="dropable">Drop</span>
-                                                    Photo Here To Upload
-                                                </p>
-                                            </div>
-                                            <div class="img-upload-crop imgcrop-area">
-                                                <img-crop image="thumbnail" result-image="data.croppedThumbnail" area-type="circle"></img-crop>
-                                            </div>
-                                        </div>
-                                        <div class="img-upload-file">
-                                            <input id="fileInput" filestyle="" type="file" data-class-button="btn btn-primary" data-class-input="form-control" accept="image/*"
-                                                   data-button-text="" data-icon-name="fa fa-upload" class="form-control iud-file-img" data-validate="upload"  data-minlength="1" data-maxlength="10000000">
-                                            <div class="exclaiminate">
-                                                <span class="inp-tool inptool1" data-alertshow="upload" style="margin-top:-12px;">
-                                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                                                    <p class="msg-alert msg1">Take your best shot of yourself and choose how you want to be seen. Use an avatar if you think you are too special for us If you do not choose one , we will choose for you</p>
-                                                    <p class="msg-alert msg2 onnext-msg2">You have no selected any avatar, we will choose for you or come back to here later on</p>
-                                                </span>
-                                            </div>
-
-                                            <div class="iud-file-mod">
-                                                <input type="text"  ng-value="fileName" class="form-control iud-file-input" disabled>
-                                                <label class="iud-file-label" for="fileInput" tabindex="0">
-                                                    <span class="fa fa-cloud-upload" style="color:#acc354; font-size:24px;"></span>
-                                                    CHOOSE FILE
-                                                </label>
-
-                                            </div>
-
-                                        </div>
-                                        <div class="img-upload-buttons">
-                                            <button class="btn btn-selectfile" ng-click="confirmImage()" ng-if="thumbnail !== null"><i class="fa fa-cloud-upload">Set Thumbnail</i></button>
-                                        </div>
-                                        <div class="image-error">{{data.imageError}}</div>
-                                        <div class="image-success" ng-if="imageSuccess !== 'null'">{{data.imageSuccess}}</div>
-                                        
-                                    </div>
-                                    
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <p class="onetothree">2 step of 4 completed </p>
-                                </div>
-                                <div class="col-sm-4 text-center">
-                                    <button class="btn btn-save btn-previous" ng-click="changeFormStep(1)"><span class="fa fa-angle-left fa-angle-leftcenter"></span> Previous</button>
-                                </div>
-                                <div class="col-sm-3 text-right">
-                                    <button class="btn btn-save" ng-disabled="step1Form.$invalid"  ng-click="changeFormStep(3)" >SAVE AND NEXT<span class="fa fa-angle-right fa-angle-rightcenter"></span></button>
-                                </div>
+                            <div class="img-upload-buttons">
+                                <button class="btn btn-info" ng-click="confirmImage()" ng-if="thumbnail !== null">Set Thumbnail</button>
                             </div>
+                            <div class="image-error">{{data.imageError}}</div>
+                            <div class="image-success" ng-if="imageSuccess !== 'null'">{{data.imageSuccess}}</div>
                         </div>
-                    </form>
-                    <div class="col-sm-3 regiitration-design">
-                        <label>Or Register as:</label>
-                        <p class="mt20"><i class="fa fa-angle-right" aria-hidden="true"></i>an Expert </p>
-                        <p><i class="fa fa-angle-right" aria-hidden="true"></i>As an Investor </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <div class="step-registration" ng-if="form.currentStep === 3">
-        <section class="formseection">
-            <div class="container">
-                <div class="row">
-                    <p class="content-creator2">Let's make sure we can communicate well</p>
-                    <div class="col-sm-9 border-right1">
-                        <div class="row">
-                            <div class="col-sm-7">
-                                <form name="step2Form">
-                                    <div class="form-group">
-
-                                        <label for="name">My email address is:</label>
-                                        <input type="text" placeholder="{{user.email}}" class="form-control " ng-model="data.email" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <label for="last">My phone number is:</label>
-                                            </div>
-                                            <script type="text/ng-template" id="countryCodeTemplate.html">
-                                                <a>
-                                                <flag country="{{match.model.country}}" size="16"></flag>
-                                                <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
-                                                </a>
-                                            </script>
-
-                                            <div class="col-xs-3">
-                                                <input type="text" ng-model="data.contactNumberCountryCode" uib-typeahead="code as code.code for code in countryCodes | filter:$viewValue | limitTo:8" typeahead-template-url="countryCodeTemplate.html" class="form-control">
-                                                <small>Country code</small>
-                                            </div>
-
-                                            <div class="col-xs-9">
-                                                
-                                                    <input type="text" placeholder="" class="form-control" ng-model="data.contactNumber" required>
-                                                   
-                                                <small>Phone Number</small>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="last">The best time to contact me as:</label>
-
-                                        
-                                            <div class="select-style">
-                                                <select required ng-options="contactTime.name for contactTime in contactTimes" class="form-control" ng-model="data.contactTime"></select>
-                                            </div>
-                                            
-                                        
-                                    </div>
-                            </form>
-                            </div>
-                            
-                        
-                        <div class="col-sm-5">
-                            
-                            <div class="uload-photo">
-                                <img src="images/icon-user-default.png" alt="" ng-if="!user.thumbnail">
-                                <img ng-src="{{user.thumbnail}}" alt="" ng-if="user.thumbnail">
-
-                            </div>
-                            <div class="exclaiminate">
-                             <span class="inp-tool inptool" data-alertshow="upload" style="margin-top:-12px;">
-                                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                                <p class="msg-alert msg1">Time to show off yourself. Choose how you want to be seen. Use an avatar if you think you are too special for us If you do not choose one , we will choose for you</p>
-                                                
-                            </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt20">
-                        <div class="col-sm-4">
-                            <p class="onetothree">3 step of 4 completed </p>
-                        </div>
-                        <div class="col-sm-4 text-center">
-                            <button class="btn btn-save btn-previous" ng-click="changeFormStep(2)"><span class="fa fa-angle-left fa-angle-leftcenter" ></span> Previous</button>
-                        </div>
-                        <div class="col-sm-4 text-center">
-
-
-                            <!-- <button type="button" class="action submit rgbBtn btn btn-save btn-submit" ng-disabled="step2Form.$invalid"  ng-if="totalSteps[data.selectedRole] === 3" ng-click="submitDetails()">Submit<span class="fa fa-check fa-angle-rightcenter fa-check11"></span></button> -->
-                            <button type="button" class="action next btn btn-save rgbBtn" ng-disabled="step2Form.$invalid" ng-click="changeFormStep(4)">Save &amp; Next<span class="fa fa-angle-right fa-angle-rightcenter"></span></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-3 regiitration-design">
-                    <label>Or Register as:</label>
-                    <p class="mt20"><i class="fa fa-angle-right" aria-hidden="true"></i>an Expert </p>
-                    <p><i class="fa fa-angle-right" aria-hidden="true"></i>As an Investor </p>
-                </div>
-            </div>
-    </div>
-</section>
-</div>
-
-<div class="step-registration" ng-if="form.currentStep === 4 && data.selectedRole === 'creator'">
-
-    <section class="formseection">
-        <div class="container">
-            <div class="row">
-                <p class="content-creator2">Complete your registration!</p>
-
-                <form name="step3Form">
-                    <div class="col-sm-9 border-right1">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="last">Innovation Category:</label>
-                                    
-                                        <div class="select-style">
-                                            <select class="form-control" required ng-options="innovation.name for innovation in innovations" ng-model="data.innovation">
-                                                <option value="" selected="selected">Please Select Innovation </option>
-                                            </select>
-                                            
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="last">Creation Category:</label>
-                                    
-                                        <div class="select-style">
-                                            <select class="form-control" required ng-options="creation.name for creation in creations" ng-model="data.creations">
-                                                <option value="" selected="selected">Please Select Creation Category </option>
-                                            </select>
-                                            
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="row mt20">
-                            <div class="col-sm-5">
-                                <p class="onetothree">4 step of 4 completed </p>
-                            </div>
-                            <div class="col-sm-4 text-center">
-                                <button class="btn btn-save btn-previous" ng-click="changeFormStep(3)" ><span class="fa fa-angle-left fa-angle-leftcenter"></span> Previous</button>
-                            </div>
-                            <div class="col-sm-3 text-right">
-                                <button class="btn btn-save btn-submit" ng-disabled="step3Form.$invalid"  ng-if="data.selectedRole === 'creator'" ng-click="submitDetails()" >Submit<span class="fa fa-check fa-angle-rightcenter fa-check11"></span></button>
-                            </div>
-                        </div>
-                        <hr style="border-color:#c8c8c8;">
                     </div>
                 </form>
-                <div class="col-sm-3 regiitration-design">
-                    <label>Or Register as:</label>
-                    <p class="mt20"><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>an Expert </a></p>
-                    <p><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>As an Investor </a></p>
+                <div class="clearfix"></div>
+                <div class="marginT30" ng-if="data.selectedRole.length > 0">
+                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="changeFormStep(1)">Previous</button>
+                    <button type="button" class="action next btn btn-info rgbBtn" ng-disabled="step1Form.$invalid" ng-click="changeFormStep(3)">Save &amp; Next</button>
                 </div>
             </div>
-        </div>
-    </section>
-</div>
-
-
-<div class="step-registration" ng-if="form.currentStep === 4 && data.selectedRole === 'investor'">
-    <section class="formseection">
-        <div class="container">
-            <div class="row">
-                <form name="step3Form">
-                    <div class="col-sm-9 border-right1">
-                        <div class="row">
-                            <p class="content-creator2">Complete your registration!</p>
-
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="last">Innovation Category:</label>
-                                    
-                                        <div class="select-style">
-                                            <select class="form-control" required ng-options="innovation.name for innovation in innovations" ng-model="data.innovation">
-                                                <option value="" selected="selected">Please Select Innovation </option>
-                                            </select>
-                                            
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="last">Creation Category:</label>
-                                    
-                                        <div class="select-style">
-                                            <select class="form-control" required ng-options="creation.name for creation in creations" ng-model="data.creations">
-                                                <option value="" selected="selected">Please Select Creation Category </option>
-                                            </select>
-                                            
-                                    </div>
-                                </div>
-                            </div>
+            <div class="step-registration" ng-if="form.currentStep === 3">
+                <form name="step2Form">
+                    <h3 class="font-light paddingB10">Let's make sure we can communicate well.</h3>
+                    <h3 class="font-light paddingB5">My email adress is</h3>
+                    <input type="text" placeholder="{{user.email}}" class="inputFieldGray" ng-model="data.email" required>
+                    <h3 class="font-light paddingTB5">My phone number is</h3>
+                    <script type="text/ng-template" id="countryCodeTemplate.html">
+                        <a>
+                            <flag country="{{match.model.country}}" size="16"></flag>
+                            <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+                        </a>
+                    </script>
+                    <div class="phone-number phone-number_verification">
+                        <div class="code">
+                            <input type="text" ng-model="data.contactNumberCountryCode" uib-typeahead="code as code.code for code in countryCodes | filter:$viewValue | limitTo:8" typeahead-template-url="countryCodeTemplate.html" class="form-control inputFieldGray">
+                            <span class="phone-number_label">Country Code</span>
                         </div>
+                        <div class="number">
+                            <input type="text" placeholder="" class="inputFieldGray" ng-model="data.contactNumber" required>
+                            <span class="phone-number_label">Phone Number</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-light paddingTB5">The best time to contact me is</h3>
+                        <label class="select-style">
+                            <select required ng-options="contactTime.name for contactTime in contactTimes" ng-model="data.contactTime"></select>
+                        </label>
+                    </div>
+                </form>
 
-                        <div class="row">
-                            <div class="col-sm-7">
-                                <form role="form">
-                                    <div class="form-group">
-                                        <label for="last">Which type of projects are you more likely to invest in?:</label>
-                                        
-                                            <div class="select-style">
-                                                <select class="form-control" >
-                                                    <option selected>iOT Connect...</option>
-                                                    <option>iOT Connect 2</option>
-                                                    <option>iOT Connect 3</option>
+                <div class="clearfix"></div>
+                <div class="marginT30">
+                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="changeFormStep(2)">Previous</button>
+                    <button type="button" class="action submit btn btn-success rgbBtn" ng-disabled="step2Form.$invalid"  ng-if="totalSteps[data.selectedRole] === 3" ng-click="submitDetails()">Submit</button>
+                    <button type="button" class="action next btn btn-info rgbBtn" ng-disabled="step2Form.$invalid"  ng-if="totalSteps[data.selectedRole] > 3" ng-click="changeFormStep(4)">Save &amp; Next</button>
+                </div>
+            </div>
+            <div class="step-registration" ng-if="form.currentStep === 4 && data.selectedRole === 'investor'">
+                <form name="step3Form">
+                    <h3 class="font-light paddingB10">Which type of projects are you more likely to invest in?</h3>
+                    <div class="projects-invest">
+                        <label class="select-style">
+                            <select>
+                                <option selected>iOT Connect...</option>
+                                <option>iOT Connect 2</option>
+                                <option>iOT Connect 3</option>
+                            </select>
+                        </label>
+                        <!-- <label class="select-style">
+                            <select>
+                                <option selected>Design...</option>
+                                <option>Design 2</option>
+                                <option>Design 3</option>
+                            </select>
+                        </label>
+                        <label class="select-style">
+                            <select>
+                                <option selected>Furniture...</option>
+                                <option>Furniture 2</option>
+                                <option>Furniture 3</option>
+                            </select>
+                        </label>
+                        <label class="select-style">
+                            <select>
+                                <option selected>Appliances...</option>
+                                <option>Appliances 2</option>
+                                <option>Appliances 3</option>
+                            </select>
+                        </label> -->
+                    </div>
+                    <h3 class="font-light">Yearly ammount to Invest</h3>
+                    <h4 class="font-light">Select the yearly ammount  in USD that you would like to dedicate for investing in innovative ideas and projects?</h4>
+                    <div class="clearfix">
+                        <div class="radiobox yearly-ammoutBox">
+                            <label for="price-label1">
+                                <input type="radio" name="yearly-ammount" id="price-label1" value="$500" required ng-model="data.selectedInvestmentBudget">
+                                <i></i> <span>$500</span> </label>
+                            <label for="price-label2">
+                                <input type="radio" name="yearly-ammount" id="price-label2" value="$100" required ng-model="data.selectedInvestmentBudget">
+                                <i></i> <span>$1000</span> </label>
+                            <label for="price-label3">
+                                <input type="radio" name="yearly-ammount" id="price-label3" value="$300" required ng-model="data.selectedInvestmentBudget">
+                                <i></i> <span>$3000</span> </label>
+                            <label for="price-label4">
+                                <input type="radio" name="yearly-ammount" id="price-label4" value="$5000" required ng-model="data.selectedInvestmentBudget">
+                                <i></i> <span>$5000</span> </label>
+                            <label for="price-labelOther">
+                                <input type="radio" name="yearly-ammount" id="price-labelOther" value="other" required ng-model="data.selectedInvestmentBudget">
+                                <i></i> <span>other</span> </label>
+                        </div>
+                    </div>
+                    <div class="other-wrap" ng-if="data.selectedInvestmentBudget === 'other'">
+                        <h3 class="font-light paddingB10">In case of other, please introduce the ammount here</h3>
+                        <input type="text" placeholder="other ammount..." class="inputFieldGray" ng-model="data.selectedInvestmentBudgetOther" required>
+                    </div>
+                    <h3 class="font-light paddingT5">What is your main  goal for investing in innovative projects?</h3>
+                    <div class="primaryinterestList radiobox radioboxGrayBase">
+                        <div>
+                            <label for="good-return">
+                                <input type="radio" name="innovative-projects" id="good-return" value="good-return" ng-model="data.selectedInvestmentGoal" required>
+                                <i></i> <span>Good return on investment</span> </label>
+                        </div>
+                        <div>
+                            <label for="new-business">
+                                <input type="radio" name="innovative-projects" id="new-business" value="new-business" ng-model="data.selectedInvestmentGoal" required>
+                                <i></i> <span>New business Opportunities</span> </label>
+                        </div>
+                        <div>
+                            <label for="great-teams">
+                                <input type="radio" name="innovative-projects" id="great-teams" value="great-teams" ng-model="data.selectedInvestmentGoal" required>
+                                <i></i> <span>Network with great minds & great teams</span> </label>
+                        </div>
+                    </div>
+                    <h3 class="font-light paddingB10 paddingT10">What is your feeling about investing in creative projects?</h3>
+                    <textarea class="grayTextareaFiled" placeholder="explain yourself..." ng-model="data.selectedInvestmentReason" required></textarea>
+                </form>
+
+                <div class="clearfix"></div>
+                <div class="marginT30">
+                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="changeFormStep(3)">Previous</button>
+                    <button type="button" class="action submit btn btn-success rgbBtn" ng-disabled="step3Form.$invalid"  ng-if="data.selectedRole === 'investor'" ng-click="submitDetails()">Submit</button>
+                </div>
+            </div>
+            <div class="step-registration" ng-if="form.currentStep === 4 && data.selectedRole === 'expert'">
+                <form name="step3Form">
+                    <h3 class="font-light paddingB10">Select your expertise.</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto exercitationem consequatur
+                    <br>laboriosam doloribus nobis quia nam dolore maxime perspiciatis nesciunt harum magni aliquid aspernatur omnis.</p>
+
+                    <div class="expertise-list">
+                        <div class="expertise" ng-repeat="inputtedExpertise in inputtedExpertiseList track by $index" ng-disabled="inputtedExpertise === false">
+                            {{inputtedExpertiseIndex=$index;''}}
+                            <h3 class="font-light paddingB10">Expertise {{inputtedExpertiseIndex + 1}}</h3>
+
+                            <div class="expertise-form">
+                                <div class="expertise-form_steps">
+                                    <div class="expertise-form_step" ng-class="{'active': inputtedExpertise.step === 1}" ng-click="inputtedExpertise.step = 1">
+                                        <span class="expertise-form_step__count">1</span>
+                                        Expertise Category
+                                        <span class="expertise-form_step__sub" ng-if="inputtedExpertise.selectedExpertiseCategory !== null">+ {{inputtedExpertise.selectedExpertiseCategory.name}}</span>
+                                    </div>
+                                    <div class="expertise-form_step" ng-class="{'active': inputtedExpertise.step === 2}" ng-click="inputtedExpertise.step = 2"
+                                        ng-disabled="inputtedExpertise.selectedExpertiseCategory === null && inputtedExpertise.otherExpertiseCategory.status === 0">
+                                        <span class="expertise-form_step__count">2</span>
+                                        Sub Expertise Category
+                                        <span class="expertise-form_step__sub" ng-if="inputtedExpertise.selectedExpertiseSubCategory !== null">+ {{inputtedExpertise.selectedExpertiseSubCategory.name}}</span>
+                                    </div>
+                                    <div class="expertise-form_step" ng-class="{'active': inputtedExpertise.step === 3}" ng-click="inputtedExpertise.step = 3"
+                                        ng-disabled="inputtedExpertise.selectedExpertiseSubCategory === null && inputtedExpertise.otherExpertiseSubCategory.status === 0">
+                                        <span class="expertise-form_step__count">3</span>
+                                        Expertise
+                                        <span class="expertise-form_step__sub" ng-if="inputtedExpertise.selectedExpertise !== null">+ {{inputtedExpertise.selectedExpertise.name}}</span>
+                                    </div>
+                                    <div class="expertise-form_step" ng-class="{'active': inputtedExpertise.step === 4}" ng-click="inputtedExpertise.step = 4"
+                                        ng-disabled="inputtedExpertise.selectedExpertise === null && inputtedExpertise.otherExpertise.status === 0">
+                                        <span class="expertise-form_step__count">4</span>
+                                        Skills Review
+                                        <span class="expertise-form_step__sub" ng-if="inputtedExpertise.selectedSkills.length > 0">+ {{inputtedExpertise.selectedSkills.length}} selected</span>
+                                    </div>
+                                </div>
+
+                                <div class="expertise-form_panes" ng-if="!inputtedEpxertise.loading">
+                                    <div class="expertise-form_step-pane" ng-if="inputtedExpertise.step === 1">
+                                        <div class="expertise-category-list" ng-if="inputtedExpertise.otherExpertiseCategory.status === 0">
+                                            <div class="expertise-category tag" ng-repeat="expertiseCategory in inputtedExpertise.expertiseCategoryList track by $index"
+                                                ng-class="{'active': inputtedExpertise.selectedExpertiseCategory === expertiseCategory}"
+                                                ng-click="selectExpertiseCategory(inputtedExpertiseIndex, expertiseCategory, 0)"
+                                                ng-disabled="inputtedExpertise.selectedExpertiseCategory !== null && inputtedExpertise.selectedExpertiseCategory != expertiseCategory">
+                                                {{expertiseCategory.name}}
+                                                <span class="expertise-category_cancel icon icon-cross" ng-click="deselectExpertiseCategory($event, inputtedExpertiseIndex, 0)"></span>
+                                            </div>
+                                        </div>
+                                        <div class="expertise-actions">
+                                            <div class="expertise-actions_other-status" ng-if="inputtedExpertise.otherExpertiseCategory.status > 0">
+                                                You have opted to enter a custom Expertise Category, enter your Expertise Category below
+                                            </div>
+
+                                            <div class="expertise-actions_other-field">
+                                                <input type="text" class="expertise-actions_other-field__input" placeholder="Other ..." ng-model="inputtedExpertise.otherExpertiseCategory.name"
+                                                focus-on="inputtedExpertise.otherExpertiseCategory.status > 0">
+                                            </div>
+
+                                            <button class="expertise-actions_other-submit btn btn-info" ng-click="saveOtherExpertiseCategory(inputtedExpertiseIndex, 0)"
+                                                ng-if="inputtedExpertise.otherExpertiseCategory.status === 0">Save</button>
+                                            <button class="expertise-actions_other-submit btn btn-danger" ng-click="removeOtherExpertiseCategory(inputtedExpertiseIndex, 0)"
+                                                ng-if="inputtedExpertise.otherExpertiseCategory.status > 0">Remove</button>
+                                        </div>
+                                    </div>
+                                    <div class="expertise-form_step-pane" ng-if="inputtedExpertise.step === 2">
+                                        <div class="expertise-category-list" ng-if="inputtedExpertise.otherExpertiseCategory.status === 0 && inputtedExpertise.otherExpertiseSubCategory.status === 0">
+                                            <div class="expertise-category tag" ng-repeat="expertiseSubCategory in inputtedExpertise.expertiseSubCategoryList track by $index"
+                                                ng-class="{'active': inputtedExpertise.selectedExpertiseSubCategory === expertiseSubCategory}"
+                                                ng-click="selectExpertiseCategory(inputtedExpertiseIndex, expertiseSubCategory, 1)"
+                                                ng-disabled="inputtedExpertise.selectedExpertiseSubCategory !== null && inputtedExpertise.selectedExpertiseSubCategory != expertiseSubCategory">
+                                                {{expertiseSubCategory.name}}
+                                                <span class="expertise-category_cancel icon icon-cross" ng-click="deselectExpertiseCategory($event, inputtedExpertiseIndex, 1)"></span>
+                                            </div>
+                                        </div>
+                                        <div class="expertise-actions">
+                                            <div class="expertise-actions_other-status" ng-if="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0">
+                                                You have opted to enter a custom Sub Expertise Category, enter your Expertise Category below
+                                            </div>
+
+                                            <div class="expertise-actions_other-field">
+                                                <input type="text" class="expertise-actions_other-field__input" placeholder="Other ..." ng-model="inputtedExpertise.otherExpertiseSubCategory.name"
+                                                focus-on="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0">
+                                            </div>
+
+                                            <button class="expertise-actions_other-submit btn btn-info" ng-click="saveOtherExpertiseCategory(inputtedExpertiseIndex, 1)"
+                                                ng-if="inputtedExpertise.otherExpertiseSubCategory.status === 0">Save</button>
+                                            <button class="expertise-actions_other-submit btn btn-danger" ng-click="removeOtherExpertiseCategory(inputtedExpertiseIndex, 1)"
+                                                ng-if="inputtedExpertise.otherExpertiseSubCategory.status > 0">Remove</button>
+                                        </div>
+                                    </div>
+                                    <div class="expertise-form_step-pane" ng-if="inputtedExpertise.step === 3">
+                                        <div class="expertise-category-list" ng-if="inputtedExpertise.otherExpertiseCategory.status === 0 && inputtedExpertise.otherExpertiseSubCategory.status === 0 && inputtedExpertise.otherExpertise.status === 0">
+                                            <div class="expertise-category tag full" ng-repeat="expertise in inputtedExpertise.expertiseList track by $index"
+                                                ng-class="{'active': inputtedExpertise.selectedExpertise === expertise}"
+                                                ng-click="selectExpertise(inputtedExpertiseIndex, expertise)"
+                                                ng-disabled="inputtedExpertise.selectedExpertise !== null && inputtedExpertise.selectedExpertise != expertise">
+                                                {{expertise.name}}
+                                                <span class="expertise-category_cancel icon icon-cross" ng-click="deselectExpertise($event, inputtedExpertiseIndex)"></span>
+                                            </div>
+                                        </div>
+                                        <div class="expertise-actions">
+                                            <div class="expertise-actions_other-status" ng-if="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0 || inputtedExpertise.otherExpertise.status > 0">
+                                                You have opted to enter a custom Expertise, enter your Expertise below
+                                            </div>
+
+                                            <div class="expertise-actions_other-field">
+                                                <input type="text" class="expertise-actions_other-field__input" placeholder="Other ..." ng-model="inputtedExpertise.otherExpertise.name"
+                                                focus-on="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0 || inputtedExpertise.otherExpertise.status > 0">
+                                            </div>
+
+                                            <button class="expertise-actions_other-submit btn btn-info" ng-click="saveOtherExpertise(inputtedExpertiseIndex)"
+                                                ng-if="inputtedExpertise.otherExpertise.status === 0">Save</button>
+                                            <button class="expertise-actions_other-submit btn btn-danger" ng-click="removeOtherExpertise(inputtedExpertiseIndex)"
+                                                ng-if="inputtedExpertise.otherExpertise.status > 0">Remove</button>
+                                        </div>
+                                    </div>
+                                    <div class="expertise-form_step-pane" ng-if="inputtedExpertise.step === 4">
+                                        <!-- <div class="expertise-category-list" ng-if="inputtedExpertise.otherExpertiseCategory.status === 0 && inputtedExpertise.otherExpertiseSubCategory.status === 0 && inputtedExpertise.otherExpertise.status === 0"> -->
+                                        <div class="expertise-category-list">
+                                            <div class="expertise-category tag" ng-repeat="skill in inputtedExpertise.skillsList track by $index"
+                                                ng-class="{'active': inSkills(inputtedExpertiseIndex, skill)}"
+                                                ng-click="selectSkill(inputtedExpertiseIndex, skill)">
+                                                <!-- ng-disabled="inputtedExpertise.skillsList.length > 0 && !inSkills(inputtedExpertiseIndex, skill)" -->
+                                                {{skill.name}}
+                                                <span class="expertise-category_cancel icon icon-cross" ng-click="deselectSkill($event, inputtedExpertiseIndex, skill)"></span>
+                                            </div>
+                                        </div>
+                                        <div class="expertise-actions">
+                                            <!-- <div class="expertise-actions_other-status" ng-if="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0 || inputtedExpertise.otherExpertise.status > 0">
+                                                You have entered a custom Expertise, please select the matching skills below.
+                                            </div> -->
+                                            <div class="expertise-actions_other-field">
+                                                <select chosen multiple data-placeholder="Other Skills ..."
+                                                    no-results-text="'Could not find any skills :('"
+                                                    ng-model="inputtedExpertise.otherSkills.list"
+                                                    ng-options="skill as skill.name for skill in allSkills">
                                                 </select>
-                                                
+                                            </div>
+
+                                            <button class="expertise-actions_other-submit btn btn-info" ng-click="saveSkills(inputtedExpertiseIndex)">Save</button>
                                         </div>
                                     </div>
-                                    <label>yearly amount to invest</label>
-                                    
-                                        <div class="clearfix">
-                                            <div class="radiobox yearly-ammoutBox">
-                                                <label for="price-label1">
-                                                    <input type="radio" name="yearly-ammount" id="price-label1" value="$500" required ng-model="data.selectedInvestmentBudget">
-                                                    <i></i> <span>$500</span> </label>
-                                                <label for="price-label2">
-                                                    <input type="radio" name="yearly-ammount" id="price-label2" value="$100" required ng-model="data.selectedInvestmentBudget">
-                                                    <i></i> <span>$1000</span> </label>
-                                                <label for="price-label3">
-                                                    <input type="radio" name="yearly-ammount" id="price-label3" value="$300" required ng-model="data.selectedInvestmentBudget">
-                                                    <i></i> <span>$3000</span> </label>
-                                                <label for="price-label4">
-                                                    <input type="radio" name="yearly-ammount" id="price-label4" value="$5000" required ng-model="data.selectedInvestmentBudget">
-                                                    <i></i> <span>$5000</span> </label>
-                                                <label for="price-labelOther">
-                                                    <input type="radio" name="yearly-ammount" id="price-labelOther" value="other" required ng-model="data.selectedInvestmentBudget">
-                                                    <i></i> <span>other</span> </label>
-                                            </div>
-                                            
-                                    </div>
-                                    <div class="other-wrap" ng-if="data.selectedInvestmentBudget === 'other'">
-                                        <h4 class="font-light">In case of other, please introduce the ammount here</h4>
-                                        <input type="text" placeholder="other ammount..." class="form-control" ng-model="data.selectedInvestmentBudgetOther" required>
+                                </div>
 
-                                    </div>
-                                    <label class="mt20">What is your main goal for investing in innovative projects?</label>
-                                    <div class="form-group marginradioinvestor4">
-                                        <p class="radiobutton-content mt0">
-                                            <label class="radio-design">
-                                                <input type="radio" name="innovative-projects" id="good-return" value="good-return" ng-model="data.selectedInvestmentGoal" required>
-                                                <span></span>Good return on investment
-                                            </label> 
-                                        </p>
-                                        <p>
-                                            <label class="radio-design">
-                                                <input type="radio" name="innovative-projects" id="new-business" value="new-business" ng-model="data.selectedInvestmentGoal" required>
-                                                <span></span>New business Opportunities
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label class="radio-design">
-                                                <input type="radio" name="innovative-projects" id="great-teams" value="great-teams" ng-model="data.selectedInvestmentGoal" required>
-                                                <span></span>Network with great minds & great terms
-                                            </label>
-                                        </p>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="col-sm-5">
-                                <div class="uload-photo">
-                                    <img src="images/icon-user-default.png" alt="" ng-if="!user.thumbnail">
-                                    <img ng-src="{{user.thumbnail}}" alt="" ng-if="user.thumbnail">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="last">What  is you feeling about investing in creative projects?</label>
-                                    <textarea class="form-control" rows="4" style="height:70px;" placeholder="explain yourself..." ng-model="data.selectedInvestmentReason" required></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt20">
-                            <div class="col-sm-5">
-                                <p class="onetothree">4 step of 4 completed </p>
-                            </div>
-                            <div class="col-sm-4 text-center">
-                                <button class="btn btn-save btn-previous" ng-click="changeFormStep(3)" ><span class="fa fa-angle-left fa-angle-leftcenter"></span> Previous</button>
-                            </div>
-                            <div class="col-sm-3 text-right">
-                                <button class="btn btn-save btn-submit"  ng-disabled="step3Form.$invalid"  ng-if="data.selectedRole === 'investor'" ng-click="submitDetails()">Submit<span class="fa fa-check fa-angle-rightcenter fa-check11"></span></button>
+                                <fd-loader ng-if="inputtedEpxertise.loading"></fd-loader>
                             </div>
                         </div>
                     </div>
+
                 </form>
-                <div class="col-sm-3 regiitration-design">
-                    <label>Or Register as:</label>
-                    <p class="mt20"><i class="fa fa-angle-right" aria-hidden="true"></i>an Expert </p>
-                    <p><i class="fa fa-angle-right" aria-hidden="true"></i>As an Investor </p>
+
+                <div class="clearfix"></div>
+                <div class="marginT30">
+                    <button type="button" class="action back btn btn-black rgbBtn" ng-click="changeFormStep(3)">Previous</button>
+                    <button type="button" class="action submit btn btn-success rgbBtn" ng-disabled="step3Form.$invalid" ng-click="submitDetails()">Submit</button>
                 </div>
             </div>
         </div>
-    </section>
-</div>
-
-
-<div class="step-registration" ng-if="form.currentStep === 4 && data.selectedRole === 'expert'">
-    <section class="formseection">
-        <div class="container">
-            <div class="row">
-                <form name="step3Form">
-                    <div class="col-sm-9 border-right1">
-                        <div class="row">
-                            <p class="content-creator2">Complete your registration!</p>
-
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="last">Innovation Category:</label>
-                                    
-                                        <div class="select-style">
-                                            <select class="form-control" required ng-options="innovation.name for innovation in innovations" ng-model="data.innovation">
-                                                <option value="" selected="selected">Please Select Innovation </option>
-                                            </select>
-                                            
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="last">Creation Category:</label>
-                                    
-                                        <div class="select-style">
-                                            <select class="form-control" required ng-options="creation.name for creation in creations" ng-model="data.creations">
-                                                <option value="" selected="selected">Please Select Creation Category </option>
-                                            </select>
-                                           
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="expertise-list col-sm-12 ">
-                                <div class="expertise" ng-repeat="inputtedExpertise in inputtedExpertiseList track by $index" ng-disabled="inputtedExpertise === false">
-                                    {{inputtedExpertiseIndex = $index;''}}
-                                    <h3 class="font-light paddingB10">Expertise {{inputtedExpertiseIndex + 1}}</h3>
-
-                                    <div class="expertise-form">
-                                        <div class="expertise-form_steps">
-                                            <div class="expertise-form_step" ng-class="{'active': inputtedExpertise.step === 1}" ng-click="inputtedExpertise.step = 1">
-                                                <span class="expertise-form_step__count">1</span>
-                                                Expertise Category
-                                                <span class="expertise-form_step__sub" ng-if="inputtedExpertise.selectedExpertiseCategory !== null">+ {{inputtedExpertise.selectedExpertiseCategory.name}}</span>
-                                            </div>
-                                            <div class="expertise-form_step" ng-class="{'active': inputtedExpertise.step === 2}" ng-click="inputtedExpertise.step = 2"
-                                                 ng-disabled="inputtedExpertise.selectedExpertiseCategory === null && inputtedExpertise.otherExpertiseCategory.status === 0">
-                                                <span class="expertise-form_step__count">2</span>
-                                                Sub Expertise Category
-                                                <span class="expertise-form_step__sub" ng-if="inputtedExpertise.selectedExpertiseSubCategory !== null">+ {{inputtedExpertise.selectedExpertiseSubCategory.name}}</span>
-                                            </div>
-                                            <div class="expertise-form_step" ng-class="{'active': inputtedExpertise.step === 3}" ng-click="inputtedExpertise.step = 3"
-                                                 ng-disabled="inputtedExpertise.selectedExpertiseSubCategory === null && inputtedExpertise.otherExpertiseSubCategory.status === 0">
-                                                <span class="expertise-form_step__count">3</span>
-                                                Expertise
-                                                <span class="expertise-form_step__sub" ng-if="inputtedExpertise.selectedExpertise !== null">+ {{inputtedExpertise.selectedExpertise.name}}</span>
-                                            </div>
-                                            <div class="expertise-form_step" ng-class="{'active': inputtedExpertise.step === 4}" ng-click="inputtedExpertise.step = 4"
-                                                 ng-disabled="inputtedExpertise.selectedExpertise === null && inputtedExpertise.otherExpertise.status === 0">
-                                                <span class="expertise-form_step__count">4</span>
-                                                Skills Review
-                                                <span class="expertise-form_step__sub" ng-if="inputtedExpertise.selectedSkills.length > 0">+ {{inputtedExpertise.selectedSkills.length}} selected</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="expertise-form_panes" ng-if="!inputtedEpxertise.loading">
-                                            <div class="expertise-form_step-pane" ng-if="inputtedExpertise.step === 1">
-                                                <div class="expertise-category-list" ng-if="inputtedExpertise.otherExpertiseCategory.status === 0">
-                                                    <div class="expertise-category tag" ng-repeat="expertiseCategory in inputtedExpertise.expertiseCategoryList track by $index"
-                                                         ng-class="{'active': inputtedExpertise.selectedExpertiseCategory === expertiseCategory}"
-                                                         ng-click="selectExpertiseCategory(inputtedExpertiseIndex, expertiseCategory, 0)"
-                                                         ng-disabled="inputtedExpertise.selectedExpertiseCategory !== null && inputtedExpertise.selectedExpertiseCategory != expertiseCategory">
-                                                        {{expertiseCategory.name}}
-                                                        <span class="expertise-category_cancel icon icon-cross" ng-click="deselectExpertiseCategory($event, inputtedExpertiseIndex, 0)"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="expertise-actions">
-                                                    <div class="expertise-actions_other-status" ng-if="inputtedExpertise.otherExpertiseCategory.status > 0">
-                                                        You have opted to enter a custom Expertise Category, enter your Expertise Category below
-                                                    </div>
-
-                                                    <div class="expertise-actions_other-field">
-                                                        <input type="text" class="expertise-actions_other-field__input" placeholder="Other ..." ng-model="inputtedExpertise.otherExpertiseCategory.name"
-                                                               focus-on="inputtedExpertise.otherExpertiseCategory.status > 0">
-                                                    </div>
-
-                                                    <button class="expertise-actions_other-submit btn btn-success" ng-click="saveOtherExpertiseCategory(inputtedExpertiseIndex, 0)"
-                                                            ng-if="inputtedExpertise.otherExpertiseCategory.status === 0">Save</button>
-                                                    <button class="expertise-actions_other-submit btn btn-danger" ng-click="removeOtherExpertiseCategory(inputtedExpertiseIndex, 0)"
-                                                            ng-if="inputtedExpertise.otherExpertiseCategory.status > 0">Remove</button>
-                                                </div>
-                                            </div>
-                                            <div class="expertise-form_step-pane" ng-if="inputtedExpertise.step === 2">
-                                                <div class="expertise-category-list" ng-if="inputtedExpertise.otherExpertiseCategory.status === 0 && inputtedExpertise.otherExpertiseSubCategory.status === 0">
-                                                    <div class="expertise-category tag" ng-repeat="expertiseSubCategory in inputtedExpertise.expertiseSubCategoryList track by $index"
-                                                         ng-class="{'active': inputtedExpertise.selectedExpertiseSubCategory === expertiseSubCategory}"
-                                                         ng-click="selectExpertiseCategory(inputtedExpertiseIndex, expertiseSubCategory, 1)"
-                                                         ng-disabled="inputtedExpertise.selectedExpertiseSubCategory !== null && inputtedExpertise.selectedExpertiseSubCategory != expertiseSubCategory">
-                                                        {{expertiseSubCategory.name}}
-                                                        <span class="expertise-category_cancel icon icon-cross" ng-click="deselectExpertiseCategory($event, inputtedExpertiseIndex, 1)"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="expertise-actions">
-                                                    <div class="expertise-actions_other-status" ng-if="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0">
-                                                        You have opted to enter a custom Sub Expertise Category, enter your Expertise Category below
-                                                    </div>
-
-                                                    <div class="expertise-actions_other-field">
-                                                        <input type="text" class="expertise-actions_other-field__input" placeholder="Other ..." ng-model="inputtedExpertise.otherExpertiseSubCategory.name"
-                                                               focus-on="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0">
-                                                    </div>
-
-                                                    <button class="expertise-actions_other-submit btn btn-success" ng-click="saveOtherExpertiseCategory(inputtedExpertiseIndex, 1)"
-                                                            ng-if="inputtedExpertise.otherExpertiseSubCategory.status === 0">Save</button>
-                                                    <button class="expertise-actions_other-submit btn btn-danger" ng-click="removeOtherExpertiseCategory(inputtedExpertiseIndex, 1)"
-                                                            ng-if="inputtedExpertise.otherExpertiseSubCategory.status > 0">Remove</button>
-                                                </div>
-                                            </div>
-                                            <div class="expertise-form_step-pane" ng-if="inputtedExpertise.step === 3">
-                                                <div class="expertise-category-list" ng-if="inputtedExpertise.otherExpertiseCategory.status === 0 && inputtedExpertise.otherExpertiseSubCategory.status === 0 && inputtedExpertise.otherExpertise.status === 0">
-                                                    <div class="expertise-category tag full" ng-repeat="expertise in inputtedExpertise.expertiseList track by $index"
-                                                         ng-class="{'active': inputtedExpertise.selectedExpertise === expertise}"
-                                                         ng-click="selectExpertise(inputtedExpertiseIndex, expertise)"
-                                                         ng-disabled="inputtedExpertise.selectedExpertise !== null && inputtedExpertise.selectedExpertise != expertise">
-                                                        {{expertise.name}}
-                                                        <span class="expertise-category_cancel icon icon-cross" ng-click="deselectExpertise($event, inputtedExpertiseIndex)"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="expertise-actions">
-                                                    <div class="expertise-actions_other-status" ng-if="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0 || inputtedExpertise.otherExpertise.status > 0">
-                                                        You have opted to enter a custom Expertise, enter your Expertise below
-                                                    </div>
-
-                                                    <div class="expertise-actions_other-field">
-                                                        <input type="text" class="expertise-actions_other-field__input" placeholder="Other ..." ng-model="inputtedExpertise.otherExpertise.name"
-                                                               focus-on="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0 || inputtedExpertise.otherExpertise.status > 0">
-                                                    </div>
-
-                                                    <button class="expertise-actions_other-submit btn btn-success" ng-click="saveOtherExpertise(inputtedExpertiseIndex)"
-                                                            ng-if="inputtedExpertise.otherExpertise.status === 0">Save</button>
-                                                    <button class="expertise-actions_other-submit btn btn-danger" ng-click="removeOtherExpertise(inputtedExpertiseIndex)"
-                                                            ng-if="inputtedExpertise.otherExpertise.status > 0">Remove</button>
-                                                </div>
-                                            </div>
-                                            <div class="expertise-form_step-pane" ng-if="inputtedExpertise.step === 4">
-                                                <!-- <div class="expertise-category-list" ng-if="inputtedExpertise.otherExpertiseCategory.status === 0 && inputtedExpertise.otherExpertiseSubCategory.status === 0 && inputtedExpertise.otherExpertise.status === 0"> -->
-                                                <div class="expertise-category-list">
-                                                    <div class="expertise-category tag" ng-repeat="skill in inputtedExpertise.skillsList track by $index"
-                                                         ng-class="{'active': inSkills(inputtedExpertiseIndex, skill)}"
-                                                         ng-click="selectSkill(inputtedExpertiseIndex, skill)">
-                                                        <!-- ng-disabled="inputtedExpertise.skillsList.length > 0 && !inSkills(inputtedExpertiseIndex, skill)" -->
-                                                        {{skill.name}}
-                                                        <span class="expertise-category_cancel icon icon-cross" ng-click="deselectSkill($event, inputtedExpertiseIndex, skill)"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="expertise-actions">
-                                                    <!-- <div class="expertise-actions_other-status" ng-if="inputtedExpertise.otherExpertiseCategory.status > 0 || inputtedExpertise.otherExpertiseSubCategory.status > 0 || inputtedExpertise.otherExpertise.status > 0">
-                                                        You have entered a custom Expertise, please select the matching skills below.
-                                                    </div> -->
-                                                    <div class="expertise-actions_other-field">
-                                                        <select chosen multiple data-placeholder="Other Skills ..."
-                                                                no-results-text="'Could not find any skills :('"
-                                                                ng-model="inputtedExpertise.otherSkills.list"
-                                                                ng-options="skill as skill.name for skill in allSkills">
-                                                        </select>
-                                                    </div>
-
-                                                    <button class="expertise-actions_other-submit btn btn-success" ng-click="saveSkills(inputtedExpertiseIndex)">Save</button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <fd-loader ng-if="inputtedEpxertise.loading"></fd-loader>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-
-                        <div class="row mt20">
-                            <div class="col-sm-5">
-                                <p class="onetothree">4 step of 4 completed </p>
-                            </div>
-                            <div class="col-sm-4 text-center">
-                                <button class="btn btn-save btn-previous" ng-click="changeFormStep(3)"><span class="fa fa-angle-left fa-angle-leftcenter"></span> Previous</button>
-                            </div>
-                            <div class="col-sm-3 text-right">
-                                <button class="btn btn-save btn-submit" ng-disabled="step3Form.$invalid" ng-click="submitDetails()">Submit<span class="fa fa-check fa-angle-rightcenter fa-check11"></span></button>
-                            </div>
-                        </div>
-                        <hr style="border-color:#c8c8c8;">
-                    </div>
-                </form>
-                <div class="col-sm-3 regiitration-design">
-                    <label>Or Register as:</label>
-                    <p class="mt20"><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>an Creator</a></p>
-                    <p><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>As an Investor </a></p>
-                </div>
-            </div>
-        </div>
-    </section>
-</div>
-
+    </div>
 </main>
-

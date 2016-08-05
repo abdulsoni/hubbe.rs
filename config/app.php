@@ -220,8 +220,8 @@ return [
          * Laravel Rateable
          */
 
-        GetStream\StreamLaravel\StreamLaravelServiceProvider::class,
-       
+        // GetStream\StreamLaravel\StreamLaravelServiceProvider::class,
+
 
 
     ],
@@ -299,7 +299,7 @@ return [
          */
         'PushNotification'  => Davibennun\LaravelPushNotification\Facades\PushNotification::class,
 
-        'FeedManager'       => GetStream\StreamLaravel\Facades\FeedManager::class,
+        // 'FeedManager'       => GetStream\StreamLaravel\Facades\FeedManager::class,
 
     ],
 

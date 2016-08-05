@@ -2,7 +2,6 @@
 
 namespace Fundator\Http\Controllers;
 
-
 use Fundator\User;
 
 use Fundator\Feeds;
@@ -13,14 +12,13 @@ use Illuminate\Http\Response;
 use Fundator\Http\Requests;
 use Fundator\Http\Controllers\Controller;
 
+use GetStream\StreamLaravel\Facades\FeedManager;
+
 class FeedCtrl extends Controller
-{   
-    /**
-     * The task repository instance.
-     *
-     * @var TaskRepository
-     */
+{
+
     protected $feeds;
+
     /**
      * Create a new controller instance.
      *
@@ -44,15 +42,16 @@ class FeedCtrl extends Controller
         $response = [];
 
         // Get your timeline:
-        $feed = \FeedManager::getNewsFeeds()['timeline'];
+        $feed = FeedManager::getNewsFeeds()['timeline'];
+
         // Get your timeline activities from Stream:
         $activities = $feed->getActivities(0,25)['results'];
 
         $response['data'] = $activities;
-        
-        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
 
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
+
     /**
      * Create a new task.
      *
