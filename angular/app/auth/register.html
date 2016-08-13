@@ -55,7 +55,7 @@
                                 <p class="radiobutton-content">
                                     <label for="As-an-Expert" class="radio-design">
                                         <input type="radio" name="interest-using-fundathom" id="As-an-Expert" value="expert" ng-model="data.selectedRole" ng-change="changeRole()">
-                                        <span></span>As an Expert 
+                                        <span></span>As an Expert
                                     </label>
                                 </p>
                             </div>
@@ -96,8 +96,8 @@
             </div>
         </section>
     </div>
-    
-    <div class="step-registration" ng-if="form.currentStep === 2">     
+
+    <div class="step-registration" ng-if="form.currentStep === 2">
         <section class="formseection">
             <div class="container">
                 <div class="row">
@@ -111,7 +111,7 @@
                                             <label>First Name:</label>
                                             <div class="exclaiminate">
                                                 <input type="text" placeholder="First Name" class="inputFieldGray form-control" style="width:100%" name="fname" ng-model="firstName"  data-validate="first" data-minlength="3" data-maxlength="20" required id="testing">
-                                                
+
                                                 <span class="inp-tool" data-alertshow="first">
                                                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                                                     <p class="msg-alert msg1">Here you put your real first & middle name (if you have one). As it is a business-related website, remember that it should be accurate and use your real identity</p>
@@ -125,7 +125,7 @@
                                             <label for="lname">Last Name:</label>
                                             <div class="exclaiminate">
                                                 <input type="text" placeholder="Last Name" class="inputFieldGray form-control" style="width:100%"  name="lname" required ng-model="data.lname" data-validate="two" data-minlength="3" data-maxlength="20" required >
-                                                
+
                                                 <span class="inp-tool" data-alertshow="two">
                                                 <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                                                     <p class="msg-alert msg1">Same just write your real family name</p>
@@ -138,7 +138,7 @@
                                             <label for="last">My position is:</label>
                                             <div class="exclaiminate">
                                                 <input type="text" placeholder="" class="inputFieldGray form-control" style="width:100%" name="fname" required ng-model="data.position" data-validate="three" data-minlength="3" data-maxlength="20" required >
-                                                
+
                                                 <span class="inp-tool" data-alertshow="three">
                                                 <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                                                     <p class="msg-alert msg1">Position gives an indication of what you do. If you register through linked, your last position will be used. Choose the position that fits best your profile</p>
@@ -198,7 +198,7 @@ If you choose no, no worry. You can still participate but you will need to have 
                                                     <span class="inp-tool  inptool-select" data-alertshow="five">
                                                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                                                         <p class="msg-alert msg1">Great things of today’s world. Being from one country and living in another. Same as me, from France but living in between China,  South Korea and Hong Kong for few years. Letting people know can be great for future meetings</p>
-                                                        
+
                                                   </span>
                                                 </div>
                                             </div>
@@ -211,7 +211,7 @@ If you choose no, no worry. You can still participate but you will need to have 
 
                                         <label>Upload your profile pic
                                         </label>
-                                   
+
                                     <div class="img-upload-style1">
 
                                         <div class="img-upload-show"  ng-class="{'dropable': dropable}">
@@ -252,9 +252,9 @@ If you choose no, no worry. You can still participate but you will need to have 
                                         </div>
                                         <div class="image-error">{{data.imageError}}</div>
                                         <div class="image-success" ng-if="imageSuccess !== 'null'">{{data.imageSuccess}}</div>
-                                        
+
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="row">
@@ -312,9 +312,9 @@ If you choose no, no worry. You can still participate but you will need to have 
                                             </div>
 
                                             <div class="col-xs-9">
-                                                
+
                                                     <input type="text" placeholder="" class="form-control" ng-model="data.contactNumber" required>
-                                                   
+
                                                 <small>Phone Number</small>
                                             </div>
 
@@ -325,19 +325,19 @@ If you choose no, no worry. You can still participate but you will need to have 
                                     <div class="form-group">
                                         <label for="last">The best time to contact me as:</label>
 
-                                        
+
                                             <div class="select-style">
                                                 <select required ng-options="contactTime.name for contactTime in contactTimes" class="form-control" ng-model="data.contactTime"></select>
                                             </div>
-                                            
-                                        
+
+
                                     </div>
                             </form>
                             </div>
-                            
-                        
+
+
                         <div class="col-sm-5">
-                            
+
                             <div class="uload-photo">
                                 <img src="images/icon-user-default.png" alt="" ng-if="!user.thumbnail">
                                 <img ng-src="{{user.thumbnail}}" alt="" ng-if="user.thumbnail">
@@ -347,7 +347,7 @@ If you choose no, no worry. You can still participate but you will need to have 
                              <span class="inp-tool inptool" data-alertshow="upload" style="margin-top:-12px;">
                                 <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                                 <p class="msg-alert msg1">Time to show off yourself. Choose how you want to be seen. Use an avatar if you think you are too special for us If you do not choose one , we will choose for you</p>
-                                                
+
                             </span>
                             </div>
                         </div>
@@ -391,24 +391,24 @@ If you choose no, no worry. You can still participate but you will need to have 
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="last">Innovation Category:</label>
-                                    
+
                                         <div class="select-style">
                                             <select class="form-control" required ng-options="innovation.name for innovation in innovations" ng-model="data.innovation">
                                                 <option value="" selected="selected">Please Select Innovation </option>
                                             </select>
-                                            
+
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="last">Creation Category:</label>
-                                    
+
                                         <div class="select-style">
                                             <select class="form-control" required ng-options="creation.name for creation in creations" ng-model="data.creations">
                                                 <option value="" selected="selected">Please Select Creation Category </option>
                                             </select>
-                                            
+
                                     </div>
                                 </div>
                             </div>
@@ -452,24 +452,24 @@ If you choose no, no worry. You can still participate but you will need to have 
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="last">Innovation Category:</label>
-                                    
+
                                         <div class="select-style">
                                             <select class="form-control" required ng-options="innovation.name for innovation in innovations" ng-model="data.innovation">
                                                 <option value="" selected="selected">Please Select Innovation </option>
                                             </select>
-                                            
+
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="last">Creation Category:</label>
-                                    
+
                                         <div class="select-style">
                                             <select class="form-control" required ng-options="creation.name for creation in creations" ng-model="data.creations">
                                                 <option value="" selected="selected">Please Select Creation Category </option>
                                             </select>
-                                            
+
                                     </div>
                                 </div>
                             </div>
@@ -480,18 +480,18 @@ If you choose no, no worry. You can still participate but you will need to have 
                                 <form role="form">
                                     <div class="form-group">
                                         <label for="last">Which type of projects are you more likely to invest in?:</label>
-                                        
+
                                             <div class="select-style">
                                                 <select class="form-control" >
                                                     <option selected>iOT Connect...</option>
                                                     <option>iOT Connect 2</option>
                                                     <option>iOT Connect 3</option>
                                                 </select>
-                                                
+
                                         </div>
                                     </div>
                                     <label>yearly amount to invest</label>
-                                    
+
                                         <div class="clearfix">
                                             <div class="radiobox yearly-ammoutBox">
                                                 <label for="price-label1">
@@ -510,7 +510,7 @@ If you choose no, no worry. You can still participate but you will need to have 
                                                     <input type="radio" name="yearly-ammount" id="price-labelOther" value="other" required ng-model="data.selectedInvestmentBudget">
                                                     <i></i> <span>other</span> </label>
                                             </div>
-                                            
+
                                     </div>
                                     <div class="other-wrap" ng-if="data.selectedInvestmentBudget === 'other'">
                                         <h4 class="font-light">In case of other, please introduce the ammount here</h4>
@@ -523,7 +523,7 @@ If you choose no, no worry. You can still participate but you will need to have 
                                             <label class="radio-design">
                                                 <input type="radio" name="innovative-projects" id="good-return" value="good-return" ng-model="data.selectedInvestmentGoal" required>
                                                 <span></span>Good return on investment
-                                            </label> 
+                                            </label>
                                         </p>
                                         <p>
                                             <label class="radio-design">
@@ -591,24 +591,24 @@ If you choose no, no worry. You can still participate but you will need to have 
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="last">Innovation Category:</label>
-                                    
+
                                         <div class="select-style">
                                             <select class="form-control" required ng-options="innovation.name for innovation in innovations" ng-model="data.innovation">
                                                 <option value="" selected="selected">Please Select Innovation </option>
                                             </select>
-                                            
+
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="last">Creation Category:</label>
-                                    
+
                                         <div class="select-style">
                                             <select class="form-control" required ng-options="creation.name for creation in creations" ng-model="data.creations">
                                                 <option value="" selected="selected">Please Select Creation Category </option>
                                             </select>
-                                           
+
                                     </div>
                                 </div>
                             </div>
