@@ -104,28 +104,29 @@ class ContestController extends Controller
             $contest_data['num_contestants'] = $contest->num_contestants;
             $contest_data['judges'] = $contest->jury;
 
-            $entries = Entry::WHERE('contest_id',$id)->groupBy('creator_id')->orderBy('created_at', 'desc')->get();   
+            $entries = Entry::WHERE('contest_id',$id)->groupBy('creator_id')->orderBy('created_at', 'desc')->get();
             foreach($entries as $entry){
                 $enryrating = EntryRating::WHERE('entry_id',$entry->id)->orderBy('created_at', 'desc')->first();
                 $average = ($enryrating->design+$enryrating->creativity+$enryrating->industrial+$enryrating->market)/4;
-                $rank[$entry->creator_id] = $average;
+                // $rank[$entry->creator_id] = $average;
             }
-            $r = 1;
-            foreach ($rank as $key => $value) {
-                $newrank[$key] = $r;
-                $r++;
-            }
-            
+
+            // $r = 1;
+            // foreach ($rank as $key => $value) {
+            //     $newrank[$key] = $r;
+            //     $r++;
+            // }
+
             $contestants = $contest->contestants;
             foreach($contestants as $contestant){
-                
+
                 $creator = $contestant->user;
-              
-                if(isset($newrank[$contestant->user->id])){
-                    $creator['rank'] = $newrank[$contestant->user->id];
-                    
-                }else{ $creator['rank'] = 0; }
-               
+
+                // if(isset($newrank[$contestant->user->id])){
+                //     $creator['rank'] = $newrank[$contestant->user->id];
+
+                // }else{ $creator['rank'] = 0; }
+
                 $contest_data['contestants'][] = $creator;
             }
         }
