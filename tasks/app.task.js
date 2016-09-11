@@ -29,7 +29,6 @@ elixir.extend('app', function(src, output, outputFilename) {
         return gulp.src([baseDir + "main.js", baseDir + "**/*.js"])
             .pipe(jshint())
             .pipe(jshint.reporter(stylish))
-            //.pipe(jshint.reporter('fail')).on('error', onError) //enable this if you want to force jshint to validate
             .pipe(gulpif(! config.production, sourcemaps.init()))
             .pipe(concat(outputFilename || 'app.js'))
             .pipe(ngAnnotate())

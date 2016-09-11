@@ -27,7 +27,7 @@
 
                 $scope.replaceValue = function(value){
                 	$scope.ngModel = value;
-                }
+                };
             },
             link: function($scope, $element, $attrs) {
                 var fields = {
@@ -35,7 +35,7 @@
                     'textarea': '<textarea class="textarea form-control" placeholder="{{placeholder}}" ng-model="ngModel" rows="6"></textarea>',
                     // 'email': '<input name="{{field}}" type="{{type}}" class="form-control input-lg" ng-disabled="isDisabled" ng-model="ngModel" ng-blur="update()"> ',
                     // 'dropdown': '<div class="select-wraper full"><span class="icon icon-arrow-bottom"></span><select class="form-control input-lg" ng-options="value.value as value.name for value in values" ng-model="ngModel" ng-change="update()"></select></div>',
-                }
+                };
 
                 var field = fields[$scope.type];
 
@@ -59,6 +59,6 @@
                 $element.html($compile(template)($scope));
             }
         };
-    })
+    });
 
 })();

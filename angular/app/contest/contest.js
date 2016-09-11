@@ -14,11 +14,13 @@
             $scope.contests = result;
             $scope.ongoingContests = [];
             $scope.judgingContests = [];
+            var contest_id = 0;
+            var contest = null;
 
             if ($rootScope.activeRole === 'creator' && typeof($rootScope.user.creator) !== 'undefined') {
                 for(var ogc in $rootScope.user.creator.ongoing_contest){
-                    var contest_id = $rootScope.user.creator.ongoing_contest[ogc];
-                    var contest = $filter('filter')(result, {id: contest_id}, true)[0];
+                    contest_id = $rootScope.user.creator.ongoing_contest[ogc];
+                    contest = $filter('filter')(result, {id: contest_id}, true)[0];
 
                     if (typeof(contest) !== 'undefined') {
                         $scope.ongoingContests.push(contest);
@@ -29,9 +31,8 @@
                 }
             }else if($rootScope.activeRole === 'jury' && $rootScope.user.judging.length > 0){
                 for(var jc in $rootScope.user.judging){
-                    var contest_id = $rootScope.user.judging[jc].contest_id;
-
-                    var contest = $filter('filter')(result, {id: contest_id}, true)[0];
+                    contest_id = $rootScope.user.judging[jc].contest_id;
+                    contest = $filter('filter')(result, {id: contest_id}, true)[0];
 
                     if (typeof(contest) !== 'undefined') {
                         $scope.judgingContests.push(contest);
@@ -88,7 +89,7 @@
             }
         });
 
-        var EntryRating = $resource(API.path('entry-ratings/:entryRatingId'), function(){
+        var EntryRating = $resource(API.path('entry-ratings/:entryRatingId'), {
             entryRatingId: '@id'
         }, {
             update: {
@@ -102,12 +103,12 @@
         $scope.showFullText = function() {
             FdScroller.toSection('.contest-single', 50);
             $scope.data.contestFullDescription = true;
-        }
+        };
 
         $scope.hideFullText = function() {
             FdScroller.toTop();
             $scope.data.contestFullDescription = false;
-        }
+        };
 
         Contest.get({
             contestId: $scope.contestId
@@ -202,7 +203,7 @@
                     }
                     break;
             }
-        }
+        };
 
         $scope.selectEntry = function(entry) {
             $scope.data.addEntry = false;
@@ -247,7 +248,6 @@
                     }, 100);
                 });
             }
-
         };
 
         $scope.openLightbox = function(item) {
@@ -265,7 +265,7 @@
             }
 
             Lightbox.openModal(allImages, currentIndex);
-        }
+        };
 
         $scope.$on('flow::fileAdded', function (event, $flow, flowFile) {
             event.preventDefault();
@@ -296,8 +296,7 @@
                     caption: ''
                 });
             }
-
-        }
+        };
 
         $scope.entryFileRemove = function(file, $flow) {
             // var items = $filter('filter')($scope.data.addEntryForm.attachedFiles, {id: file.id});
@@ -321,7 +320,7 @@
 
             console.log($flow.files);
             console.log($scope.data.addEntryForm.attachedFiles);
-        }
+        };
 
         $scope.showAddEntry = function() {
             FdScroller.toSection('.entries-list');
@@ -332,7 +331,7 @@
             $scope.data.addEntryForm.attachedFiles = [];
 
             $scope.data.addEntryForm.description = $scope.contest.entries[$scope.contest.entries.length - 1].description;
-        }
+        };
 
         $scope.submitEntry = function() {
             $scope.data.savingEntry = true;
@@ -382,8 +381,7 @@
                     }, 1000);
                 });
             }
-
-        }
+        };
 
         $scope.sendMessage = function(){
             var messageRequest = {
@@ -446,20 +444,18 @@
                     }
                 });
             }
-
-        }
+        };
 
         $scope.becomeJudge = function(){
             // Show NDA
             FdScroller.toSection('.contest-single', 50);
             $scope.data.showJudgeNda = true;
-        }
+        };
 
         $scope.acceptJudge = function(){
             $scope.data.showJudgeNdaLoading = true;
 
             $http.post(API.path('users/becomeJudge'), {contest_id: $scope.contest.id}).then(function(result){
-                console.log(result)
                 if (typeof(result.data.error) === 'undefined') {
                     $scope.data.showJudgeNdaSuccess = true;
 
@@ -471,19 +467,18 @@
             }).finally(function(){
                 $scope.data.showJudgeNdaLoading = false;
             });
-        }
+        };
 
         $scope.becomeContestant = function(){
             // Show NDA
             FdScroller.toSection('.contest-single', 50);
             $scope.data.showContestantNda = true;
-        }
+        };
 
         $scope.acceptContestant = function(){
             $scope.data.showContestantNdaLoading = true;
 
             $http.post(API.path('users/becomeContestant'), {contest_id: $scope.contest.id}).then(function(result){
-                console.log(result)
                 if (typeof(result.data.error) === 'undefined') {
                     $scope.data.showContestantNdaSuccess = true;
 

@@ -23,8 +23,8 @@
                 name: $scope.data.name,
                 email: $scope.data.email,
                 password: $scope.data.password
-            }
-            console.log(userInfo);
+            };
+
             $http.post(API.path('authenticate/signup'), userInfo).then(function(result){
                 if (typeof(result.data.error) === 'undefined') {
 
@@ -40,7 +40,7 @@
                     $scope.errorMessage = error.data.message.email[0];
                 }
             });
-        }
+        };
 
         $scope.login = function() {
             $scope.errorMessage = '';
@@ -75,7 +75,7 @@
                 $rootScope.$broadcast('stopLoading');
 
                 if (err.statusText === 'Unauthorized') {
-                    $scope.errorMessage = 'The email or password you entered is incorrect.'
+                    $scope.errorMessage = 'The email or password you entered is incorrect.';
                 }else{
                     $scope.errorMessage = err.statusText;
                 }
@@ -86,7 +86,7 @@
             $rootScope.$broadcast('startLoading');
 
             $auth.authenticate(provider).then(function(response) {
-                $auth.setToken(result.data.token)
+                $auth.setToken(result.data.token);
 
                 var payload = $auth.getPayload();
 
@@ -116,8 +116,7 @@
 
                 $state.go('app.auth.login', {}, {reload: true});
             });
-        }
-
+        };
     });
 
     angular.module('fundator.controllers').controller('AuthConfirmCtrl', function($rootScope, $scope, $state, $stateParams, $auth, $timeout, $http, API){
@@ -199,10 +198,9 @@
                     $scope.errorMessage = 'Error in recovering password';
                 }
             });
-        }
+        };
 
         $scope.set = function(){
-
             // Reset Password
             if ($scope.data.password.length >= 6) {
                 if ($scope.data.password === $scope.data.password_repeat) {
@@ -233,7 +231,7 @@
             }else{
                 $scope.errorMessage = 'Passwords need to be longer than 6 characters!';
             }
-        }
+        };
     });
 
 })();

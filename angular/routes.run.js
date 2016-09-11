@@ -18,10 +18,10 @@
 
         $rootScope.collapseNotification = function(state){
             $rootScope.notificationCollapse = state;
-        }
+        };
 
         $rootScope.toggleNavigation = function () {
-            ($rootScope.isNavShown >= 0.5) ? $rootScope.isNavShown = 0 : $rootScope.isNavShown = 0.5;
+            $rootScope.isNavShown = ($rootScope.isNavShown >= 0.5) ? 0 : 0.5;
         };
 
         $rootScope.$on('startLoading', function(){
@@ -51,7 +51,7 @@
 
                         FdNotifications.init();
 
-                        if ($rootScope.user.registered == 0) {
+                        if ($rootScope.user.registered === 0) {
                             $rootScope.initialRoleAssignment = true;
                             $state.go('app.auth.register');
                         }else{
@@ -219,17 +219,17 @@
                 var roles = $filter('filter')($rootScope.user.user_roles, {role: role}, true);
 
                 if (typeof(roles) !== 'undefined' && roles.length > 0) {
-                    var role = roles[0];
+                    role = roles[0];
                     roleId = role.id;
                 }
             }
 
             switch(role){
-                case 'creator': model = API.path('creators/') + roleId
+                case 'creator': model = API.path('creators/') + roleId;
                 break;
-                case 'expert': model = API.path('experts/') + roleId
+                case 'expert': model = API.path('experts/') + roleId;
                 break;
-                case 'investor': model = API.path('investors/') + roleId
+                case 'investor': model = API.path('investors/') + roleId;
                 break;
             }
 
@@ -257,7 +257,6 @@
         };
 
         // Has User Role
-
         $rootScope.hasUserRole = function(role) {
             if (typeof($rootScope.user) !== 'undefined') {
                 var hasRoles = $filter('filter')($rootScope.user.user_roles, {role: role}, true);
@@ -268,7 +267,7 @@
             }
 
             return false;
-        }
+        };
 
     });
 

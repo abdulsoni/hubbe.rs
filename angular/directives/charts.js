@@ -59,10 +59,13 @@
                     ]
                 };
 
-                if($attrs.data === 'A'){
-                    var ctx = $element.find('canvas')[0].getContext('2d');
+                var ctx = null;
+                var fdChart = null;
 
-                    var fdChart = new Chart(ctx).Pie(pieDataA, {
+                if($attrs.data === 'A'){
+                    ctx = $element.find('canvas')[0].getContext('2d');
+
+                    fdChart = new Chart(ctx).Pie(pieDataA, {
                         segmentShowStroke : false,
                         legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
                     });
@@ -72,9 +75,9 @@
                         $element.find("canvas + .pie-chart-labels").prepend('<div class="pie-chart-label"><span style="background-color: '+the_item.color+';"></span> '+the_item.value+'% '+the_item.label+'</div>');
                     });
                 }else{
-                    var ctx = $element.find('canvas')[0].getContext('2d');
+                    ctx = $element.find('canvas')[0].getContext('2d');
 
-                    var fdChart = new Chart(ctx).Line(lineDataA, {
+                    fdChart = new Chart(ctx).Line(lineDataA, {
                         segmentShowStroke : false,
                         legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
                     });

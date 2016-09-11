@@ -61,11 +61,10 @@
         $scope.changeFormStep = function(newStep){
             FdScroller.toTop();
             $scope.form.currentStep = newStep;
-        }
+        };
 
-        $scope.countries = Countries();
-        console.log($scope.countries);
-        $scope.countryCodes = CountryCodes();
+        $scope.countries = new Countries();
+        $scope.countryCodes = new CountryCodes();
 
         $scope.countryConfig = {
             options: $scope.countries,
@@ -117,15 +116,15 @@
         $rootScope.$broadcast('stopLoading');
         $scope.changeRole = function() {
             $scope.form.totalSteps = $scope.totalSteps[$scope.data.selectedRole];
-        }
+        };
 
         $scope.getProgress = function() {
             return Math.min(($scope.form.currentStep / $scope.form.totalSteps) * 100, 96);
-        }
+        };
 
         $scope.getProgressInverted = function() {
             return Math.max(((1 - ($scope.form.currentStep / $scope.form.totalSteps)) * 100), 4);
-        }
+        };
 
         $scope.thumbnail = null;
         $scope.croppedThumbnail = null;
@@ -142,15 +141,16 @@
         var handleFileSelect = function(evt, drop) {
             evt.stopPropagation();
             evt.preventDefault();
+            var file = null;
 
             $scope.$apply(function() {
                 $scope.dropable = false;
             });
 
             if (evt.originalEvent.dataTransfer) {
-                var file = evt.originalEvent.dataTransfer.files[0];
+                file = evt.originalEvent.dataTransfer.files[0];
             } else {
-                var file = evt.currentTarget.files[0];
+                file = evt.currentTarget.files[0];
             }
 
             var reader = new FileReader();
@@ -238,7 +238,7 @@
 
             $scope.uploader.addToQueue(dataURItoBlob(image));
             $scope.uploader.uploadAll();
-        }
+        };
 
 
         // Expert Related Functions
@@ -251,10 +251,9 @@
         function addNewInputtedExpertise(){
             var lastInputtedExpertise = {selectedExpertise: 'null', otherExpertise: {status: 1}};
 
-            if ($scope.inputtedExpertiseList.length > 0) {
-                $scope.inputtedExpertiseList[$scope.inputtedExpertiseList.length -1];
-
-            }
+            // if ($scope.inputtedExpertiseList.length > 0) {
+            //     $scope.inputtedExpertiseList[$scope.inputtedExpertiseList.length -1];
+            // }
 
             console.log($scope.inputtedExpertiseList);
             console.log(lastInputtedExpertise);
@@ -275,8 +274,8 @@
                     otherSkills: {list: [], status: 0},
                     step: 1,
                     loading: false
-                })
-            };
+                });
+            }
 
             $scope.fetchExpertiseCategory($scope.inputtedExpertiseList.length - 1);
         }
@@ -291,7 +290,7 @@
                 $scope.inputtedExpertiseList[index].step = 3;
                 $scope.fetchExpertiseList(index);
             }
-        }
+        };
 
         $scope.deselectExpertiseCategory = function(e, index, level){
             if (level === 0) {
@@ -310,7 +309,7 @@
                 $scope.inputtedExpertiseList[index].selectedSkills = [];
             }
             e.stopPropagation();
-        }
+        };
 
         $scope.saveOtherExpertiseCategory = function(index, level){
             if (level === 0) {
@@ -334,7 +333,7 @@
                 $scope.inputtedExpertiseList[index].otherExpertiseSubCategory.status = 1;
                 $scope.inputtedExpertiseList[index].step = 3;
             }
-        }
+        };
 
         $scope.removeOtherExpertiseCategory = function(index, level){
             if (level === 0) {
@@ -345,7 +344,7 @@
                 $scope.inputtedExpertiseList[index].otherExpertiseSubCategory = {name: '', status: 0};
                 $scope.inputtedExpertiseList[index].otherExpertise = {name: '', status: 0};
             }
-        }
+        };
 
         $scope.selectExpertise = function(index, expertise){
             $scope.inputtedExpertiseList[index].selectedExpertise = expertise;
@@ -353,13 +352,13 @@
             $scope.inputtedExpertiseList[index].step = 4;
             $scope.fetchSkillsList(index);
             addNewInputtedExpertise();
-        }
+        };
 
         $scope.deselectExpertise = function(e, index){
             $scope.inputtedExpertiseList[index].selectedExpertise = null;
             $scope.inputtedExpertiseList[index].selectedSkills = [];
             e.stopPropagation(index);
-        }
+        };
 
         $scope.saveOtherExpertise = function(index){
             $scope.inputtedExpertiseList[index].selectedExpertise = null;
@@ -369,11 +368,11 @@
             $scope.inputtedExpertiseList[index].otherExpertise.status = 1;
             $scope.inputtedExpertiseList[index].step = 4;
             addNewInputtedExpertise();
-        }
+        };
 
         $scope.removeOtherExpertise = function(index){
             $scope.inputtedExpertiseList[index].otherExpertise = {name: '', status: 0};
-        }
+        };
 
         $scope.inSkills = function(index, skill){
             var foundSkill = $filter('filter')($scope.inputtedExpertiseList[index].selectedSkills, {id: skill.id}, true);
@@ -383,27 +382,27 @@
             }
 
             return false;
-        }
+        };
 
         $scope.selectSkill = function(index, skill){
             if(!$scope.inSkills(index, skill)){
                 $scope.inputtedExpertiseList[index].selectedSkills.push(skill);
             }
             $scope.inputtedExpertiseList[index].step = 4;
-        }
+        };
 
         $scope.deselectSkill = function(e, index, skill){
             $scope.inputtedExpertiseList[index].selectedSkills = $filter('filter')($scope.inputtedExpertiseList[index].selectedSkills, {id: skill.id}, function(actual, expected){
-                return !angular.equals(actual, expected)
+                return !angular.equals(actual, expected);
             });
             e.stopPropagation();
-        }
+        };
 
         $scope.saveSkills = function(index){
             $scope.inputtedExpertiseList[index].skillsList = angular.copy($scope.inputtedExpertiseList[index].otherSkills.list);
             $scope.inputtedExpertiseList[index].selectedSkills = angular.copy($scope.inputtedExpertiseList[index].otherSkills.list);
             $scope.inputtedExpertiseList[index].otherSkills = {list: [], status: 0};
-        }
+        };
 
         $scope.fetchExpertiseCategory = function(index){
             $scope.inputtedExpertiseList[index].expertiseCategoryList = [];
@@ -413,7 +412,7 @@
                 $scope.inputtedExpertiseList[index].expertiseCategoryList = result.data;
                 $scope.inputtedExpertiseList[index].loading = false;
             });
-        }
+        };
 
         $scope.fetchExpertiseSubCategory = function(index){
             $scope.expertiseSubCategoryList = [];
@@ -423,7 +422,7 @@
                 $scope.inputtedExpertiseList[index].expertiseSubCategoryList = result.data;
                 $scope.inputtedExpertiseList[index].loading = false;
             });
-        }
+        };
 
         $scope.fetchExpertiseList = function(index){
             $scope.inputtedExpertiseList[index].expertiseList = [];
@@ -433,7 +432,7 @@
                 $scope.inputtedExpertiseList[index].expertiseList = result.data;
                 $scope.inputtedExpertiseList[index].loading = false;
             }, 2000);
-        }
+        };
 
         $scope.fetchSkillsList = function(index){
             $scope.inputtedExpertiseList[index].skillsList = [];
@@ -444,7 +443,7 @@
                 $scope.inputtedExpertiseList[index].selectedSkills = result.data;
                 $scope.inputtedExpertiseList[index].loading = false;
             }, 2000);
-        }
+        };
 
         $http.get(API.path('innovationList')).then(function(response){
            $scope.innovations = response.data ;
@@ -491,8 +490,6 @@
 
                     angular.forEach($scope.inputtedExpertiseList, function(inputtedExpertise){
                         if (inputtedExpertise.selectedExpertise !== null || inputtedExpertise.otherExpertise.status === 1) {
-                            console.log(inputtedExpertise.selectedExpertise);
-                            console.log(inputtedExpertise.otherExpertise);
                             userData.expert.list.push({
                                 expertise_category: inputtedExpertise.selectedExpertiseCategory,
                                 other_expertise_category: inputtedExpertise.otherExpertiseCategory,
@@ -502,7 +499,7 @@
                                 other_expertise: inputtedExpertise.otherExpertise,
                                 skills: inputtedExpertise.selectedSkills
                             });
-                        };
+                        }
                     });
                 break;
             }
@@ -529,7 +526,7 @@
             }).finally(function(){
                 $rootScope.$broadcast('stopLoading');
             });
-        }
+        };
 
     });
 

@@ -13,18 +13,18 @@
 
 Route::get('/', 'AppController@serveApp');
 
-/*
- * Authentication Routes
- */
+
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
 $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
+
     /*
-     * Authentication
+     * Auth Providers
      */
+
     $api->get('users', 'Fundator\Http\Controllers\AuthenticateController@index');
     $api->get('user', 'Fundator\Http\Controllers\UserController@show');
 
@@ -47,7 +47,9 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
     $api->post('authenticate/forgot-verify', 'Fundator\Http\Controllers\Auth\PasswordController@appRecoverPasswordVerify');
     $api->post('authenticate/recover', 'Fundator\Http\Controllers\Auth\PasswordController@appRecoverPasswordProcess');
 
-    // Providers
+    /*
+     * Auth Providers
+     */
     $api->post('authenticate/facebook', 'Fundator\Http\Controllers\AuthenticateController@facebook');
     $api->get('authenticate/facebook', 'Fundator\Http\Controllers\AuthenticateController@facebook');
     $api->post('authenticate/unlinkFacebook', 'Fundator\Http\Controllers\AuthenticateController@unlinkFacebook');
@@ -235,6 +237,4 @@ Route::get('edit',function(){
 //    $user->password=bcrypt('123456');
 //    $user->save();
 //    return randomString();
-
 });
-

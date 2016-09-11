@@ -10,15 +10,16 @@
     var handleFileSelect = function(evt, drop) {
         evt.stopPropagation();
         evt.preventDefault();
+        var file = null;
 
         $scope.$apply(function(){
             $scope.dropable = false;
         });
 
         if (evt.originalEvent.dataTransfer) {
-            var file = evt.originalEvent.dataTransfer.files[0];
+            file = evt.originalEvent.dataTransfer.files[0];
         }else{
-            var file = evt.currentTarget.files[0];
+            file = evt.currentTarget.files[0];
         }
 
         var reader = new FileReader();
@@ -78,11 +79,11 @@
 
     $scope.setThumbnail = function(){
         $uibModalInstance.close($scope.croppedThumbnail);
-    }
+    };
 
     $scope.cancel = function(){
         $uibModalInstance.dismiss('cancel');
-    }
+    };
   });
 
 })();

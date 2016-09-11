@@ -1,3 +1,0 @@
-ALTER TABLE  `users` ADD  `rating` FLOAT NOT NULL AFTER  `age_gate` ;
-ALTER TABLE  `entries` ADD  `created_at` DATETIME NOT NULL ;
-ALTER TABLE  `entries` ADD  `updated_at` DATETIME NOT NULL ;

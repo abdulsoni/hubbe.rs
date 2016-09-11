@@ -2,7 +2,6 @@
     "use strict";
 
     angular.module('fundator.controllers').controller('ExpertCtrl', function($rootScope, $scope, $state, $resource, $filter, $timeout, FdScroller, API) {
-        console.log('Expert Started');
         $scope.expertiseSource = null;
         $scope.availableExpertise = [];
         $scope.matchingExpertise = [];
@@ -53,8 +52,6 @@
     });
 
     angular.module('fundator.controllers').controller('ExpertiseCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $http, FdScroller, API) {
-        console.log('Expertise Started');
-
         FdScroller.toTop();
 
         $scope.data = {};
@@ -82,7 +79,7 @@
             }).finally(function(){
                 $scope.data.bidLoading = false;
             });
-        }
+        };
     });
 
 })();

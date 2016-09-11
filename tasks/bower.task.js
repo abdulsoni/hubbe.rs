@@ -1,6 +1,8 @@
-/*Elixir Task for bower
+/**
+ * Elixir Task for bower
  * Upgraded from https://github.com/ansata-biz/laravel-elixir-bower
  */
+
 var gulp = require('gulp');
 var mainBowerFiles = require('main-bower-files');
 var filter = require('gulp-filter');
@@ -49,7 +51,6 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, cssOutputFile, css
                 message: ' '
             }));
     }).watch('bower.json');
-
 
     new Task('bower-css', function(){
         return gulp.src(mainBowerFiles())

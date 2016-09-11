@@ -1,6 +1,6 @@
 (function() {
     "use strict";
- 
+
     angular.module('fundator.routes').config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 
         // Remove the # for the non html5 browsers
@@ -121,6 +121,18 @@
                     'main@': {
                         templateUrl: getView('auth', 'register'),
                         controller: 'RegisterCtrl'
+                    }
+                }
+            })
+            .state('app.home', {
+                url: '/',
+                data: {
+                    needLogin: false
+                },
+                views: {
+                    'main@': {
+                        templateUrl: getView('home', 'home'),
+                        controller: 'HomeCtrl'
                     }
                 }
             })
@@ -413,20 +425,6 @@
                         controller: 'ContestCtrl'
                     }
                 }
-            })
-            // .state('app.page', {
-            //     url: '/:slug',
-            //     data: {
-            //         needLogin: false
-            //     },
-            //     views: {
-            //         'main@': {
-            //             templateUrl: getView('page'),
-            //             controller: 'PageCtrl'
-            //         }
-            //     }
-            // })
-
+            });
     });
-
 })();
