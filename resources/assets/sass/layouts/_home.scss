@@ -1,3 +1,165 @@
+.homepage{
+
+	// Section
+	.section-home{
+		padding: 45px 0;
+
+		.section-home_title{
+			font-family: $font-family-abel;
+			font-size: 28px;
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+			text-align: center;
+
+			margin-top: 0;
+			margin-bottom: 35px;
+
+			.highlight{
+				color: $fd-green;
+			}
+		}
+	}
+
+	// Lists
+	.section-lists{
+
+	}
+
+		.section-lists_list{
+		@include clearfix();
+		margin: 0 -20px;
+
+		.item{
+			float: left;
+			width: 50%;
+			padding: 0 20px;
+			margin-bottom: 40px;
+
+			// &:before{
+			// 	content: ' ';
+			// 	position: absolute;
+			// 	top: 0; left: 0; right: 0; bottom: 0;
+			// 	box-shadow: 0 0 20px rgba(#444, 0.25);
+			// 	opacity: 0;
+
+			// 	@include transition(all 0.3s);
+			// }
+
+			&:hover{
+				cursor: pointer;
+
+				// &:before{
+				// 	opacity: 1;
+				// }
+			}
+		}
+
+
+		.item-details{
+			position: relative;
+
+			.item-image{
+				@extends .img-responsive;
+				width: 100%;
+			}
+
+			.item-info{
+				position: absolute;
+				bottom: 0;
+				width: 100%;
+
+				padding: 10px 10px 15px;
+
+				background-color: rgba(#000, 0.75);
+				color: #fff;
+
+				.item-name{
+					font-size: 24px;
+				}
+
+				.item-duration{
+					.icon{
+						font-size: 20px;
+						position: relative;
+						top: 4px;
+						margin-right: 5px;
+
+						color: $fd-green;
+					}
+
+					text-transform: uppercase;
+				}
+			}
+		}
+
+		.item-stats{
+			height: 75px;
+			text-align: center;
+
+			.item-stat{
+				color: #fff;
+
+				display: table;
+				width: 50%;
+				float: left;
+				height: 100%;
+
+				.item-stat_num{
+					display: table-cell;
+					vertical-align: middle;
+					width: 75px;
+
+					font-size: 38px;
+					font-weight: 300;
+					background-color: #80b030;
+				}
+
+				.item-stat_label{
+					display: table-cell;
+					vertical-align: middle;
+
+					font-size: 16px;
+					text-transform: uppercase;
+					letter-spacing: 0.05em;
+					background-color: $fd-green;
+				}
+			}
+		}
+	}
+
+
+	// Filters
+	.list-filters{
+		@extend .list-inline;
+		@extend .list-unstyled;
+		text-align: center;
+		margin-bottom: 40px;
+
+		> li{
+			text-transform: uppercase;
+			letter-spacing: 0.075em;
+
+			padding-left: 15px;
+			padding-right: 15px;
+
+			a{
+				color: $body-color;
+
+				&:hover{
+					color: $fd-green;
+				}
+			}
+		}
+	}
+
+	// Contest List
+	.contest-list{
+		.contest{
+		}
+	}
+
+}
+
 // Homepage specific styles
 .homepage{
 	.notification-section{

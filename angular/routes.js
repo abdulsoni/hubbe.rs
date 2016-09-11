@@ -5,7 +5,6 @@
 
         // Remove the # for the non html5 browsers
         // $locationProvider.html5Mode(true)
-
         var getView = function(viewName, secondaryName) {
             if (typeof secondaryName === 'undefined') {
                 secondaryName = viewName;
@@ -14,8 +13,7 @@
             return './views/app/app/' + viewName + '/' + secondaryName + '.html';
         };
 
-
-        $urlRouterProvider.otherwise('/projects');
+        $urlRouterProvider.otherwise('/');
 
         $stateProvider
             .state('app', {
@@ -127,7 +125,8 @@
             .state('app.home', {
                 url: '/',
                 data: {
-                    needLogin: false
+                    needLogin: false,
+                    bodyClass: 'homepage'
                 },
                 views: {
                     'main@': {

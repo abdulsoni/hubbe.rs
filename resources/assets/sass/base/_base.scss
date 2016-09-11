@@ -1,11 +1,20 @@
-body{
-	background-color:#FFF;
-	overflow-x: hidden;
+body {
+    background-color: #FFF;
+    overflow-x: hidden;
 }
 
-#container{
-	position: relative;
+#container {
+    position: relative;
     margin: 0 auto;
     width: 80%;
     border: #A5A5A5 1px solid;
-    padding: 10px;}
+    padding: 10px;
+}
+
+h1, h2, h3, h4, h5, h6{
+	margin-top: 0;
+}
+
+a{
+	text-decoration: none !important;
+}

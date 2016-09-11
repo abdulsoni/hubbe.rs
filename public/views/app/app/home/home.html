@@ -6,6 +6,7 @@
         <h2 class="section-home_title">Ongoing <span class="highlight">Contests</span></h2>
 
         <ul class="list-filters">
+<<<<<<< 02da886a251ac7e1d52207c5094c79f9d26d8cc4
             <li class="active"><a href="#">Product (3)</a></li>
             <li><a href="#">Innovation</a></li>
             <li><a href="#">Geography</a></li>
@@ -33,6 +34,16 @@
 
 
 <!--             <div class="item">
+=======
+            <li><a href="#">Category Filter One</a></li>
+            <li><a href="#">Category Filter Two</a></li>
+            <li><a href="#">Category Filter Three</a></li>
+            <li><a href="#">Category Filter Four</a></li>
+        </ul>
+
+        <div class="contest-list section-lists_list">
+            <div class="item">
+>>>>>>> Homepage Tiles
                 <div class="item-details">
                     <img class="item-image" src="/images/contest.jpg" alt="Contest Name">
 
@@ -143,6 +154,7 @@
                         </div>
                     </div>
                 </div>
+<<<<<<< 02da886a251ac7e1d52207c5094c79f9d26d8cc4
             </div> -->
 
         </div>
@@ -259,8 +271,33 @@
     </div>
     <div class="marginT15">
         <button class="btn btn-white btn-ujarak" ui-sref="app.auth.signup">Become a Creator</button>
+=======
+            </div>
+
+        </div>
+
+>>>>>>> Homepage Tiles
     </div>
+
+
+    <li ng-repeat="contest in contests" ui-sref="app.contest({contestId: contest.id})">
+        <div class="projectImg" ng-style="{'background-image': (contest.thumbnail) ? 'url(/' + contest.thumbnail + ')': ''}">
+            <div class="row rankingMng">
+                <div class="col-xs-3 leftRank">
+                    <h4>Contestants</h4>
+                    <span class="countValue">{{contest.num_contestants}}</span>
+                </div>
+                <div class="col-xs-3">
+                    <h4>Time to Go</h4> {{ end_time = (contest.start_time | amAdd : contest.duration : 'days'); ''}}
+                    <span class="countValue">{{ end_time | amDifference : null : 'days' }}</span>
+                </div>
+            </div>
+        </div>
+        <h3 class="projectHeading">{{contest.name}}</h3>
+    </li>
+
 </div>
+
 <div class="container" ng-if="contests.length > 0">
     <ul class="tabProjectList">
         <li ng-repeat="contest in contests" ui-sref="app.contest({contestId: contest.id})">
@@ -325,7 +362,7 @@
         </li>
     </ul>
 </div>
-<div class="homepage-banner-section">
+<div class="homepage-banner-section" ng-if="false">
     <div class="homepage-banner-section_text">
         Invest your money in creative projects and earn up to 30% return: <strong>12860 usd</strong> from <strong>{{investors.length}}</strong> investors available. Start from 10usd.
     </div>

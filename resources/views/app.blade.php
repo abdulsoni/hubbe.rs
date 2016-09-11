@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="{!! asset('css/app/vendor.css') !!}">
 
     <!-- <link rel="stylesheet" type="text/css" href="http://cloud.github.com/downloads/lafeber/world-flags-sprite/flags16.css" /> -->
-
     <meta name="renderer" content="webkit">
     <meta name="keywords" content="">
     <meta name="description" content="">
@@ -26,13 +25,6 @@
 
         <main>
             <section class="body-content">
-                <!-- <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="flast-notice-list" ui-view="flashNotice"></div>
-                        </div>
-                    </div>
-                </div> -->
                 <div class="notification-section container marginB30 ng-hide" ng-class="{'collapsed': notificationCollapse}"
                     ng-show="authenticated && user.registered === 1" ng-if="authenticated && user.registered === 1">
                     <div class="row">
@@ -85,7 +77,7 @@
                 $('[data-alertshow="'+getInValue+'"]').addClass('show2');
                 if (getval.length<=0) {
                     $('[data-alertshow="'+getInValue+'"]').removeClass('show2');
-                }   
+                }
             }
             else{
                 $('[data-alertshow="'+getInValue+'"]').removeClass('show2');
@@ -94,7 +86,7 @@
                     $('[data-alertshow="'+getInValue+'"]').addClass('show3');
                 }
                 else{   $('[data-alertshow="'+getInValue+'"]').removeClass('show3');}
-            } 
+            }
         });
 
 
@@ -109,7 +101,7 @@
     });
     </script>
 
-   
+
 <style type="text/css">
 .ui-select-container{
   position: relative;
@@ -165,8 +157,8 @@
 
 .exclaiminate p:before{
     content: ' ';
-    width: 0; 
-  height: 0; 
+    width: 0;
+  height: 0;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-top: 10px solid #000;
