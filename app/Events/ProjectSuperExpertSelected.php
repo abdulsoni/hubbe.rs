@@ -6,19 +6,28 @@ use Fundator\Events\Event;
 use Fundator\Project;
 use Fundator\Expert;
 use Illuminate\Queue\SerializesModels;
+use GetStream\StreamLaravel\Facades\FeedManager;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ProjectSuperExpertSelected extends Event
-{
+class ProjectSuperExpertSelected extends Event{
     use SerializesModels;
-
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @return voidp
      */
-    public function __construct(Project $project, Expert $superExpert)
-    {
+    public function __construct(Project $project, Expert $superExpert){
+        $creator = $project->creator;
+        $userDetails = $superExpert->user;
+        //Add Activity
+        $activityData = [
+            'actor'=>$creator->id,
+            'verb'=>'Superexpert Assigned',
+            'object'=>$project->id,
+            'display_message'=>"$creator->name has choosen <b>$userDetails->name</b>  as a super expert for his project $project->name"
+        ];
+        $userFeed = FeedManager::getUserFeed($creator->id);
+        $userFeed->addActivity($activityData);
         $this->project = $project;
         $this->superExpert = $superExpert;
     }
@@ -28,8 +37,7 @@ class ProjectSuperExpertSelected extends Event
      *
      * @return array
      */
-    public function broadcastOn()
-    {
+    public function broadcastOn(){
         return [];
     }
 }

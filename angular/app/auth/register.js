@@ -207,7 +207,8 @@
 
         // Expert Related Functions
 
-        $scope.allSkills = $resource('api/skills').query();
+        // $scope.allSkills = $resource(API.path('skills')).query();
+        // $scope.innovations = $resource(API.path('innovationList')).query();
 
         $scope.inputtedExpertiseList = [];
 
@@ -408,6 +409,14 @@
                 $scope.inputtedExpertiseList[index].loading = false;
             }, 2000);
         }
+
+        $http.get(API.path('innovationList')).then(function(response){
+           $scope.innovations = response.data ;
+        });
+
+        $http.get(API.path('creationList')).then(function(response){
+            $scope.creations = response.data ;
+        });
 
         addNewInputtedExpertise();
 

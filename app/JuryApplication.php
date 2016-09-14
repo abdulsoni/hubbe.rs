@@ -49,6 +49,8 @@ class JuryApplication extends Model
         return $this->belongsTo('Fundator\Contest');
     }
 
+
+
     /**
      * Auto assign the jury
      */

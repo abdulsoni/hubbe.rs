@@ -15,9 +15,9 @@ APP Sercret: nv8jfwgstjcubye6gnf94wxpr9gc8uzry3kug86cyn8jrc4ne9gvn8drz945e6qj
 
 
 
-    'api_key' => 'w4zuvzmcjcxb',
-    'api_secret' => 'emukbhsn66hccx5j6r6aypxu96ywws37kdu4trpn6uxbxczq37zdx7zwvhdu8mfk',
-    'api_app_id' => '14455',
+    'api_key' => 'sfbawhmedm6h',
+    'api_secret' => 'xhutphb9r9485ah7pfgv6rvkxxg3zt75q56r4x5zmgj54tpuhb32j6wjs33xyzrb',
+    'api_app_id' => '15538',
     /*
     |-----------------------------------------------------------------------------
     | Client connection options
@@ -25,7 +25,7 @@ APP Sercret: nv8jfwgstjcubye6gnf94wxpr9gc8uzry3kug86cyn8jrc4ne9gvn8drz945e6qj
     |
     */
     'location' => '',
-    'timeout' => 3,
+    'timeout' => 20,
     /*
     |-----------------------------------------------------------------------------
     | The default feed manager class

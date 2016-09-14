@@ -262,6 +262,8 @@
 
         $http.get(API.path('super-experts')).then(function(result) {
             $scope.superExperts = result.data;
+            console.log($scope.superExperts);
+            // alert('Super Experts Data')
         }).finally(function() {
             $rootScope.innerSectionLoading = false;
         });
@@ -269,7 +271,6 @@
         $scope.chooseSuperExpert = function(superExpert) {
             $scope.project.super_expert_id = superExpert.id;
             $scope.saveProgress();
-
             FdScroller.toSection('.steps-content');
 
             $timeout(function() {

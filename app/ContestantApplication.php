@@ -5,7 +5,7 @@ namespace Fundator;
 use Fundator\Role;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
-
+use GetStream\StreamLaravel\Eloquent\ActivityTrait;
 class ContestantApplication extends Model
 {
     /**
@@ -36,6 +36,10 @@ class ContestantApplication extends Model
      */
     public function user(){
         return $this->belongsTo('Fundator\User');
+    }
+
+    public function is_following(){
+        return $this->belongsTo('Fundator\Followers','user_id','user_id');
     }
 
     /**

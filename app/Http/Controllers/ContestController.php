@@ -3,6 +3,7 @@
 namespace Fundator\Http\Controllers;
 
 use Fundator\Creator;
+use Fundator\Follow;
 use Fundator\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,9 +13,11 @@ use Fundator\Http\Controllers\Controller;
 use Fundator\Contest;
 use Fundator\Entry;
 use Fundator\EntryRating;
+use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
-
 use Exception;
+use GetStream\StreamLaravel\Facades\FeedManager;
+use GetStream\StreamLaravel\Enrich;
 
 class ContestController extends Controller
 {
@@ -83,6 +86,9 @@ class ContestController extends Controller
      */
      public function show($id)
     {
+        if (!$user = JWTAuth::parseToken()->authenticate()) {
+            return response()->json(['user_not_found'], 404);
+        }
         $statusCode = 200;
         $response = [];
         $contest = Contest::where('visible', 1)->where('id', $id)->first();
@@ -92,7 +98,6 @@ class ContestController extends Controller
         if (!is_null($contest)) {
             $contest_data = $contest->getAttributes();
             $contest_data['total_entries'] = $contest->entries->groupBy('creator_id')->count();
-
             $unmarkedEntries = $contest->unmarkedEntries();
 
             if (!is_null($unmarkedEntries)) {
@@ -102,7 +107,24 @@ class ContestController extends Controller
             $contest_data['rating'] = $contest->rating;
             $contest_data['contestants'] = [];
             $contest_data['num_contestants'] = $contest->num_contestants;
-            $contest_data['judges'] = $contest->jury;
+//          $contest_data['judges'] = $contest->jury;
+            $judges = $contest->jury;
+
+            //Getting Following Data to Check is judge Followed By Current Logged In User
+            foreach($judges as $judge){
+                $count = Follow::where('user_id',$user->id)->where('target_id',$judge->user_id)->count();
+                if ($count > 0) {
+                    $judge->areYouFollowed = 1;
+                    $judge->followClass = 'btn btn-sm btn-success';
+                    $judge->followText = 'Following';
+                }
+                else{
+                    $judge->areYouFollowed = 0;
+                    $judge->followClass = 'btn btn-sm btn-danger';
+                    $judge->followText = 'Follow';
+                }
+                $contest_data['judges'][]=$judge;
+            }
 
             $entries = Entry::WHERE('contest_id',$id)->groupBy('creator_id')->orderBy('created_at', 'desc')->get();
             foreach($entries as $entry){
@@ -119,7 +141,6 @@ class ContestController extends Controller
 
             $contestants = $contest->contestants;
             foreach($contestants as $contestant){
-
                 $creator = $contestant->user;
 
                 // if(isset($newrank[$contestant->user->id])){

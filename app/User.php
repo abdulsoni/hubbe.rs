@@ -2,6 +2,7 @@
 
 namespace Fundator;
 
+use Carbon\Carbon;
 use Fenos\Notifynder\Notifable;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
@@ -40,14 +41,14 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'last_name', 'email', 'role', 'needs_reset', 'registered', 'linkedin', 'bio', 'position', 'age_gate', 'country_origin', 'country_residence', 'contact_number', 'contact_number_country_code', 'phone_verified', 'contact_time'];
+    protected $fillable = ['name', 'last_name', 'email', 'role', 'needs_reset', 'registered', 'linkedin', 'bio', 'position', 'age_gate', 'country_origin', 'country_residence', 'contact_number', 'contact_number_country_code', 'phone_verified', 'contact_time','password'];
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = ['remember_token'];
 
     /**
      * The attributes included in the model's JSON form.
@@ -384,5 +385,9 @@ class User extends Model implements AuthenticatableContract,
                     break;
             }
         });
+    }
+
+    public function getfullNameAttribute(){
+        return $this->name." ".$this->last_name;
     }
 }

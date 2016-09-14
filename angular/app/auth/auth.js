@@ -52,6 +52,9 @@
                 password: $scope.data.password
             };
 
+            //print usercredentials
+            console.log(credentials);
+
             $auth.login(credentials).then(function(result) {
                 $auth.setToken(result.data.token);
 

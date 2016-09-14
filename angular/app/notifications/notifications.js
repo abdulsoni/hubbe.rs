@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    angular.module('fundator.controllers').controller('NotificationsCtrl', function($rootScope, $scope, $state, $stateParams, $http, FdNotifications) {
+    angular.module('fundator.controllers').controller('NotificationsCtrl', function($rootScope, $scope, $state, $stateParams, $http, FdNotifications,API) {
 
         $scope.fetchNotifications = function(){
             $scope.notifications = null;
@@ -15,6 +15,14 @@
                 });
             }
         }
+
+        $scope.latestFeeds = function(){
+            $scope.feeds=null;
+            $http.get(API.path('feed/show')).then(function(response){
+                $scope.feeds = response.data ;
+            });
+        }
+        $scope.latestFeeds();
 
         console.log('notifications');
         console.log($scope.notifications);

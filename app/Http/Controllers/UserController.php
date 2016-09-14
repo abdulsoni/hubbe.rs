@@ -18,6 +18,7 @@ use Fundator\Role;
 use Fundator\Skill;
 use Fundator\JuryApplication;
 use Fundator\ContestantApplication;
+use GetStream\StreamLaravel\Facades\FeedManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Fundator\Http\Requests;
@@ -29,6 +30,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use DB;
+use GetStream\Stream\Client;
 
 class UserController extends Controller {
 
@@ -116,17 +118,19 @@ class UserController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, $id) {
         $statusCode = 200;
         $response = [];
+
 
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['user_not_found'], 404);
             }
+            $oldName = $user->fullName;
 
             // Update Attributes
-
             $user->name = $request->name;
             $user->last_name = $request->last_name;
             $user->role = $request->role;
@@ -153,7 +157,7 @@ class UserController extends Controller {
                 UserInnovation::where('user_id', $id)->delete();
                 foreach ($request->innovation_id as $innovation_id) {
                     DB::table('user_innovation')->insert(['innovation_id' => $innovation_id['id'], 'user_id' => $id]);
-                    
+
                 }
             }
 
@@ -258,9 +262,16 @@ class UserController extends Controller {
                 $user->registered = 1;
                 Event::fire(new Register($user));
             }
-
             if ($user->save()) {
-                //$response ='Updated';
+                $activityData = [
+                    'actor'=>$user->id,
+                    'verb'=>'Profile Updation',
+                    'object'=>0,
+                    'display_message'=>$oldName." Changes To ".$user->fullName
+                ];
+                $userFeed = FeedManager::getUserFeed($user->id);
+                $userFeed->addActivity($activityData);
+
                 $response = ['success' => true, 'message' => 'Your profile has been updated successfully.'];
             }
         } catch (TokenExpiredException $e) {
@@ -318,7 +329,6 @@ class UserController extends Controller {
      */
     public function becomeJudge(Request $request) {
         $statusCode = 200;
-
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['user_not_found'], 404);
@@ -327,6 +337,7 @@ class UserController extends Controller {
             $application = JuryApplication::where('user_id', $user->id)->where('contest_id', $request->contest_id)->first();
 
             if (is_null($application)) {
+
                 $contest = Contest::find($request->contest_id);
 
                 $application = JuryApplication::create([
@@ -505,5 +516,6 @@ class UserController extends Controller {
         }
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
+
 
 }
