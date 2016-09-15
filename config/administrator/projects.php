@@ -270,7 +270,6 @@ return array(
                 }catch (Exception $e){
                     Log::error($e);
                 }
-
                 return false;
             }
         )

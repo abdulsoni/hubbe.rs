@@ -168,23 +168,17 @@ class ProjectController extends Controller
                 }
             }
             $project->state = $request->state;
-            print_r($project->state);
             if (is_null($project->super_expert_id) && isset($request->super_expert_id)) {
                 $superExpert = Expert::find($request->super_expert_id);
                 Event::fire(new ProjectSuperExpertSelected($project, $superExpert));
-
                 $project->super_expert_id = $request->super_expert_id;
                 $project->state = 2;
-                print_r($project);
-                exit;
             }
             $response = $project->save();
         } catch (Exception $e) {
             $statusCode = 400;
             $response = ['error' => $e->getMessage()];
         }
-
-        print_r($response);
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
@@ -389,15 +383,12 @@ class ProjectController extends Controller
 
             $investorsForTeam = $project->investments()->whereNotNull('investor_id')->get();
             $investorsTeam = [];
-
             foreach ($investorsForTeam as $investment) {
                 $investor = Investor::find($investment->investor_id);
                 $investorsTeam[] = $investor;
             }
-
             $project_data['investors'] = $investorsTeam;
         }
-
         return $project_data;
     }
 
@@ -411,11 +402,8 @@ class ProjectController extends Controller
     {
         $statusCode = 200;
         $response = [];
-
         try{
             $project = Project::find($id);
-//            return $project;
-
             $project_data = [];
 
             if (!is_null($project)) {
