@@ -1,0 +1,51 @@
+<div class="item-wrap">
+    <div class="item-title">
+        <h2>{{item.name}}</h2>
+
+        <span class="icon icon-close"></span>
+    </div>
+
+    <div class="item">
+        <div class="item-details">
+            <div class="item-image">
+                <img ng-src="{{item.thumbnail}}" alt="{{item.name}}">
+            </div>
+
+            <div class="item-info">
+                <div class="item-name">
+                    <a>{{item.name}}</a>
+                </div>
+                <div class="item-duration">
+                    <span class="icon icon-clock"></span>
+                    {{ end_time = (item.start_time | amAdd : item.duration : 'days'); ''}}
+                    {{ end_time | amDifference : null : 'days' }} Days to go
+                </div>
+            </div>
+        </div>
+
+        <div class="item-stats">
+            <div class="item-stat item-stat--contestants">
+                <div class="item-stat_num">{{item.num_contestants}}</div>
+                <div class="item-stat_label">
+                    Contestants
+                </div>
+            </div>
+            <div class="item-stat item-stat--jury">
+                <div class="item-stat_num">10</div>
+                <div class="item-stat_label">
+                    Juries
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="item-tabs">
+        <uib-tabset vertical="true" type="pills">
+            <uib-tab heading="General"></uib-tab>
+            <uib-tab heading="Creators"></uib-tab>
+            <uib-tab heading="Jury"></uib-tab>
+            <uib-tab heading="Market"></uib-tab>
+            <uib-tab heading="Contest official rules"></uib-tab>
+        </uib-tabset>
+    </div>
+</div>
