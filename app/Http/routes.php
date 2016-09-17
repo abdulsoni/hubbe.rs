@@ -27,11 +27,12 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
      */
     $api->get('users', 'Fundator\Http\Controllers\AuthenticateController@index');
     $api->get('user', 'Fundator\Http\Controllers\UserController@show');
-    $api->put('users/{id}', 'Fundator\Http\Controllers\UserController@update');
-    $api->post('users/{id}', 'Fundator\Http\Controllers\UserController@update');
 
     $api->post('users/becomeJudge', 'Fundator\Http\Controllers\UserController@becomeJudge');
     $api->post('users/becomeContestant', 'Fundator\Http\Controllers\UserController@becomeContestant');
+
+    $api->put('users/{id}', 'Fundator\Http\Controllers\UserController@update');
+    $api->post('users/{id}', 'Fundator\Http\Controllers\UserController@update');
 
     $api->get('users/sideNavigationData', 'Fundator\Http\Controllers\UserController@sideNavigationData');
 
@@ -203,7 +204,7 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
      * Innovation Category
      * @author Xipetech
      */
-    $api->get('innovationList/', 'Fundator\Http\Controllers\UserController@innovationList');
+    $api->get('innovationList', 'Fundator\Http\Controllers\UserController@innovationList');
     /*
      * Innovation Category
      * @author Xipetech
@@ -219,5 +220,21 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
      * Feed
      */
     $api->get('feed/show/', 'Fundator\Http\Controllers\FeedCtrl@index');
-    
+
+    /*
+     * Followers
+     */
+    $api->post('follow/', 'Fundator\Http\Controllers\FollowController@follow');
+    $api->post('unfollow/', 'Fundator\Http\Controllers\FollowController@unfollow');
 });
+
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
+Route::get('edit',function(){
+//   $user = \Fundator\User::find(132);
+//    $user->password=bcrypt('123456');
+//    $user->save();
+//    return randomString();
+
+});
+

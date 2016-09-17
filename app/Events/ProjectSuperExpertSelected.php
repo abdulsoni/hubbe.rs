@@ -7,18 +7,17 @@ use Fundator\Project;
 use Fundator\Expert;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Fundator\User;
 
-class ProjectSuperExpertSelected extends Event
-{
+class ProjectSuperExpertSelected extends Event{
     use SerializesModels;
-
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @return voidp
      */
-    public function __construct(Project $project, Expert $superExpert)
-    {
+    public function __construct(Project $project, Expert $superExpert){
+        $this->creator = User::find($project->creator->user_id);
         $this->project = $project;
         $this->superExpert = $superExpert;
     }
@@ -28,8 +27,7 @@ class ProjectSuperExpertSelected extends Event
      *
      * @return array
      */
-    public function broadcastOn()
-    {
+    public function broadcastOn(){
         return [];
     }
 }

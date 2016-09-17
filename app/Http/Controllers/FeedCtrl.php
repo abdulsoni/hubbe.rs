@@ -13,6 +13,8 @@ use Fundator\Http\Requests;
 use Fundator\Http\Controllers\Controller;
 
 use GetStream\StreamLaravel\Facades\FeedManager;
+use GetStream\Stream\Client;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class FeedCtrl extends Controller
 {
@@ -37,21 +39,20 @@ class FeedCtrl extends Controller
      */
     public function index()
     {
-
         $statusCode = 200;
         $response = [];
 
-        // Get your timeline:
-        $feed = FeedManager::getNewsFeeds()['timeline'];
+        if (!$user = JWTAuth::parseToken()->authenticate()) {
+            return response()->json(['user_not_found'], 404);
+        }
 
+        // Get your timeline:
+        $feed = FeedManager::getNewsFeeds($user->id)['timeline'];
         // Get your timeline activities from Stream:
         $activities = $feed->getActivities(0,25)['results'];
-
-        $response['data'] = $activities;
-
+        $response= $activities;
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
-
     /**
      * Create a new task.
      *

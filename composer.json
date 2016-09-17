@@ -18,7 +18,8 @@
         "efriandika/laravel-settings": "^1.2",
         "doctrine/dbal": "^2.5.4",
         "davibennun/laravel-push-notification": "dev-laravel5",
-        "get-stream/stream-laravel": "~2.2.6"
+        "get-stream/stream-laravel": "~2.2.6",
+        "rap2hpoutre/laravel-log-viewer": "^0.7.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

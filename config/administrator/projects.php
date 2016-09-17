@@ -1,5 +1,4 @@
 <?php
-
 use Fundator\Expert;
 use Fundator\Events\ProjectApproved;
 use Fundator\Events\ProjectBidSuperExpert;
@@ -7,19 +6,15 @@ use Fundator\Events\ProjectExpertiseApproved;
 use Fundator\Events\ProjectExpertsApproved;
 use Fundator\Events\ProjectBudgetApproved;
 use Fundator\Events\ProjectFinanceApproved;
-
+use Fundator\Events\ProjectInvestorsApproved;
 /**
  * Directors model config
  */
-
 return array(
 
     'title' => 'Projects',
-
     'single' => 'Project',
-
     'model' => 'Fundator\Project',
-
     /**
      * The display columns
      */
@@ -116,14 +111,10 @@ return array(
             {
                 // Notify the judges
                 Log::info('Approved');
-
                 try{
                     $model->state = 1;
-
                     $saveResult = $model->save();
-
                     $superExpert = Expert::where('super_expert', 1)->first();
-
                     Event::fire(new ProjectApproved($model));
                     Event::fire(new ProjectBidSuperExpert($model, $superExpert));
 
@@ -152,9 +143,7 @@ return array(
 
                 try{
                     $model->state = 3;
-
                     Event::fire(new ProjectExpertiseApproved($model));
-
                     if ($model->save()) {
                         return true;
                     }
@@ -274,16 +263,13 @@ return array(
                     $model->state = 6;
                     $model->draft = 0;
                     $model->display = 1;
-
                     Event::fire(new ProjectInvetorsApproved($model));
-
                     if ($model->save()) {
                         return true;
                     }
                 }catch (Exception $e){
                     Log::error($e);
                 }
-
                 return false;
             }
         )

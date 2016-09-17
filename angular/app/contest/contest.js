@@ -113,6 +113,7 @@
             contestId: $scope.contestId
         }).$promise.then(function(result) {
             $scope.contest = result;
+            // console.log(result);
 
             var judgeable = $filter('filter')($rootScope.user.judging, {
                 contest_id: $scope.contestId,
@@ -493,6 +494,44 @@
                 }
             }).finally(function(){
                 $scope.data.showContestantNdaLoading = false;
+            });
+        }
+
+        // Custom Functions For Follwing Users
+        $scope.checkFollow = function(follow,targetId,element){
+            var target = element.target;
+            var message = follow==1 ? 'Unfollow' : 'Follow';
+            bootbox.confirm("Are you sure you want to "+message+" ?", function(result) {
+                if(result){
+                    if (follow == 1) {
+                        $scope.unFollow(targetId);
+                        $(target).removeClass('btn-success').addClass('btn-danger');
+                        $(target).text("Follow");
+                    }
+                    else {
+                        $scope.follow(targetId);
+                        $(target).removeClass('btn-danger').addClass('btn-success');
+                        $(target).text("Following");
+                    }
+                }
+            });
+        }
+
+        $scope.follow = function(target){
+            var postData ={
+                targetId:target
+            };
+            $http.post(API.path('follow'),postData).success(function(data){
+                console.log(data);
+            })
+        }
+
+        $scope.unFollow = function(target){
+            var postData={
+                targetId:target
+            };
+            $http.post(API.path('unfollow'),postData).success(function(data){
+                console.log(data);
             });
         }
     });

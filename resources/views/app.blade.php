@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{!! asset('css/app/vendor.css') !!}">
     <link rel="stylesheet" href="{!! asset('css/app/style.css') !!}">
     <link rel="stylesheet" href="{!! asset('css/app/font-awesome.min.css') !!}">
-    
+
     <!-- <link rel="stylesheet" type="text/css" href="http://cloud.github.com/downloads/lafeber/world-flags-sprite/flags16.css" /> -->
 
     <meta name="renderer" content="webkit">
@@ -65,8 +65,11 @@
         </main>
     </div>
 
-    <script src="{!! asset('js/app/jquery.min.js') !!}"></script>
+    {{--<script src="{!! asset('js/app/jquery.min.js') !!}"></script>--}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="{!! asset('js/app/chosen.jquery.min.js') !!}"></script>
+    <script src="{!! asset('js/app/bootstrap.min.js') !!}"></script>
+    <script src="{!! asset('js/app/bootbox.min.js') !!}"></script>
     <script src="{!! asset('js/app/vendor.js') !!}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular-messages.min.js"></script> 
     <script src="{!! asset('js/app/app.js') !!}"></script>
@@ -81,13 +84,14 @@
       var select = $('.selectui').select2({
             placeholder:'Innovation'
         });
-    });      
+    });
+
     </script>
     <script type="text/javascript">
     $(function(){  
         $(document).on('keyup blur change','[data-validate]', function(){
             var getval = $(this).val();
-           var getminl = $(this).data('minlength');
+            var getminl = $(this).data('minlength');
             var getmaxl = $(this).data('maxlength');
             var getInValue = $(this).data('validate');
             if (getval.length<=getminl-1) {

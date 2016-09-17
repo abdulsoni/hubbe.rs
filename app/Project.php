@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\URL;
 use Fundator\ProjectFinance;
 
 use Cmgmyr\Messenger\Models\Thread;
-
+use GetStream\StreamLaravel\Eloquent\ActivityTrait;
 class Project extends Model
 {
     /**

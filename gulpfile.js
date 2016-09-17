@@ -22,10 +22,10 @@ elixir(function(mix) {
      .copy('./angular/directives/**/*.html', 'public/views/app/directives/')
      .copy('./angular/dialogs/**/*.html', 'public/views/app/dialogs/')
      .livereload([
-      'public/js/app/vendor.js',
-      'public/js/app/app.js',
-      'public/css/app/vendor.css',
-      'public/css/app.app.css',
+      // 'public/js/app/vendor.js',
+      // 'public/js/app/app.js',
+      // 'public/css/app/vendor.css',
+      // 'public/css/app.app.css',
       'public/views/app/**/*.html'
      ], {liveCSS: true})
 });

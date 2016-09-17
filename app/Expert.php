@@ -54,6 +54,10 @@ class Expert extends Model
         return $this->belongsTo('Fundator\User');
     }
 
+    public function user2(){
+        return $this->belongsTo('Fundator\User','user_id','id');
+    }
+
     public function expertise(){
         return $this->belongsToMany('Fundator\Expertise', 'expert_expertise');
     }

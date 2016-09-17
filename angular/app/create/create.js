@@ -165,7 +165,6 @@
 
         $scope.saveProgress = function() {
             var project = angular.copy($scope.project);
-
             console.log(project);
 
             if (typeof($scope.project) !== 'undefined') {
@@ -262,14 +261,16 @@
 
         $http.get(API.path('super-experts')).then(function(result) {
             $scope.superExperts = result.data;
+            console.log($scope.superExperts);
+            // alert('Super Experts Data')
         }).finally(function() {
             $rootScope.innerSectionLoading = false;
         });
 
         $scope.chooseSuperExpert = function(superExpert) {
+            console.log($scope.project);
             $scope.project.super_expert_id = superExpert.id;
             $scope.saveProgress();
-
             FdScroller.toSection('.steps-content');
 
             $timeout(function() {
@@ -422,7 +423,7 @@
                 $scope.inputtedExpertiseList[index].selectedExpertise = null;
                 $scope.inputtedExpertiseList[index].otherExpertise = { name: '', status: 0 };
 
-                $scope.inputtedExpertiseList[index].otherExpertiseCategory.status = 1;
+                $regscope.inputtedExpertiseList[index].otherExpertiseCategory.status = 1;
                 $scope.inputtedExpertiseList[index].step = 2;
             } else {
                 $scope.inputtedExpertiseList[index].selectedExpertiseSubCategory = null;

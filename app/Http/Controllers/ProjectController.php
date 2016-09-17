@@ -64,18 +64,15 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+
         $statusCode = 200;
         $response = [];
-
         try{
             if (! $user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['user_not_found'], 404);
             }
-
             $creator = $user->creator;
-
             if (!is_null($creator)) {
                 $project = Project::create([
                     'draft' => 1,
@@ -84,21 +81,16 @@ class ProjectController extends Controller
                     'start_time' => date('Y-m-d H:i:s'),
                     'duration' => 60
                 ]);
-
                 $project->creator()->associate($creator);
                 $project->save();
-
                 $response = $project;
             }
         } catch (Exception $e) {
             $statusCode = 400;
             $response = ['error' => $e->getMessage()];
         }
-
-
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
-
     /**
      * Display the specified resource.
      *
@@ -148,7 +140,6 @@ class ProjectController extends Controller
     {
         $statusCode = 200;
         $response = [];
-
         try{
             if (! $user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['user_not_found'], 404);
@@ -156,7 +147,6 @@ class ProjectController extends Controller
 
             $creator = $user->creator;
             $project = Project::find($id);
-
             // Update Logic Happens here
             $project->thumbnail = $request->thumbnail;
             $project->name = $request->name;
@@ -165,40 +155,30 @@ class ProjectController extends Controller
             $project->price = floatval($request->price);
             $project->geography = $request->geography;
             $project->language = $request->language;
-
             if (isset($request->productCategory['id'])) {
                 $productCategory = ProductCategory::find($request->productCategory['id']);
-
                 if (!is_null($productCategory)) {
                     $project->productCategory()->associate($productCategory);
                 }
             }
-
             if (isset($request->innovationCategory['id'])) {
                 $innovationCategory = InnovationCategory::find($request->innovationCategory['id']);
-
                 if (!is_null($innovationCategory)) {
                     $project->innovationCategory()->associate($innovationCategory);
                 }
             }
-
             $project->state = $request->state;
-
             if (is_null($project->super_expert_id) && isset($request->super_expert_id)) {
                 $superExpert = Expert::find($request->super_expert_id);
                 Event::fire(new ProjectSuperExpertSelected($project, $superExpert));
-
                 $project->super_expert_id = $request->super_expert_id;
                 $project->state = 2;
             }
-
             $response = $project->save();
         } catch (Exception $e) {
             $statusCode = 400;
             $response = ['error' => $e->getMessage()];
         }
-
-
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
@@ -403,15 +383,12 @@ class ProjectController extends Controller
 
             $investorsForTeam = $project->investments()->whereNotNull('investor_id')->get();
             $investorsTeam = [];
-
             foreach ($investorsForTeam as $investment) {
                 $investor = Investor::find($investment->investor_id);
                 $investorsTeam[] = $investor;
             }
-
             $project_data['investors'] = $investorsTeam;
         }
-
         return $project_data;
     }
 
@@ -425,15 +402,12 @@ class ProjectController extends Controller
     {
         $statusCode = 200;
         $response = [];
-
         try{
             $project = Project::find($id);
-
             $project_data = [];
 
             if (!is_null($project)) {
                 $project_data = $project->expertise;
-
                 foreach ($project_data as $project_expertise) {
                     $project_expertise['project'] = $project_expertise->getProject();
                     $project_expertise['expertise'] = $project_expertise->getExpertise();

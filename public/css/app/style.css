@@ -386,7 +386,6 @@ width: 100%;
   width: 180px!important;
 }
 
-
 .boxz-img{
   width: 140px;
   height: 115px;
@@ -463,3 +462,7 @@ width: 100%;
   position: relative;
   padding-right: 28px;
  } */
+
+.custom-modal-content{
+  padding:0px 10px;
+}

@@ -4,6 +4,7 @@ namespace Fundator;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
+use GetStream\StreamLaravel\Eloquent\ActivityTrait;
 
 class Contest extends Model
 {

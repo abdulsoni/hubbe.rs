@@ -16,8 +16,8 @@
                 isArray: false
             }
         });
-
         Project.query({fd_active_role: $rootScope.activeRole}).$promise.then(function(result) {
+            
             if ($rootScope.activeRole === 'creator') {
                 $scope.projects = result.ongoing;
                 $scope.draftProjects = result.draft;

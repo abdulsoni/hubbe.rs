@@ -168,7 +168,7 @@
                 }
             }, function(result){
                 console.log('error');
-                alert(result);
+                // alert(result);
             }).finally(function(){
                 $timeout(function(){
                     $scope.data.userSettingsSave = -1;
