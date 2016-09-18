@@ -94,7 +94,6 @@
             });
         });
 
-
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
             if ($auth.isAuthenticated()) {
                 if (!$rootScope.initialRoleAssignment && toState.name.indexOf('auth') === -1) {
