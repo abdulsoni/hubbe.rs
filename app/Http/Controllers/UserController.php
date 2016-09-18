@@ -29,7 +29,7 @@ use Exception;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
- use DB;
+use DB;
 use GetStream\Stream\Client;
 
 class UserController extends Controller {
