@@ -11,6 +11,8 @@ Homestead.json
 .ai
 .zip
 /public/uploads
+/public/css
+/public/js
 /public/resize
 composer.lock
 composer.lock
