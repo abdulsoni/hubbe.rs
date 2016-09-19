@@ -199,7 +199,7 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
      */
     $api->post('messages/', 'Fundator\Http\Controllers\MessagesController@store');
     $api->get('messages/{id}', 'Fundator\Http\Controllers\MessagesController@show');
-    
+
     /*
      * Innovation Category
      * @author Xipetech

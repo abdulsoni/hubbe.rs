@@ -220,9 +220,7 @@ return [
          * Laravel Rateable
          */
 
-        GetStream\StreamLaravel\StreamLaravelServiceProvider::class,
-
-        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        GetStream\StreamLaravel\StreamLaravelServiceProvider::class
     ],
 
     /*

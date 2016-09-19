@@ -51,3 +51,21 @@ stop the virtual machine.
 
 Always pull the changes before commiting your own changes.
 
+### Switch from HHVM to PHP7.0
+
+Add the PHP respository and update apt
+
+`sudo add-apt-repository ppa:ondrej/php`
+`sudo apt-get update`
+
+Install PHP7.0, PHP7.0-FPM and PHP7.0-Mysql 
+`sudo apt-get install php7.0-fpm`
+`sudo apt-get install php7.0-mysql`
+
+Replace the php5-fmp sock with php7-fpm sock
+
+`sudo nano /etc/nginx/sites-enabled/default`
+
+`fastcgi_pass unix:/var/run/php/php5-fpm.sock;`
+to replace with
+`fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;`

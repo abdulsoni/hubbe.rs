@@ -29,7 +29,7 @@ use Exception;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
-use DB;
+// use DB;
 use GetStream\Stream\Client;
 
 class UserController extends Controller {
@@ -486,15 +486,18 @@ class UserController extends Controller {
      * @author Xipetech
      */
 
-    Public function innovationList() {
+    public function innovationList() {
         $statusCode = 200;
+
         try {
+
             $response = DB::table('innovation_categories')
                     ->select('id', 'name')
                     ->get();
         } catch (Exception $e) {
             $statusCode = 400;
             $response = ['error' => $e->getMessage()];
+
         }
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
@@ -504,7 +507,7 @@ class UserController extends Controller {
      * @author Xipetech
      */
 
-    Public function creationList() {
+    public function creationList() {
         $statusCode = 200;
         try {
             $response = DB::table('creation_categories')
