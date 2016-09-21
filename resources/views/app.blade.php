@@ -6,12 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <title>{!! config('app.site_name') !!}</title> -->
     <title>Fundator | Community of creators</title>
-    <link rel="stylesheet" href="{!! asset('css/app/bootstrap.min.css') !!}">
-    <link rel="stylesheet" href="{!! asset('css/app/chosen.min.css') !!}">
     <link rel="stylesheet" href="{!! asset('css/app/app.css') !!}">
     <link rel="stylesheet" href="{!! asset('css/app/vendor.css') !!}">
-    <link rel="stylesheet" href="{!! asset('css/app/style.css') !!}">
-    <link rel="stylesheet" href="{!! asset('css/app/font-awesome.min.css') !!}">
 
     <!-- <link rel="stylesheet" type="text/css" href="http://cloud.github.com/downloads/lafeber/world-flags-sprite/flags16.css" /> -->
 
@@ -64,32 +60,23 @@
             <footer ui-view="footer"></footer>
         </main>
     </div>
-
-    {{--<script src="{!! asset('js/app/jquery.min.js') !!}"></script>--}}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="{!! asset('js/app/chosen.jquery.min.js') !!}"></script>
-    <script src="{!! asset('js/app/bootstrap.min.js') !!}"></script>
-    <script src="{!! asset('js/app/bootbox.min.js') !!}"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.js" type="text/javascript"></script>
+    <script src="{!! asset('js/app/selectize.js') !!}"></script>
+    <script src="{!! asset('js/app/angular-selectize.js') !!}"></script>
     <script src="{!! asset('js/app/vendor.js') !!}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular-messages.min.js"></script> 
     <script src="{!! asset('js/app/app.js') !!}"></script>
-    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css">
-    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2-bootstrap.css">
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.min.js"></script>
 
-    <!-- Latest compiled and minified JavaScript -->
     <script type="text/javascript">
-    //Select2
-    $(function(){  
-      var select = $('.selectui').select2({
-            placeholder:'Innovation'
-        });
-    });
-
-    </script>
-    <script type="text/javascript">
-    $(function(){  
+    $(function(){
         $(document).on('keyup blur change','[data-validate]', function(){
+            $( ".form-control" ).focusin(function() {
+                var e = $(this).next();
+                $(e).find('.msg1').css('display','block');
+            });
+            $(".form-control").focusout(function(){
+                var e = $(this).next();
+                $(e).find('.msg1').css('display','none');
+            });
             var getval = $(this).val();
             var getminl = $(this).data('minlength');
             var getmaxl = $(this).data('maxlength');

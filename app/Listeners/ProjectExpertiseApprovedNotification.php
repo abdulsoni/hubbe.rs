@@ -13,8 +13,7 @@ class ProjectExpertiseApprovedNotification
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(){
         //
     }
 
@@ -24,8 +23,7 @@ class ProjectExpertiseApprovedNotification
      * @param  ProjectExpertiseApproved  $event
      * @return void
      */
-    public function handle(ProjectExpertiseApproved $event)
-    {
+    public function handle(ProjectExpertiseApproved $event){
         //
     }
 }

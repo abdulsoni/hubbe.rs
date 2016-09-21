@@ -38,6 +38,8 @@
 
     angular.module('fundator.controllers').controller('RegisterCtrl', function($rootScope, $scope, $state, $auth, $timeout, $http, $resource, FdScroller, $filter, FileUploader, Countries, CountryCodes, API) {
 
+
+        $scope.single = null;
         $scope.form = {
             currentStep: 1,
             totalSteps: 3
@@ -49,13 +51,48 @@
             investor: 4
         };
 
+        $scope.changeRoleStart = function(type){
+            $scope.data.selectedRole = type;
+            $scope.changeRole();
+            $scope.form.currentStep=1;
+
+        };
+
         $scope.changeFormStep = function(newStep){
             FdScroller.toTop();
             $scope.form.currentStep = newStep;
         }
 
         $scope.countries = Countries();
+        console.log($scope.countries);
         $scope.countryCodes = CountryCodes();
+
+        $scope.countryConfig = {
+            options: $scope.countries,
+            sortField: 'name',
+            maxItems: 5,
+            valueField: 'code',
+            labelField: 'name',
+            searchField: 'name',
+        }
+
+        $scope.countryConfig2 = {
+            options: $scope.countries,
+            sortField: 'name',
+            maxItems: 1,
+            valueField: 'code',
+            labelField: 'name',
+            searchField: 'name',
+        }
+        // console.log($scope.countryCodes);
+        $scope.countryCodeConfig = {
+            options: $scope.countryCodes,
+            sortField: 'country',
+            maxItems: 1,
+            valueField: 'code',
+            labelField: 'code',
+            searchField: ['code','country']
+        }
 
         $scope.contactTimes = [
             {name: 'Working hours (9am to 6 pm)', value: '9-6'},
@@ -77,9 +114,7 @@
         };
 
         var payload = $auth.getPayload();
-
         $rootScope.$broadcast('stopLoading');
-
         $scope.changeRole = function() {
             $scope.form.totalSteps = $scope.totalSteps[$scope.data.selectedRole];
         }
@@ -147,6 +182,7 @@
             event.stopPropagation();
             event.preventDefault();
         });
+
 
         $(document).on('dragenter', '.img-upload-show', function(event) {
             event.stopPropagation();

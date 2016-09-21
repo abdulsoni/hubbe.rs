@@ -414,9 +414,7 @@ width: 100%;
      background: none!important;
 }
 .inptool-select{
-
  	right:-30px!important;
-
  }
 /* .exclaiminate p{
   position: absolute;
@@ -461,3 +459,23 @@ width: 100%;
   position: relative;
   padding-right: 28px;
  } */
+.selectize-control{
+  padding-left: 0;
+}
+.selectize-input{
+  border:0px !important;
+  box-shadow:none !important;
+}
+.selectize-input:focus{
+  box-shadow: none !important;
+}
+//.selectize-control.single .selectize-input:after{
+  //border-width: 8px 7px 0 !important;
+  //border-color:#565656 !important;
+//}
+.selectize-dropdown-content{
+  background: #fff;
+}
+.selectize-input>*{
+  font-size:18px;
+}
