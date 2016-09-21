@@ -12,7 +12,7 @@
         ]);
 
     angular.module('fundator.routes', ['ui.router', 'satellizer']);
-    angular.module('fundator.controllers', ['ngResource', 'ngCookies', 'ngAnimate', 'ui.bootstrap', 'ui.router', 'satellizer', 'angularMoment', 'angular-owl-carousel', 'ngImgCrop', 'angularFileUpload', 'bootstrapLightbox']);
+    angular.module('fundator.controllers', ['ngResource', 'ngCookies', 'ngAnimate', 'ui.bootstrap', 'ui.router', 'satellizer', 'angularMoment', 'angular-owl-carousel', 'ngImgCrop', 'angularFileUpload', 'bootstrapLightbox','selectize']);
     angular.module('fundator.filters', ['ordinal']);
     angular.module('fundator.services', ['ui.router']);
     angular.module('fundator.directives', ['dibari.angular-ellipsis', 'localytics.directives', 'textAngular', 'flow', 'angular-ladda', 'ngFlag', 'oitozero.ngSweetAlert', 'ui.bootstrap-slider', 'Firestitch.angular-counter', 'ui.select', 'ngSanitize']);

@@ -11,7 +11,6 @@ use Fundator\Events\ProjectInvestorsApproved;
  * Directors model config
  */
 return array(
-
     'title' => 'Projects',
     'single' => 'Project',
     'model' => 'Fundator\Project',
@@ -38,14 +37,12 @@ return array(
             'title' => 'Should Display ?',
         )
     ),
-
     /**
      * The width of the model's edit form
      *
      * @type int
      */
     'form_width' => 500,
-
     /**
      * The editable fields
      */
@@ -90,7 +87,6 @@ return array(
             'title' => 'Should Display ?',
         )
     ),
-
     /**
      * Project Actions
      */
@@ -117,12 +113,10 @@ return array(
                     $superExpert = Expert::where('super_expert', 1)->first();
                     Event::fire(new ProjectApproved($model));
                     Event::fire(new ProjectBidSuperExpert($model, $superExpert));
-
                     return $saveResult;
                 }catch (Exception $e){
                     Log::error($e);
                 }
-
                 return false;
             }
         ),
@@ -140,7 +134,6 @@ return array(
             'action' => function($model)
             {
                 Log::info('Project Expertise Approved');
-
                 try{
                     $model->state = 3;
                     Event::fire(new ProjectExpertiseApproved($model));
@@ -150,7 +143,6 @@ return array(
                 }catch (Exception $e){
                     Log::error($e);
                 }
-
                 return false;
             }
         ),
@@ -168,19 +160,15 @@ return array(
             'action' => function($model)
             {
                 Log::info('Project Experts Approved');
-
                 try{
                     $model->state = 4;
-
                     Event::fire(new ProjectExpertsApproved($model));
-
                     if ($model->save()) {
                         return true;
                     }
                 }catch (Exception $e){
                     Log::error($e);
                 }
-
                 return false;
             }
         ),
@@ -198,19 +186,15 @@ return array(
             'action' => function($model)
             {
                 Log::info('Project Budget Approved');
-
                 try{
                     $model->state = 4.1;
-
                     Event::fire(new ProjectBudgetApproved($model));
-
                     if ($model->save()) {
                         return true;
                     }
                 }catch (Exception $e){
                     Log::error($e);
                 }
-
                 return false;
             }
         ),
@@ -228,19 +212,15 @@ return array(
             'action' => function($model)
             {
                 Log::info('Project Finance Approved');
-
                 try{
                     $model->state = 5;
-
                     Event::fire(new ProjectFinanceApproved($model));
-
                     if ($model->save()) {
                         return true;
                     }
                 }catch (Exception $e){
                     Log::error($e);
                 }
-
                 return false;
             }
         ),
@@ -258,7 +238,6 @@ return array(
             'action' => function($model)
             {
                 Log::info('Project Invetors Approved');
-
                 try{
                     $model->state = 6;
                     $model->draft = 0;

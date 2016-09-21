@@ -93,7 +93,7 @@
                         <div class="col-sm-9 border-right1">
                             <div class="row">
                                 <div class="col-sm-7">
-                                    <form role="form">
+                                    <!--<form role="form">-->
                                         <div class="form-group">
                                             <label>First Name:</label>
                                             <div class="exclaiminate">
@@ -136,7 +136,7 @@
                                         <div class="form-group">
                                             <label for="last">I'm over 18 years old:</label>
 
-                                            <p class="radiobutton-content">
+                                            <!--<p class="radiobutton-content">-->
                                             <div class="exclaiminate">
                                                 <label class="radio-design">
                                                     <input type="radio" name="iam-overEighteen" id="yes-overEighteen" value="yes" ng-model="data.ageGate">
@@ -155,7 +155,7 @@
 If you choose no, no worry. You can still participate but you will need to have your parents or someone having the right to take decisions on your behalf. Write us an email legal@fundator.co to get more information</p>
                                                 </span>
                                             </div>
-                                            </p>
+                                            <!--</p>-->
                                         </div>
                                         <script type="text/ng-template" id="countryTemplate.html">
                                             <a>
@@ -167,7 +167,8 @@ If you choose no, no worry. You can still participate but you will need to have 
                                             <label for="last">I am from:</label>
                                             <div class="exclaiminate">
                                                 <div class="select-style">
-                                                    <input type="text" ng-model="data.countryOrigin" uib-typeahead="country as country.name for country in countries | filter:$viewValue | limitTo:8" typeahead-template-url="countryTemplate.html" class="form-control inputFieldGray" data-validate="four" data-minlength="4" data-maxlength="40">
+                                                    <selectize class="form-control" config="countryConfig" ng-model="data.countryOrigin"></selectize>
+                                                    <!--<input type="text" ng-model="data.countryOrigin" uib-typeahead="country as country.name for country in countries | filter:$viewValue | limitTo:8" typeahead-template-url="countryTemplate.html" class="form-control inputFieldGray" data-validate="four" data-minlength="4" data-maxlength="40">-->
                                                     <span class="inp-tool inptool-select" data-alertshow="four">
                                                         <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                                                         <p class="msg-alert msg1">That is your country of nationality. Either born there or not. If you have more than 1, feel free to choose the one our prefer</p>
@@ -181,7 +182,9 @@ If you choose no, no worry. You can still participate but you will need to have 
                                             <label for="last">I live in:</label>
                                             <div class="exclaiminate">
                                                 <div class="select-style">
-                                                    <input type="text" ng-model="data.countryResidence" uib-typeahead="country as country.name for country in countries | filter:$viewValue | limitTo:8" typeahead-template-url="countryTemplate.html" class="form-control inputFieldGray">
+
+                                                    <selectize class="form-control" config="countryConfig2" ng-model="data.countryResidence"></selectize>
+                                                    <!--<input type="text" ng-model="data.countryResidence" uib-typeahead="country as country.name for country in countries | filter:$viewValue | limitTo:8" typeahead-template-url="countryTemplate.html" class="form-control inputFieldGray">-->
                                                     <span class="inp-tool  inptool-select" data-alertshow="five">
                                                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                                                         <p class="msg-alert msg1">Great things of today’s world. Being from one country and living in another. Same as me, from France but living in between China,  South Korea and Hong Kong for few years. Letting people know can be great for future meetings</p>
@@ -190,7 +193,7 @@ If you choose no, no worry. You can still participate but you will need to have 
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    <!--</form>-->
                                 </div>
 
 
@@ -235,7 +238,7 @@ If you choose no, no worry. You can still participate but you will need to have 
 
                                         </div>
                                         <div class="img-upload-buttons">
-                                            <button class="btn btn-selectfile" ng-click="confirmImage()" ng-if="thumbnail !== null"><i class="fa fa-cloud-upload">Set Thumbnail</i></button>
+                                             <button type="button" class="btn btn-selectfile" ng-click="confirmImage()" ng-if="thumbnail !== null"><i class="fa fa-cloud-upload">Set Thumbnail</i></button>
                                         </div>
                                         <div class="image-error">{{data.imageError}}</div>
                                         <div class="image-success" ng-if="imageSuccess !== 'null'">{{data.imageSuccess}}</div>
@@ -252,15 +255,15 @@ If you choose no, no worry. You can still participate but you will need to have 
                                     <button class="btn btn-save btn-previous" ng-click="changeFormStep(1)"><span class="fa fa-angle-left fa-angle-leftcenter"></span> Previous</button>
                                 </div>
                                 <div class="col-sm-3 text-right">
-                                    <button class="btn btn-save" ng-disabled="step1Form.$invalid"  ng-click="changeFormStep(3)" >SAVE AND NEXT<span class="fa fa-angle-right fa-angle-rightcenter"></span></button>
+                                    <button class="btn btn-save" ng-disabled="step1Form1.$invalid"  ng-click="changeFormStep(3)" >SAVE AND NEXT<span class="fa fa-angle-right fa-angle-rightcenter"></span></button>
                                 </div>
                             </div>
                         </div>
                     </form>
                     <div class="col-sm-3 regiitration-design">
                         <label>Or Register as:</label>
-                        <p class="mt20"><i class="fa fa-angle-right" aria-hidden="true"></i>an Expert </p>
-                        <p><i class="fa fa-angle-right" aria-hidden="true"></i>As an Investor </p>
+                        <p class="mt20"><i class="fa fa-angle-right" aria-hidden="true"></i><a ng-click="changeRoleStart('expert')" href="javascript:void(0);">an Expert</a></p>
+                        <p><i class="fa fa-angle-right" aria-hidden="true"></i><a ng-click="changeRoleStart('investor')" href="javascript:void(0);">As an Investor</a> </p>
                     </div>
                 </div>
             </div>
@@ -277,7 +280,6 @@ If you choose no, no worry. You can still participate but you will need to have 
                             <div class="col-sm-7">
                                 <form name="step2Form">
                                     <div class="form-group">
-
                                         <label for="name">My email address is:</label>
                                         <input type="text" placeholder="{{user.email}}" class="form-control " ng-model="data.email" required>
                                     </div>
@@ -294,7 +296,9 @@ If you choose no, no worry. You can still participate but you will need to have 
                                             </script>
 
                                             <div class="col-xs-3">
-                                                <input type="text" ng-model="data.contactNumberCountryCode" uib-typeahead="code as code.code for code in countryCodes | filter:$viewValue | limitTo:8" typeahead-template-url="countryCodeTemplate.html" class="form-control">
+                                                <selectize class="form-control" config="countryCodeConfig" ng-model="data.contactNumberCountryCode"></selectize>
+
+                                                <!--<input type="text" ng-model="data.contactNumberCountryCode" uib-typeahead="code as code.code for code in countryCodes | filter:$viewValue | limitTo:8" typeahead-template-url="countryCodeTemplate.html" class="form-control">-->
                                                 <small>Country code</small>
                                             </div>
 
@@ -324,7 +328,6 @@ If you choose no, no worry. You can still participate but you will need to have 
 
 
                         <div class="col-sm-5">
-
                             <div class="uload-photo">
                                 <img src="images/icon-user-default.png" alt="" ng-if="!user.thumbnail">
                                 <img ng-src="{{user.thumbnail}}" alt="" ng-if="user.thumbnail">
@@ -357,8 +360,9 @@ If you choose no, no worry. You can still participate but you will need to have 
 
                 <div class="col-sm-3 regiitration-design">
                     <label>Or Register as:</label>
-                    <p class="mt20"><i class="fa fa-angle-right" aria-hidden="true"></i>an Expert </p>
-                    <p><i class="fa fa-angle-right" aria-hidden="true"></i>As an Investor </p>
+
+                    <p class="mt20"><i class="fa fa-angle-right" aria-hidden="true"></i><a ng-click="changeRoleStart('expert')" href="javascript:void(0);">an Expert</a></p>
+                    <p><i class="fa fa-angle-right" aria-hidden="true"></i><a ng-click="changeRoleStart('investor')" href="javascript:void(0);">As an Investor</a> </p>
                 </div>
             </div>
     </div>
@@ -418,8 +422,8 @@ If you choose no, no worry. You can still participate but you will need to have 
                 </form>
                 <div class="col-sm-3 regiitration-design">
                     <label>Or Register as:</label>
-                    <p class="mt20"><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>an Expert </a></p>
-                    <p><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>As an Investor </a></p>
+                    <p class="mt20"><i class="fa fa-angle-right" aria-hidden="true"></i><a ng-click="changeRoleStart('expert')" href="javascript:void(0);">an Expert</a></p>
+                    <p><i class="fa fa-angle-right" aria-hidden="true"></i><a ng-click="changeRoleStart('investor')" href="javascript:void(0);">As an Investor</a> </p>
                 </div>
             </div>
         </div>
