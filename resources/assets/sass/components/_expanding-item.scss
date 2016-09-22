@@ -51,6 +51,7 @@ expanding-item{
 		@include transition(all 0.5s);
 
 		h2{
+			margin-top: 0;
 			font-weight: 300;
 		}
 	}
@@ -59,6 +60,7 @@ expanding-item{
 		position: relative;
 
 		.item-image{
+			min-height: 311px;
 			padding-top: 56.25%;
 			position: relative;
 
@@ -145,7 +147,19 @@ expanding-item{
 
 		@include translate(-15px, 0);
 
+		> {
+			margin-left: 120px;
+			padding: 35px;
+		}
+
+		.tab-content{
+			margin-left: 120px;
+			padding: 35px;
+			width: 100%;
+		}
+
 		.nav-pills{
+			float: left;
 			> li {
 				margin-top: 0;
 

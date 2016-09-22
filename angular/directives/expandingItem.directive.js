@@ -36,6 +36,8 @@
                     // });
 
                     $timeout(function(){
+                        console.log($parent);
+                        console.log('parent-clicked');
                         $parent.addClass('transitioning transitioning_expanding');
                     });
                 });
