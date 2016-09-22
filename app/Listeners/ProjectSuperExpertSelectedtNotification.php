@@ -42,7 +42,7 @@ class ProjectSuperExpertSelectedtNotification
             'object'=>$project->id,
             'display_message'=>"$creator->name has choosen <b>$user->name</b>  as a super expert for his project $project->name"
         ];
-        print_r($activityData);
+//        print_r($activityData);
         $userFeed = FeedManager::getUserFeed($creator->id);
         $userFeed->addActivity($activityData);
 

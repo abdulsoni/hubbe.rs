@@ -57,13 +57,15 @@ class EventServiceProvider extends ServiceProvider
         'Fundator\Events\JuryApplicationApproval' => [
             'Fundator\Listeners\JuryApplicationApprovalNotification'
         ],
-
         'Fundator\Events\ContestNewEntry' => [
             'Fundator\Listeners\ContestNewEntryNotification'
         ],
         'Fundator\Events\ContestEntryReviewed' => [
             'Fundator\Listeners\ContestEntryReviewedNotification'
         ],
+        'Fundator\Events\ProfileUpdated' => [
+            'Fundator\Listeners\ProfileUpdatedNotification'
+        ]
     ];
 
     /**
