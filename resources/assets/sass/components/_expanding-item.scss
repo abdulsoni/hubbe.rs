@@ -139,10 +139,12 @@ expanding-item{
 	}
 
 	.item-tabs{
+		height:386px;
+		overflow-y: scroll;
+		overflow-x: hidden;
 		float: left;
 		opacity: 0;
 		visibility: hidden;
-
 		z-index: 21;
 
 		@include translate(-15px, 0);
@@ -155,6 +157,8 @@ expanding-item{
 		.tab-content{
 			margin-left: 120px;
 			padding: 35px;
+			margin-left: 95px;
+			padding: 0px 5px 0px 35px;
 			width: 100%;
 		}
 
@@ -213,7 +217,7 @@ expanding-item{
 	&.active{
 		.item-wrap{
 			width: 100%;
-			padding: 90px 30px 30px;
+			padding: 90px 12px 12px;
 			background-color: #fff;
 
 			@include transition(all 0.5s 0.3s, background-color 0.3s 0.8s);
@@ -249,10 +253,55 @@ expanding-item{
 		}
 
 		.item-tabs{
+			width: 52%;
 			opacity: 1;
 			visibility: visible;
 			@include translate(0, 0);
 			@include transition(all 0.75s 1s);
 		}
 	}
+}
+.jury-box .col-sm-6{
+	padding:0px 10px;
+}
+.jury-box .single-member{
+	padding: 0px 7px;
+}
+.transitioning.transitioning_expanding expanding-item.active .item{
+	width:48% !important;
+}
+.social-buttons>ul{
+	list-style: none;
+	padding-left:0;
+	margin-left:0;
+	padding-top: 23px;
+}
+.social-buttons>ul>li{
+	display: inline-block;
+}
+.social-buttons>ul>li>a{
+	display: block;
+	color:#333333;
+	margin:0 10px;
+}
+.single-member h3{
+	font-size:18px;
+	margin:10px 0px;
+}
+
+.btn-green{
+	background-color: #95c54d;
+	border-color: #abc452;
+	padding: 15px 31px;
+	font-size: 14px;
+	color:#fff;
+}
+.jury-box .info{
+	margin-top:50px;
+	margin-left:-20px;
+}
+
+.jury-box .btn-secondary{
+	background-color: #DDDDDD;
+	border:0px;
 }

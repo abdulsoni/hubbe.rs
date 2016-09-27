@@ -16,3 +16,32 @@
 
 // Tablet & Mobile
 @import "_responsive";
+
+.custom-tabs{
+  border-bottom:0px;
+  background: #fff !important;
+}
+.custom-tabs>li.active>a{
+  border:0px;
+  background: #fff;
+  border-right: 2px solid #D1D3D4;
+  color:#95C54D;
+}
+.custom-tabs>li>a{
+  border:0px;
+  background: #fff;
+  border-right: 2px solid #272727;
+  border-radius:0px !important;
+  padding:0px 15px;
+  margin:10px 0px;
+  color:#272727;
+}
+.custom-tabs>li:last-child a{
+    border:0px !important;
+}
+.custom-tabs>li>a:hover{
+  border-top-width: 0px !important;
+  border-bottom-width: 0px !important;
+  border-left-width:0px !important;
+  border-right-width:2px;
+}

@@ -1,10 +1,8 @@
 <div class="item-wrap">
     <div class="item-title">
         <h2>{{item.name}}</h2>
-
         <span class="icon icon-close"></span>
     </div>
-
     <div class="item">
         <div class="item-details">
             <div class="item-image">
@@ -31,7 +29,7 @@
                 </div>
             </div>
             <div class="item-stat item-stat--jury">
-                <div class="item-stat_num">10</div>
+                <div class="item-stat_num" ng-bind="item.judges.length"></div>
                 <div class="item-stat_label">
                     Juries
                 </div>
@@ -47,8 +45,102 @@
             <uib-tab heading="Creators">
                 Input 'Creators' content here ...
             </uib-tab>
-            <uib-tab heading="Jury">
-                Input 'Jury' content here ...
+            <uib-tab heading="Jury" ng-show="loggedIn">
+                <div class="jury-box" ng-if="singleJudge">
+                    <div>
+                        <a ng-click="closeJudge()" href="javascript:void(0)"><i class="fa fa-times fa-2x"></i></a>
+                    </div>
+                    <hr>
+                    <div class="col-sm-12 single-member">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <img src="./images/icon-user-default.png" width="100px" alt="">
+                                <!--<img src="{{judge.user.thumbnail_url}}" width="100px">-->
+                            </div>
+                            <div class="col-sm-7">
+                                <h3 ng-bind="singleItem.user.name+' '+singleItem.user.last_name"></h3>
+                                <h5><i class="fa fa-map-marker"></i> {{singleItem.user.country_origin}}</h5>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="social-buttons" style="margin:16px;">
+                                <div class="c100 p45 small">
+                                    <span>45%</span>
+                                    <div class="slice">
+                                        <div class="bar"></div>
+                                        <div class="fill"></div>
+                                    </div>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </a>
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-facebook fa-2x"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter fa-2x"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-linkedin fa-2x"></i></a></li>
+                                </ul>
+                                <button ng-click="checkFollow(singleItem.followData.areYouFollowed,singleItem.user_id)" style="width:84%; margin-top:10px;" class="btn btn-green btn-full">{{singleItem.followData.followText}} this Jury</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="singleJudge==false" class="jury-box">
+                    <div class="row">
+                        <div class="col-sm-5 single-member" ng-repeat="judge in item.judges">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <img src="./images/icon-user-default.png" width="100px" alt="">
+                                    <!--<img src="{{judge.user.thumbnail_url}}" width="100px">-->
+                                </div>
+                                <div class="col-sm-7">
+                                    <h3 ng-bind="judge.user.name+' '+judge.user.last_name"></h3>
+                                    <h5><i class="fa fa-map-marker"></i> {{judge.user.country_origin}}</h5>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="social-buttons" style="margin:16px;">
+                                    <div class="c100 p45 small">
+                                        <span>45%</span>
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
+                                        </div>
+                                    </div>
+                                    <ul>
+                                        <li><a href="#"><i class="fa fa-facebook fa-2x"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-twitter fa-2x"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-linkedin fa-2x"></i></a></li>
+                                    </ul>
+                                    <button style="width: 100%;background: #333333;color: white;padding: 10px 0px;" ng-click="expand($index)" class="btn btn-full">More Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab heading="Jury" ng-hide="loggedIn">
+                <div class="jury-box">
+                    <!--<div class="row">-->
+                        <div class="col-md-2" ng-repeat="judge in item.judges">
+                            <img src="./images/icon-user-default.png" width="100px" alt="">
+                        </div>
+                    <!--</div>-->
+                    <div class="col-md-12 text-center info">
+                        <span class="icon">
+                            <i style="color:#ABC452;" class="fa fa-sign-in fa-4x"></i>
+                        </span>
+                        <p>PLEASE REGISTER AND GET ACCESS<bR>TO ALL THOSE INFORMATION</p>
+                        <br>
+                        <button class="btn btn-lg btn-green" type="button">REGISTER NOW ! <i class="fa fa-lg fa-arrow-circle-o-right"></i></button>
+                        <br><br>
+
+                        <button class="btn btn-secondary" type="button">IT WILL JUST TAKE 60 SECONDS !</button>
+                    </div>
+                </div>
             </uib-tab>
             <uib-tab heading="Market">
                 Input 'Market' content here ...

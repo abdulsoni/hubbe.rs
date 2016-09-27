@@ -5,6 +5,7 @@ namespace Fundator\Http\Controllers;
 use Fenos\Notifynder\Models\Notification;
 use Fundator\Contest;
 use Fundator\Creator;
+use Fundator\Events\ProfileUpdated;
 use Fundator\Events\Register;
 use Fundator\Investor;
 use Fundator\Expert;
@@ -263,14 +264,16 @@ class UserController extends Controller {
                 Event::fire(new Register($user));
             }
             if ($user->save()) {
-                $activityData = [
-                    'actor'=>$user->id,
-                    'verb'=>'Profile Updation',
-                    'object'=>0,
-                    'display_message'=>$oldName." Changes To ".$user->fullName
-                ];
-                $userFeed = FeedManager::getUserFeed($user->id);
-                $userFeed->addActivity($activityData);
+//                $activityData = [
+//                    'actor'=>$user->id,
+//                    'verb'=>'Profile Updation',
+//                    'object'=>0,
+//                    'display_message'=>$oldName." Changes To ".$user->fullName
+//                ];
+                $user->oldName = $oldName;
+                Event::fire(new ProfileUpdated($user));
+//                $userFeed = FeedManager::getUserFeed($user->id);
+//                $userFeed->addActivity($activityData);
 
                 $response = ['success' => true, 'message' => 'Your profile has been updated successfully.'];
             }
