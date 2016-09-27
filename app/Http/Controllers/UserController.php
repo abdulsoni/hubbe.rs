@@ -488,7 +488,6 @@ class UserController extends Controller {
      * Innovation Category List
      * @author Xipetech
      */
-
     public function innovationList() {
         $statusCode = 200;
 
@@ -509,7 +508,6 @@ class UserController extends Controller {
      * Creation Category
      * @author Xipetech
      */
-
     public function creationList() {
         $statusCode = 200;
         try {
@@ -523,5 +521,38 @@ class UserController extends Controller {
         return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
     }
 
+    /*
+     * Profile
+     *
+     * Get prodile for a specific user
+     */
+    public function getProfile() {
+        $statusCode = 200;
+        $response = [];
 
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+
+            $profile = [
+                'name' => $user->name,
+                'last_name' => $user->last_name,
+                'country_origin' => $user->country_origin,
+                'country_residence' => $user->country_residence,
+                'bio' => $user->bio,
+                'thumbnail' => $user->thumbnail_url,
+                'contact_number' => $user->contact_number_country_code . ' ' . $user->contact_number,
+                'contact_skype' => '',
+                'contact_facebook' => '',
+                'contact_wechat' => ''
+            ];
+
+        } catch (Exception $e) {
+            $statusCode = 400;
+            $response = ['error' => $e->getMessage()];
+
+        }
+        return response()->json($response, $statusCode, [], JSON_NUMERIC_CHECK);
+    }
 }

@@ -85,4 +85,26 @@ class Creator extends Model
 
         return 0;
     }
+
+    public function getAverageRatingByCategory()
+    {
+        // $entries = $this->entries;
+
+        // if(sizeof($entries) > 0){
+        //     $averageSum = 0;
+
+        //     foreach($entries as $entry){
+        //         $averageSum = $averageSum + $entry->getAverageRating();
+        //     }
+
+        //     return $averageSum / sizeof($entries);
+        // }
+
+        return [
+            'design' => 7.50,
+            'usability' => 7.18,
+            'creativity' => 6.0,
+            'content' => 8.2,
+        ];
+    }
 }
