@@ -98,7 +98,6 @@ class Contest extends Model
     public function getNumContestantsAttribute() {
         return $this->contestants()->count();
     }
-
     /**
      * Judge Entries
      */

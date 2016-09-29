@@ -5,13 +5,9 @@
  */
 
 return array(
-
     'title' => 'ContestantApplications',
-
     'single' => 'ContestantApplication',
-
     'model' => 'Fundator\ContestantApplication',
-
     /**
      * The display columns
      */
@@ -34,14 +30,12 @@ return array(
             'title' => 'Approved ?',
         )
     ),
-
     /**
      * The width of the model's edit form
      *
      * @type int
      */
     'form_width' => 500,
-
     /**
      * The editable fields
      */

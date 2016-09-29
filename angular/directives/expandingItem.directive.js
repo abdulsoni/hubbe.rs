@@ -13,7 +13,7 @@
                 item: '='
             },
             link: function($scope, $element, $attrs) {
-                $scope.singleJudge=false;
+                $scope.singleMember=false;
                 if ($auth.isAuthenticated()) {
                     $scope.loggedIn=true;
                 }else{
@@ -48,17 +48,22 @@
                     });
                 });
 
-                $scope.expand = function($index){
-                    $scope.singleItem = $scope.item.judges[$index];
+                $scope.expand = function($index,type){
+                    if(type=='J') {
+                        $scope.singleItem = $scope.item.judges[$index];
+                    }
+                    else{
+                        $scope.singleItem = $scope.item.contestants[$index];
+                    }
                     var data = {id:$scope.singleItem.user.id};
                     $http.post(API.path('check-follow'),data).then(function(response){
                         $scope.singleItem.followData = response.data;
                         console.log($scope.singleItem);
-                        $scope.singleJudge=true;
+                        $scope.singleMember=true;
                     });
                 }
                 $scope.closeJudge = function(){
-                    $scope.singleJudge = false;
+                    $scope.singleMember = false;
                 }
 
                 $scope.checkFollow = function(follow,targetId){

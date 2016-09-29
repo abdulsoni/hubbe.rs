@@ -26,15 +26,37 @@ class ContestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(Request $request){
+        $filters = $request->filters;
+        $type = $request->type=='' ? 'product_categories' : $request->type;
         $statusCode = 200;
         $response = [];
-        $contests = Contest::where('visible', 1)->get();
-
+        if($type=='product_categories'){
+            $contests = Contest::join('contest_product_categories as cpc','cpc.contest_id','=','contests.id')
+                ->join('product_categories as pc','cpc.product_category','=','pc.id')
+                ->where(function($query) use ($filters){
+                    if(count($filters)>0){
+                        $query->whereIn('cpc.product_category',$filters);
+                    }
+                })
+                ->where('contests.visible', 1)
+                ->select('contests.*')
+                ->get();
+        }
+        else if($type=='innovation_categories'){
+            $contests = Contest::join('contest_innovation_categories as cnc','cnc.contest_id','=','contests.id')
+                ->join('innovation_categories as ic','cnc.innovation_category','=','ic.id')
+                ->where(function($query) use ($filters){
+                    if(count($filters)>0){
+                        $query->whereIn('cnc.innovation_category',$filters);
+                    }
+                })
+                ->where('contests.visible', 1)
+                ->select('contests.*')
+                ->get();
+        }
         $i = 0;
-        foreach($contests as $contest)
-        {
+        foreach($contests as $contest){
             $i++;
             $contest_data = $contest->getAttributes();
             $contest_data['total_entries'] = $contest->entries->groupBy('creator_id')->count();
@@ -44,6 +66,18 @@ class ContestController extends Controller
             if (!is_null($unmarkedEntries)) {
                 $contest_data['unmarked_entries'] = $unmarkedEntries;
             }
+            $judges = $contest->jury;
+            foreach($judges as $key=>$judge){
+                $judges[$key]['user'] = User::find($judge->user_id);
+            }
+
+            $contestants = $contest->contestants;
+            foreach($contestants as $key=>$contestant){
+                $contestants[$key]['user'] = User::find($contestant->user_id);
+            }
+
+            $contest_data['judges'] = $judges;
+            $contest_data['contestants'] = $contestants;
 
             $contest_data['num_contestants'] = $contest->num_contestants;
             $contest_data['rank'] = 1;

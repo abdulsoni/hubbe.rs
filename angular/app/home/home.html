@@ -6,24 +6,27 @@
         <h2 class="section-home_title">Ongoing <span class="highlight">Contests</span></h2>
 
         <ul class="list-filters">
-            <li class="active"><a href="#">Product (3)</a></li>
-            <li><a href="#">Innovation</a></li>
+            <li><a ng-click="filterCategories($event,'product_categories')" href="#">Product</a></li>
+            <li><a ng-click="filterCategories($event,'innovation_categories')" href="#">Innovation</a></li>
             <li><a href="#">Geography</a></li>
             <li><a href="#">Contest Status</a></li>
         </ul>
 
         <div class="list-filter">
             <ul class="filter-items">
-                <li><a href="#">Test Item</a></li>
-                <li class="selected"><a href="#">Test Item</a></li>
-                <li><a href="#">Test Item</a></li>
-                <li><a href="#">Test Item</a></li>
-                <li><a href="#">Test Item</a></li>
-                <li class="selected"><a href="#">Test Item</a></li>
-                <li><a href="#">Test Item</a></li>
-                <li><a href="#">Test Item</a></li>
-                <li class="selected"><a href="#">Test Item</a></li>
-                <li><a href="#">Test Item</a></li>
+                <li ng-repeat="category in filterList">
+                    <a ng-click="toggleFilter($event,category.id);" href="#" ng-bind="category.name"></a>
+                </li>
+                <!--<li><a href="#">Test Item</a></li>-->
+                <!--<li class="selected"><a href="#">Test Item</a></li>-->
+                <!--<li><a href="#">Test Item</a></li>-->
+                <!--<li><a href="#">Test Item</a></li>-->
+                <!--<li><a href="#">Test Item</a></li>-->
+                <!--<li class="selected"><a href="#">Test Item</a></li>-->
+                <!--<li><a href="#">Test Item</a></li>-->
+                <!--<li><a href="#">Test Item</a></li>-->
+                <!--<li class="selected"><a href="#">Test Item</a></li>-->
+                <!--<li><a href="#">Test Item</a></li>-->
             </ul>
         </div>
 

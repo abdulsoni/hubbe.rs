@@ -68,6 +68,7 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
      * Contests
      */
     $api->get('contests/', 'Fundator\Http\Controllers\ContestController@index');
+    $api->post('contests/', 'Fundator\Http\Controllers\ContestController@index');
     $api->get('contests/{id}', 'Fundator\Http\Controllers\ContestController@show');
 
     /*
@@ -228,13 +229,19 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
      */
     $api->post('follow/', 'Fundator\Http\Controllers\FollowController@follow');
     $api->post('unfollow/', 'Fundator\Http\Controllers\FollowController@unfollow');
+    $api->post('check-follow/', 'Fundator\Http\Controllers\FollowController@checkFollow');
+
+    //Filter
+    $api->get('filter-categories/{type}',function($type){
+        $select=['id','name'];
+        if($type=='product_categories') {
+            $data = \Fundator\ProductCategory::get($select);
+        }
+        else{
+            $data = \Fundator\InnovationCategory::get($select);
+        }
+        return $data;
+    });
 });
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
-
-Route::get('edit',function(){
-//   $user = \Fundator\User::find(132);
-//    $user->password=bcrypt('123456');
-//    $user->save();
-//    return randomString();
-});
