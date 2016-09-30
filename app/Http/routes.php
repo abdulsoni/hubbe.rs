@@ -26,17 +26,18 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
      */
 
     $api->get('users', 'Fundator\Http\Controllers\AuthenticateController@index');
-    $api->get('user', 'Fundator\Http\Controllers\UserController@show');
-
     $api->post('users/becomeJudge', 'Fundator\Http\Controllers\UserController@becomeJudge');
     $api->post('users/becomeContestant', 'Fundator\Http\Controllers\UserController@becomeContestant');
+    $api->get('users/sideNavigationData', 'Fundator\Http\Controllers\UserController@sideNavigationData');
+    $api->post('users/store-device-token', 'Fundator\Http\Controllers\UserController@storeDeviceToken');
 
+    $api->get('user', 'Fundator\Http\Controllers\UserController@show');
     $api->put('users/{id}', 'Fundator\Http\Controllers\UserController@update');
     $api->post('users/{id}', 'Fundator\Http\Controllers\UserController@update');
 
-    $api->get('users/sideNavigationData', 'Fundator\Http\Controllers\UserController@sideNavigationData');
-
-    $api->post('users/store-device-token', 'Fundator\Http\Controllers\UserController@storeDeviceToken');
+    // Profile API
+    $api->get('users/profile', 'Fundator\Http\Controllers\UserController@getProfile');
+    // Profile API
 
     $api->post('authenticate', 'Fundator\Http\Controllers\AuthenticateController@authenticate');
     $api->post('authenticate/signup', 'Fundator\Http\Controllers\AuthenticateController@signup');
