@@ -33,15 +33,15 @@ class ContestController extends Controller
         $response = [];
         if($type=='product_categories'){
             $contests = Contest::join('contest_product_categories as cpc','cpc.contest_id','=','contests.id')
-                ->join('product_categories as pc','cpc.product_category','=','pc.id')
-                ->where(function($query) use ($filters){
-                    if(count($filters)>0){
-                        $query->whereIn('cpc.product_category',$filters);
-                    }
-                })
-                ->where('contests.visible', 1)
-                ->select('contests.*')
-                ->get();
+            ->join('product_categories as pc','cpc.product_category','=','pc.id')
+            ->where(function($query) use ($filters){
+                if(count($filters)>0){
+                    $query->whereIn('cpc.product_category',$filters);
+                }
+            })
+            ->where('contests.visible', 1)
+            ->select('contests.*')
+            ->get();
         }
         else if($type=='innovation_categories'){
             $contests = Contest::join('contest_innovation_categories as cnc','cnc.contest_id','=','contests.id')

@@ -19,24 +19,33 @@
             $scope.contests = result;
         });
 
+        //Get Available Filters
+        var url = 'filter-categories/';
+        $http.get(API.path(url)).then(function (response) {
+            $scope.availableFilterList = response.data;
+            $scope.filterCategories('','product_categories');
+        });
+
+
+        // Change Tabs
         $scope.filterCategories = function(element,type){
+            $(".list-filter").slideUp();
             $scope.tabType=type;
-            if(element==''){
-                $('.list-filters li:first-child').addClass('active');
-            }
-            else{
-                $('.list-filters li').removeClass('active');
                 var target = element.target;
                 var parent = $(target).parent();
-                $(parent).addClass('active');
+                // Remove Active Class From Previous Elements
+                $('.list-filters li').not(parent).removeClass('active');
+                // Set Active Class on Current Elements
+                $(parent).toggleClass('active');
+
+            if($(parent).hasClass('active')){
+                $(".list-filter").slideDown();
             }
+
             $scope.postFilters=[];
-            var url = 'filter-categories/'+type;
-            $http.get(API.path(url)).then(function(response){
-                $scope.filterList = response.data[type];
-            });
+            $scope.filterList = $scope.availableFilterList[type];
+            $scope.loadContests();
         }
-        $scope.filterCategories('','product_categories');
 
         $scope.toggleFilter = function(element,val) {
             var target = element.target;

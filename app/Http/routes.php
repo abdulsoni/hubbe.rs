@@ -233,14 +233,10 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
     $api->post('check-follow/', 'Fundator\Http\Controllers\FollowController@checkFollow');
 
     //Filter
-    $api->get('filter-categories/{type}',function($type){
+    $api->get('filter-categories',function(){
         $select=['id','name'];
-        if($type=='product_categories') {
-            $data = \Fundator\ProductCategory::get($select);
-        }
-        else{
-            $data = \Fundator\InnovationCategory::get($select);
-        }
+        $data['product_categories'] = \Fundator\ProductCategory::get($select);
+        $data['innovation_categories'] = \Fundator\InnovationCategory::get($select);
         return $data;
     });
 });
