@@ -240,5 +240,8 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
         return $data;
     });
 });
-
+Route::get('temp',function(){
+    $data = \Fundator\Contest::whereDate('start_time','>',\Carbon\Carbon::now())->get();
+    return $data;
+});
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

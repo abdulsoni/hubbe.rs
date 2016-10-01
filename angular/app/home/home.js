@@ -1,7 +1,6 @@
 (function() {
     "use strict";
-
-    angular.module('fundator.controllers').controller('HomeCtrl', function($rootScope, $scope, $state, $stateParams, $http, $resource, FdScroller, API) {
+    angular.module('fundator.controllers').controller('HomeCtrl', function($rootScope, $scope, $state, $stateParams, $http, $resource, FdScroller, API, Countries) {
         $scope.postFilters=[];
         $scope.tabType='product_categories';
         console.log('Home View Started');
@@ -19,9 +18,23 @@
             $scope.contests = result;
         });
 
+        $scope.countries = new Countries();
+
+        $scope.contestStatusType = [
+            {
+                name: "Present",
+                id: 1
+            },
+            {
+                name: "Past",
+                id: 0
+            }
+        ];
+
         //Get Available Filters
         var url = 'filter-categories/';
         $http.get(API.path(url)).then(function (response) {
+            console.log($scope.countries);
             $scope.availableFilterList = response.data;
             $scope.filterCategories('','product_categories');
         });
@@ -29,6 +42,7 @@
 
         // Change Tabs
         $scope.filterCategories = function(element,type){
+            $scope.moreCountries = false;
             $(".list-filter").slideUp();
             $scope.tabType=type;
                 var target = element.target;
@@ -44,14 +58,40 @@
 
             $scope.postFilters=[];
             $scope.filterList = $scope.availableFilterList[type];
+            if(type=='countries'){
+                $scope.filterList = $scope.countries.slice(0,18);
+                $scope.filterList[18] ={name: "Other"};
+            }
+            else if(type=='status'){
+                $scope.filterList = $scope.contestStatusType;
+            }
             $scope.loadContests();
         }
 
         $scope.toggleFilter = function(element,val) {
+
+            if(val=='special'){
+                return 0;
+            }
+
             var target = element.target;
             var parent = $(target).parent();
+
+            if($scope.tabType=='countries'){
+                val = $(target).text();
+
+                // If Value is Other and is Already Selected Then Hide More Countries
+                if(val=='Other' && $(parent).hasClass('selected')){
+                    $scope.moreCountries = false;
+                }
+                // Else Show Other Countries
+                else if(val=='Other'){
+                    $scope.moreCountries = true;
+                }
+            }
+
             $(parent).toggleClass('selected');
-            if(parent.hasClass('selected')){
+            if(parent.hasClass('selected') && val!='Other'){
                 $scope.postFilters.push(val);
             }
             else{

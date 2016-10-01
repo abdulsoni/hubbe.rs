@@ -8,8 +8,8 @@
         <ul class="list-filters">
             <li><a ng-click="filterCategories($event,'product_categories')" href="javascript:void(0);">Product</a></li>
             <li><a ng-click="filterCategories($event,'innovation_categories')" href="javascript:void(0);">Innovation</a></li>
-            <li><a href="javascript:void(0);">Geography</a></li>
-            <li><a href="javascript:void(0);">Contest Status</a></li>
+            <li><a ng-click="filterCategories($event,'countries')" href="javascript:void(0);">Geography</a></li>
+            <li><a ng-click="filterCategories($event,'status')" href="javascript:void(0);">Contest Status</a></li>
         </ul>
 
         <div class="list-filter">
@@ -17,16 +17,11 @@
                 <li ng-repeat="category in filterList">
                     <a ng-click="toggleFilter($event,category.id);" href="#" ng-bind="category.name"></a>
                 </li>
-                <!--<li><a href="#">Test Item</a></li>-->
-                <!--<li class="selected"><a href="#">Test Item</a></li>-->
-                <!--<li><a href="#">Test Item</a></li>-->
-                <!--<li><a href="#">Test Item</a></li>-->
-                <!--<li><a href="#">Test Item</a></li>-->
-                <!--<li class="selected"><a href="#">Test Item</a></li>-->
-                <!--<li><a href="#">Test Item</a></li>-->
-                <!--<li><a href="#">Test Item</a></li>-->
-                <!--<li class="selected"><a href="#">Test Item</a></li>-->
-                <!--<li><a href="#">Test Item</a></li>-->
+                <li ng-if="moreCountries">
+                    <select ng-model="specialCountry" ng-change="toggleFilter($event,'special')" name="" id="" class="form-control">
+                        <option ng-repeat="country in countries" ng-value="country.name">{{country.name}}</option>
+                    </select>
+                </li>
             </ul>
         </div>
 

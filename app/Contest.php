@@ -49,8 +49,7 @@ class Contest extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function entries()
-    {
+    public function entries(){
         return $this->hasMany('Fundator\Entry');
     }
 
@@ -66,8 +65,7 @@ class Contest extends Model
     /**
      * Active Jury
      */
-    public function jury()
-    {
+    public function jury(){
         // return $this->belongsToMany('Fundator\User', 'contest_jury', null, 'judge_id');
         return $this->hasMany('Fundator\JuryApplication')->where('status', 1);
     }
@@ -77,8 +75,7 @@ class Contest extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function prizes()
-    {
+    public function prizes(){
         return $this->hasMany('Fundator\Prize');
     }
 
@@ -87,11 +84,9 @@ class Contest extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function skills()
-    {
+    public function skills(){
         return $this->belongsToMany('Fundator\Skill', 'contest_skills');
     }
-
     /**
      * Number of contestants
      */
@@ -101,14 +96,11 @@ class Contest extends Model
     /**
      * Judge Entries
      */
-    public function unmarkedEntries()
-    {
+    public function unmarkedEntries(){
         if (!isset($_REQUEST['token']) || is_null($_REQUEST['token'])) {
             return null;
         }
-
         $user = JWTAuth::parseToken()->authenticate();
-
         $contestId = $this->id;
         $judgeableContests = JuryApplication::where('user_id', $judgeId)->where('contest_id', $contestId)->where('status', 1)->first();
         $unmarkedEntries = null;
@@ -123,7 +115,6 @@ class Contest extends Model
                 }
             }
         }
-
         return $unmarkedEntries;
     }
 }

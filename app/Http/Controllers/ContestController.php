@@ -2,6 +2,7 @@
 
 namespace Fundator\Http\Controllers;
 
+use Carbon\Carbon;
 use Fundator\Creator;
 use Fundator\Follow;
 use Fundator\User;
@@ -28,12 +29,13 @@ class ContestController extends Controller
      */
     public function index(Request $request){
         $filters = $request->filters;
-        $type = $request->type=='' ? 'product_categories' : $request->type;
+        $type = $request->type;
         $statusCode = 200;
         $response = [];
         if($type=='product_categories'){
-            $contests = Contest::join('contest_product_categories as cpc','cpc.contest_id','=','contests.id')
-            ->join('product_categories as pc','cpc.product_category','=','pc.id')
+            $contests = Contest::distinct()
+            ->join('contest_product_categories as cpc','contests.id','=','cpc.contest_id')
+            ->join('product_categories as pc','pc.id','=','cpc.product_category')
             ->where(function($query) use ($filters){
                 if(count($filters)>0){
                     $query->whereIn('cpc.product_category',$filters);
@@ -44,7 +46,8 @@ class ContestController extends Controller
             ->get();
         }
         else if($type=='innovation_categories'){
-            $contests = Contest::join('contest_innovation_categories as cnc','cnc.contest_id','=','contests.id')
+            $contests = Contest::distinct()
+                ->join('contest_innovation_categories as cnc','cnc.contest_id','=','contests.id')
                 ->join('innovation_categories as ic','cnc.innovation_category','=','ic.id')
                 ->where(function($query) use ($filters){
                     if(count($filters)>0){
@@ -54,6 +57,23 @@ class ContestController extends Controller
                 ->where('contests.visible', 1)
                 ->select('contests.*')
                 ->get();
+        }
+        else if($type=='countries'){
+            $contests = Contest::where(function($query) use($filters){
+                    if(count($filters) > 0){
+                        $query->whereIn('country',$filters);
+                    }
+                })
+                ->where('visible',1)->get();
+        }
+        else if($type=='status'){
+            $contests = Contest::where(function($query) use($filters){
+                if(count($filters)==1){
+                    $sign = $filters[0]==1 ? '>' : '<';
+                    $query->where('start_time',$sign,Carbon::now());
+                }
+            })
+            ->where('visible',1)->get();
         }
         $i = 0;
         foreach($contests as $contest){
