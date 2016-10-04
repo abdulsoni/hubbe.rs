@@ -1,4 +1,9 @@
-/public
+/public/css/
+/public/js/
+/public/views/
+/public/uploads/
+/public/packages/
+/public/resize/
 /vendor
 /node_modules
 /bower_components
