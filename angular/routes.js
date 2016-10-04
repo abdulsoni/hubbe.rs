@@ -1,11 +1,10 @@
 (function() {
     "use strict";
- 
+
     angular.module('fundator.routes').config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 
         // Remove the # for the non html5 browsers
         // $locationProvider.html5Mode(true)
-
         var getView = function(viewName, secondaryName) {
             if (typeof secondaryName === 'undefined') {
                 secondaryName = viewName;
@@ -14,8 +13,7 @@
             return './views/app/app/' + viewName + '/' + secondaryName + '.html';
         };
 
-
-        $urlRouterProvider.otherwise('/projects');
+        $urlRouterProvider.otherwise('/');
 
         $stateProvider
             .state('app', {
@@ -121,6 +119,19 @@
                     'main@': {
                         templateUrl: getView('auth', 'register'),
                         controller: 'RegisterCtrl'
+                    }
+                }
+            })
+            .state('app.home', {
+                url: '/',
+                data: {
+                    needLogin: false,
+                    bodyClass: 'homepage'
+                },
+                views: {
+                    'main@': {
+                        templateUrl: getView('home', 'home'),
+                        controller: 'HomeCtrl'
                     }
                 }
             })
@@ -413,20 +424,6 @@
                         controller: 'ContestCtrl'
                     }
                 }
-            })
-            // .state('app.page', {
-            //     url: '/:slug',
-            //     data: {
-            //         needLogin: false
-            //     },
-            //     views: {
-            //         'main@': {
-            //             templateUrl: getView('page'),
-            //             controller: 'PageCtrl'
-            //         }
-            //     }
-            // })
-
+            });
     });
-
 })();

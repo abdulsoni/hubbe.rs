@@ -22,20 +22,20 @@
         });
 
         $scope.fetchCategories = function() {
-            Category.query({type: 'product'}).$promise.then(function(result){
+            Category.query({ type: 'product' }).$promise.then(function(result) {
                 $scope.productCategories = result;
                 console.log('product categories : ' + result);
-            }, function(){
+            }, function() {
                 console.log('failed to retrive the product cateories');
             });
 
-            Category.query({type: 'innovation'}).$promise.then(function(result){
+            Category.query({ type: 'innovation' }).$promise.then(function(result) {
                 $scope.innovationCategories = result;
                 console.log('innovation categories : ' + result);
-            }, function(){
+            }, function() {
                 console.log('failed to retrive the innovation cateories');
             });
-        }
+        };
 
         $scope.fetchCategories();
 
@@ -152,7 +152,7 @@
 
         $scope.goToProject = function(project) {
             $state.go('app.create.details', { projectId: project.id });
-        }
+        };
 
         $scope.createNewProject = function() {
             $scope.data.newProjectLoading = true;
@@ -161,7 +161,7 @@
                 $scope.goToProject(result);
                 $scope.data.newProjectLoading = false;
             });
-        }
+        };
 
         $scope.saveProgress = function() {
             var project = angular.copy($scope.project);
@@ -175,7 +175,7 @@
                     console.log(result);
                 });
             }
-        }
+        };
 
         // Scroll to the top
         FdScroller.toTop();
@@ -203,18 +203,18 @@
 
 
         $scope.countries = [
-            {code: 'us', name: 'United States'},
-            {code: 'cn', name: 'China'},
-            {code: 'fr', name: 'France'},
-            {code: 'kr', name: 'South Korea'},
+            { code: 'us', name: 'United States' },
+            { code: 'cn', name: 'China' },
+            { code: 'fr', name: 'France' },
+            { code: 'kr', name: 'South Korea' },
         ];
 
-        $scope.tagTransform = function (newTag) {
+        $scope.tagTransform = function(newTag) {
             var item = {
                 name: newTag
             };
 
-           return item;
+            return item;
         };
 
         $scope.$watch('project', function(project) {
@@ -235,7 +235,7 @@
             $scope.project.thumbnail_id = message.file.id;
             $scope.project.thumbnail = message.file.file_url;
             $scope.saveProgress();
-        }
+        };
 
         $scope.attachedFilesSuccess = function($file, $message) {
             var message = JSON.parse($message);
@@ -244,14 +244,14 @@
             if (index === -1) {
                 $scope.project.attachedFiles.push(message.file.id);
             }
-        }
+        };
 
         $scope.submitDraft = function() {
             $scope.project.state = 0.9;
             $scope.saveProgress();
 
             FdScroller.toSection('.steps-content');
-        }
+        };
 
         FdScroller.toSection('#projectSteps');
     });
@@ -276,7 +276,7 @@
             $timeout(function() {
                 $state.go('app.create.expertise');
             }, 300);
-        }
+        };
     });
 
     angular.module('fundator.controllers').controller('CreateExpertiseCtrl', function($rootScope, $scope, $state, $resource, $http, $timeout, FdScroller, API) {
@@ -300,7 +300,7 @@
                 $rootScope.innerSectionLoading = false;
                 $scope.loadedOnce = true;
             });
-        }
+        };
 
         $scope.$watch('project', function(project) {
             if (typeof(project) === 'undefined' || project === null) return;
@@ -318,21 +318,21 @@
             };
 
             if (expertise.selectedExpertise !== null) {
-                projectExpertiseData['expertise_id'] = expertise.selectedExpertise.id;
+                projectExpertiseData.expertise_id = expertise.selectedExpertise.id;
             } else {
-                projectExpertiseData['other_expertise'] = expertise.otherExpertise;
+                projectExpertiseData.other_expertise = expertise.otherExpertise;
             }
 
             if (expertise.selectedExpertiseSubCategory !== null) {
-                projectExpertiseData['expertise_sub_category_id'] = expertise.selectedExpertiseSubCategory.id;
+                projectExpertiseData.expertise_sub_category_id = expertise.selectedExpertiseSubCategory.id;
             } else {
-                projectExpertiseData['other_expertise_sub_category'] = expertise.otherExpertiseSubCategory;
+                projectExpertiseData.other_expertise_sub_category = expertise.otherExpertiseSubCategory;
             }
 
             if (expertise.selectedExpertiseCategory !== null) {
-                projectExpertiseData['expertise_category_id'] = expertise.selectedExpertiseCategory.id;
+                projectExpertiseData.expertise_category_id = expertise.selectedExpertiseCategory.id;
             } else {
-                projectExpertiseData['other_expertise_category'] = expertise.otherExpertiseCategory;
+                projectExpertiseData.other_expertise_category = expertise.otherExpertiseCategory;
             }
 
 
@@ -345,21 +345,21 @@
 
             $scope.inputtedExpertiseList = [];
             $scope.inputtedEpxertise = null;
-        }
+        };
 
         $scope.saveExpertiseSelection = function() {
             $scope.project.state = 2.9;
 
             $scope.saveProgress();
             FdScroller.toSection('.steps-content');
-        }
+        };
 
         $scope.addNewInputtedExpertise = function() {
             var lastInputtedExpertise = { selectedExpertise: 'null', otherExpertise: { status: 1 } };
 
-            if ($scope.inputtedExpertiseList.length > 0) {
-                $scope.inputtedExpertiseList[$scope.inputtedExpertiseList.length - 1];
-            }
+            // if ($scope.inputtedExpertiseList.length > 0) {
+            //     $scope.inputtedExpertiseList[$scope.inputtedExpertiseList.length - 1];
+            // }
 
             if ($scope.inputtedExpertiseList.length < 3 && (lastInputtedExpertise.selectedExpertise !== null && lastInputtedExpertise.otherExpertise.status !== 0)) {
                 $scope.inputtedExpertiseList.push({
@@ -381,10 +381,10 @@
                 });
 
                 $scope.inputtedEpxertise = $scope.inputtedExpertiseList[$scope.inputtedExpertiseList.length - 1];
-            };
+            }
 
             $scope.fetchExpertiseCategory($scope.inputtedExpertiseList.length - 1);
-        }
+        };
 
         $scope.selectExpertiseCategory = function(index, expertiseCategory, level) {
             if (level === 0) {
@@ -396,7 +396,7 @@
                 $scope.inputtedExpertiseList[index].step = 3;
                 $scope.fetchExpertiseList(index);
             }
-        }
+        };
 
         $scope.deselectExpertiseCategory = function(e, index, level) {
             if (level === 0) {
@@ -413,7 +413,7 @@
                 $scope.inputtedExpertiseList[index].otherExpertise = { name: '', status: 0 };
             }
             e.stopPropagation();
-        }
+        };
 
         $scope.saveOtherExpertiseCategory = function(index, level) {
             if (level === 0) {
@@ -433,7 +433,7 @@
                 $scope.inputtedExpertiseList[index].otherExpertiseSubCategory.status = 1;
                 $scope.inputtedExpertiseList[index].step = 3;
             }
-        }
+        };
 
         $scope.removeOtherExpertiseCategory = function(index, level) {
             if (level === 0) {
@@ -444,29 +444,29 @@
                 $scope.inputtedExpertiseList[index].otherExpertiseSubCategory = { name: '', status: 0 };
                 $scope.inputtedExpertiseList[index].otherExpertise = { name: '', status: 0 };
             }
-        }
+        };
 
         $scope.selectExpertise = function(index, expertise) {
             $scope.inputtedExpertiseList[index].selectedExpertise = expertise;
             $scope.inputtedExpertiseList[index].otherExpertise = { name: '', status: 0 };
             $scope.inputtedExpertiseList[index].step = 4;
-        }
+        };
 
         $scope.deselectExpertise = function(e, index) {
             $scope.inputtedExpertiseList[index].selectedExpertise = null;
             e.stopPropagation(index);
-        }
+        };
 
         $scope.saveOtherExpertise = function(index) {
             $scope.inputtedExpertiseList[index].selectedExpertise = null;
 
             $scope.inputtedExpertiseList[index].otherExpertise.status = 1;
             $scope.inputtedExpertiseList[index].step = 4;
-        }
+        };
 
         $scope.removeOtherExpertise = function(index) {
             $scope.inputtedExpertiseList[index].otherExpertise = { name: '', status: 0 };
-        }
+        };
 
         $scope.fetchExpertiseCategory = function(index) {
             $scope.inputtedExpertiseList[index].expertiseCategoryList = [];
@@ -476,7 +476,7 @@
                 $scope.inputtedExpertiseList[index].expertiseCategoryList = result.data;
                 $scope.inputtedExpertiseList[index].loading = false;
             });
-        }
+        };
 
         $scope.fetchExpertiseSubCategory = function(index) {
             $scope.expertiseSubCategoryList = [];
@@ -486,7 +486,7 @@
                 $scope.inputtedExpertiseList[index].expertiseSubCategoryList = result.data;
                 $scope.inputtedExpertiseList[index].loading = false;
             });
-        }
+        };
 
         $scope.fetchExpertiseList = function(index) {
             $scope.inputtedExpertiseList[index].expertiseList = [];
@@ -496,7 +496,7 @@
                 $scope.inputtedExpertiseList[index].expertiseList = result.data;
                 $scope.inputtedExpertiseList[index].loading = false;
             }, 2000);
-        }
+        };
     });
 
     angular.module('fundator.controllers').controller('CreateExpertCtrl', function($rootScope, $scope, $state, $resource, $http, $timeout, API, SweetAlert, FdScroller) {
@@ -516,7 +516,7 @@
             }).finally(function() {
                 $rootScope.innerSectionLoading = false;
             });
-        }
+        };
 
         $scope.$watch('project', function(project) {
             if (typeof(project) === 'undefined' || project === null) return;
@@ -529,7 +529,7 @@
             }
 
             expertise.shortlist.push(bid);
-        }
+        };
 
         $scope.isShortlistExpert = function(expertise, bid) {
             if (typeof(expertise.shortlist) !== 'undefined') {
@@ -537,7 +537,7 @@
             }
 
             return false;
-        }
+        };
 
         $scope.removeShortlistExpert = function(expertise, bid) {
             var index = expertise.shortlist.indexOf(bid);
@@ -545,15 +545,15 @@
             if (index !== -1) {
                 expertise.shortlist.splice(index, 1);
             }
-        }
+        };
 
         $scope.discussExpert = function(expertise, bid) {
-            $scope.data.selectedBid = bid
-        }
+            $scope.data.selectedBid = bid;
+        };
 
         $scope.hideDiscussExpert = function() {
             $scope.data.selectedBid = null;
-        }
+        };
 
         $scope.selectExpert = function(expertise, bid) {
             SweetAlert.swal({
@@ -577,14 +577,14 @@
                         });
                     }
                 });
-        }
+        };
 
         $scope.confirmExperts = function() {
             $scope.project.state = 3.9;
             $scope.saveProgress();
 
             FdScroller.toSection('.steps-content');
-        }
+        };
     });
 
     angular.module('fundator.controllers').controller('CreateBudgetCtrl', function($rootScope, $scope, $state, $resource, API, FdScroller) {
@@ -615,7 +615,7 @@
             payback_duration_extended: 2,
             investors_message_creator: '',
             investors_message_se: ''
-        }
+        };
 
         $scope.$watch('project', function(project) {
             if (typeof(project) === 'undefined' || project === null) return;
@@ -632,7 +632,7 @@
             });
         });
 
-        $scope.$watch('projectFinance', function(projectFinance){
+        $scope.$watch('projectFinance', function(projectFinance) {
             if (typeof(projectFinance) === 'undefined') return;
 
             if ($scope.data.oldPaybackDuration !== $scope.data.paybackDuration) {
@@ -653,7 +653,7 @@
             }
 
             return repaymentMonths;
-        }
+        };
 
         $scope.getTotalBudget = function(withInterest) {
             var totalBudget = $scope.projectFinance.base_budget + ($scope.projectFinance.base_budget * ($scope.projectFinance.adjustment_margin / 100));
@@ -667,7 +667,7 @@
             }
 
             return totalBudget;
-        }
+        };
 
         $scope.getRemainingBudget = function(withInterest) {
             var investorAmount = $scope.projectFinance.base_budget - $scope.projectFinance.self_funding_amount;
@@ -682,7 +682,7 @@
             }
 
             return remainingBudget;
-        }
+        };
 
         $scope.getPaybackDuration = function() {
             if ($scope.projectFinance.payback_duration === $scope.data.oldPaybackDuration) return $scope.data.paybackDurationArray;
@@ -716,14 +716,14 @@
 
             $scope.data.paybackDurationArray = angular.copy(yearsCopy);
             return angular.copy(yearsCopy);
-        }
+        };
 
         $scope.saveInvestorLimit = function() {
             $scope.projectFinance.investors_min = $scope.data.investorSliderRange[0];
             $scope.projectFinance.investors_max = $scope.data.investorSliderRange[1];
 
             $scope.saveFinanceProgress();
-        }
+        };
 
         $scope.saveFinanceProgress = function() {
             var projectFinance = angular.copy($scope.projectFinance);
@@ -737,7 +737,7 @@
                     console.log(result);
                 });
             }
-        }
+        };
 
         $scope.confirmBudget = function() {
             $scope.projectFinance.mini_plan = JSON.stringify($scope.data.paybackDuration);
@@ -747,7 +747,7 @@
             $scope.saveProgress();
 
             FdScroller.toSection('.steps-content');
-        }
+        };
     });
 
     angular.module('fundator.controllers').controller('CreateInvestorsCtrl', function($rootScope, $scope, $state, $http, $filter, API, SweetAlert) {
@@ -763,7 +763,7 @@
                     $scope.investmentData.amount_shortlist = $scope.investmentData.amount_shortlist + bid.bid_amount_max;
                 }
             });
-        }
+        };
 
         $scope.unShortlistBid = function(bid) {
             bid.type = '';
@@ -774,77 +774,83 @@
                     $scope.investmentData.amount_shortlist = $scope.investmentData.amount_shortlist - bid.bid_amount_max;
                 }
             });
-        }
+        };
 
         $scope.unSelectBid = function(bid) {
             SweetAlert.swal({
-                title: 'Are you sure?',
-                text: 'You are removing an investment bid from : ' + bid.investor.name + ' ' + bid.investor.last_name,
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#F8C486',
-                confirmButtonText: 'Yes, go ahead!',
-                cancelButtonText: 'Cancel',
-                closeOnConfirm: false,
-                closeOnCancel: true
-            },
-            function(isConfirm) {
-                if (isConfirm) {
-                    bid.type = '';
+                    title: 'Are you sure?',
+                    text: 'You are removing an investment bid from : ' + bid.investor.name + ' ' + bid.investor.last_name,
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#F8C486',
+                    confirmButtonText: 'Yes, go ahead!',
+                    cancelButtonText: 'Cancel',
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                function(isConfirm) {
+                    if (isConfirm) {
+                        bid.type = '';
 
-                    $http.put(API.path('/projects/' + bid.project.id + '/investment-bids/' + bid.id), bid).then(function(result) {
-                        if (result) {
-                            var index = $scope.investmentData.shortlist_bids.indexOf(bid);
-                            $scope.investmentData.shortlist_bids.splice(index, 1);
+                        $http.put(API.path('/projects/' + bid.project.id + '/investment-bids/' + bid.id), bid).then(function(result) {
+                            if (result) {
+                                var index = $scope.investmentData.shortlist_bids.indexOf(bid);
+                                $scope.investmentData.shortlist_bids.splice(index, 1);
 
-                            $scope.investmentData.amount_selected = $scope.investmentData.amount_selected - bid.bid_amount_max;
-                        }
+                                $scope.investmentData.amount_selected = $scope.investmentData.amount_selected - bid.bid_amount_max;
+                            }
 
-                        SweetAlert.swal('Removed!', 'You have removed an Investor!', 'success');
-                    });
-                }
-            });
-        }
+                            SweetAlert.swal('Removed!', 'You have removed an Investor!', 'success');
+                        });
+                    }
+                });
+        };
 
         $scope.selectBid = function(bid) {
             SweetAlert.swal({
-                title: 'Are you sure?',
-                text: 'You are selecting an investment bid from :  ' + bid.investor.name + ' ' + bid.investor.last_name,
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#F8C486',
-                confirmButtonText: 'Yes, go ahead!',
-                cancelButtonText: 'Cancel',
-                closeOnConfirm: false,
-                closeOnCancel: true
-            },
-            function(isConfirm) {
-                if (isConfirm) {
-                    bid.type = 'select';
+                    title: 'Are you sure?',
+                    text: 'You are selecting an investment bid from :  ' + bid.investor.name + ' ' + bid.investor.last_name,
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#F8C486',
+                    confirmButtonText: 'Yes, go ahead!',
+                    cancelButtonText: 'Cancel',
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                function(isConfirm) {
+                    if (isConfirm) {
+                        bid.type = 'select';
 
-                    $http.put(API.path('/projects/' + bid.project.id + '/investment-bids/' + bid.id), bid).then(function(result) {
-                        if (result) {
-                            $scope.investmentData.selected_bids.push(bid);
-                            $scope.investmentData.amount_selected = $scope.investmentData.amount_selected + bid.bid_amount_max;
-                        }
+                        $http.put(API.path('/projects/' + bid.project.id + '/investment-bids/' + bid.id), bid).then(function(result) {
+                            if (result) {
+                                $scope.investmentData.selected_bids.push(bid);
+                                $scope.investmentData.amount_selected = $scope.investmentData.amount_selected + bid.bid_amount_max;
+                            }
 
-                        SweetAlert.swal('Selected!', 'You have selected an Investor!', 'success');
-                    }, function(){
-                        SweetAlert.swal('Error!', 'Investor could not be selected', 'error');
-                    });
-                }
-            });
-        }
+                            SweetAlert.swal('Selected!', 'You have selected an Investor!', 'success');
+                        }, function() {
+                            SweetAlert.swal('Error!', 'Investor could not be selected', 'error');
+                        });
+                    }
+                });
+        };
 
-        $scope.switchSource = function(source){
-            switch(source){
-                case 'shortlist': $scope.bidSource = $scope.investmentData.shortlist_bids; $scope.bidSourceType = 'shortlist';
-                break;
-                case 'selected': $scope.bidSource = $scope.investmentData.selected_bids; $scope.bidSourceType = 'selected';
-                break;
-                default: $scope.bidSource = $scope.investmentData.all_bids; $scope.bidSourceType = 'all';
+        $scope.switchSource = function(source) {
+            switch (source) {
+                case 'shortlist':
+                    $scope.bidSource = $scope.investmentData.shortlist_bids;
+                    $scope.bidSourceType = 'shortlist';
+                    break;
+                case 'selected':
+                    $scope.bidSource = $scope.investmentData.selected_bids;
+                    $scope.bidSourceType = 'selected';
+                    break;
+                default:
+                    $scope.bidSource = $scope.investmentData.all_bids;
+                    $scope.bidSourceType = 'all';
             }
-        }
+        };
 
         $scope.$watch('project', function(project) {
             if (typeof(project) === 'undefined' || project === null) return;
@@ -858,14 +864,14 @@
                 var selectedBidIds = angular.copy($scope.investmentData.selected_bids);
                 var selectedBids = [];
 
-                angular.forEach(shortlistBidIds, function(bidId){
-                    var bid = $filter('filter')($scope.investmentData.all_bids, {id: bidId}, true)[0];
+                angular.forEach(shortlistBidIds, function(bidId) {
+                    var bid = $filter('filter')($scope.investmentData.all_bids, { id: bidId }, true)[0];
                     shortlistBids.push(bid);
                 });
                 $scope.investmentData.shortlist_bids = shortlistBids;
 
-                angular.forEach(selectedBidIds, function(bidId){
-                    var bid = $filter('filter')($scope.investmentData.all_bids, {id: bidId}, true)[0];
+                angular.forEach(selectedBidIds, function(bidId) {
+                    var bid = $filter('filter')($scope.investmentData.all_bids, { id: bidId }, true)[0];
                     selectedBids.push(bid);
                 });
                 $scope.investmentData.selected_bids = selectedBids;
@@ -882,6 +888,6 @@
             $scope.saveProgress();
 
             FdScroller.toSection('.steps-content');
-        }
+        };
     });
 })();

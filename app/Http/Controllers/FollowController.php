@@ -41,5 +41,23 @@ class FollowController extends Controller{
         Follow::where('user_id',$userId)->where('target_id',$targetId)->delete();
         FeedManager::unfollowUser($userId, $targetId);
     }
+    public function checkFollow(){
+        if (!$user = JWTAuth::parseToken()->authenticate()) {
+            return response()->json(['user_not_found'], 404);
+        }
+        $targetId = Request::get('id');
+        $count = Follow::where('user_id',$user->id)->where('target_id',$targetId)->count();
+        if ($count > 0) {
+            $temp['areYouFollowed'] = 1;
+            $temp['followClass'] = 'btn btn-sm btn-success';
+            $temp['followText'] = 'Unfollow';
+        }
+        else{
+            $temp['areYouFollowed'] = 0;
+            $temp['followClass'] = 'btn btn-sm btn-danger';
+            $temp['followText'] = 'Follow';
+        }
+        return response()->json($temp);
+    }
 
 }

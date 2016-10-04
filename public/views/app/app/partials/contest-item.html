@@ -1,0 +1,269 @@
+<div class="item-wrap">
+    <div class="item-title">
+        <h2>{{item.name}}</h2>
+        <span class="icon icon-close"></span>
+    </div>
+    <div class="item">
+        <div class="item-details">
+            <div class="item-image">
+                <img ng-src="{{item.thumbnail}}" alt="{{item.name}}">
+            </div>
+
+            <div class="item-info">
+                <div class="item-name">
+                    <a>{{item.name}}</a>
+                </div>
+                <div class="item-duration">
+                    <span class="icon icon-clock"></span>
+                    {{ end_time = (item.start_time | amAdd : item.duration : 'days'); ''}}
+                    {{ end_time | amDifference : null : 'days' }} Days to go
+                </div>
+            </div>
+        </div>
+
+        <div class="item-stats">
+            <div class="item-stat item-stat--contestants">
+                <div class="item-stat_num">{{item.num_contestants}}</div>
+                <div class="item-stat_label">
+                    Contestants
+                </div>
+            </div>
+            <div class="item-stat item-stat--jury">
+                <div class="item-stat_num" ng-bind="item.judges.length"></div>
+                <div class="item-stat_label">
+                    Juries
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="item-tabs">
+        <uib-tabset vertical="true" type="pills">
+            <uib-tab heading="General">
+                Input 'General' content here ...
+            </uib-tab>
+            <!--Creator Tab When Logged In :  Start-->
+            <uib-tab heading="Creators" ng-show="loggedIn">
+                <!--Show Single Member Data : Start-->
+                <div class="jury-box" ng-if="singleMember">
+                    <div>
+                        <a ng-click="closeJudge()" href="javascript:void(0)"><i class="fa fa-times fa-2x"></i></a>
+                    </div>
+                    <hr>
+                    <div class="col-sm-12 single-member">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <img src="./images/icon-user-default.png" width="100px" alt="">
+                                <!--<img src="{{judge.user.thumbnail_url}}" width="100px">-->
+                            </div>
+                            <div class="col-sm-7">
+                                <h3 ng-bind="singleItem.user.name+' '+singleItem.user.last_name"></h3>
+                                <h5><i class="fa fa-map-marker"></i> {{singleItem.user.country_origin}}</h5>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="social-buttons" style="margin:16px;">
+                                <div class="c100 p45 small">
+                                    <span>45%</span>
+                                    <div class="slice">
+                                        <div class="bar"></div>
+                                        <div class="fill"></div>
+                                    </div>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </a>
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-facebook fa-2x"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter fa-2x"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-linkedin fa-2x"></i></a></li>
+                                </ul>
+                                <button ng-click="checkFollow(singleItem.followData.areYouFollowed,singleItem.user_id)" style="width:84%; margin-top:10px;" class="btn btn-green btn-full">{{singleItem.followData.followText}} this Creator</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Show Single Member Data : Ends-->
+
+                <!--Show All Contestants Data : Start-->
+                <div ng-if="singleMember==false" class="jury-box">
+                    <div class="row">
+                        <div class="col-sm-5 single-member" ng-repeat="contestant in item.contestants">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <img src="./images/icon-user-default.png" width="100px" alt="">
+                                    <!--<img src="{{judge.user.thumbnail_url}}" width="100px">-->
+                                </div>
+                                <div class="col-sm-7">
+                                    <h3 ng-bind="contestant.user.name+' '+contestant.user.last_name"></h3>
+                                    <h5><i class="fa fa-map-marker"></i> {{contestant.user.country_origin}}</h5>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="social-buttons" style="margin:16px;">
+                                    <div class="c100 p45 small">
+                                        <span>45%</span>
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
+                                        </div>
+                                    </div>
+                                    <ul>
+                                        <li><a href="#"><i class="fa fa-facebook fa-2x"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-twitter fa-2x"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-linkedin fa-2x"></i></a></li>
+                                    </ul>
+                                    <button style="width: 100%;background: #333333;color: white;padding: 10px 0px;" ng-click="expand($index,'C')" class="btn btn-full">More Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Show All Contestants Data : Ends-->
+            </uib-tab>
+            <!--Creator Tab When Logged In : Ends-->
+
+            <!--Creator Tab When Not Logged In : Start-->
+            <uib-tab heading="Creators" ng-hide="loggedIn">
+                <div class="jury-box">
+                    <!--<div class="row">-->
+                    <div class="col-md-2" ng-repeat="contestant in item.contestants">
+                        <img src="./images/icon-user-default.png" width="100px" alt="">
+                    </div>
+                    <!--</div>-->
+                    <div class="col-md-12 text-center info">
+                        <span class="icon">
+                            <i style="color:#ABC452;" class="fa fa-sign-in fa-4x"></i>
+                        </span>
+                        <p>PLEASE REGISTER AND GET ACCESS<bR>TO ALL THOSE INFORMATION</p>
+                        <br>
+                        <button class="btn btn-lg btn-green" type="button">REGISTER NOW ! <i class="fa fa-lg fa-arrow-circle-o-right"></i></button>
+                        <br><br>
+
+                        <button class="btn btn-secondary" type="button">IT WILL JUST TAKE 60 SECONDS !</button>
+                    </div>
+                </div>
+            </uib-tab>
+            <!--Creator Tab When Not Logged In : Ends-->
+
+            <!--Jury Tab When Use is Logged In : Start-->
+            <uib-tab heading="Jury" ng-show="loggedIn">
+                <!--Jury Single Member Details : Start-->
+                <div class="jury-box" ng-if="singleMember">
+                    <div>
+                        <a ng-click="closeJudge()" href="javascript:void(0)"><i class="fa fa-times fa-2x"></i></a>
+                    </div>
+                    <hr>
+                    <div class="col-sm-12 single-member">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <img src="./images/icon-user-default.png" width="100px" alt="">
+                                <!--<img src="{{judge.user.thumbnail_url}}" width="100px">-->
+                            </div>
+                            <div class="col-sm-7">
+                                <h3 ng-bind="singleItem.user.name+' '+singleItem.user.last_name"></h3>
+                                <h5><i class="fa fa-map-marker"></i> {{singleItem.user.country_origin}}</h5>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="social-buttons" style="margin:16px;">
+                                <div class="c100 p45 small">
+                                    <span>45%</span>
+                                    <div class="slice">
+                                        <div class="bar"></div>
+                                        <div class="fill"></div>
+                                    </div>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </a>
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-facebook fa-2x"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter fa-2x"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-linkedin fa-2x"></i></a></li>
+                                </ul>
+                                <button ng-click="checkFollow(singleItem.followData.areYouFollowed,singleItem.user_id)" style="width:84%; margin-top:10px;" class="btn btn-green btn-full">{{singleItem.followData.followText}} this Jury</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Jury Single Member Details : Ends-->
+
+                <!--Jury All Members List : Start-->
+                <div ng-if="singleMember==false" class="jury-box">
+                    <div class="row">
+                        <div class="col-sm-5 single-member" ng-repeat="judge in item.judges">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <img src="./images/icon-user-default.png" width="100px" alt="">
+                                    <!--<img src="{{judge.user.thumbnail_url}}" width="100px">-->
+                                </div>
+                                <div class="col-sm-7">
+                                    <h3 ng-bind="judge.user.name+' '+judge.user.last_name"></h3>
+                                    <h5><i class="fa fa-map-marker"></i> {{judge.user.country_origin}}</h5>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="social-buttons" style="margin:16px;">
+                                    <div class="c100 p45 small">
+                                        <span>45%</span>
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
+                                        </div>
+                                    </div>
+                                    <ul>
+                                        <li><a href="#"><i class="fa fa-facebook fa-2x"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-twitter fa-2x"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-linkedin fa-2x"></i></a></li>
+                                    </ul>
+                                    <button style="width: 100%;background: #333333;color: white;padding: 10px 0px;" ng-click="expand($index,'J')" class="btn btn-full">More Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Jury All Members List : Ends-->
+            </uib-tab>
+            <!--Jury Tab When User is Logged In : Ends-->
+
+            <!--Jury Tab When User is Not Logged In :  Start-->
+            <uib-tab heading="Jury" ng-hide="loggedIn">
+                <div class="jury-box">
+                    <!--<div class="row">-->
+                        <div class="col-md-2" ng-repeat="judge in item.judges">
+                            <img src="./images/icon-user-default.png" width="100px" alt="">
+                        </div>
+                    <!--</div>-->
+                    <div class="col-md-12 text-center info">
+                        <span class="icon">
+                            <i style="color:#ABC452;" class="fa fa-sign-in fa-4x"></i>
+                        </span>
+                        <p>PLEASE REGISTER AND GET ACCESS<bR>TO ALL THOSE INFORMATION</p>
+                        <br>
+                        <button class="btn btn-lg btn-green" type="button">REGISTER NOW ! <i class="fa fa-lg fa-arrow-circle-o-right"></i></button>
+                        <br><br>
+
+                        <button class="btn btn-secondary" type="button">IT WILL JUST TAKE 60 SECONDS !</button>
+                    </div>
+                </div>
+            </uib-tab>
+            <!--Jury Tab When User is Not Logged In : Ends-->
+
+            <uib-tab heading="Market">
+                Input 'Market' content here ...
+            </uib-tab>
+            <uib-tab heading="Contest official rules">
+                Input 'Contest official rules' content here ...
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>

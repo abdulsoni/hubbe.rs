@@ -4,6 +4,10 @@ use Fundator\Events\AssignJury;
 /**
  * Directors model config
  */
+$data = json_decode(file_get_contents(storage_path().'/countries.json'));
+foreach($data as $row){
+    $options[] = $row->name;
+}
 
 return array(
 
@@ -31,6 +35,9 @@ return array(
             'relationship' => 'prizes',
             'select' => 'COUNT((:table).id)',
         ),
+        'country'=>[
+            'title'=>'Country',
+        ],
         'visible' => array(
             'title' => 'Visible ?'
         )
@@ -61,6 +68,11 @@ return array(
         'name' => array(
             'title' => 'Name',
         ),
+        'country' => [
+            'title'=>'Country',
+            'type' => 'enum',
+            'options'=> $options
+        ],
         'description' => array(
             'title' => 'Description',
             'type' => 'wysiwyg'

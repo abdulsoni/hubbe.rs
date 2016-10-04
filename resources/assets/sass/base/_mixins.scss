@@ -1,0 +1,64 @@
+@mixin backfaceVisibility() {
+	-webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+@mixin antialiased() {
+	-webkit-font-smoothing: antialiased;
+}
+
+//Rounded corners misins
+@mixin rounded-corners($radius) {
+  -webkit-border-radius: $radius; -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  -o-border-radius: $radius;
+  border-radius: $radius;
+}
+
+//box shadow
+@mixin box-shadow($box-shadowes){
+	-webkit-box-shadow: $box-shadowes;
+    -moz-box-shadow: $box-shadowes;
+    box-shadow: $box-shadowes;
+}
+
+//transform
+@mixin transform($transforms){
+	-webkit-transform: $transforms;
+	-moz-transform: $transforms;
+	-ms-transform: $transforms;
+	-o-transform: $transforms;
+	transform: $transforms;
+}
+
+//transform style
+@mixin transform-style($transform-styles){
+	-webkit-transform-style: $transform-styles;
+	-moz-transform-style: $transform-styles;
+	-ms-transform-style: $transform-styles;
+	-o-transform-style: $transform-styles;
+	transform-style: $transform-styles;
+}
+
+//Transform Origin
+@mixin transform-origin($transform-origins){
+	-webkit-transform-origin: $transform-origins;
+	-moz-transform-origin: $transform-origins;
+	-ms-transform-origin: $transform-origins;
+	-o-transform-origin: $transform-origins;
+	transform-origin: $transform-origins;
+}
+
+//backface-visibility
+@mixin backface-visibility($backface-visibilitys){
+	-webkit-backface-visibility: $backface-visibilitys;
+	-moz-backface-visibility: $backface-visibilitys;
+	-ms-backface-visibility: $backface-visibilitys;
+	-o-backface-visibility: $backface-visibilitys;
+	backface-visibility: $backface-visibilitys;
+}
+
+//Rounded corners misins
+@mixin sm-width($make-sm) {
+  width: $make-sm;
+}

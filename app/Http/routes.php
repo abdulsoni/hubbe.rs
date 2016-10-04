@@ -13,18 +13,18 @@
 
 Route::get('/', 'AppController@serveApp');
 
-/*
- * Authentication Routes
- */
+
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
 $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
+
     /*
-     * Authentication
+     * Auth Providers
      */
+
     $api->get('users', 'Fundator\Http\Controllers\AuthenticateController@index');
     $api->post('users/becomeJudge', 'Fundator\Http\Controllers\UserController@becomeJudge');
     $api->post('users/becomeContestant', 'Fundator\Http\Controllers\UserController@becomeContestant');
@@ -48,7 +48,9 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
     $api->post('authenticate/forgot-verify', 'Fundator\Http\Controllers\Auth\PasswordController@appRecoverPasswordVerify');
     $api->post('authenticate/recover', 'Fundator\Http\Controllers\Auth\PasswordController@appRecoverPasswordProcess');
 
-    // Providers
+    /*
+     * Auth Providers
+     */
     $api->post('authenticate/facebook', 'Fundator\Http\Controllers\AuthenticateController@facebook');
     $api->get('authenticate/facebook', 'Fundator\Http\Controllers\AuthenticateController@facebook');
     $api->post('authenticate/unlinkFacebook', 'Fundator\Http\Controllers\AuthenticateController@unlinkFacebook');
@@ -67,6 +69,7 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
      * Contests
      */
     $api->get('contests/', 'Fundator\Http\Controllers\ContestController@index');
+    $api->post('contests/', 'Fundator\Http\Controllers\ContestController@index');
     $api->get('contests/{id}', 'Fundator\Http\Controllers\ContestController@show');
 
     /*
@@ -227,15 +230,18 @@ $api->version('v1', ['prefix' => 'api/v1'], function ($api) {
      */
     $api->post('follow/', 'Fundator\Http\Controllers\FollowController@follow');
     $api->post('unfollow/', 'Fundator\Http\Controllers\FollowController@unfollow');
-});
+    $api->post('check-follow/', 'Fundator\Http\Controllers\FollowController@checkFollow');
 
+    //Filter
+    $api->get('filter-categories',function(){
+        $select=['id','name'];
+        $data['product_categories'] = \Fundator\ProductCategory::get($select);
+        $data['innovation_categories'] = \Fundator\InnovationCategory::get($select);
+        return $data;
+    });
+});
+Route::get('temp',function(){
+    $data = \Fundator\Contest::whereDate('start_time','>',\Carbon\Carbon::now())->get();
+    return $data;
+});
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
-
-Route::get('edit',function(){
-//   $user = \Fundator\User::find(132);
-//    $user->password=bcrypt('123456');
-//    $user->save();
-//    return randomString();
-
-});
-

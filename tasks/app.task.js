@@ -12,9 +12,8 @@ var uglify = require('gulp-uglify');
 var ngAnnotate = require('gulp-ng-annotate');
 var notify = require('gulp-notify');
 var gulpif = require('gulp-if');
-
+var plumber = require('gulp-plumber');
 var cleanCSS = require('gulp-clean-css');
-
 var elixir = require('laravel-elixir');
 
 var Task = elixir.Task;
@@ -27,9 +26,9 @@ elixir.extend('app', function(src, output, outputFilename) {
     new Task('angular in ' + baseDir, function() {
         // Main file has to be included first.
         return gulp.src([baseDir + "main.js", baseDir + "**/*.js"])
+            .pipe(plumber())
             .pipe(jshint())
             .pipe(jshint.reporter(stylish))
-            //.pipe(jshint.reporter('fail')).on('error', onError) //enable this if you want to force jshint to validate
             .pipe(gulpif(! config.production, sourcemaps.init()))
             .pipe(concat(outputFilename || 'app.js'))
             .pipe(ngAnnotate())
@@ -46,6 +45,7 @@ elixir.extend('app', function(src, output, outputFilename) {
 
     new Task('do app sass', function() {
         return gulp.src(elixir.config.appConfig.sass.main)
+            .pipe(plumber())
             .pipe(sass())
             .pipe(cleanCSS())
             .pipe(rename({
@@ -56,6 +56,7 @@ elixir.extend('app', function(src, output, outputFilename) {
 
     new Task('do home sass', function() {
         return gulp.src(elixir.config.appConfig.homesass.main)
+            .pipe(plumber())
             .pipe(sass())
             .pipe(cleanCSS())
             .pipe(rename({
@@ -66,6 +67,7 @@ elixir.extend('app', function(src, output, outputFilename) {
 
     new Task('do IE 9', function() {
         return gulp.src(elixir.config.appConfig.sass.ie)
+            .pipe(plumber())
             .pipe(sass())
             .pipe(rename({
                 basename: "ie9"

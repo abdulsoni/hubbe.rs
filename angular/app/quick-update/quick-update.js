@@ -2,8 +2,6 @@
     "use strict";
 
     angular.module('fundator.controllers').controller('QuickUpdateCtrl', function($rootScope, $scope, $state, $stateParams, $resource, FdNotifications, API) {
-        console.log('quickupdate');
-
         $scope.data = {
         	editMode: false
         };
@@ -18,7 +16,7 @@
 
         $scope.editInvestment = function(state){
         	$scope.data.editMode = state;
-        }
+        };
 
         $scope.modifyInvestment = function(){
 
@@ -35,7 +33,7 @@
                     console.log(result);
                 }
             });
-        }
+        };
     });
 
 })();

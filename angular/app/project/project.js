@@ -47,11 +47,11 @@
                 $scope.goToProject(result);
                 $scope.data.newProjectLoading = false;
             });
-        }
+        };
 
         $scope.goToProject = function(project) {
             $state.go('app.create.details', { projectId: project.id });
-        }
+        };
     });
 
     angular.module('fundator.controllers').controller('ProjectCtrl', function($rootScope, $scope, $state, $stateParams, $resource, $http, $timeout, $filter, API) {
@@ -78,7 +78,7 @@
 
         $scope.goToSection = function(state){
             $state.go(state);
-        }
+        };
 
         var Project = $resource(API.path('projects/:projectId'), {
             projectId: '@id'

@@ -24,12 +24,10 @@
         }
         $scope.latestFeeds();
 
-        console.log('notifications');
-        console.log($scope.notifications);
-
         if (!$scope.notifications) {
             $scope.fetchNotifications();
         }
+
     });
 
 })();

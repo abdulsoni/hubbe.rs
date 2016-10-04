@@ -10,9 +10,9 @@
         	path: function(func, version) {
         		if (typeof(version) === 'undefined') version = 'v1';
         		var delimiter = func.startsWith('/') ? '' : '/';
-        		return path = base + version + delimiter + func;
+        		return (base + version + delimiter + func);
         	}
-        }
+        };
     });
 
     angular.module('fundator.services').provider('APIProvider', function() {
@@ -25,9 +25,9 @@
         		path: function(func, version) {
         			if (typeof(version) === 'undefined') version = 'v1';
         			var delimiter = func.startsWith('/') ? '' : '/';
-        			return path = base + version + delimiter + func;
+        			return (base + version + delimiter + func);
         		}
-        	}
+        	};
         };
     });
 

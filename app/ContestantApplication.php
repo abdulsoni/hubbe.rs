@@ -41,14 +41,13 @@ class ContestantApplication extends Model
     public function is_following(){
         return $this->belongsTo('Fundator\Followers','user_id','user_id');
     }
-
     /**
      * Attachment to the contest
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function contest(){
-        return $this->belongsTo('Fundator\Contest');
+        return $this->belongsTo('Fundator\Contest','contest_id','id');
     }
 
     /**

@@ -19,17 +19,17 @@
             }, function() {
             	console.log('Modal dismissed at: ' + new Date());
             });
-        }
+        };
     });
 
     angular.module('fundator.controllers').controller('LoginCtrl', function($scope, $uibModalInstance) {
     	$scope.login = function(){
     		console.log('logging in now !');
-    	}
+    	};
 
     	$scope.authenticate = function(){
     		console.log('auth in now !');
-    	}
+    	};
     });
 
 })();

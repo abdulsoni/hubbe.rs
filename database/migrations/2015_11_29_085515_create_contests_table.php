@@ -26,6 +26,7 @@ class CreateContestsTable extends Migration
 
             // $table->float('budget');
             $table->boolean('visible');
+            $table->string('country');
         });
     }
 

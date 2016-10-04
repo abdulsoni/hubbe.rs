@@ -1,9 +1,10 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito:400,700,300);
+@import url('https://fonts.googleapis.com/css?family=Abel|Lato:300,400,700');
 
 @import '_font-awesome.scss';
 
 
 /*--------------- common -----------------------*/
+@import 'base/_mixins.scss';
 @import 'common/_variables.scss';
 @import 'common/_common.scss';
 
@@ -14,6 +15,7 @@
 @import 'components/_chart.scss';
 @import 'components/_animations.scss';
 @import 'components/_expertise-selection.scss';
+@import 'components/_expanding-item.scss';
 
 /*--------------- layouts -----------------------*/
 @import 'layouts/_setting-dashboard.scss';

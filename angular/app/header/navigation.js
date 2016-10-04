@@ -24,7 +24,7 @@
     angular.module('fundator.controllers').controller('NavigationCtrl', function($rootScope, $scope, $state, $auth, $log, $timeout, $filter, $http, $resource, $uibModal, FileUploader, CountryCodes, API) {
 
         $scope.allSkills = [];
-        $scope.allSkills =  $resource(API.path('skills')).query();;
+        $scope.allSkills =  $resource(API.path('skills')).query();
 
         $scope.uploader = new FileUploader({
             url: API.path('files'),
@@ -46,10 +46,10 @@
                 countryCode: angular.copy($rootScope.user.contact_number_country_code),
                 number: angular.copy($rootScope.user.contact_number),
                 verificationCode: ''
-            }
+            };
         }
 
-        $scope.countryCodes = CountryCodes();
+        $scope.countryCodes = new CountryCodes();
 
         $scope.startTwoFAVerify = function() {
             $scope.data.twoFA.loading = true;
@@ -77,7 +77,7 @@
             }, function(error){
                 alert(JSON.stringify(error));
             });
-        }
+        };
 
         $scope.completeTwoFAVerfiy = function() {
             $scope.data.twoFA.loading = true;
@@ -108,7 +108,7 @@
             }, function(error){
                 alert(JSON.stringify(error));
             });
-        }
+        };
 
         $scope.socialConnect = function(provider) {
             $scope.data.socialConnect[provider].loading = true;
@@ -124,7 +124,7 @@
                 alert(JSON.stringify(response));
                 $scope.data.socialConnect[provider].loading = false;
             });
-        }
+        };
 
         $scope.socialUnlink = function(provider) {
             var method = null;
@@ -146,13 +146,13 @@
             }).finally(function(){
                 $scope.data.socialConnect[provider].loading = false;
             });
-        }
+        };
 
         $scope.saveProfile = function(){
             var userData = angular.copy($rootScope.user);
-            delete userData['creator'];
-            delete userData['investor'];
-            delete userData['judging'];
+            delete userData.creator;
+            delete userData.investor;
+            delete userData.judging;
 
             $scope.data.userSettingsSave = 0;
 
@@ -174,7 +174,7 @@
                     $scope.data.userSettingsSave = -1;
                 }, 1000);
             });
-        }
+        };
 
         // Change user thumbnail
         $scope.changeThumbnail = function(){
@@ -208,7 +208,7 @@
             }, function () {
                 $log.info('Modal dismissed at: ' + new Date());
             });
-        }
+        };
 
         // Logout
         $scope.logout = function(){
@@ -221,7 +221,7 @@
 
                 $state.go('app.auth.login', {}, {reload: true});
             });
-        }
+        };
 
         // Populate side navigation
         $scope.populateSideNavigation = function(){
@@ -230,7 +230,7 @@
                     $scope.sideNavigationData = result.data;
                 }
             });
-        }
+        };
 
         $rootScope.$watch('user', function(user){
             if (typeof(user) === 'undefined' || $rootScope.initialRoleAssignment === false) return;
@@ -240,7 +240,7 @@
 
         $scope.openFullMenu = function(){
             $rootScope.isNavShown = 1;
-        }
+        };
 
         $scope.goToLink = function(page, data, role){
             $rootScope.isNavShown = 0;
@@ -248,10 +248,10 @@
             var roles = $filter('filter')($rootScope.user.user_roles, {role: role}, true);
 
             if (typeof(roles) !== 'undefined' && roles.length > 0) {
-                var role = roles[0];
+                role = roles[0];
                 $rootScope.switchUserRole(role.role, role.id, true, page, data);
             }
-        }
+        };
     });
 
 })();
