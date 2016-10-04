@@ -7,6 +7,7 @@
 /vendor
 /node_modules
 /bower_components
+/database/dumps
 Homestead.yaml
 Homestead.json
 .env
